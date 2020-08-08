@@ -77,7 +77,7 @@
                 <div class="form-group">
                     <label class="control-label pull-left">EMAIL</label>
                     <input type="text"  name="email" class="form-control input-lg" />
-                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                    <i class="" aria-hidden="true"></i>
                 </div>
                 <div class="form-group">
                     <div class="clearfix">
@@ -85,7 +85,7 @@
                         <div class="pull-right"></div>
                     </div>
                     <input type="password" name="password" class="form-control input-lg" />
-                    <i class="fa fa-lock" aria-hidden="true"></i>
+                    <i class="" aria-hidden="true"></i>
                 </div>
                 <div class="form-group text-center">
                     <ul class="ul over">

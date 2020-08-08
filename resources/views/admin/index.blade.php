@@ -8,10 +8,10 @@
         <meta name="author" content="">
         <title>Admin - QLThucTap</title>
         <!-- Custom fonts for this template-->
-        <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
+        <link href="{{ asset('admin_asset/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
         <!-- Custom styles for this template-->
-        <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('admin_asset/css/sb-admin-2.min.css') }}" rel="stylesheet">
     </head>
     <body id="page-top">
         <!-- Page Wrapper -->
@@ -67,11 +67,11 @@
             </div>
         </div>
         <!-- Bootstrap core JavaScript-->
-        <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-        <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('admin_asset/vendor/jquery/jquery.min.js') }}"></script>
+        <script src="{{ asset('admin_asset/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <!-- Core plugin JavaScript-->
-        <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
+        <script src="{{ asset('admin_asset/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <!-- Custom scripts for all pages-->
-        <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+        <script src="{{ asset('admin_asset/js/sb-admin-2.min.js') }}"></script>
     </body>
 </html>

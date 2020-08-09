@@ -10,6 +10,7 @@
         <!-- Custom fonts for this template-->
         <link href="{{ asset('admin_asset/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
         <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('admin_asset/vendor/datatables/dataTables.bootstrap4.min.css') }}">
         <!-- Custom styles for this template-->
         <link href="{{ asset('admin_asset/css/sb-admin-2.min.css') }}" rel="stylesheet">
     </head>
@@ -31,6 +32,7 @@
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
                         <!-- Page Heading -->
+                        {{-- @include('admin.inc.bang') --}}
                         @yield('content')
                     </div>
                     <!-- /.container-fluid -->
@@ -69,6 +71,15 @@
         <!-- Bootstrap core JavaScript-->
         <script src="{{ asset('admin_asset/vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('admin_asset/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('admin_asset/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+        {{-- datatables javascripts --}}
+        <script src="{{ asset('admin_asset/vendor/datatables/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('admin_asset/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+                $('#example').DataTable();
+            } );
+        </script>
         <!-- Core plugin JavaScript-->
         <script src="{{ asset('admin_asset/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <!-- Custom scripts for all pages-->

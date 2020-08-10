@@ -19,7 +19,7 @@
         <div id="wrapper">
 
             {{-- begin slidebar --}}
-            @include('admin.layouts.slidebar')
+            @include('admin.layout.slidebar')
             {{-- end slidebar --}}
 
             <!-- Content Wrapper -->
@@ -27,7 +27,7 @@
                 <!-- Main Content -->
                 <div id="content">
                     {{-- begin nav --}}
-                    @include('admin.layouts.navbar')
+                    @include('admin.layout.navbar')
                     {{-- end nav --}}
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
@@ -39,7 +39,7 @@
                 </div>
                 <!-- End of Main Content -->
                 {{-- begin footer --}}
-                @include('admin.layouts.footer')
+                @include('admin.layout.footer')
                 {{-- end footer --}}
                 {{--  --}}
             </div>

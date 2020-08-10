@@ -19,9 +19,36 @@ Route::get('/',function ()
 {
 	return view('admin.layouts.index');
 });
-// Route::group(['prefix' => 'admin'], function () {
-//     Route::get('internshipClass', 'internshipclassController');
-// });
+Route::group(['prefix' => 'admin'], function () {
+    //quản lý đợt thực tập
+    Route::resource('internshipClass', 'internshipclassController');
+
+    //Quản lý nhóm
+    Route::resource('manageGroup', 'GroupController');
+    Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask');
+    Route::get('manageGroup/list-evaluate/{id}', 'GroupController@getListEvaluate');
+
+    //Quản lý sinh viên
+    // Route::group(['prefix' => 'manageStudent'], function () {
+    //     Route::get('/', function ($id) {
+
+    //     });
+    // });
+
+    //Quản lý giảng viên
+    // Route::resource('manageLecturers', 'UserController');
+
+    //Quản lý task
+    Route::resource('manageTask', 'TaskController');
+
+    //Quản lý lịch thực tập
+    Route::get('manageSchedule', 'ScheduleController@index')->name('manageSchedule.index');
+    Route::get('manageSchedule/checkin-out', 'ScheduleController@getCheckinOut')->name('manageSchedule.checkin-out');
+
+    //Quản lý đánh giá
+
+
+});
 
 
 
@@ -41,5 +68,4 @@ Route::get('dangnhap',function ()
 {
 	return view('admin/login');
 });
-// Route::get()
 

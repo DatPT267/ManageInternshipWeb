@@ -14,7 +14,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.pages.manageTasks.list');
     }
 
     /**
@@ -24,7 +24,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.manageTasks.add');
     }
 
     /**
@@ -46,7 +46,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        //
+        return view('admin.pages.manageTasks.show');
     }
 
     /**
@@ -57,7 +57,7 @@ class TaskController extends Controller
      */
     public function edit(Task $task)
     {
-        //
+        return view('admin.pages.manageTasks.update');
     }
 
     /**

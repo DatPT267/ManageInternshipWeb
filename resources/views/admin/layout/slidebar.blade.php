@@ -29,7 +29,7 @@
                 <h6 class="collapse-header">Custom Components:</h6>
                 --}}
                 <a class="collapse-item" href="{{route('internshipClass.index')}}">Danh sách đợt thực tập</a>
-                <a class="collapse-item" href="#">thêm đợt thực tập</a>
+                <a class="collapse-item" href="{{route('internshipClass.create')}}">thêm đợt thực tập</a>
             </div>
         </div>
     </li>
@@ -53,6 +53,22 @@
         </div>
     </li>
     <hr class="sidebar-divider">
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#QLTask" aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>Quản lý task</span>
+        </a>
+        <div id="QLTask" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                {{--
+                <h6 class="collapse-header">Custom Components:</h6>
+                --}}
+                <a class="collapse-item" href="{{route('manageTask.index')}}">Danh sách task</a>
+                <a class="collapse-item" href="{{route('manageTask.create')}}">Thêm task</a>
+            </div>
+        </div>
+    </li>
+    <hr class="sidebar-divider">
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#QLNhom" aria-expanded="true" aria-controls="collapseTwo">
@@ -64,8 +80,8 @@
                 {{--
                 <h6 class="collapse-header">Custom Components:</h6>
                 --}}
-                <a class="collapse-item" href="#">Danh sách nhóm</a>
-                <a class="collapse-item" href="#">Thêm nhóm</a>
+                <a class="collapse-item" href="{{route('manageGroup.index')}}">Danh sách nhóm</a>
+                <a class="collapse-item" href="{{route('manageGroup.create')}}">Thêm nhóm</a>
             </div>
         </div>
     </li>
@@ -80,8 +96,8 @@
                 {{--
                 <h6 class="collapse-header">Custom Components:</h6>
                 --}}
-                <a class="collapse-item" href="#">Danh sách đăng ký</a>
-                <a class="collapse-item" href="#">Lịch checkin-out</a>
+                <a class="collapse-item" href="{{route('manageSchedule.index')}}">Danh sách đăng ký</a>
+                <a class="collapse-item" href="{{route('manageSchedule.checkin-out')}}">Lịch checkin-out</a>
             </div>
         </div>
     </li>
@@ -89,7 +105,7 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#QLGVHD" aria-expanded="true" aria-controls="collapseTwo">
         <i class="fas fa-fw fa-cog"></i>
-        <span>Quản ký GV hướng dẫn</span>
+        <span>Quản lý GV hướng dẫn</span>
         </a>
         <div id="QLGVHD" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
@@ -98,6 +114,26 @@
                 --}}
                 <a class="collapse-item" href="#">Danh sách giảng viên</a>
                 <a class="collapse-item" href="#">Thêm giảng viên</a>
+            </div>
+        </div>
+    </li>
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#QLDG" aria-expanded="true" aria-controls="collapseTwo">
+        <i class="fas fa-fw fa-cog"></i>
+        <span>Quản lý đánh giá</span>
+        </a>
+        <div id="QLDG" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+
+                <h6 class="collapse-header" style="text-align: center">Group</h6>
+
+                <a class="collapse-item" href="#">Danh sách đánh giá</a>
+                <a class="collapse-item" href="#">Thêm đánh giá</a>
+                <h6 class="collapse-header" style="text-align: center">Task</h6>
+
+                <a class="collapse-item" href="#">Danh sách đánh giá</a>
+                <a class="collapse-item" href="#">Thêm đánh giá</a>
             </div>
         </div>
     </li>

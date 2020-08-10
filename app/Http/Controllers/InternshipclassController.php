@@ -16,7 +16,7 @@ class InternshipclassController extends Controller
     public function index()
     {
         $listClass = Internshipclass::all();
-        return view('admin.pages.internshipClass.index', ['listClass'=>$listClass]);
+        return view('admin.pages.internshipClass.list', ['listClass'=>$listClass]);
     }
 
     /**
@@ -26,7 +26,7 @@ class InternshipclassController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.internshipClass.add');
     }
 
     /**
@@ -48,7 +48,7 @@ class InternshipclassController extends Controller
      */
     public function show(Internshipclass $internshipclass)
     {
-        //
+        return view('admin.pages.internshipClass.show');
     }
 
     /**
@@ -59,7 +59,7 @@ class InternshipclassController extends Controller
      */
     public function edit(Internshipclass $internshipclass)
     {
-        //
+        return view('admin.pages.internshipClass.edit');
     }
 
     /**

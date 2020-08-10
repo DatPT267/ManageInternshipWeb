@@ -14,7 +14,7 @@ class GroupController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.pages.manageGroup.list');
     }
 
     /**
@@ -24,7 +24,7 @@ class GroupController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.pages.manageGroup.add');
     }
 
     /**
@@ -46,7 +46,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        //
+        return view('admin.pages.manageGroup.show');
     }
 
     /**
@@ -57,7 +57,7 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        //
+        return view('admin.pages.manageGroup.update');
     }
 
     /**
@@ -81,5 +81,12 @@ class GroupController extends Controller
     public function destroy(Group $group)
     {
         //
+    }
+
+    public function getListTask($id){
+        return view('admin.pages.manageGroup.list-task');
+    }
+    public function getListEvaluate($id){
+        return view('admin.pages.manageGroup.list-Evaluate');
     }
 }

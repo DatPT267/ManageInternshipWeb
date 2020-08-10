@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EmptyModule</title>
+    <meta name="description" />
+    <meta name="keywords" />
+    <meta name="robots" content="noodp,index,follow" />
+    <meta name='revisit-after' content='1 days' />
+    <meta property="og:image" />
+    <meta property="og:title" content="EmptyModule" />
+    <meta property="og:description" />
+    <meta property="og:site_name" content="Nasol" />
+    <meta property="og:url" content="/error" />
+    <meta property="og:type" content="article" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta charset="utf-8">
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+   
+    <!--css-->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic&subset=latin,vietnamese' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" type="text/css" href="/Content/html/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/Content/html/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="../../Content/html/css/jquery.simplyscroll.css">
+    <link rel="stylesheet" type="text/css" href="../../Content/html/css/jquery.mmenu.all.css">
+    <link rel="stylesheet" type="text/css" href="../../Content/html/css/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="../../Content/html/css/owl.theme.css">
+    <link rel="stylesheet" type="text/css" href="../../Content/html/css/owl.transitions.css">
+    <link rel="stylesheet" type="text/css" href="/Content/html/css/remodal.css">
+    <link rel="stylesheet" type="text/css" href="/Content/html/css/remodal-default-theme.css">
+    <link rel="stylesheet" type="text/css" href="/Content/html/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" type="text/css" href="/Content/html/css/sweetalert.css">
+    <link href="../../Content/Admin/theme/css/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/Content/html/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/Content/html/css/layout.css">
+    <link rel="stylesheet" type="text/css" href="/Content/html/css/reponsive.css">
+    <link href="../../Content/Publishing/css/jquery.datetimepicker.css" rel="stylesheet" />
+    <link href="../../Content/Admin/Bootstrap/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+
+
+    <script type="text/javascript" src="/Content/html/js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="/Content/html/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/Content/html/js/jquery.mmenu.min.all.js"></script>
+    <script type="text/javascript" src="/Content/html/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="/Content/html/js/remodal.min.js"></script>
+    <script type="text/javascript" src="/Content/html/js/jquery.timepicker.js"></script>
+    <script type="text/javascript" src="/Content/html/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/Content/html/js/slick.min.js"></script>
+    <script type="text/javascript" src="/Content/html/js/member.js"></script>
+    <script src="/Content/Publishing/js/jquery.form.min.js"></script>
+    <script type="text/javascript" src="/Content/html/js/jquery.validate.min.js"></script>
+    <script src="/Content/Admin/theme/js/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+    <script src="/Content/Admin/theme/js/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/Content/html/js/sweetalert.min.js"></script>
+    <script src="/Content/Admin/js/jquery.address-1.6.js"></script>
+    <script type="text/javascript" src="/Content/html/js/javascript.js"></script>
+    <script type="text/javascript" src="/Content/Publishing/js/LoadData.js"></script>
+    <script src="/Content/Admin/Bootstrap/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/Content/Publishing/js/jquery.datetimepicker.full.js"></script>  
+                   
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=612720708938941";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+               
+    <div class="wrapper">
+        <!-- header -->
+<div class="header delay">
+    <div class="container">
+        <div class="logo delay">
+            <a href="/">
+
+                <img src="/Uploads/files/logo3.png" alt="Ð?T S&#194;N NHANH" title="Ð?T S&#194;N NHANH" class="delay">
+
+            </a>
+        </div>
+        <div class="menu delay">
+            <nav id="mainMenu">
+                <ul class="mainMenu delay">
+                    <li><a href="/" title="Trang ch?">Trang ch?</a></li>
+                        <li>
+                            <a href="/dat-san" title="Ð?t s&#226;n">Ð?t s&#226;n</a>
+                                <ul class="subMenu">
+                                        <li><a href="/tim-doi" title="T&#236;m d?i">T&#236;m d?i</a></li>
+                                        <li><a href="/quan-ly-tim-doi-thu" title="Ðang tin t&#236;m d?i">Ðang tin t&#236;m d?i</a></li>
+                                        <li><a href="/san-gio-vang" title="S&#226;n gi? v&#224;ng">S&#226;n gi? v&#224;ng</a></li>
+                                </ul>
+                        </li>
+                        <li>
+                            <a href="/khuyen-mai" title="Khuy?n m&#227;i">Khuy?n m&#227;i</a>
+                                <ul class="subMenu">
+                                        <li><a href="/da-tran" title="Ð&#225; tr?n ">Ð&#225; tr?n </a></li>
+                                        <li><a href="/da-giai" title="Ð&#225; gi?i">Ð&#225; gi?i</a></li>
+                                </ul>
+                        </li>
+                        <li>
+                            <a href="/y-kien-khach-hang" title="KH&#193;CH H&#192;NG">KH&#193;CH H&#192;NG</a>
+                        </li>
+                        <li>
+                            <a href="/tin-tuc" title="Tin t?c ">Tin t?c </a>
+                                <ul class="subMenu">
+                                        <li><a href="/danh-sach-san" title="Danh s&#225;ch s&#226;n">Danh s&#225;ch s&#226;n</a></li>
+                                </ul>
+                        </li>
+                </ul>
+            </nav>
+            <button id="button-toggle-menu" class="visible-xs"><i class="fa fa-bars"></i></button>
+        </div>
+        <div class="leng-item">
+            <ul class="ul">
+                <li>
+                    <a href="javascript:void(0)" class="on-serach"><i class="fa fa-search delay" aria-hidden="true"></i></a>
+                    <div class="show-serach delay">
+                        <div class="search">
+                            <form action="tim-kiem">
+                                <input type="text" name="q" class="form-control input-sm" maxlength="64" placeholder="Tìm ki?m" />
+                                <button type="submit" class="btn btn-sm">Search</button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="dropdown">
+                        <img src="/Content/html/images/dk.png" style="margin-top: 3px;" class="dropdown-toggle" data-toggle="dropdown">
+
+                        <ul class="dropdown-menu">
+                                <li><a href="#loginmember">Ch? sân</a></li>
+                                <li><a href="#login">Thành viên</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><i class="fa fa-phone" aria-hidden="true"></i><span> <a href="tel:0917665155">0917.665.155</a></span></li>
+            </ul>
+        </div>
+    </div>
+    <!-- popup dang ký -->
+    <div class="remodal" data-remodal-id="register" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" data-remodal-options="closeOnOutsideClick: false">
+        <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+        <div class="register">
+            <form id="formRegister" method="post" action="/Ajax/Member/Register">
+                <h3>Ðang ký tài kho?n</h3>
+                <div class="form-group">
+                    <label class="control-label pull-left">H? VÀ TÊN</label>
+                    <input type="text" id="iptResName" name="iptResName" class="form-control" />
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                </div>
+                <div class="form-group">
+                    <label class="control-label pull-left">EMAIL</label>
+                    <input type="email" id="iptResEmail" name="iptResEmail" class="form-control" />
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                </div>
+                <div class="form-group">
+                    <label class="control-label pull-left">S? ÐI?N THO?I</label>
+                    <input type="text" id="iptResMobile" name="iptResMobile" class="form-control" />
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                </div>
+                <div class="form-group">
+                    <label class="control-label pull-left">M?t kh?u</label>
+                    <input type="password" id="iptResPass" name="iptResPass" class="form-control" />
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                </div>
+                <div class="form-group">
+                    <label class="control-label pull-left">NH?P L?I M?T KH?U</label>
+                    <input type="password" id="iptResCofPass" name="iptResCofPass" class="form-control" />
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                </div>
+                <div class="form-group text-center">
+                    <ul class="ul over">
+                        <li><button type="submit" id="res-acc" class="btn btn-lg btn-block btn-green">Ðang ký</button></li>
+                        <li><b style="font-weight: 600"><a href="/#login" title="" class="color-green" style="font-size: 13.4px">Ðang nh?p t?i dây</a></b></li>
+                    </ul>
+                </div>
+
+
+                <input type="hidden" name="urlback" />
+            </form>
+        </div>
+    </div>
+    <!-- end popup dang ký -->
+    <!-- popup dang ký ch? sân -->
+    <div class="remodal" data-remodal-id="registermember" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" data-remodal-options="closeOnOutsideClick: false">
+        <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+        <div class="register">
+            <form id="formRegisterMember" method="post" action="/Ajax/Member/RegisterMember">
+                <h3>Ðang ký tài kho?n ch? sân</h3>
+                <div class="form-group">
+                    <label class="control-label pull-left">H? VÀ TÊN</label>
+                    <input type="text" id="iptResName" name="iptResName" class="form-control" />
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                </div>
+                <div class="form-group">
+                    <label class="control-label pull-left">EMAIL</label>
+                    <input type="email" id="iptResEmail" name="iptResEmail" class="form-control" />
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                </div>
+                <div class="form-group">
+                    <label class="control-label pull-left">S? ÐI?N THO?I</label>
+                    <input type="text" id="iptResMobile" name="iptResMobile" class="form-control" />
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                </div>
+                <div class="form-group">
+                    <label class="control-label pull-left">M?t kh?u</label>
+                    <input type="password" id="iptResPass1" name="iptResPass1" class="form-control" />
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                </div>
+                <div class="form-group">
+                    <label class="control-label pull-left">NH?P L?I M?T KH?U</label>
+                    <input type="password" id="iptResCofPass1" name="iptResCofPass1" class="form-control" />
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                </div>
+                <div class="form-group text-center">
+                    <ul class="ul over">
+                        <li><button type="submit" id="res-member" class="btn btn-lg btn-block btn-green">Ðang ký</button></li>
+                        <li><b style="font-weight: 600"><a href="/#loginmember" title="" class="color-green" style="font-size: 13.4px">Ðang nh?p t?i dây</a></b></li>
+                    </ul>
+                </div>
+
+                <input type="hidden" name="urlback" />
+            </form>
+        </div>
+    </div>
+    <!-- end popup dang ký -->
+    <!-- popup dang nh?p -->
+    <div class="remodal" data-remodal-id="login" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" data-remodal-options="closeOnOutsideClick: false">
+        <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+        <div class="register">
+            <form id="formLogin" method="post" action="/Ajax/Member/Login">
+                <h3>Chào m?ng b?n quay tr? l?i!</h3>
+                <div class="form-group">
+                    <label class="control-label pull-left">EMAIL</label>
+                    <input type="text" id="iptLoginUser" name="iptLoginUser" class="form-control input-lg" />
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                </div>
+                <div class="form-group">
+                    <div class="clearfix">
+                        <label class="control-label pull-left">M?T KH?U</label>
+                        <div class="pull-right"></div>
+                    </div>
+                    <input type="password" id="iptLoginPass" name="iptLoginPass" class="form-control input-lg" />
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                </div>
+                <div class="form-group text-center">
+                    <ul class="ul over">
+                        <li><button type="submit" id="log-acc" class="btn btn-green">Ðang nh?p</button></li>
+                        <li><b style="font-weight: 600"> <a href="/#register" title="" class="color-green">Ðang ký ngay</a></b></li>
+                        <li><b style="font-weight: 600"><a href="/#forgot-password" title="Khôi ph?c m?t kh?u" class="color-green pull-right">Quên m?t kh?u</a></b></li>
+                    </ul>
+                </div>
+                <input type="hidden" name="urlback" />
+            </form>
+        </div>
+    </div>
+    <!-- end popup dang nh?p -->
+    <!-- popup dang nh?p ch? sân -->
+    <div class="remodal" data-remodal-id="loginmember" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" data-remodal-options="closeOnOutsideClick: false">
+        <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+        <div class="register">
+            <form id="formLoginMember" method="post" action="/Ajax/Member/LoginMember">
+                <h3>Chào m?ng b?n quay tr? l?i!</h3>
+                <div class="form-group">
+                    <label class="control-label pull-left">EMAIL</label>
+                    <input type="text" id="iptLoginUser1" name="iptLoginUser1" class="form-control input-lg" />
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                </div>
+                <div class="form-group">
+                    <div class="clearfix">
+                        <label class="control-label pull-left">M?T KH?U</label>
+                    </div>
+                    <input type="password" id="iptLoginPass1" name="iptLoginPass1" class="form-control input-lg" />
+                    <i class="fa fa-lock" aria-hidden="true"></i>
+                </div>
+                <div class="form-group text-center">
+                    <ul class="ul over">
+                        <li><button type="submit" id="log-member" class="btn btn-lg btn-block  btn-login btn-green">Ðang nh?p</button></li>
+                        <li><b style="font-weight: 600"> <a href="/#registermember" title="" class="color-green" style="font-size: 13.4px">Ðang ký ngay</a></b></li>
+                        <li><b style="font-weight: 600"><a href="/#forgot-password-temp" title="Khôi ph?c m?t kh?u" class="color-green pull-right">Quên m?t kh?u</a></b></li>
+                    </ul>
+                </div>
+                <input type="hidden" name="urlback" />
+            </form>
+        </div>
+    </div>
+    <!-- end popup dang nh?p -->
+    <!-- quên pass -->
+    <div class="remodal" data-remodal-id="forgot-password" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" data-remodal-options="closeOnOutsideClick: false">
+        <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+        <div class="register">
+            <form id="form-forgot-pass" action="/Ajax/Member/ForgotPass">
+                <h3>Khôi ph?c m?t kh?u</h3>
+                <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <input type="text" name="forgotPassEmail" id="forgotPassEmail" class="form-control input-lg" />
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                </div>
+                <div class="form-group text-center">
+                    <ul class="ul over">
+                        <li><button type="submit" id="btn-send-forgot-pass" class="btn btn-lg btn-block btn-green">G?i di</button></li>
+                        <li><b style="font-weight: 600"> <a href="/#register" title="" class="color-green" style="font-size: 13.4px">Ðang ký t?i dây</a></b></li>
+                        <li><b style="font-weight: 600"><a href="/#login" title="" class="color-green" style="font-size: 13.4px">Ðang nh?p t?i dây</a></b></li>
+                    </ul>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!-- end popup quên pass -->
+    <!-- quên pass chu san -->
+    <div class="remodal" data-remodal-id="forgot-password-temp" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" data-remodal-options="closeOnOutsideClick: false">
+        <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+        <div class="register">
+            <form id="frmforgoPass" action="/Ajax/Member/ForgotPassWord">
+                <h3>Khôi ph?c m?t kh?u</h3>
+                <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <input type="text" name="forgotPassEmail" id="forgotPassEmail" class="form-control input-lg" />
+                    <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                </div>
+                <div class="form-group text-center">
+                    <ul class="ul over">
+                        <li><button type="submit" id="btn-send-forgot-pass-temp" class="btn btn-lg btn-block btn-green">G?i di</button></li>
+                        <li><b style="font-weight: 600"> <a href="/#register" title="" class="color-green" style="font-size: 13.4px">Ðang ký t?i dây</a></b></li>
+                        <li><b style="font-weight: 600"><a href="/#login" title="" class="color-green" style="font-size: 13.4px">Ðang nh?p t?i dây</a></b></li>
+                    </ul>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- end header -->
+
+
+
+<script>
+    $(function () {
+        $("#btnSearch").click(function () {
+            if ($("#frmSearch").valid()) {
+                $("#frmSearch").submit();
+            }
+        });
+        $("#frmSearch").validate({
+            rules: {
+                district_choice: {
+                    required: true
+                },
+                date: {
+                    required: true
+                },
+                //time_zone: {
+                //    required: true
+                //},
+            },
+            messages: {
+                district_choice: {
+                    required: "*",
+                },
+                date: {
+                    required: "*",
+                },
+                //time_zone: {
+                //    required: "*",
+                //},
+            }
+        });
+        $("#district_choice").change(function () {
+            var city = $(this).val();
+            if (city == '')
+                city = 0;
+            $.post("/Ajax/Home/GetListField", { ID: city }, function (data) {
+                //var html = '';
+                //$.each(data, function (i, item) {
+                //    html += '<option value="' + item.ID + '">' + item.Name + '</option>';
+                //});
+                //$("#field_choice").empty();
+                //$("#field_choice").append('<option value="">Ch?n sân</option>');
+                $("#field_choice").html(data);
+            });
+        });
+        
+        
+    });
+
+</script>
+
+
+<style>
+    .voic i {
+        position: absolute;
+        top: 12px;
+        right: 11px;
+    }
+</style>
+        
+<style>
+    .error-page-container { width: 80%; height:250px; margin: 0 auto; }
+    .error-box { padding: 30px 40px; }
+    .error-box { clear: both; overflow: hidden; }
+
+    .error-page-content { text-align: center; }
+    .error-page-mess { margin-top: 20px; font-size: 24px; }
+    .error-page-link { margin-top: 10px; }
+    .error-search-box { text-align:center; margin-top:22px; }
+
+    .error-page-search { width:60%; border:1px solid #ccc; padding:6px 4px; }
+</style>
+
+<div class="error-page-container">
+
+    <div class="error-page-content">
+
+        <div class="error-page-mess">Không tìm th?y du?ng d?n này</div>
+
+        <div class="error-page-link">B?n có th? truy c?p vào <a href="/" rel="home">Trang ch?</a> ho?c s? d?ng ô du?i dây d? tìm ki?m</div>
+    </div>
+
+    <div class="error-search-box">
+        <form id="frm_search_error" action="">
+            <input type="text" name="keyword" class="error-page-search">
+            <input type="hidden" name="view" value="product">
+            <input type="submit" class="form_button" value="Tìm ki?m">
+        </form>
+    </div>
+
+</div>
+<script>
+    var action = $("#f-search-main").attr("action");
+    $("#frm_search_error").attr("action", action);
+</script>
+
+        <!-- slyder-home -->
+        <!-- footer -->
+        
+<!-- footter -->
+<div class="footter">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+                <div class="item">
+                    <h3>liên h?</h3>
+                    <p>
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        Ð?a ch?:  C?u Gi?y, H&#224; N?i
+                    </p>
+                    <p>
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        Ði?n tho?i: 
+                    </p>
+                    <p>
+                        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+                        E-mail: datsannhanh@gmail.com
+                    </p>
+                    <p>
+                        <i class="fa fa-globe" aria-hidden="true"></i>
+                        Website: <a href="datsanonline.com.vn">datsanonline.com.vn</a>
+                    </p>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="item">
+                            <h3>danh m?c</h3>
+                            <ul class="ul ft">
+                                <li>
+                                    <a href="/" title="Trang ch?"><i class="fa fa-caret-right" aria-hidden="true"></i> Trang ch?</a>
+                                </li>
+                                    <li>
+                                        <a href="/dat-san" title="Ð?t s&#226;n"><i class="fa fa-caret-right" aria-hidden="true"></i>Ð?t s&#226;n</a>
+                                    </li>
+                                    <li>
+                                        <a href="/khuyen-mai" title="Khuy?n m&#227;i"><i class="fa fa-caret-right" aria-hidden="true"></i>Khuy?n m&#227;i</a>
+                                    </li>
+                                    <li>
+                                        <a href="/y-kien-khach-hang" title="KH&#193;CH H&#192;NG"><i class="fa fa-caret-right" aria-hidden="true"></i>KH&#193;CH H&#192;NG</a>
+                                    </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 text-right">
+                        <div class="item">
+                            <h3>k?t n?i v?i chúng tôi</h3>
+                            <ul class="ul connect">
+                                <li><a href="https://www.facebook.com/datsanonline/" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                <li><a href="https://twitter.com/" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                <li><a href="https://plus.google.com/" target="_blank"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                <li><a href="https://www.youtube.com/" target="_blank"><i class="fa fa-youtube" aria-hidden="true"></i></a></li>
+                            </ul>
+                            <div class="over" style="display: block;width: 100%;float: left;margin-top: 10px">
+                                <p>
+                                    <a style="color: white" href="http://www.adcvietnam.net/thiet-ke-website.htm" title="Thi?t k? website chu?n SEO">Thi?t k? website</a> b?i ADC Vi?t Nam
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end footter -->
+
+        <!-- end footer -->
+    </div>
+
+    <a href="#" class="delay gotop bg"><i class="fa fa-angle-up" aria-hidden="true"></i></a>
+    <script type="text/javascript">
+        (function () {
+            $(window).scroll(function () {
+                if ($(window).scrollTop() == 0) {
+                    $('.gotop').stop(false, true).fadeOut(600);
+                } else {
+                    $('.gotop').stop(false, true).fadeIn(600);
+                }
+            });
+            $('.gotop').click(function () {
+                $('body,html').animate({ scrollTop: 0 }, 400);
+                return false;
+            });
+        })(jQuery);
+    </script>
+
+    
+    <!-- Go to www.addthis.com/dashboard to customize your tools -->
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-97001872-1', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+    <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-546c6a3a3551dec6"></script>
+               
+</body>
+</html>
+

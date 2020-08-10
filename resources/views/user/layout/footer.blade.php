@@ -14,11 +14,11 @@
                     </p>
                     <p>
                         <i class="fa fa-envelope-o" aria-hidden="true"></i>
-                        E-mail: SDC@gmail.com
+                        E-mail: sdc@gmail.com
                     </p>
                     <p>
                         <i class="fa fa-globe" aria-hidden="true"></i>
-                        Website: <a href="">SDC@com.vn</a>
+                        Website: <a href="">sdc@com.vn</a>
                     </p>
                 </div>
             </div>
@@ -35,7 +35,7 @@
                                         <a href="" title=""><i class="fa fa-caret-right" aria-hidden="true"></i>Nhóm</a>
                                     </li>
                                     <li>
-                                        <a href="" title=""><i class="fa fa-caret-right" aria-hidden="true"></i>Task hàng ngày</a>
+                                        <a href="" title=""><i class="fa fa-caret-right" aria-hidden="true"></i>Bài tập hàng ngày</a>
                                     </li>
                                     <li>
                                         <a href="" title=""><i class="fa fa-caret-right" aria-hidden="true"></i>Đánh giá</a>
@@ -54,7 +54,8 @@
                             </ul>
                             <div class="over" style="display: block;width: 100%;float: left;margin-top: 10px">
                                 <p>
-                                    <a style="color: white" href="http://www.adcvietnam.net/thiet-ke-website.htm" title="Thiết kế website chuẩn SEO">Thiết kế website</a> bởi DB WEB
+                                    <a style="color: white" href="http://www.adcvietnam.net/thiet-ke-website.htm" title="Thiết kế
+                                     website chuẩn SEO">Thiết kế website</a> bởi SDC
                             </div>
                         </div>
                     </div>

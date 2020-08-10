@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
+
 //ADMIN
 
 Route::get('admin/confirmemail', function () {
@@ -26,3 +27,15 @@ Route::get('admin/losspassword', function () {
 
 Route::get('admin/login', 'AuthenticationController@getLogin');
 Route::post('admin/login', 'AuthenticationController@postLogin');
+
+
+
+Route::get('trangchu',function ()
+{
+	return view('pages/trangchu');
+});
+Route::get('dangnhap',function ()
+{
+	return view('admin/login');
+});
+

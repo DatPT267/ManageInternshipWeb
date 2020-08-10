@@ -1,0 +1,373 @@
+
+
+.simply-scroll-container { /* Container DIV - automatically generated */
+	position: relative;
+}
+
+	.simply-scroll-clip { /* Clip DIV - automatically generated */
+		position: relative;
+		overflow: hidden;
+	}
+
+	.simply-scroll-list { /* UL/OL/DIV - the element that simplyScroll is inited on */
+		overflow: hidden;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	
+		.simply-scroll-list li {
+			padding: 0;
+			margin: 0;
+			list-style: none;
+		}
+	
+		.simply-scroll-list li img {
+			border: none;
+			display: block;
+		}
+	
+	.simply-scroll-btn {
+		position: absolute;
+		background-image: url(buttons.png);
+		width: 42px;
+		height: 44px;
+		z-index:3;
+		cursor: pointer;
+	}
+	
+	.simply-scroll-btn-left {
+		left: 6px;
+		bottom: 6px;
+		background-position: 0 -44px;
+	}
+	.simply-scroll-btn-left.disabled {
+		background-position: 0 0 !important;
+	}
+	.simply-scroll-btn-left:hover, .simply-scroll-btn-left:focus {
+		background-position: 0 -88px;
+	}
+	
+	.simply-scroll-btn-right {
+		right: 6px;
+		bottom: 6px;
+		background-position: -84px -44px;
+	}
+	.simply-scroll-btn-right.disabled {
+		background-position: -84px 0 !important;
+	}
+	.simply-scroll-btn-right:hover, .simply-scroll-btn-right:focus {
+		background-position: -84px -88px;
+	}
+	
+	.simply-scroll-btn-up {
+		right: 6px;
+		top: 6px;
+		background-position: -126px -44px;
+	}
+	.simply-scroll-btn-up.disabled {
+		background-position: -126px 0 !important;
+	}
+	.simply-scroll-btn-up:hover, .simply-scroll-btn-up:focus {
+		background-position: -126px -88px;
+	}
+	
+	.simply-scroll-btn-down {
+		right: 6px;
+		bottom: 6px;
+		background-position: -42px -44px;
+	}
+	.simply-scroll-btn-down.disabled {
+		background-position: -42px 0 !important;
+	}
+	.simply-scroll-btn-down:hover, .simply-scroll-btn-down:focus {
+		background-position: -42px -88px;
+	}
+	
+	.simply-scroll-btn-pause {
+		right: 6px;
+		bottom: 6px;
+		background-position: -168px -44px;
+	}
+	.simply-scroll-btn-pause:hover, .simply-scroll-btn-pause:focus {
+		background-position: -168px -88px;
+	}
+	
+	.simply-scroll-btn-pause.active {
+		background-position: -84px -44px;
+	}
+	.simply-scroll-btn-pause.active:hover, .simply-scroll-btn-pause.active:focus {
+		background-position: -84px -88px;
+	}
+
+/* Custom class modifications - override classees
+
+.simply-scroll is default
+
+*/
+
+.simply-scroll { /* Customisable base class for style override DIV */
+	width: 100%;
+	height: auto;
+	margin-bottom: 1em;
+}
+
+	.simply-scroll .simply-scroll-clip {
+		width: 100%;
+		height: auto;
+	}
+	
+		.simply-scroll .simply-scroll-list {}
+		
+		.simply-scroll .simply-scroll-list li {
+			float: left;
+			width: 200px;
+			text-align: center;
+		}
+		.simply-scroll .simply-scroll-list li img {
+			display: inline-block;
+			vertical-align:middle;
+		}
+	
+	.simply-scroll .simply-scroll-btn {}
+	
+	.simply-scroll .simply-scroll-btn-left {}
+	.simply-scroll .simply-scroll-btn-left.disabled {}
+	.simply-scroll .simply-scroll-btn-left:hover {}
+	
+	.simply-scroll .simply-scroll-btn-right {}
+	.simply-scroll .simply-scroll-btn-right.disabled {}
+	.simply-scroll .simply-scroll-btn-right:hover {}
+	
+	.simply-scroll .simply-scroll-btn-up {}
+	.simply-scroll .simply-scroll-btn-up.disabled {}
+	.simply-scroll .simply-scroll-btn-up:hover {}
+	
+	.simply-scroll .simply-scroll-btn-down {}
+	.simply-scroll .simply-scroll-btn-down.disabled {}
+	.simply-scroll .simply-scroll-btn-down:hover {}
+	
+
+
+/* Vertical scroller example */
+
+.vert { /* wider than clip to position buttons to side */
+	width: 340px;
+	height: 400px;
+	margin-bottom: 1.5em;
+}
+
+	.vert .simply-scroll-clip {
+		width: 290px;
+		height: 400px;
+	}
+	
+		.vert .simply-scroll-list {}
+		
+		.vert .simply-scroll-list li {
+			width: 290px;
+			height: 200px;
+		}
+		.vert .simply-scroll-list li img {}
+	
+	.vert .simply-scroll-btn {}
+
+	.vert .simply-scroll-btn-up { /* modified btn pos */
+		right: 0;
+		top: 0;
+	}
+	.vert .simply-scroll-btn-up.disabled {}
+	.vert .simply-scroll-btn-up:hover {}
+	
+	.vert .simply-scroll-btn-down { /* modified btn pos */
+		right: 0;
+		top: 52px;
+	}
+	.vert .simply-scroll-btn-down.disabled {}
+	.vert .simply-scroll-btn-down:hover {}
+	
+	/* NOTE left-right classes wouldn't be needed on vertical scroller */
+
+
+
+
+/**/
+
+
+#header .container{
+    position: relative;
+}
+#header #mainHeader {
+    padding: 15px 0;
+}
+
+/* Main Menu */
+#mainNavi {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 0 15px;
+    margin: 0px;
+}
+#mainMenu > ul {
+    width: 100%;
+    margin: 0;
+    font-size:14px;
+    border-radius: 3px 3px 0 0;
+    padding: 0;
+    position: relative;
+}
+#mainMenu .mainMenu > li{
+ float: left;
+ list-style-type: none;
+}
+
+#mainMenu .mainMenu > li:last-child > a {
+    background: none;
+}
+
+#mainMenu .mainMenu > li.active > a:before,
+#mainMenu .mainMenu > li:hover > a:before,
+#mainMenu .mainMenu > li > a:focus:before,
+#mainMenu .mainMenu > li > a:active:before {
+    left: 0;
+    right: 0;
+}
+#button-toggle-menu {
+    width: 40px;
+    height: 37px;
+    border: 0;
+    color: #FFF;
+    background: #1c1f25;
+    position: fixed;
+    top: 7px;
+    left: 7px;
+    padding: 0px 8px;
+}
+#button-toggle-menu .fa-bars {
+    float: left;
+    font-size: 27px;
+    margin-right: 10px;
+}
+/* Sub Menu */
+#mainMenu .mainMenu > li > ul {
+    position: absolute;
+    z-index: 1;
+    padding: 0;
+    top: 50%;
+    opacity: 0;
+    visibility: hidden;
+    transition-duration: 0.3s;
+    min-width: 180px;
+}
+#mainMenu .mainMenu > li:hover > ul {
+    opacity: 1;
+    visibility: visible;
+    top: 100%;
+}
+
+
+#mainMenu .mainMenu > li > ul > li {
+    list-style-type: none;
+}
+#mainMenu .mainMenu > li > ul > li span.imgSubMenu {
+    display: block;
+    text-align: center;
+    border-bottom:1px solid #e4e4e4;
+    margin-bottom:15px;
+    padding:10px 0;
+}
+#mainMenu .mainMenu > li > ul > li span.title {
+    display: block;
+    padding-left: 25px;
+}
+#mainMenu .mainMenu > li > ul > li span.title a{
+    color: #007ac3;
+    font-size: 16px;
+}
+#mainMenu .mainMenu > li > ul > li > .subMenuList {
+    
+}
+#mainMenu .mainMenu > li > ul > li > .subMenuList li{
+    list-style-type: cirle;
+}
+#mainMenu .mainMenu > li > ul > li > .subMenuList li a {
+    color:#fff;
+    font-size: 13px;
+}
+
+.menu {
+    float: left;
+    margin-left: 70px;
+    margin-top: 0;
+    height: 84px;
+}
+.menu nav >ul >li{
+	position: relative;
+	height: 84px;
+	line-height: 84px;
+}
+.menu nav >ul >li >a {
+    color: #13A9E4;
+    text-transform: uppercase;
+    padding: 32px 15px;
+    font-weight: 600;
+    position: relative;
+    -moz-transition: ease 0.5s;
+    -o-transition: ease 0.5s;
+    -webkit-transition: ease 0.5s;
+    transition: ease 0.5s;
+    z-index: 2;
+    font-size: 15px;
+}
+.menu nav >ul >li:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;s
+    background: #fff;
+    top: 50%;
+    bottom: 50%;
+    -moz-transition: ease 0.5s;
+    -o-transition: ease 0.5s;
+    -webkit-transition: ease 0.5s;
+    transition: ease 0.5s;
+}
+.menu nav >ul >li:hover:before,.menu nav >ul >li.active:before{
+	top: 0;
+	bottom: 0;
+}
+.menu nav >ul >li.acitve >a{
+	background: #30353d;
+}
+#mainMenu .mainMenu > li > ul li {
+    line-height: 24px;
+}
+#mainMenu .mainMenu > li > ul li a {
+    display: block;
+    color: #13A9E4; 
+    border-top: 1px solid rgba(255,255,255,0.2);
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+    padding: 5px 20px;
+    -moz-transition: ease 0.5s;
+    -o-transition: ease 0.5s;
+    -webkit-transition: ease 0.5s;
+    transition: ease 0.5s;
+    background: rgba(255,255,255,0.9); 
+}
+#mainMenu .mainMenu > li > ul li a:hover{
+	background: rgba(255,255,255,0.66);
+}
+
+
+@media screen and (max-width:1024px){
+	#mainMenu > ul{
+	display: none;
+	}
+	#button-toggle-menu{
+		display: block !important;
+	}
+}
+
+

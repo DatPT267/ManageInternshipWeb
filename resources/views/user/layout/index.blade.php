@@ -72,10 +72,10 @@
                
     <div class="wrapper">
         <!-- header -->
-@include('layout.header')
+@include('user.layout.header')
 <!-- end header -->
 
-@include('layout.timkiem')
+@include('user.layout.timkiem')
 
 
 
@@ -105,7 +105,7 @@
         <!-- footer -->
         
 <!-- footter -->
-@include('layout.footer')
+@include('user.layout.footer')
 <!-- end footter -->
 
         <!-- end footer -->

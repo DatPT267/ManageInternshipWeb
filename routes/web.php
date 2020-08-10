@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 //User
 Route::get('trangchu',function ()
 {
-	return view('pages/trangchu');
+	return view('user/pages/trangchu');
 });
 Route::get('dangnhap',function ()
 {

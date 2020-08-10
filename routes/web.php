@@ -87,5 +87,7 @@ Route::get('logout', 'UserController@getLogout')->name('logout');
 Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
 
 
+Route::get('/user/{id}', 'UserController@edit');
+Route::post('/user/{id}', 'UserController@update')->name('user.update');
 
 

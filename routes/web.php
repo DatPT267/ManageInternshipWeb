@@ -12,8 +12,20 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+//ADMIN and GVHD
 
 
+
+
+
+
+
+
+
+
+
+
+//User
 Route::get('trangchu',function ()
 {
 	return view('pages/trangchu');

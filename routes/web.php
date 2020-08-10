@@ -17,16 +17,17 @@ use Illuminate\Support\Facades\Route;
 
 //ADMIN
 
-Route::get('admin/confirmemail', function () {
-    return view('confirmemail');
-});
+
 
 
 
 Route::get('admin/login', 'AuthenticationController@getLogin');
 Route::post('admin/login', 'AuthenticationController@postLogin');
 
+Route::get('admin/logout', 'AuthenticationController@getLogout');
+
 Route::get('admin/losspassword', 'AuthenticationController@getLosspassword')->name('losspassword');
+Route::post('admin/losspassword', 'AuthenticationController@postLosspassword');
 
-
+Route::post('admin/sendemail/{email}', 'SendEmailController@send');
 

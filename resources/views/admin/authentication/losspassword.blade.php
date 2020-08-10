@@ -14,10 +14,11 @@
             </div>
         @endif
         <div style="text-align: center">
-        @if(session('thongbao'))
-            {{session('thongbao')}}
-        @endif
-        <form role="form" action="../admin/login" method="POST" >
+            @if(session('thongbao'))
+                {{session('thongbao')}}
+            @endif
+        </div>
+        <form role="form" action="../admin/losspassword" method="POST" >
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <p>Vui lòng nhập email để lấy Lại mật khẩu của bạn</p>
             <input type="text" name="email">

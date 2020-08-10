@@ -28,7 +28,7 @@
                 {{--
                 <h6 class="collapse-header">Custom Components:</h6>
                 --}}
-                <a class="collapse-item" href="#">Danh sách đợt thực tập</a>
+                <a class="collapse-item" href="{{route('internshipClass.index')}}">Danh sách đợt thực tập</a>
                 <a class="collapse-item" href="#">thêm đợt thực tập</a>
             </div>
         </div>

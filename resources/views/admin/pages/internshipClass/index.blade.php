@@ -1,4 +1,4 @@
-@extends('admin.index')
+@extends('admin.layouts.index')
 @section('content')
 @if (session('success'))
     <div class="alert alert-success">

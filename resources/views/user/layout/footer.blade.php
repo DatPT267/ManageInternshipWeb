@@ -35,7 +35,7 @@
                                         <a href="" title=""><i class="fa fa-caret-right" aria-hidden="true"></i>Nhóm</a>
                                     </li>
                                     <li>
-                                        <a href="" title=""><i class="fa fa-caret-right" aria-hidden="true"></i>Task hàng ngày</a>
+                                        <a href="" title=""><i class="fa fa-caret-right" aria-hidden="true"></i>Bài tập hàng ngày</a>
                                     </li>
                                     <li>
                                         <a href="" title=""><i class="fa fa-caret-right" aria-hidden="true"></i>Đánh giá</a>
@@ -54,7 +54,8 @@
                             </ul>
                             <div class="over" style="display: block;width: 100%;float: left;margin-top: 10px">
                                 <p>
-                                    <a style="color: white" href="http://www.adcvietnam.net/thiet-ke-website.htm" title="Thiết kế website chuẩn SEO">Thiết kế website</a> bởi DB WEB
+                                    <a style="color: white" href="http://www.adcvietnam.net/thiet-ke-website.htm" title="Thiết kế
+                                     website chuẩn SEO">Thiết kế website</a> bởi SDC
                             </div>
                         </div>
                     </div>

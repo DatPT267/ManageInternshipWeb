@@ -10,27 +10,28 @@
         <div class="menu delay">
             <nav id="mainMenu">
                 <ul class="mainMenu delay">
-                        <li><a href="trangchu" title="Trang chủ">Homepage</a></li>
+                        <li><a href="trangchu" title="Trang chủ">Trang chủ</a></li>
                         <li>
-                            <a href="" title="Quản lý">Manage</a>
+                            <a href="" title="Quản lý">Quản Lý</a>
                                 <ul class="subMenu">
-                                    <li><a href="" title="Task">Task</a></li>
+                                    <li><a href="" title="Bài tập">Bài tập</a></li>
                                     <li><a href="" title="Check">Checkin - checkout</a></li> 
-                                    <li><a href="" title="Lịch">Internship registration schedule</a></li>
+                                    <li><a href="" title="Lịch đăng kí thực tập">Lịch đăng kí thực tập</a></li>
                                 </ul>
                         </li>
                         <li>
-                            <a href="" title="Nhóm">Group</a>
+                            <a href="" title="Nhóm">Nhóm</a>
                             <ul class="subMenu">
                     
-                                        <li><a href="" title="Project">Project</a></li>  
+                                        <li><a href="" title="Dự án">Dự án</a></li>  
+                                        <li><a href="" title="Thành viên">Thành viên</a></li>
                                 </ul>
                         </li>
                         <li>
-                            <a href="" title="">Profile</a>
+                            <a href="" title="">Thông tin cá nhân</a>
                         </li>
                         <li>
-                            <a href="" title="">Review</a>
+                            <a href="" title="">Đánh giá</a>
                             
                         </li>
                 </ul>
@@ -45,7 +46,7 @@
                         <div class="search">
                             <form action="tim-kiem">
                                 <input type="text" name="q" class="form-control input-sm" maxlength="64" placeholder="Tìm kiếm" />
-                                <button type="submit" class="btn btn-sm">Search</button>
+                                <button type="submit" class="btn btn-sm">Tìm kiếm</button>
                             </form>
                         </div>
                     </div>
@@ -162,4 +163,3 @@
         right: 11px;
     }
 </style>
-        

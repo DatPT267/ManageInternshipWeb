@@ -19,9 +19,9 @@ Route::get('/',function ()
 {
 	return view('admin.layouts.index');
 });
-Route::group(['prefix' => 'admin'], function () {
-    Route::resource('internshipClass', 'internshipclassController');
-});
+// Route::group(['prefix' => 'admin'], function () {
+//     Route::get('internshipClass', 'internshipclassController');
+// });
 
 
 

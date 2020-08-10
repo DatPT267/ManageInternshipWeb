@@ -5,6 +5,18 @@
 <body>
     <div class="loginbox">
     <img src="../authentication/images/avatar.png" class="avatar">
+        @if(count($errors)>0)
+            <div class="alert alert-danger" style="text-align: center">
+                @foreach($errors->all() as $err)
+                    {{$err}} <br>
+                @endforeach
+            </div>
+        @endif
+        <div style="text-align: center">
+        @if(session('thongbao'))
+            {{session('thongbao')}}
+        @endif
+        </div>
         <h1>Vui Lòng Đăng Nhập</h1>
         <form role="form" action="../admin/login" method="POST">
             <input type="hidden" name="_token" value="{{csrf_token()}}">

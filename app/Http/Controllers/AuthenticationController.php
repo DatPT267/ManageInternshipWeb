@@ -9,7 +9,7 @@ class AuthenticationController extends Controller
 {
     public function getLogin()
     {
-        return view('admin.login');
+        return view('admin.authentication.login');
     }
     public function postLogin(Request $request)
     {   
@@ -25,14 +25,18 @@ class AuthenticationController extends Controller
         $account = $request->input('account');
         $password = $request->input('password');
         if (Auth::attempt(['account' => $account, 'password' => $password])) {
-            // return redirect('admin/phong/danhsach');
+            
             return "ok";
         }
         else
         {
-            return redirect('admin/login')->with('thongbao', 'Đăng Nhập Không Thành Công');
+            return redirect('admin/authentication/login')->with('thongbao', 'Đăng Nhập Không Thành Công');
           
         }  
+    }
+    public function getLosspassword()
+    {   
+        return view('admin/authentication/losspassword');
     }
 
 }

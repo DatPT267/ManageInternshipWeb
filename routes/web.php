@@ -20,22 +20,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('admin/confirmemail', function () {
     return view('confirmemail');
 });
-Route::get('admin/losspassword', function () {
-    return view('losspassword');
-})->name('losspassword');
+
 
 
 Route::get('admin/login', 'AuthenticationController@getLogin');
 Route::post('admin/login', 'AuthenticationController@postLogin');
 
+Route::get('admin/losspassword', 'AuthenticationController@getLosspassword')->name('losspassword');
 
 
-Route::get('trangchu',function ()
-{
-	return view('pages/trangchu');
-});
-Route::get('dangnhap',function ()
-{
-	return view('admin/login');
-});
 

@@ -48,6 +48,8 @@ Route::group(['prefix' => 'admin'], function () {
 
     //Quản lý giảng viên
     // Route::resource('manageLecturers', 'UserController');
+    Route::resource('internshipClass', 'InternshipclassController');
+});
 
     //Quản lý task
     Route::resource('manageTask', 'TaskController');
@@ -58,8 +60,6 @@ Route::group(['prefix' => 'admin'], function () {
 
     //Quản lý đánh giá
 
-
-});
 
 
 //User
@@ -85,7 +85,7 @@ Route::get('/',function ()
 Route::post('login', 'UserController@postLogin');
 Route::get('logout', 'UserController@getLogout')->name('logout');
 Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
-
+Route::resource('user', 'UserController');
 
 //cập nhật thông tin user và update mật khẩu
 Route::get('/user/{id}', 'UserController@edit');

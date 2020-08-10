@@ -41,4 +41,5 @@ Route::get('dangnhap',function ()
 {
 	return view('admin/login');
 });
+// Route::get()
 

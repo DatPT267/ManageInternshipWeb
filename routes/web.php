@@ -37,5 +37,3 @@ Route::get('dangnhap',function ()
 {
 	return view('admin/login');
 });
-Route::resource('user', 'UserController');
-

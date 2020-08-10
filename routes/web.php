@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 //ADMIN and GVHD
 
 
-Route::get('/',function ()
+Route::get('/admin',function ()
 {
 	return view('admin.layouts.index');
 });

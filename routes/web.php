@@ -19,13 +19,9 @@ Route::get('/',function ()
 {
 	return view('admin.layouts.index');
 });
-// Route::group(['prefix' => 'admin'], function () {
-//     Route::get('internshipClass', 'internshipclassController');
-// });
-
-
-
-
+Route::group(['prefix' => 'admin'], function () {
+    Route::resource('internshipClass', 'InternshipclassController');
+});
 
 
 
@@ -41,5 +37,5 @@ Route::get('dangnhap',function ()
 {
 	return view('admin/login');
 });
-// Route::get()
+Route::resource('user', 'UserController');
 

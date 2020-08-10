@@ -15,6 +15,13 @@ use Illuminate\Support\Facades\Route;
 //ADMIN and GVHD
 
 
+Route::get('/',function ()
+{
+	return view('admin.layouts.index');
+});
+Route::group(['prefix' => 'admin'], function () {
+    Route::resource('internshipClass', 'internshipclassController');
+});
 
 
 
@@ -34,3 +41,4 @@ Route::get('dangnhap',function ()
 {
 	return view('admin/login');
 });
+

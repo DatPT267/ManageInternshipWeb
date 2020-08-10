@@ -22,3 +22,7 @@ Route::get('dangnhap',function ()
 {
 	return view('admin/login');
 });
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::resource('internshipClass', 'internshipclassController');
+});

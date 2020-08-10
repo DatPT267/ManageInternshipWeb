@@ -14,7 +14,8 @@ class InternshipclassController extends Controller
      */
     public function index()
     {
-        //
+        $danhsachdot = Internshipclass::all();
+        return view('admin.pages.internshipClass.index', ['danhsachdot'=>$danhsachdot]);
     }
 
     /**
@@ -78,8 +79,10 @@ class InternshipclassController extends Controller
      * @param  \App\Internshipclass  $internshipclass
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Internshipclass $internshipclass)
+    public function destroy($id)
     {
-        //
+        $a = Internshipclass::find($id);
+        $a->delete();
+        return redirect('admin/internshipClass')->with('success', 'Xóa thành công');
     }
 }

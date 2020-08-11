@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {
@@ -55,9 +57,10 @@ class UserController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
     }
 
     /**
@@ -67,9 +70,40 @@ class UserController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|min:2|max:50',
+            'email' => 'email'
+        ],[
+            'name.required' => 'Bạn chưa nhập tên',
+            'name.min' => 'Tên ký tự bắt buộc trên 2 ký tự',
+            'name.max' => 'Tên ký tự bắt buộc trên 2 ký tự',
+            'email.email' => 'Email chưa đúng'
+            ]);
+        $user = User::find($id);
+
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $duoi = $file->getClientOriginalExtension();
+            if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg'){
+                return redirect('user/'.$id)->with('fail', 'Bạn chỉ được chọn file có đuổi png, jpg, jpeg');
+            }
+            $imgName = $file->getClientOriginalName();
+            $hinh = Str::random(3).'_'.Carbon::now()->timestamp."_".$imgName;
+            $file->move("uploads", $hinh);
+            unlink('uploads/'.$user->image);
+            $user->image = $hinh;
+        }
+
+        $user->name = $request->input('name');
+        $user->email = $request->input('email');
+        $user->phone = $request->input('phone');
+        $user->address = $request->input('address');
+        $user->position = $request->input('position');
+        $user->save();
+
+        return redirect('user/'.$id)->with('success', 'Bạn đã cập nhật thành công');
     }
 
     /**

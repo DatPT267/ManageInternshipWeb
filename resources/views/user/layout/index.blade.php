@@ -55,9 +55,9 @@
     <script type="text/javascript" src="admin_asset1/css/Content/html/js/javascript.js"></script>
     <script type="text/javascript" src="admin_asset1/css/Content/Publishing/js/LoadData.js"></script>
     <script src="admin_asset1/css/Content/Admin/Bootstrap/js/bootstrap-datetimepicker.min.js"></script>
-    <script src="admin_asset1/css/Content/Publishing/js/jquery.datetimepicker.full.js"></script>  
+    <script src="admin_asset1/css/Content/Publishing/js/jquery.datetimepicker.full.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-                   
+
 </head>
 <body>
     <div id="fb-root"></div>
@@ -69,7 +69,7 @@
             js.src = "admin_asset1/css/connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v2.8&appId=612720708938941";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
-               
+
     <div class="wrapper">
         <!-- header -->
 @include('user.layout.header')
@@ -78,14 +78,10 @@
 @include('user.layout.timkiem')
 
 
-
-<div style="display: none">
-               
-</div>
 <!-- main content -->
         @yield('content')
 
-
+    </div>
 <script>
     $(function () {
         $(".ClosePopup")
@@ -103,7 +99,7 @@
 
         <!-- slyder-home -->
         <!-- footer -->
-        
+
 <!-- footter -->
 @include('user.layout.footer')
 <!-- end footter -->
@@ -128,7 +124,7 @@
         })(jQuery);
     </script>
 
-    
+
     <!-- Go to www.addthis.com/dashboard to customize your tools -->
     <script>
         (function (i, s, o, g, r, a, m) {
@@ -143,7 +139,7 @@
 
     </script>
     <script type="text/javascript" src="admin_asset1/css/s7.addthis.com/js/300/addthis_widget.js#pubid=ra-546c6a3a3551dec6"></script>
-    
+    @yield('script')
 </body>
 </html>
 

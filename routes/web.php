@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/admin',function ()
 {
-	return view('admin.layouts.index');
+	return view('admin.layout.index');
 });
 Route::group(['prefix' => 'admin'], function () {
     Route::resource('internshipClass', 'InternshipclassController');

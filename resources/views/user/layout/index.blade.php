@@ -81,7 +81,7 @@
 @yield('content')
 <!-- main content -->
 
-
+    </div>
 <script>
     $(function () {
         $(".ClosePopup")
@@ -139,7 +139,7 @@
 
     </script>
     <script type="text/javascript" src="admin_asset1/css/s7.addthis.com/js/300/addthis_widget.js#pubid=ra-546c6a3a3551dec6"></script>
-
+    @yield('script')
 </body>
 </html>
 

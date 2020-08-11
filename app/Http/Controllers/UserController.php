@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Image;
 use App\Mail\SendMail;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class UserController extends Controller
 {

@@ -74,6 +74,10 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 //User
+
+Route::get('/updateInformation', function () {
+    return view('user.pages.personalInformation.updateInformation');
+});
 Route::get('/',function ()
 {
 	return view('user/pages/trangchu');

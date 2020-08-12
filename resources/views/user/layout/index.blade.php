@@ -78,12 +78,8 @@
 @include('user.layout.timkiem')
 
 
-
-<div style="display: none">
-
-</div>
+@yield('content')
 <!-- main content -->
-        @yield('content')
 
 
 <script>

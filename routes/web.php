@@ -14,6 +14,17 @@ use Illuminate\Support\Facades\Route;
 */
 //ADMIN and GVHD
 
+Route::get('admin/login', 'AuthenticationController@getLogin');
+Route::post('admin/login', 'AuthenticationController@postLogin');
+
+Route::get('admin/logout', 'AuthenticationController@getLogout');
+
+Route::get('admin/losspassword', 'AuthenticationController@getLosspassword')->name('losspassword');
+Route::post('admin/losspassword', 'AuthenticationController@postLosspassword');
+
+Route::post('admin/sendemail/{email}', 'SendEmailController@send');
+
+
 
 Route::get('/admin',function ()
 {
@@ -60,12 +71,14 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 //User
-Route::get('trangchu',function ()
+Route::get('/',function ()
 {
 	return view('user/pages/trangchu');
-});
-Route::get('dangnhap',function ()
-{
-	return view('admin/login');
-});
+})->name('home');
+Route::post('login', 'UserController@postLogin');
+Route::get('logout', 'UserController@getLogout')->name('logout');
+Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
+
+
+
 

@@ -10,4 +10,9 @@ class Internshipclass extends Model
     const UPDATED_AT = null;
 
     protected $table = "internshipclass";
+
+    public function group()
+    {
+        return $this->hasMany('App\Group', 'class_id', 'id');
+    }
 }

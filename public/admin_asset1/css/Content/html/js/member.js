@@ -276,7 +276,7 @@ $(document).ready(function () {
                     success: function (response) {
                         swal("Thành công!", "Bạn đã đăng xuất thành công!", "success");
                         setInterval(function () {
-                            window.location.href = $('#trangchu').text();
+                            window.location.href = $('#').text();
                         }, 2000);
                         console.log(response)
                     },
@@ -312,20 +312,22 @@ $(document).ready(function () {
         $form = $("#form-forgot-pass");
         $btnSend = $("#btn-send-forgot-pass");
         $btnSend.unbind("click").text("Đang gửi...");
-        var d = $form.serialize();
+        var data = $form.serialize();
         var url = $form.attr("action");
-        $.post(url, d, function (data) {
-            if (data.errorcode != 0) {
+        console.log('sending request');
+        // Thành công --> 200
+        // Email ko tồn tại trong hệ thống --> 404 em cảm ơn nha <3
+        // Thiếu email, email ko hợp lệ --> 400
+   
+        $.post(url, data).done((data) => {
                 swal("Thành công!", "Chúng tôi đã gửi mail cho bạn, kiểm tra lại mail bạn vừa nhập để lấy mật khẩu mới!", "success");
                 $("[data-remodal-id=forgot-password]").remodal().close();
-            }
-            else {
-                swal("Không thành công!", "Email này không hợp lệ hoặc không có trong hệ thống!", "error");
-                setInterval(function () {
-                    window.location.reload();
-                }, 3000);
-            }
-        }, "json");
+        }).fail(() => {
+            swal("Không thành công!", "Email này không hợp lệ hoặc không có trong hệ thống!", "error");
+            setInterval(function () {
+                window.location.reload();
+            }, 3000);
+        });
     }
     
     $("#frmforgoPass").validate({

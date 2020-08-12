@@ -1,7 +1,7 @@
 <div class="header delay">
     <div class="container">
         <div class="logo delay">
-            <a href="/SanBongWeb/public/trangchu">
+        <a href="{{route('home')}}">
 
                 <img src="image/logo.png" alt="TRANG CHỦ" title="TRANG CHỦ" class="delay" width="70" height="70">
 
@@ -54,30 +54,35 @@
                 <li>
                         <img src="image/user.png" style="margin-top: 3px;"  data-toggle="dropdown">
                         @if(Auth::check())
+                        <ul class="dropdown-menu">
+                            <li style="color: black;padding:10px;">Xin chào, {{Auth::user()->name}}</li>
+                            <li><a href="thongtintaikhoan" title="Thông tin tài khoản">Thông tin tài khoản</a></li>
+                            <li><a href="{{ route('logout') }}" class="log-out-acc" title="Đăng xuất">Đăng Xuất</a></li>
+                        </ul>
                         @else
                         <ul class="dropdown-menu">
-                            <li><a href="dangnhap">Quản trị</a></li>
-                            <li><a href="trangchu#login">Thành viên</a></li>
+                            <li><a href="admin/login">Quản trị</a></li>
+                            <li><a href="#login">Thành viên</a></li>
                         </ul>
                         @endif
                    
                 </li>
-                <li><img src="image/phone1.png" style="margin-top: 3px;" class="dropdown-toggle" data-toggle="dropdown"><span> <a href="tel:0917665155">0773.354.138</a></span></li>
+                <li><img src="image/phone1.png" style="margin-top: 3px;" class="dropdown-toggle" data-toggle="dropdown"><span> <a href="tel:0773354138">0773.354.138</a></span></li>
             </ul>
         </div>
     </div>
-    <!-- popup đăng ký -->
+
    
     <!-- popup đăng nhập -->
     <div class="remodal" data-remodal-id="login" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" data-remodal-options="closeOnOutsideClick: false">
         <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
         <div class="register">
-            <form  method="post" action="dangnhap"  enctype="multipart/form-data">
+            <form  method="post" action="login"  enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{csrf_token()}}" />
                 <h3>Chào mừng bạn quay trở lại!</h3>
                 <div class="form-group">
-                    <label class="control-label pull-left">EMAIL</label>
-                    <input type="text"  name="email" class="form-control input-lg" />
+                    <label class="control-label pull-left">Tài Khoản</label>
+                    <input type="text"  name="account" class="form-control input-lg" />
                     <i class="" aria-hidden="true"></i>
                 </div>
                 <div class="form-group">
@@ -101,6 +106,31 @@
     </div>
     <!-- end popup đăng nhập -->
     
+     <!-- quên pass -->
+    <div class="remodal" data-remodal-id="forgot-password" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" data-remodal-options="closeOnOutsideClick: false">
+        <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+        <div class="register">
+            <form id="form-forgot-pass" action="losspassword" method="post"  enctype="multipart/form-data">
+                <input type="hidden" name="_token" value="{{csrf_token()}}" />
+                <h3>Khôi phục mật khẩu</h3>
+                <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <input type="text" name="email" id="forgotPassEmail" class="form-control input-lg" />
+                    
+                </div>
+                <div class="form-group text-center">
+                    <ul class="ul over">
+                        <li><button type="submit" id="btn-send-forgot-pass" class="btn btn-lg btn-block btn-green">Gửi đi</button></li>
+                    <li><b style="font-weight: 600"><a href="#login" title="" class="color-green" style="font-size: 13.4px">Đăng nhập tại đây</a></b></li>
+                    </ul>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <!-- end popup quên pass -->
+ 
+</div>
    
  
 </div>

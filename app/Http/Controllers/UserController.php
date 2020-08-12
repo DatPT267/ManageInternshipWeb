@@ -24,15 +24,20 @@ class UserController extends Controller
             ]);
         $account = $request->input('account');
         $password = $request->input('password');
-        if (Auth::attempt(['account' => $account, 'password' => $password])) {
-            
-            return back();
+        
+        $user = User::where('account', $account)->get()->first();
+        if($user != null &&  $user->status == 0 ){
+            return redirect('../public/#login')->with('thongbao', 'Tài khoản của bạn đã bị khóa');
         }
-        else
-        {
-            return back()->with('thongbao', 'Đăng Nhập Không Thành Công');
-          
-        }  
+        else {
+            if (Auth::attempt(['account' => $account, 'password' => $password])) {
+                return back();
+            }
+            else
+            {
+                return redirect('../public/#login')->with('thongbao', 'Đăng Nhập Không Thành Công');
+            }  
+        }        
     }
     public function getLogout()
     {   

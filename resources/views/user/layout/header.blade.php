@@ -80,6 +80,18 @@
             <form  method="post" action="login"  enctype="multipart/form-data">
                 <input type="hidden" name="_token" value="{{csrf_token()}}" />
                 <h3>Chào mừng bạn quay trở lại!</h3>
+                @if(count($errors)>0)
+                    <div class="alert alert-danger" style="text-align: center">
+                        @foreach($errors->all() as $err)
+                            {{$err}} <br>
+                        @endforeach
+                    </div>
+                @endif
+                <div style="text-align: center">
+                @if(session('thongbao'))
+                    {{session('thongbao')}}
+                @endif
+                </div>
                 <div class="form-group">
                     <label class="control-label pull-left">Tài Khoản</label>
                     <input type="text"  name="account" class="form-control input-lg" />

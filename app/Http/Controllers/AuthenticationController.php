@@ -30,14 +30,18 @@ class AuthenticationController extends Controller
             ]);
         $account = $request->input('account');
         $password = $request->input('password');
-        if (Auth::attempt(['account' => $account, 'password' => $password])) {
-            
-            return "ok";
+        $user = User::where('account', $account)->get()->first();
+        if($user != null &&  $user->status == 0 ){
+            return back()->with('thongbao', 'Tài khoản của bạn đã bị khóa');
         }
-        else
-        {
-            return back()->with('thongbao', 'Đăng Nhập Không Thành Công');
-          
+        else {
+            if (Auth::attempt(['account' => $account, 'password' => $password])) {
+                return "ok";
+            }
+            else
+            {
+                return back()->with('thongbao', 'Đăng Nhập Không Thành Công');
+            }  
         }  
     }
     public function getLosspassword()

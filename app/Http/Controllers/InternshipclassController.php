@@ -86,7 +86,7 @@ class InternshipclassController extends Controller
         $group = Group::where('class_id', $a->id)->get();
         $count = count($group);
         if($count != 0){
-            return redirect('admin/internshipClass')->with('fail', 'Xóa không thành công.');
+            return redirect('admin/internshipClass')->with('fail', 'Xóa không thành công. Đợt có nhóm hoặc sinh viên đang hoạt động');
         }
         $a->delete();
         return redirect('admin/internshipClass')->with('success', 'Xóa thành công');

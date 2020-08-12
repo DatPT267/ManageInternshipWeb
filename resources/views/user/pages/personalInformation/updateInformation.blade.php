@@ -21,7 +21,7 @@
         @endif
         <form action="{{route('user.update', $user->id)}}" method="POST" enctype="multipart/form-data">
             <center>
-            <img src="uploads/{{$user->image}}" name="aboutme" width="200" height="200" class="avatar img-circle">
+            <img src="storage/{{$user->image}}" name="aboutme" width="200" height="200" class="avatar img-circle">
             <h3 class="media-heading">
                 {{$user->name}}
                 <small>

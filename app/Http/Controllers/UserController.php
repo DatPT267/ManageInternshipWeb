@@ -96,7 +96,9 @@ class UserController extends Controller
             $image = Image::make('storage/'.$imgPath)->fit(1000, 1000);
             $image->save();
             // $file->move("storage/uploads", $hinh);
-            unlink('storage/'.$user->image);
+            if($user->image != null){
+                unlink('storage/'.$user->image);
+            }
             $user->image = $imgPath;
         }
 
@@ -104,7 +106,6 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
         $user->address = $request->input('address');
-        $user->position = $request->input('position');
         $user->save();
 
         return redirect('user/'.$id)->with('success', 'Bạn đã cập nhật thành công');

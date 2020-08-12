@@ -60,10 +60,6 @@
                 <input type="text" id="address" class="form-control" name="address" value="{{$user->address}}">
             </div>
             <div class="form-group">
-                <label for="position">Position</label>
-                <input type="text" id="position" class="form-control" name="position" value="{{$user->position}}">
-            </div>
-            <div class="form-group">
                 <label for="exampleInputPassword1">Internship class: </label>
                 <input type="text" class="form-control" disabled value="{{$user->internshipClass->name}}">
             </div>

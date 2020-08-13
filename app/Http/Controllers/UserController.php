@@ -151,16 +151,15 @@ class UserController extends Controller
             if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg'){
                 return redirect('user/'.$id)->with('fail', 'Bạn chỉ được chọn file có đuổi png, jpg, jpeg');
             }
-            // $imgName = $file->getClientOriginalName();
-            // $hinh = Str::random(3).'_'.Carbon::now()->timestamp."_".$imgName;
-            $imgPath = $file->store('profiles', 'public');
-            $image = Image::make('storage/'.$imgPath)->fit(1000, 1000);
-            $image->save();
-            // $file->move("storage/uploads", $hinh);
+            $imgName = $file->getClientOriginalName();
+            $hinh = Str::random(3).'_'.Carbon::now()->timestamp."_".$imgName;
+            // $imgPath = $file->store('profiles', 'public');
+            // $image = Image::make('storage/'.$imgPath)->fit(1000, 1000);
+            $file->move("image/user/", $hinh);
             if($user->image != null){
-                unlink('storage/'.$user->image);
+                unlink('image/user/'.$user->image);
             }
-            $user->image = $imgPath;
+            $user->image = $hinh;
         }
 
         $user->name = $request->input('name');

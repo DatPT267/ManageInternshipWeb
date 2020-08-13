@@ -21,7 +21,7 @@
         @endif
         <form action="{{route('user.update', $user->id)}}" method="POST" enctype="multipart/form-data">
             <center>
-                <img src="storage/{{$user->image}}" name="aboutme" width="200" height="200" class="avatar img-circle">
+                <img src="image/user/{{$user->image}}" name="aboutme" width="200" height="200" class="avatar img-circle">
                 <div class="d-flex justify-content-center">
                     <div class="btn btn-mdb-color btn-rounded float-left">
                       <input type="file" class="form-control file-upload" name="image" id="image">

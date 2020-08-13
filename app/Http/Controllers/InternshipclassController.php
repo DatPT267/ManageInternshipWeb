@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Group;
 use App\Internshipclass;
+use App\User;
 use Illuminate\Http\Request;
 
 class InternshipclassController extends Controller
@@ -83,10 +84,10 @@ class InternshipclassController extends Controller
     public function destroy($id)
     {
         $a = Internshipclass::find($id);
-        $group = Group::where('class_id', $a->id)->get();
-        $count = count($group);
+        $user = User::where('class_id', $a->id)->get();
+        $count = count($user);
         if($count != 0){
-            return redirect('admin/internshipClass')->with('fail', 'Xóa không thành công.');
+            return redirect('admin/internshipClass')->with('fail', 'Xóa không thành công. Đợt có nhóm hoặc sinh viên đang hoạt động');
         }
         $a->delete();
         return redirect('admin/internshipClass')->with('success', 'Xóa thành công');

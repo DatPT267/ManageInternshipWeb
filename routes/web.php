@@ -91,6 +91,4 @@ Route::get('/user/{id}/edit', 'UserController@edit');
 Route::post('/user/{id}', 'UserController@update')->name('user.update');
 
 
-Route::resource('user', 'UserController');
-
 //cập nhật thông tin user và update mật khẩu

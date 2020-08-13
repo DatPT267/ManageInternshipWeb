@@ -2,6 +2,7 @@
 @section('content')
     {{-- <h1 style="text-align: center">infomation User</h1> --}}
     <div style="margin: 20px 30%;">
+        <h1 style="text-align: center; margin-bottom: 20px">Cập nhật thông tin sinh viên</h1>
         @if (count($errors) > 0)
             <div class="alert alert-danger">
                 @foreach ($errors->all() as $error)
@@ -42,11 +43,11 @@
                 <input type="email" id="account" disabled class="form-control" name="account" value="{{$user->account}}">
             </div>
             <div class="form-group">
-                <label for="name">Họ tên</label>
-                <input type="text" id="name" class="form-control" name="name" value="{{$user->name}}">
+                <label>Đổi mật khẩu</label>
+                <a href="#" class="btn btn-primary">Đổi mật khẩu</a>
             </div>
             <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">Email </label>
                 <input type="text" id="email" class="form-control" name="email" value="{{$user->email}}">
             </div>
             <div class="form-group">

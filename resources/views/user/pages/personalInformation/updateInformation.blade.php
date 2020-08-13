@@ -1,7 +1,7 @@
 @extends('user.layout.index')
 @section('content')
     {{-- <h1 style="text-align: center">infomation User</h1> --}}
-    <div style="margin: 20px 20%;">
+    <div style="margin: 20px 30%;">
         @if (count($errors) > 0)
             <div class="alert alert-danger">
                 @foreach ($errors->all() as $error)

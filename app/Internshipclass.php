@@ -15,4 +15,8 @@ class Internshipclass extends Model
     {
         return $this->hasMany('App\Group', 'class_id', 'id');
     }
+
+    public function user(){
+        return $this->hasMany('App\User', 'class_id', 'id');
+    }
 }

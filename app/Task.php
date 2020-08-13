@@ -10,4 +10,8 @@ class Task extends Model
     const UPDATED_AT = null;
 
     protected $table = "task";
+
+    public function review(){
+        return $this->hasMany('App\Review', 'task_id', 'id');
+    }
 }

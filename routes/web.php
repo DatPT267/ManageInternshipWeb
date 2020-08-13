@@ -85,8 +85,8 @@ Route::get('/',function ()
 Route::post('login', 'UserController@postLogin');
 Route::get('logout', 'UserController@getLogout')->name('logout');
 Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
+Route::get('/user/{id}', 'UserController@edit');
+Route::post('/user/{id}', 'UserController@update')->name('user.update');
 Route::resource('user', 'UserController');
 
 //cập nhật thông tin user và update mật khẩu
-Route::get('/user/{id}', 'UserController@edit');
-Route::post('/user/{id}', 'UserController@update')->name('user.update');

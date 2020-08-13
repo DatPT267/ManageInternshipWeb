@@ -11,9 +11,6 @@ class User extends Authenticatable
     use Notifiable;
     const CREATED_AT = null;
     const UPDATED_AT = null;
-
-    const CREATED_AT = null;
-    const UPDATED_AT = null;
     /**
      * The attributes that are mass assignable.
      *

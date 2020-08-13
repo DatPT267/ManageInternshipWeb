@@ -169,7 +169,7 @@ class UserController extends Controller
         $user->address = $request->input('address');
         $user->save();
 
-        return redirect('user/'.$id)->with('success', 'Bạn đã cập nhật thành công');
+        return redirect('user/'.$id.'/edit')->with('success', 'Bạn đã cập nhật thành công');
     }
 
     /**

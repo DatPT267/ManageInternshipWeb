@@ -21,17 +21,22 @@
         @endif
         <form action="{{route('user.update', $user->id)}}" method="POST" enctype="multipart/form-data">
             <center>
-            <img src="storage/{{$user->image}}" name="aboutme" width="200" height="200" class="avatar img-circle">
-            <h3 class="media-heading">
-                {{$user->name}}
-            </h3>
+                <img src="storage/{{$user->image}}" name="aboutme" width="200" height="200" class="avatar img-circle">
+                <div class="d-flex justify-content-center">
+                    <div class="btn btn-mdb-color btn-rounded float-left">
+                      <input type="file" class="form-control file-upload" name="image" id="image">
+                    </div>
+                </div>
+                <h3 class="media-heading">
+                    {{$user->name}}
+                </h3>
             </center>
             <hr>
             @csrf
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="image">Thay ảnh đại diện</label>
-                <input type="file" class="form-control file-upload" name="image" id="image imgUpload">
-            </div>
+                <input type="file" class="form-control file-upload" name="image" id="image">
+            </div> --}}
             <div class="form-group">
                 <label for="account">Tên đăng nhập</label>
                 <input type="email" id="account" disabled class="form-control" name="account" value="{{$user->account}}">
@@ -53,10 +58,10 @@
                 <input type="text" id="address" class="form-control" name="address" value="{{$user->address}}">
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Đợt thực tập: </label>
+                <label for="exampleInputPassword1">Đợt thực tập </label>
                 <input type="text" class="form-control" disabled value="{{$user->internshipClass->name}}">
             </div>
-            <button type="submit" class="btn btn-primary">Sửa</button>
+            <button type="submit" class="btn btn-primary">Lưu</button>
         </form>
     </div>
 @endsection
@@ -70,7 +75,6 @@
                     reader.onload = function (e) {
                         $('.avatar').attr('src', e.target.result);
                     }
-
                     reader.readAsDataURL(input.files[0]);
                 }
             }

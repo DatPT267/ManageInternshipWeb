@@ -30,4 +30,9 @@ class StudentController extends Controller
         $i=0;
         return view('admin.pages.manageStudents.show-regSchedule', ['studentName'=>$student->name, 'arrayDayOfWeek'=>$arrayDayOfWeek, 'index'=>$i]);
     }
+
+    public function viewHisSchedule($id){
+
+        return view('admin.pages.manageStudents.show-hisRegSchedule');
+    }
 }

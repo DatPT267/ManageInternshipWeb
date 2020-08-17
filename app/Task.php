@@ -10,4 +10,9 @@ class Task extends Model
     const UPDATED_AT = null;
 
     protected $table = "task";
+
+    public function check()
+    {
+        return $this->hasMany('App\Check', 'task_id', 'id');
+    }
 }

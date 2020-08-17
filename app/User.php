@@ -42,4 +42,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Internshipclass', 'class_id', 'id');
     }
+
+    public function member(){
+        return $this->belongsTo('App\Member', 'user_id', 'id');
+    }
 }

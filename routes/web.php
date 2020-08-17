@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -90,5 +91,8 @@ Route::post('losspassword', 'UserController@postLosspassword')->name('losspasswo
 Route::get('/user/{id}/edit', 'UserController@edit');
 Route::post('/user/{id}', 'UserController@update')->name('user.update');
 
-
-//cập nhật thông tin user và update mật khẩu
+Route::get('/user/{id}/group', 'StudentController@infoGroupOfStudent');
+Route::get('/user/{id}/show', 'UserController@show')->name('infoUser');
+// Route::get('/user/{id}/show', function($id){
+//     dd(User::find($id));
+// });

@@ -108,9 +108,11 @@ class UserController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        $user = User::find($id);
+        // return response()->json(['position'=>$user->position], 200);
+        return response()->json(['data'=>$user, 'position'=>$user->position], 200);
     }
 
     /**
@@ -135,12 +137,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|min:2|max:50',
             'email' => 'email'
         ],[
-            'name.required' => 'Bạn chưa nhập tên',
-            'name.min' => 'Tên ký tự bắt buộc trên 2 ký tự',
-            'name.max' => 'Tên ký tự bắt buộc trên 2 ký tự',
             'email.email' => 'Email chưa đúng'
             ]);
         $user = User::find($id);
@@ -162,7 +160,6 @@ class UserController extends Controller
             $user->image = $hinh;
         }
 
-        $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
         $user->address = $request->input('address');

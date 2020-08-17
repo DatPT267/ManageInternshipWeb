@@ -27,6 +27,18 @@ class MemberController extends Controller
         return redirect('admin/group/'.$id.'/list-member')->with('success','Bạn đã xóa thành viên <strong>'.$name.'</strong> thành công!');
     }
 
+    public function DeleteAjax($id)
+    {
+        $member = Member::find($id);
+        if($member){
+            $member->delete();
+            return response()->json(['ok'=>'ok']);
+        } else
+        {
+            return response()->json(['fail'=>'fail']);
+        }
+    }
+
     public function addMember($id){
         $group = Group::find($id);
         $students = User::where('class_id', $group->class_id)->where('status', '<>', '1')->whereNotExists(function ($query){

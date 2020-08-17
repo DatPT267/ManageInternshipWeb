@@ -46,10 +46,36 @@
                 </td>
                 <td class="center">
                     <a href="/admin/group/{{$member->group_id}}/delMember/{{$member->user_id}}"><i class="fas fa-trash-alt" ></i> Delete</a>
+                    {{-- <button" class="btn btn-danger btn-delete" data-url="{{route("member.delete", 2, $member->user_id)}}" data-id="{{$member->user_id}}"> Delete</button> --}}
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
 
+@endsection
+@section('script')'
+<script>
+    $(document).ready(function () {
+        $('.btn-delete').click(function (e) {
+            var id = $(this).data('id');
+            var url = $(this).attr('data-url');
+            $.ajax({
+                    type: 'DELETE',
+                    url: url,
+                    success: function (res) {
+                        if (res == 'ok') {
+                            //xóa thành công -> ẩn dòng đó đi
+                            alert('ok')
+                        } else {
+                            alert('Dữ liệu không tồn tại!');
+                        }
+                    },
+                    error: function () {
+                        alert('Lỗi xảy ra');
+                    }
+            });
+        });
+    });
+</script>
 @endsection

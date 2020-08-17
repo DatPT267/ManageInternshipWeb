@@ -80,6 +80,7 @@
                 $('#example').DataTable();
             } );
         </script>
+        @yield('script')
         <!-- Core plugin JavaScript-->
         <script src="{{ asset('admin_asset/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <!-- Custom scripts for all pages-->

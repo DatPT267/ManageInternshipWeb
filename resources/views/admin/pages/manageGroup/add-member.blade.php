@@ -25,7 +25,7 @@
             <tr class="odd gradeX" align="center">
                 <td>{{$student->id}}</td>
                 <td>
-                    <img src="/storage/{{$student->image}}" width="100px" height="100px">
+                    <img src="/image/user/{{$student->image}}" width="100px" height="100px">
                 </td>
                 <td>{{$student->name}}</td>
                 <td>{{$student->email}}</td>

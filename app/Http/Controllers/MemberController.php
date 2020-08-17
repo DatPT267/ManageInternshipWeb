@@ -17,26 +17,11 @@ class MemberController extends Controller
     }
 
     public function deleteMemberGroup($id, $id_member){
-        $member = Member::where([
-            ['group_id', (int)$id],
-            ['user_id', (int)$id_member]
-        ])->first();
+        $member = Member::find($id_member);
         $name = $member->user->name;
         $member->delete();
 
         return redirect('admin/group/'.$id.'/list-member')->with('success','Bạn đã xóa thành viên <strong>'.$name.'</strong> thành công!');
-    }
-
-    public function DeleteAjax($id)
-    {
-        $member = Member::find($id);
-        if($member){
-            $member->delete();
-            return response()->json(['ok'=>'ok']);
-        } else
-        {
-            return response()->json(['fail'=>'fail']);
-        }
     }
 
     public function addMember($id){

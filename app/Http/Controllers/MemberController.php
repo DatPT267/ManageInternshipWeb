@@ -17,14 +17,14 @@ class MemberController extends Controller
     }
 
     public function deleteMemberGroup($id, $id_member){
-        $user = User::find($id_member);
         $member = Member::where([
             ['group_id', (int)$id],
             ['user_id', (int)$id_member]
         ])->first();
+        $name = $member->user->name;
         $member->delete();
 
-        return redirect('admin/group/'.$id.'/list-member')->with('success','Bạn đã xóa thành viên <strong>'.$user->name.'</strong> thành công!');
+        return redirect('admin/group/'.$id.'/list-member')->with('success','Bạn đã xóa thành viên <strong>'.$name.'</strong> thành công!');
     }
 
     public function addMember($id){

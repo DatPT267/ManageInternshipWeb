@@ -26,7 +26,7 @@
             <tr class="odd gradeX" align="center">
                 <td>{{$member->id}}</td>
                 <td>
-                    <img src="/storage/{{$member->user->image}}" width="100px" height="100px">
+                    <img src="/image/user/{{$member->user->image}}" width="100px" height="100px">
                 </td>
                 <td>{{$member->user->name}}</td>
                 <td>{{$member->user->email}}</td>

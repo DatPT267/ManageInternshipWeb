@@ -2,7 +2,7 @@
 @section('content')
     <h1>Danh sách thành viên nhóm <strong>{{$nameGroup}}</strong></h1>
     @if (session('success'))
-        <div class="alert alert-success">
+        <div class="alert alert-danger">
             {!! session('success') !!}
             {{-- {{session('success')}} --}}
         </div>
@@ -45,7 +45,7 @@
                     @endif
                 </td>
                 <td class="center">
-                    <a href="/admin/group/{{$member->group_id}}/delMember/{{$member->user_id}}"><i class="fas fa-trash-alt" ></i> Delete</a>
+                    <a href="/admin/group/{{$member->group_id}}/delMember/{{$member->id}}"><i class="fas fa-trash-alt" ></i> Delete</a>
                     {{-- <button" class="btn btn-danger btn-delete" data-url="{{route("member.delete", 2, $member->user_id)}}" data-id="{{$member->user_id}}"> Delete</button> --}}
                 </td>
             </tr>
@@ -58,7 +58,6 @@
 <script>
     $(document).ready(function () {
         $('.btn-delete').click(function (e) {
-            var id = $(this).data('id');
             var url = $(this).attr('data-url');
             $.ajax({
                     type: 'DELETE',

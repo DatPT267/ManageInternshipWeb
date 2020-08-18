@@ -12,7 +12,6 @@ class MemberController extends Controller
     public function listMemberGroup($id){
         $members = Member::where('group_id', $id)->get();
         $nameGroup = Group::where('id', $id)->first();
-
         return view('admin.pages.manageGroup.list-member', ['members'=>$members, 'nameGroup'=>$nameGroup->name]);
     }
 

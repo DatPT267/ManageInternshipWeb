@@ -93,6 +93,4 @@ Route::post('/user/{id}', 'UserController@update')->name('user.update');
 
 Route::get('/user/{id}/group', 'StudentController@infoGroupOfStudent');
 Route::get('/user/{id}/show', 'UserController@show')->name('infoUser');
-// Route::get('/user/{id}/show', function($id){
-//     dd(User::find($id));
-// });
+Route::get('/user/{id}/group/list-task', 'GroupController@getListTask')->name('view-list-task');

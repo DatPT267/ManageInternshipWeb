@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Assign;
 use App\Group;
+use App\Member;
+use App\User;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -84,7 +87,9 @@ class GroupController extends Controller
     }
 
     public function getListTask($id){
-        return view('admin.pages.manageGroup.list-task');
+        $member = Member::where('user_id', $id)->first();
+        $assign = Assign::where('member_id', $member->id)->get();
+        return response()->json(['data'=>$assign]);
     }
     public function getListEvaluate($id){
         return view('admin.pages.manageGroup.list-Evaluate');

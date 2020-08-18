@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Check;
 use App\Schedule;
 use App\User;
 use Illuminate\Http\Request;
@@ -31,8 +32,10 @@ class StudentController extends Controller
         return view('admin.pages.manageStudents.show-regSchedule', ['studentName'=>$student->name, 'arrayDayOfWeek'=>$arrayDayOfWeek, 'index'=>$i]);
     }
 
-    public function viewHisSchedule($id){
-
-        return view('admin.pages.manageStudents.show-hisRegSchedule');
+    public function viewHisSchedule($id)
+    {
+        $checks = Check::where('user_id', $id)->get();
+        $user = User::find($id);
+        return view('admin.pages.manageStudents.show-hisRegSchedule', ['checks'=>$checks, 'name'=>$user->name]);
     }
 }

@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 @section('content')
-    <h1>show history register Schedule</h1>
+    <h1>Lịch sử thực tập của sinh viên <strong>{{$name}}</strong></h1>
     <table class="table table-striped table-bordered table-hover" id="example">
         <thead>
             <tr align="center">
@@ -13,17 +13,20 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="odd gradeX" align="center">
-                <td>1</td>
-                <td>name1</td>
-                <td>status</td>
-                <td>status</td>
-                <td>status</td>
-                <td class="center">
-                    <a href="#"><i class="fas fa-trash-alt" ></i> Delete</a> |
-                    <a href="#"><i class="fas fa-edit"></i> Edit</a>
-                </td>
-            </tr>
+            @foreach ($checks as $check)
+                <tr class="odd gradeX" align="center">
+                    <td>{{$check->id}}</td>
+                    <td>{{$check->task->name}}</td>
+                    <td>{{$check->note}}</td>
+                    <td>{{$check->date}}</td>
+                    <td>{{$check->schedule->date}}</td>
+                    <td class="center">
+                        <a href="#" class="btn btn-info btn-circle">
+                            <i class="fas fa-info-circle"></i>
+                        </a>
+                    </td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 

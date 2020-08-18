@@ -37,7 +37,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('internshipClass/sua/{id}', 'internshipclassController@postSua')->name('updateclass');
     Route::post('internshipClass/member/{nameclass}/{amount}', 'internshipclassController@postMember')->name('member');
 
-
     //Quản lý nhóm
     Route::resource('manageGroup', 'GroupController');
 

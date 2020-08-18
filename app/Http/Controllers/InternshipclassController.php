@@ -97,11 +97,7 @@ class InternshipclassController extends Controller
         return redirect('admin/internshipClass')->with('success', 'Xóa thành công');
     }
 
-    // public function getThem()
-    // {   
-       
-    // 	return view('admin/pages/internshipClass/add');
-    // }
+   
     public function postThem(Request $request)
     {
         $this->validate($request,
@@ -121,30 +117,22 @@ class InternshipclassController extends Controller
                 'student_amount.required'=> 'Bạn chưa nhập số lượng sinh viên'
                 
             ]);
-
+           
             for( $i=0 ; $i < $request->student_amount ; $i++){
                 $member[$i] = $i;
-            }       
-            $fullName = "Nguyễn Văn Đạt A";
-            $name = changeTitle($fullName);
-            $words = explode("-", $name);
-            $lastName = array_pop($words); 
-            
-            $acronym = "";
-            
-            foreach ($words as $w) {
-              $acronym .= $w[0];
-            }
-            return $acronym;
+            }   
+             
         $internshipclass = new Internshipclass;
-        $internshipclass->name = $words[0];
+        $internshipclass->name = $request->name;
         $internshipclass->start_day = $request->start_day;
         $internshipclass->end_day = $request->end_day;
         $internshipclass->note = $request->note;
+        $name_unsigned = changeTitle($request->name);
+        $internshipclass->name_unsigned = $name_unsigned;
         $internshipclass->save();
+  
         
-        
-        return view('admin/pages/internshipClass/memberinternshipclass', ['member' => $member, 'nameclass' => $request->name ])->with('thongbao','Thêm thành công');
+        return view('admin/pages/internshipClass/memberinternshipclass', ['member' => $member, 'nameclass' => $name_unsigned ])->with('thongbao','Thêm thành công');
     }
 
     public function postSua(Request $request, $id)
@@ -178,42 +166,119 @@ class InternshipclassController extends Controller
 
     public function postMember(Request $request, $nameclass, $amount){
         
-
-        for($i =0 ; i<= $amount; $i++){
-
+       
+        $interclass = Internshipclass::where('name_unsigned', $nameclass)->get()->first();
+        for($i =0 ; $i<= $amount; $i++){
+            $a = "name".$i;
+            $fullName = $request->$a;
+            $name = changeTitle($fullName);
+            $words = explode("-", $name);
+            $lastName = array_pop($words); 
+            $lastName = ucfirst( $lastName );
+            $acronym = "";
+          
+            foreach ($words as $w) {
+            
+              switch ($w[0]) {
+                case "a":
+                    $w[0] = "A";
+                  break;
+                  case "b":
+                    $w[0] = "B";
+                  break;
+                  case "c":
+                    $w[0] = "C";
+                  break;
+                  case "d":
+                    $w[0] = "D";
+                  break;
+                  case "e":
+                    $w[0] = "E";
+                  break;
+                  case "f":
+                    $w[0] = "F";
+                  break;
+                  case "g":
+                    $w[0] = "G";
+                  break;
+                  case "h":
+                    $w[0] = "H";
+                  break;
+                  case "i":
+                    $w[0] = "I";
+                  break;
+                  case "j":
+                    $w[0] = "J";
+                  break;
+                  case "k":
+                    $w[0] = "K";
+                  break;
+                  case "l":
+                    $w[0] = "L";
+                  break;
+                  case "m":
+                    $w[0] = "M";
+                  break;
+                  case "n":
+                    $w[0] = "N";
+                  break;
+                  case "o":
+                    $w[0] = "O";
+                  break;
+                  case "p":
+                    $w[0] = "P";
+                  break;
+                  case "q":
+                    $w[0] = "Q";
+                  break;
+                  case "r":
+                    $w[0] = "R";
+                  break;
+                  case "s":
+                    $w[0] = "S";
+                  break;
+                  case "t":
+                    $w[0] = "T";
+                  break;
+                  case "u":
+                    $w[0] = "U";
+                  break;
+                  case "v":
+                    $w[0] = "V";
+                  break;
+                  case "w":
+                    $w[0] = "W";
+                  break;
+                  case "x":
+                    $w[0] = "X";
+                  break;
+                  case "y":
+                    $w[0] = "Y";
+                  break;
+                default:
+                  $w[0] = "Z";
+              }
+              $acronym .= $w[0];
+            }
+         
+            $lastName = $lastName .= $acronym;
             $user = new User;
-
+            $user->account = $lastName;
+            $user->password = bcrypt("123456789");
+            $user->name = $fullName;
+            $user->position = 0;
+            $user->class_id = $interclass->id;
+            $user->status = 1;
+            $user->save();
         }
         
+        $usermember = User::Where('class_id', $interclass->id)->get();
+ 
+        return view('admin/pages/internshipClass/memberclass',['usermember'=> $usermember] );
 
     }
 
-    public function getTest(){
-        $fullName = "Nguyễn Văn Đạt A";
-        $words = explode(" ", $fullName);
-        $lastName = array_pop($words); 
-        
-        $acronym = "";
-        foreach ($words as $w) {
-            $acronym = changeTitle($acronym);
-            $acronym .= $w[0];
-        }
-        return $acronym;
-    }
-
-
-    public function Test1(){
-        $fullName = "Nguyễn Văn Đạt A";
-        $words = explode(" ", $fullName);
-        $lastName = array_pop($words); 
-        
-        $acronym = "";
-        foreach ($words as $w) {
-            $acronym = changeTitle($acronym);
-            $acronym .= $w[0];
-        }
+   
     
-        return view('admin.pages.internshipClass.test', ['acronym' => $acronym]);
-    }
     
 }

@@ -12,6 +12,14 @@ class Check extends Model
     protected $table = "check";
     public function user()
     {
-
+        return $this->belongsTo('App\User', 'user_id', 'id');
+    }
+    public function schedule()
+    {
+        return $this->belongsTo('App\Schedule', 'schedule_id', 'id');
+    }
+    public function task()
+    {
+        return $this->belongsTo('App\Task', 'task_id', 'id');
     }
 }

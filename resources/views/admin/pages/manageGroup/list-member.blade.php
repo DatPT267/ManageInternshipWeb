@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 @section('content')
-    <h1>Danh sách thành viên nhóm <strong>{{$nameGroup}}</strong></h1>
+    <h1>Danh sách thành viên nhóm <strong>{{$group->name}}</strong></h1>
     @if (session('success'))
         <div class="alert alert-danger">
             {!! session('success') !!}
@@ -45,36 +45,71 @@
                     @endif
                 </td>
                 <td class="center">
-                    <a href="/admin/group/{{$member->group_id}}/delMember/{{$member->id}}"><i class="fas fa-trash-alt" ></i> Delete</a>
-                    {{-- <button" class="btn btn-danger btn-delete" data-url="{{route("member.delete", 2, $member->user_id)}}" data-id="{{$member->user_id}}"> Delete</button> --}}
+                    <button class="btn btn-danger btn-circle delete" id="{{$member->id}}"><i class="fas fa-trash"></i></button>
                 </td>
             </tr>
+
             @endforeach
         </tbody>
     </table>
-
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel" style="text-align: center">Xác nhận xóa?</h5>
+            </div>
+            <div class="modal-body">
+            <h3> Bạn có thật sự muốn xóa?</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cancel"><i class="far fa-window-close"></i> No, cancel</button>
+                <button type="button" class="btn btn-danger" name="btn-delete" id="btn-delete" data-idGroup="{{$group->id}}" > <i class="fas fa-trash-alt" ></i>Yes, Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
-@section('script')'
-<script>
-    $(document).ready(function () {
-        $('.btn-delete').click(function (e) {
-            var url = $(this).attr('data-url');
-            $.ajax({
-                    type: 'DELETE',
-                    url: url,
-                    success: function (res) {
-                        if (res == 'ok') {
-                            //xóa thành công -> ẩn dòng đó đi
-                            alert('ok')
-                        } else {
-                            alert('Dữ liệu không tồn tại!');
-                        }
-                    },
-                    error: function () {
-                        alert('Lỗi xảy ra');
-                    }
-            });
+@section('script')
+    <script>
+        // =====================================AJAX DELETE====================================
+        var member_id;
+        $(document).on('click', '.delete', function(){
+            member_id = $(this).attr('id');
+            $('#confirmModal').modal('show');
+
         });
-    });
-</script>
+        $('#btn-delete').click(function(){
+            var idGroup = $(this).attr('data-idGroup');
+            var url = '/admin/group/' +idGroup+'/delMember/' + member_id;
+            $.ajax({
+                url: url,
+                beforeSend:function(){
+                    $('#btn-delete').text('Deleting ....');
+                    $('.modal-body').html('<h2>Đang xóa ........</h2>');
+                },
+                success:function(response){
+                    if(response.data == 0){
+                        setTimeout(() => {
+                            $('#confirmModal').modal('show');
+                            $('.modal-body').html(
+                                '<div class="alert alert-success"> Bạn đã xóa thành công thành viên <strong>'+response.name+'</strong></div>'
+                            );
+                            $('#btn-delete').hide();
+                            $('#btn-cancel').text('Cancel');
+                            $('#btn-cancel').click(function (){
+                                window.location.reload(true);
+                            });
+
+                        }, 1000);
+                    } else{
+                        $('.modal-body').text('Xóa thất bại!');
+                        $('#btn-cancel').text('Cancel');
+                    }
+                }
+            })
+        });
+        // =====================================AJAX DELETE====================================
+
+    </script>
 @endsection

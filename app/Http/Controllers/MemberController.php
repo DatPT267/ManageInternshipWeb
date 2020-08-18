@@ -11,16 +11,19 @@ class MemberController extends Controller
 {
     public function listMemberGroup($id){
         $members = Member::where('group_id', $id)->get();
-        $nameGroup = Group::where('id', $id)->first();
-        return view('admin.pages.manageGroup.list-member', ['members'=>$members, 'nameGroup'=>$nameGroup->name]);
+        $group = Group::where('id', $id)->first();
+        return view('admin.pages.manageGroup.list-member', ['members'=>$members, 'group'=>$group]);
     }
 
     public function deleteMemberGroup($id, $id_member){
         $member = Member::find($id_member);
         $name = $member->user->name;
-        $member->delete();
-
-        return redirect('admin/group/'.$id.'/list-member')->with('success','Bạn đã xóa thành viên <strong>'.$name.'</strong> thành công!');
+        if(isset($member)){
+            $member->delete();
+            return response()->json(['data'=>0, 'name'=>$name]);
+        } else{
+            return response()->json(['data'=>1]);
+        }
     }
 
     public function addMember($id){

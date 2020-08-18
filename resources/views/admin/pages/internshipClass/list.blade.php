@@ -22,6 +22,7 @@
                 <th>Name</th>
                 <th>Start day</th>
                 <th>End day</th>
+                <th>Note</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -32,6 +33,7 @@
                 <td>{{$lc->name}}</td>
                 <td>{{$lc->start_day}}</td>
                 <td>{{$lc->end_day}}</td>
+                <td>{{$lc->note}}</td>
                 <td class="center">
                     {{-- <a href="{{route('internshipClass.destroy', $lc->id)}}" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a> --}}
                     <form action="{{route('internshipClass.destroy', $lc->id)}}" method="post">

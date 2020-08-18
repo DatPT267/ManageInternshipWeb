@@ -10,7 +10,7 @@
         <div class="menu delay">
             <nav id="mainMenu">
                 <ul class="mainMenu delay">
-                        <li><a href="trangchu" title="Trang chủ">Trang chủ</a></li>
+                        <li><a href="" title="Trang chủ">Trang chủ</a></li>
                         <li>
                             <a href="" title="Quản lý">Quản Lý</a>
                                 <ul class="subMenu">

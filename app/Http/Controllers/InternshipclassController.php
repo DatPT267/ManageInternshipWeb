@@ -165,31 +165,22 @@ class InternshipclassController extends Controller
     }
 
     public function postMember(Request $request, $nameclass, $amount){
-        
        
         $interclass = Internshipclass::where('name_unsigned', $nameclass)->get()->first();
         for($i =0 ; $i<= $amount; $i++){
             $a = "name".$i;
             $fullName = $request->$a;
+            if($fullName == null){
+              continue;
+            }
             $name = changeTitle($fullName);
             $words = explode("-", $name);
             $lastName = array_pop($words); 
             $lastName = ucfirst( $lastName );
             $acronym = "";
 
-          
-        $this->validate($request,
-       
-        [
          
-            'name' =>'required',
-            
-            
-        ],
-        [
-            'name.required' =>'Bạn chưa nhập tên sinh viên',
-            
-        ]);
+       
 
           
             foreach ($words as $w) {

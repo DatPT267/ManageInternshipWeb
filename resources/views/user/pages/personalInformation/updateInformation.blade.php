@@ -67,7 +67,7 @@
     </div>
 
     <!-- Đôi mật khẩu-->
-    <d  iv class="remodal" data-remodal-id="changepassword" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" data-remodal-options="closeOnOutsideClick: false">
+    <div class="remodal" data-remodal-id="changepassword" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" data-remodal-options="closeOnOutsideClick: false">
         <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
         <div class="register">
         @if(count($errors)>0)

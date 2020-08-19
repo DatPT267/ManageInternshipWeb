@@ -41,7 +41,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     //Quản lý sinh viên
     Route::group(['prefix' => 'manageStudent'], function () {
-        Route::get('/{id}/view-chedule', 'StudentController@viewSchedule');
+        Route::get('/{id}/view-schedule', 'StudentController@viewSchedule');
         Route::get('/{id}/view-history-schedule', 'StudentController@viewHisSchedule');
     });
 

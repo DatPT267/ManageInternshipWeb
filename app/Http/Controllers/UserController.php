@@ -121,7 +121,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
+        $user = User::find(Auth::id());
         return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
     }
 
@@ -135,21 +135,17 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|min:2|max:50',
             'email' => 'email'
         ],[
-            'name.required' => 'Bạn chưa nhập tên',
-            'name.min' => 'Tên ký tự bắt buộc trên 2 ký tự',
-            'name.max' => 'Tên ký tự bắt buộc trên 2 ký tự',
             'email.email' => 'Email chưa đúng'
             ]);
-        $user = User::find($id);
+        $user = User::find(Auth::id());
 
         if($request->hasFile('image')){
             $file = $request->file('image');
             $duoi = $file->getClientOriginalExtension();
             if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg'){
-                return redirect('user/'.$id)->with('fail', 'Bạn chỉ được chọn file có đuổi png, jpg, jpeg');
+                return redirect('user/'.Auth::id())->with('fail', 'Bạn chỉ được chọn file có đuổi png, jpg, jpeg');
             }
             $imgName = $file->getClientOriginalName();
             $hinh = Str::random(3).'_'.Carbon::now()->timestamp."_".$imgName;
@@ -162,13 +158,12 @@ class UserController extends Controller
             $user->image = $hinh;
         }
 
-        $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
         $user->address = $request->input('address');
         $user->save();
 
-        return redirect('user/'.$id.'/edit')->with('success', 'Bạn đã cập nhật thành công');
+        return redirect('user/'.Auth::id().'/edit')->with('success', 'Bạn đã cập nhật thành công');
     }
 
     /**

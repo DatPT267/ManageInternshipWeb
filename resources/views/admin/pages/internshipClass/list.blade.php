@@ -1,6 +1,5 @@
 @extends('admin.layout.index')
 @section('content')
-    <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Danh sách các đợt thực tập</h1>
     </div>
@@ -33,7 +32,6 @@
                 <td>{{$lc->start_day}}</td>
                 <td>{{$lc->end_day}}</td>
                 <td class="center">
-                    {{-- <a href="{{route('internshipClass.destroy', $lc->id)}}" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a> --}}
                     <form action="{{route('internshipClass.destroy', $lc->id)}}" method="post">
                         @csrf
                         @method('DELETE')

@@ -177,7 +177,20 @@ class InternshipclassController extends Controller
             $lastName = ucfirst( $lastName );
             $acronym = "";
 
+          
+        $this->validate($request,
+       
+        [
          
+            'name' =>'required',
+            
+            
+        ],
+        [
+            'name.required' =>'Bạn chưa nhập tên sinh viên',
+            
+        ]);
+
           
             foreach ($words as $w) {
             

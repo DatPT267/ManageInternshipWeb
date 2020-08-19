@@ -87,9 +87,16 @@ class GroupController extends Controller
     }
 
     public function getListTask($id){
-        $member = Member::where('user_id', $id)->first();
-        $assign = Assign::where('member_id', $member->id)->get();
-        return response()->json(['data'=>$assign]);
+        $member = Member::where('user_id', $id)->firstOrFail();
+        $members = Member::where('group_id', $member->group_id)->get();
+        $arrTask = [];
+        foreach ($members as $key => $value) {
+            if(Assign::where('member_id', $value->id)->exists()){
+                $assign = Assign::where('member_id', $value->id)->first();
+                $arrTask[$key] = array([$assign->task->name => $value->user->name]);
+            }
+        }
+        return response()->json(['data'=>$arrTask]);
     }
     public function getListEvaluate($id){
         return view('admin.pages.manageGroup.list-Evaluate');

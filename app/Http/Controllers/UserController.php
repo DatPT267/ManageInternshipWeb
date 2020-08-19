@@ -121,8 +121,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find(Auth::id());
-        return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
+        if($id == Auth::id()){
+            $user = User::find(Auth::id());
+            return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
+        } else{
+            $user = User::find(Auth::id());
+            return redirect('user/'.Auth::id().'/edit')->with('user', $user);
+        }
     }
 
     /**

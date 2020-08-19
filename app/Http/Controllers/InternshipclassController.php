@@ -176,6 +176,8 @@ class InternshipclassController extends Controller
             $lastName = array_pop($words); 
             $lastName = ucfirst( $lastName );
             $acronym = "";
+
+         
           
             foreach ($words as $w) {
             
@@ -260,7 +262,8 @@ class InternshipclassController extends Controller
               }
               $acronym .= $w[0];
             }
-         
+
+          
             $lastName = $lastName .= $acronym;
             $user = new User;
             $user->account = $lastName;

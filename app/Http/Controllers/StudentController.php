@@ -10,6 +10,10 @@ use Illuminate\Http\Request;
 
 class StudentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function infoGroupOfStudent($id)
     {
         $member = Member::where('user_id', $id)->firstOrFail();

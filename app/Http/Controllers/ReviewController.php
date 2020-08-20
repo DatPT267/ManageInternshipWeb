@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function listReviewGroup($id){
         $review = Review::where('group_id', $id)->get();
         $nameGroup = Group::find($id)->first();

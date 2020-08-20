@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 //ADMIN and GVHD
 
-Route::get('admin/login', 'AuthenticationController@getLogin');
+Route::get('admin/login', 'AuthenticationController@getLogin')->name('login');
 Route::post('admin/login', 'AuthenticationController@postLogin');
 
 Route::get('admin/logout', 'AuthenticationController@getLogout');

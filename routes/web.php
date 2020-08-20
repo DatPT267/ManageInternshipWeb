@@ -41,9 +41,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     //Quản lý sinh viên
     // Route::group(['prefix' => 'manageStudent'], function () {
-    //     Route::get('/', function ($id) {
-
-    //     });
+    //     Route::get('/show-history-register-schedule', 'ScheduleController@index');
     // });
 
 
@@ -56,18 +54,14 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('manageSchedule', 'ScheduleController@index')->name('manageSchedule.index');
     Route::get('manageSchedule/checkin-out', 'ScheduleController@getCheckinOut')->name('manageSchedule.checkin-out');
 
-    //Quản lý đánh giá
-
-
-
-//User
-
-
-
-
-
-
-
+    //Quản lý group: đã xong: add-member, list-review, list-member, del-member | ĐỢI REVIEW
+    Route::group(['prefix' => 'group'], function () {
+        Route::get('/{id}/add-member', 'GroupController@addMember');
+        Route::get('/{id}/add-member/{id_member}', 'GroupController@storeMember');
+        Route::get('/{id}/list-review', 'ReviewController@listReviewGroup');
+        Route::get('/{id}/list-member', 'GroupController@listMemberGroup');
+        Route::get('/{id}/delMember/{id_member}', 'GroupController@deleteStudentGroup')->name('member.delete');
+    });
 
 
 

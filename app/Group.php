@@ -15,4 +15,12 @@ class Group extends Model
     {
         return $this->belongsTo('App\Internshipclass', 'class_id', 'id');
     }
+
+    public function review(){
+        return $this->hasMany('App\Review', 'group_id', 'id');
+    }
+
+    public function member(){
+        return $this->hasMany('App\Member', 'group_id', 'id');
+    }
 }

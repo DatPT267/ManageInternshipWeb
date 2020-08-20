@@ -21,4 +21,6 @@ class ScheduleController extends Controller
     {
         return view('admin.pages.manageSchedule.statistic-checkin-out');
     }
+
+
 }

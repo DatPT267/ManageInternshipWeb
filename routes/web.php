@@ -44,6 +44,14 @@ Route::group(['prefix' => 'admin'], function () {
     //     Route::get('/show-history-register-schedule', 'ScheduleController@index');
     // });
 
+    //Quản lý group: đã xong: add-member, list-review, list-member, del-member | ĐỢI REVIEW
+    Route::group(['prefix' => 'group'], function () {
+        Route::get('/{id}/add-member', 'MemberController@addMember');
+        Route::get('/{id}/add-member/{id_member}', 'MemberController@storeMember');
+        Route::get('/{id}/list-review', 'ReviewController@listReviewGroup');
+        Route::get('/{id}/list-member', 'MemberController@listMemberGroup');
+        Route::get('/{id}/delMember/{id_member}', 'MemberController@deleteMemberGroup')->name('member.delete');
+    });
 
 });
 
@@ -54,14 +62,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('manageSchedule', 'ScheduleController@index')->name('manageSchedule.index');
     Route::get('manageSchedule/checkin-out', 'ScheduleController@getCheckinOut')->name('manageSchedule.checkin-out');
 
-    //Quản lý group: đã xong: add-member, list-review, list-member, del-member | ĐỢI REVIEW
-    Route::group(['prefix' => 'group'], function () {
-        Route::get('/{id}/add-member', 'MemberController@addMember');
-        Route::get('/{id}/add-member/{id_member}', 'MemberController@storeMember');
-        Route::get('/{id}/list-review', 'ReviewController@listReviewGroup');
-        Route::get('/{id}/list-member', 'MemberController@listMemberGroup');
-        Route::get('/{id}/delMember/{id_member}', 'MemberController@deleteMemberGroup')->name('member.delete');
-    });
+
 
 
 

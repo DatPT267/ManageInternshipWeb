@@ -27,9 +27,11 @@
                                         <li><a href="" title="Thành viên">Thành viên</a></li>
                                 </ul>
                         </li>
+                        @if (Auth::check())
                         <li>
-                            <a href="" title="">Thông tin cá nhân</a>
+                            <a href="{{route('user.edit', Auth::id())}}" title="">Thông tin cá nhân</a>
                         </li>
+                        @endif
                         <li>
                             <a href="" title="">Đánh giá</a>
 

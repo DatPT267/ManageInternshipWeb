@@ -9,13 +9,10 @@ use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+
     public function listMemberGroup($id){
         $members = Member::where('group_id', $id)->get();
-        $group = Group::where('id', $id)->first();
+        $group = Group::where('id', $id)->firstOrFail();
         return view('admin.pages.manageGroup.list-member', ['members'=>$members, 'group'=>$group]);
     }
 
@@ -32,7 +29,7 @@ class MemberController extends Controller
 
     public function addMember($id){
         $group = Group::find($id);
-        $students = User::where('class_id', $group->class_id)->where('status', '<>', '1')->whereNotExists(function ($query){
+        $students = User::where('class_id', $group->class_id)->where('status', '=', '0')->whereNotExists(function ($query){
             $query->select('*')
                 ->from('member')
                 ->whereRaw('member.user_id = users.id');

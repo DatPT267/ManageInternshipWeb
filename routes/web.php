@@ -40,11 +40,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('manageGroup/list-evaluate/{id}', 'GroupController@getListEvaluate');
 
     //Quản lý sinh viên
-    Route::group(['prefix' => 'manageStudent'], function () {
+    Route::group(['prefix' => 'student'], function () {
         Route::get('/{id}/view-schedule', 'StudentController@viewSchedule');
         Route::get('/{id}/view-history-schedule', 'StudentController@viewHisSchedule');
     });
-
 
 });
 

@@ -11,13 +11,14 @@ use DateTime;
 
 class StudentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function viewSchedule($id)
     {
         $student = User::find($id);
         $schedules = Schedule::where('user_id', $id)->get();
-        // $ngay = Carbon::parse($schedules->date)->format('l');
-        // $gio = Carbon::parse($schedules->date)->format('H');
-        // $phut = Carbon::parse($schedules->date)->format('i');
         $arrayDayOfWeek = array();
         foreach ($schedules as $value) {
             $now = Carbon::now();
@@ -28,8 +29,8 @@ class StudentController extends Controller
             }
         }
         // dd($arrayDayOfWeek);
-        $i=0;
-        return view('admin.pages.manageStudents.show-regSchedule', ['studentName'=>$student->name, 'arrayDayOfWeek'=>$arrayDayOfWeek, 'index'=>$i]);
+        $index=0;
+        return view('admin.pages.manageStudents.show-regSchedule', ['studentName'=>$student->name, 'arrayDayOfWeek'=>$arrayDayOfWeek, 'index'=>$index]);
     }
 
     public function viewHisSchedule($id)

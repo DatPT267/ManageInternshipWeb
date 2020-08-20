@@ -19,4 +19,9 @@ class Member extends Model
     {
         return $this->belongsTo('App\User', 'user_id', 'id');
     }
+
+    public function assign()
+    {
+        return $this->hasMany('App\Assign', 'member_id', 'id');
+    }
 }

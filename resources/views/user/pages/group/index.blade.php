@@ -5,38 +5,38 @@
             <div class="card mb-3">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <h4 class="mb-0">Tên nhóm</h4>
                         </div>
-                        <div class="col-sm-9 text-secondary">
+                        <div class="col-sm-10 text-secondary">
                             {{$group->name}}
                         </div>
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <h4 class="mb-0">Đợt thực tập</h4>
                         </div>
-                        <div class="col-sm-9 text-secondary">
+                        <div class="col-sm-10 text-secondary">
                             {{$group->internshipClass->name}}
                         </div>
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <h4 class="mb-0">Tên đề tài</h4>
                         </div>
-                        <div class="col-sm-9 text-secondary">
-                            {{$group->topic}}
+                        <div class="col-sm-10 text-secondary">
+                            {{$group->project->name}}
                         </div>
                     </div>
                     <hr>
 
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <h4 class="mb-0">Trạng thái</h4>
                         </div>
-                        <div class="col-sm-9 text-secondary">
+                        <div class="col-sm-10 text-secondary">
                             @if ($group->status == 0)
                             <button class="btn btn-success">Hoạt động</button>
                             @else
@@ -72,12 +72,4 @@
 
 
     </div>
-@endsection
-@section('script')
-<script>
-    $(document).ready(function() {
-        $('#example').DataTable();
-        $('#listTask').DataTable();
-    } );
-</script>
 @endsection

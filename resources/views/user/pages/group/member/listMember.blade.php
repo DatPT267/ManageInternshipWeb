@@ -79,6 +79,11 @@
     </div>
 </div>
 @section('script')
+<script>
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
+</script>
     <script>
         $('.btn-show').click(function(){
             var url = $(this).attr('data-url');

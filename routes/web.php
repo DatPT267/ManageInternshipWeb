@@ -1,5 +1,7 @@
 <?php
 
+use App\Assign;
+use App\Task;
 use App\User;
 use Illuminate\Support\Facades\Route;
 
@@ -91,7 +93,7 @@ Route::post('losspassword', 'UserController@postLosspassword')->name('losspasswo
 Route::get('/user/{id}/edit', 'UserController@edit');
 Route::post('/user/{id}', 'UserController@update')->name('user.update');
 
-Route::get('/user/{id}/group', 'StudentController@infoGroupOfStudent');
+Route::get('/user/{id}/group', 'StudentController@infoGroupOfStudent')->name('user.group');
 Route::get('/user/{id}/show', 'UserController@show')->name('infoUser');
 Route::get('/user/{id}/group/list-task', 'GroupController@getListTask')->name('view-list-task');
-Route::get('test/{id}', 'GroupController@getListTask');
+Route::get('/test/{id}', 'GroupController@getListTask');

@@ -15,4 +15,8 @@ class Assign extends Model
     {
         return $this->belongsTo('App\Task', 'task_id', 'id');
     }
+
+    public function member(){
+        return $this->belongsTo('App\Member', 'member_id', 'id');
+    }
 }

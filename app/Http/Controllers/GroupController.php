@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Assign;
 use App\Group;
 use App\Member;
+use App\Task;
 use App\User;
 use Illuminate\Http\Request;
 
@@ -88,15 +89,11 @@ class GroupController extends Controller
 
     public function getListTask($id){
         $member = Member::where('user_id', $id)->firstOrFail();
-        $members = Member::where('group_id', $member->group_id)->get();
-        $arrTask = [];
-        foreach ($members as $key => $value) {
-            if(Assign::where('member_id', $value->id)->exists()){
-                $assign = Assign::where('member_id', $value->id)->first();
-                $arrTask[$key] = array([$assign->task->name => $value->user->name]);
-            }
-        }
-        return response()->json(['data'=>$arrTask]);
+        $project_id = $member->group->project->id;
+        $tasks = Task::select("id", "name", "status", "note")->where('project_id', $project_id)->get();
+
+        return response()->json(['data'=>$tasks]);
+        // return datatables($tasks)->make(true);
     }
     public function getListEvaluate($id){
         return view('admin.pages.manageGroup.list-Evaluate');

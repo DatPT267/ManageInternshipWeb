@@ -15,24 +15,25 @@
                             <a href="" title="Quản lý">Quản Lý</a>
                                 <ul class="subMenu">
                                     <li><a href="" title="Bài tập">Bài tập</a></li>
-                                    <li><a href="" title="Check">Checkin - checkout</a></li> 
+                                    <li><a href="" title="Check">Checkin - checkout</a></li>
                                     <li><a href="" title="Lịch đăng kí thực tập">Lịch đăng kí thực tập</a></li>
                                 </ul>
                         </li>
+                        @if (Auth::check())
                         <li>
                             <a href="" title="Nhóm">Nhóm</a>
                             <ul class="subMenu">
-                    
-                                        <li><a href="" title="Dự án">Dự án</a></li>  
-                                        <li><a href="" title="Thành viên">Thành viên</a></li>
-                                </ul>
+                                <li><a href="/user/{{Auth::id()}}/group" title="Dự án">thông tin nhóm</a></li>
+                                <li><a href="" title="Thành viên">Thành viên</a></li>
+                            </ul>
                         </li>
+                        @endif
                         <li>
                             <a href="" title="">Thông tin cá nhân</a>
                         </li>
                         <li>
                             <a href="" title="">Đánh giá</a>
-                            
+
                         </li>
                 </ul>
             </nav>
@@ -65,14 +66,14 @@
                             <li><a href="#login">Thành viên</a></li>
                         </ul>
                         @endif
-                   
+
                 </li>
                 <li><img src="image/phone1.png" style="margin-top: 3px;" class="dropdown-toggle" data-toggle="dropdown"><span> <a href="tel:0773354138">0773.354.138</a></span></li>
             </ul>
         </div>
     </div>
 
-   
+
     <!-- popup đăng nhập -->
     <div class="remodal" data-remodal-id="login" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" data-remodal-options="closeOnOutsideClick: false">
         <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
@@ -108,7 +109,7 @@
                 <div class="form-group text-center">
                     <ul class="ul over">
                         <li><button type="submit" id="log-acc" class="btn btn-green">Đăng nhập</button></li>
-                        
+
                         <li><b style="font-weight: 600"><a href="#forgot-password" title="Khôi phục mật khẩu" class="color-green pull-right">Quên mật khẩu</a></b></li>
                     </ul>
                 </div>
@@ -117,7 +118,7 @@
         </div>
     </div>
     <!-- end popup đăng nhập -->
-    
+
      <!-- quên pass -->
     <div class="remodal" data-remodal-id="forgot-password" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc" data-remodal-options="closeOnOutsideClick: false">
         <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
@@ -128,7 +129,7 @@
                 <div class="form-group">
                     <label class="control-label">Email</label>
                     <input type="text" name="email" id="forgotPassEmail" class="form-control input-lg" />
-                    
+
                 </div>
                 <div class="form-group text-center">
                     <ul class="ul over">
@@ -141,10 +142,10 @@
         </div>
     </div>
     <!-- end popup quên pass -->
- 
+
 </div>
-   
- 
+
+
 </div>
 <script>
     $(function () {
@@ -191,8 +192,8 @@
                 $("#field_choice").html(data);
             });
         });
-        
-        
+
+
     });
 
 </script>

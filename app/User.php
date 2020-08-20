@@ -44,6 +44,6 @@ class User extends Authenticatable
     }
 
     public function member(){
-        return $this->belongsTo('App\Member', 'user_id', 'id');
+        return $this->hasOne('App\Member', 'user_id', 'id');
     }
 }

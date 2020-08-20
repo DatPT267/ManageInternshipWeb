@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="{{ asset('admin_asset/vendor/datatables/dataTables.bootstrap4.min.css') }}">
         <!-- Custom styles for this template-->
         <link href="{{ asset('admin_asset/css/sb-admin-2.min.css') }}" rel="stylesheet">
+        @yield('style')
     </head>
     <body id="page-top">
         <!-- Page Wrapper -->
@@ -84,5 +85,6 @@
         <script src="{{ asset('admin_asset/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <!-- Custom scripts for all pages-->
         <script src="{{ asset('admin_asset/js/sb-admin-2.min.js') }}"></script>
+        @yield('script')
     </body>
 </html>

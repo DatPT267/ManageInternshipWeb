@@ -180,6 +180,7 @@ class UserController extends Controller
     {
         //
     }
+
     public function viewSchedule($id){
         return view('admin.pages.manageStudents.show-regSchedule');
     }

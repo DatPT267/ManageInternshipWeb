@@ -65,7 +65,6 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 
-
 //User
 
 Route::get('/updateInformation', function () {

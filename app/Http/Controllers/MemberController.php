@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function listMemberGroup($id){
         $members = Member::where('group_id', $id)->get();
         $group = Group::where('id', $id)->first();

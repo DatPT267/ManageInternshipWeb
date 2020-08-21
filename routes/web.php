@@ -87,3 +87,7 @@ Route::post('losspassword', 'UserController@postLosspassword')->name('losspasswo
 
 //cập nhật thông tin user và update mật khẩu
 Route::resource('user', 'UserController');
+
+// Checkin-out
+Route::get('/user/{id}/reg-schedule', 'ScheduleController@getRegSchedule');
+Route::post('/user/{id}/reg-schedule', 'ScheduleController@postRegSchedule')->name('reg.schedule');

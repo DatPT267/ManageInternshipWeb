@@ -15,24 +15,28 @@
                     <td>{{ ++$index }}</td>
                     <td>
                         @if ($key == 'Monday')
-                            Thứ 2
+                            <h3><span class="badge badge-primary">Thứ 2</span></h3>
                         @elseif($key == 'Tuesday')
-                            Thứ 3
+                            <h3><span class="badge badge-primary">Thứ 3</span></h3>
                         @elseif($key == 'Wednesday')
-                            Thứ 4
+                            <h3><span class="badge badge-primary">Thứ 4</span></h3>
                         @elseif($key == 'Thursday')
-                            Thứ 5
+                            <h3><span class="badge badge-primary">Thứ 5</span></h3>
                         @elseif($key == 'Friday')
-                            Thứ 6
+                            <h3><span class="badge badge-primary">Thứ 6</span></h3>
+                        @elseif($key == 'Saturday')
+                            <h3><span class="badge badge-warning">Thứ 7</span></h3>
+                        @elseif($key == 'Sunday')
+                            <h3><span class="badge badge-warning">Chủ nhật</span></h3>
                         @endif
                     </td>
                     <td>
                         @if ($value['session']==0)
-                            Cả ngày
+                            <h3><span class="badge badge-success">Cả ngày</span></h3>
                         @elseif($value['session']==1)
-                            Ca sáng
+                            <h3><span class="badge badge-info">Ca sáng</span></h3>
                         @else
-                            Ca chiều
+                            <h3><span class="badge badge-warning">Ca chiều</span></h3>
                         @endif
                     </td>
                 </tr>

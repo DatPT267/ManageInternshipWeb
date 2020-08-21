@@ -11,10 +11,6 @@ use DateTime;
 
 class StudentController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     public function viewSchedule($id)
     {
         $student = User::find($id);
@@ -36,6 +32,11 @@ class StudentController extends Controller
     public function viewHisSchedule($id)
     {
         $checks = Check::where('user_id', $id)->get();
+        // foreach ($checks as $check) {
+        //     dd($check->date_end);
+        //     dd(\Carbon\Carbon::parse($check->date_end)->isoFormat('M/D'));
+        // }
+        // dd($checks);
         $user = User::find($id);
         return view('admin.pages.manageStudents.show-hisRegSchedule', ['checks'=>$checks, 'name'=>$user->name]);
     }

@@ -87,3 +87,6 @@ Route::post('losspassword', 'UserController@postLosspassword')->name('losspasswo
 
 //cập nhật thông tin user và update mật khẩu
 Route::resource('user', 'UserController');
+
+//checkin - checkout
+Route::get('user/{id}/checkin', 'CheckController@checkin');

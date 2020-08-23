@@ -13,7 +13,8 @@ class MemberController extends Controller
     public function listMemberGroup($id){
         $members = Member::where('group_id', $id)->get();
         $group = Group::where('id', $id)->firstOrFail();
-        return view('admin.pages.manageGroup.list-member', ['members'=>$members, 'group'=>$group]);
+        $index = 0;
+        return view('admin.pages.manageGroup.list-member', ['members'=>$members, 'group'=>$group, 'index'=>$index]);
     }
 
     public function deleteMemberGroup($id, $id_member){

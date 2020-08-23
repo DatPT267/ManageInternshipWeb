@@ -7,7 +7,7 @@
             {{-- {{session('success')}} --}}
         </div>
     @endif
-    <table class="table table-striped table-bordered table-hover" id="example">
+    <table class="table table-striped table-bordered table-hover" id="list-member">
         <thead>
             <tr align="center">
                 <th>ID</th>
@@ -24,7 +24,7 @@
         <tbody>
             @foreach ($members as $member)
             <tr class="odd gradeX" align="center">
-                <td>{{$member->id}}</td>
+                <td>{{$index++}}</td>
                 <td>
                     <img src="/image/user/{{$member->user->image}}" width="100px" height="100px">
                 </td>
@@ -72,44 +72,50 @@
 @endsection
 @section('script')
     <script>
-        // =====================================AJAX DELETE====================================
-        var member_id;
-        $(document).on('click', '.delete', function(){
-            member_id = $(this).attr('id');
-            $('#confirmModal').modal('show');
+        $(document).ready(function() {
+            var table = $('#list-member').DataTable();
+            // =====================================AJAX DELETE====================================
+            var member_id;
+            $(document).on('click', '.delete', function(){
+                member_id = $(this).attr('id');
+                $('#confirmModal').modal('show');
 
-        });
-        $('#btn-delete').click(function(){
-            var idGroup = $(this).attr('data-idGroup');
-            var url = '/admin/group/' +idGroup+'/delMember/' + member_id;
-            $.ajax({
-                url: url,
-                beforeSend:function(){
-                    $('#btn-delete').text('Deleting ....');
-                    $('.modal-body').html('<h2>Đang xóa ........</h2>');
-                },
-                success:function(response){
-                    if(response.data == 0){
-                        setTimeout(() => {
-                            $('#confirmModal').modal('show');
-                            $('.modal-body').html(
-                                '<div class="alert alert-success"> Bạn đã xóa thành công thành viên <strong>'+response.name+'</strong></div>'
-                            );
-                            $('#btn-delete').hide();
+            });
+            $('#btn-delete').click(function(){
+                var idGroup = $(this).attr('data-idGroup');
+                var url = '/admin/group/' +idGroup+'/delMember/' + member_id;
+                $.ajax({
+                    url: url,
+                    beforeSend:function(){
+                        $('#btn-delete').text('Deleting ....');
+                        $('.modal-body').html('<h2>Đang xóa ........</h2>');
+                    },
+                    success:function(response){
+                        if(response.data == 0){
+                            setTimeout(() => {
+                                $('#confirmModal').modal('show');
+                                $('.modal-body').html(
+                                    '<div class="alert alert-success"> Bạn đã xóa thành công thành viên <strong>'+response.name+'</strong></div>'
+                                );
+                                $('#btn-delete').hide();
+                                $('#btn-cancel').text('Cancel');
+                                $('#btn-cancel').click(function (){
+                                    window.location.reload(true);
+                                    // table.ajax.reload(null, false);
+                                });
+
+                            }, 1000);
+                        } else{
+                            $('.modal-body').text('Xóa thất bại!');
                             $('#btn-cancel').text('Cancel');
-                            $('#btn-cancel').click(function (){
-                                window.location.reload(true);
-                            });
-
-                        }, 1000);
-                    } else{
-                        $('.modal-body').text('Xóa thất bại!');
-                        $('#btn-cancel').text('Cancel');
+                        }
                     }
-                }
-            })
-        });
-        // =====================================AJAX DELETE====================================
+                })
+            });
+            // =====================================AJAX DELETE====================================
+        } );
+
+
 
     </script>
 @endsection

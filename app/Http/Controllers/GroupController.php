@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Member;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -14,7 +15,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.manageGroup.list');
+        $listGroup = Group::all();
+        return view('admin.pages.manageGroup.list', ['listGroup'=>$listGroup]);
     }
 
     /**
@@ -78,9 +80,16 @@ class GroupController extends Controller
      * @param  \App\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Group $group)
+    public function destroy($id)
     {
-        //
+        $a = Group::find($id);
+        $user = Member::where('group_id', $a->id)->get();
+        $count = count($user);
+        if($count != 0){
+            return redirect('admin/manageGroup')->with('fail', 'Xóa không thành công.Nhóm có sinh viên đang hoạt động');
+        }
+        $a->delete();
+        return redirect('admin/manageGroup')->with('success', 'Xóa thành công');
     }
 
     public function getListTask($id){

@@ -6,6 +6,8 @@ use App\Group;
 use App\Internshipclass;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
 
 class InternshipclassController extends Controller
 {
@@ -50,6 +52,7 @@ class InternshipclassController extends Controller
     public function show(Internshipclass $internshipclass)
     {
         return view('admin.pages.internshipClass.show');
+
     }
 
     /**
@@ -58,9 +61,10 @@ class InternshipclassController extends Controller
      * @param  \App\Internshipclass  $internshipclass
      * @return \Illuminate\Http\Response
      */
-    public function edit(Internshipclass $internshipclass)
+    public function edit(Internshipclass $internshipclass, $id)
     {
-        return view('admin.pages.internshipClass.edit');
+       $class = Internshipclass::where('id', $id)->get()->first();
+        return view('admin.pages.internshipClass.update', ['class'=>$class]);
     }
 
     /**
@@ -70,10 +74,10 @@ class InternshipclassController extends Controller
      * @param  \App\Internshipclass  $internshipclass
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Internshipclass $internshipclass)
-    {
-        //
-    }
+    // public function update(Request $request, Internshipclass $internshipclass)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -92,4 +96,7 @@ class InternshipclassController extends Controller
         $a->delete();
         return redirect('admin/internshipClass')->with('success', 'Xóa thành công');
     }
+
+  
+    
 }

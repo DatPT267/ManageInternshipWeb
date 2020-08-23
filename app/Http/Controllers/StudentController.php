@@ -13,7 +13,7 @@ class StudentController extends Controller
 {
     public function viewSchedule($id)
     {
-        $student = User::find($id);
+        $student = User::findOrFail($id);
         $schedules = Schedule::where('user_id', $id)->get();
         $arrayDayOfWeek = array();
         foreach ($schedules as $value) {
@@ -37,7 +37,7 @@ class StudentController extends Controller
         //     dd(\Carbon\Carbon::parse($check->date_end)->isoFormat('M/D'));
         // }
         // dd($checks);
-        $user = User::find($id);
+        $user = User::findOrFail($id);
         return view('admin.pages.manageStudents.show-hisRegSchedule', ['checks'=>$checks, 'name'=>$user->name]);
     }
 }

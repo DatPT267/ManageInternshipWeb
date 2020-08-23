@@ -11,7 +11,7 @@
     <table class="table table-striped table-bordered table-hover" id="example">
         <thead>
             <tr align="center">
-                <th>ID</th>
+                <th>STT</th>
                 <th>Tên task</th>
                 <th>Thời gian check-in</th>
                 <th>Thời gian check-out</th>

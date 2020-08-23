@@ -4,7 +4,7 @@
     <table class="table table-striped table-bordered table-hover mt-5" id="example">
         <thead>
             <tr align="center" >
-                <th>ID</th>
+                <th>STT</th>
                 <th>Ngày đăng ký thực tập</th>
                 <th>Ca làm</th>
             </tr>
@@ -12,7 +12,7 @@
         <tbody>
             @foreach ($arrayDayOfWeek as $key => $value)
                 <tr class="odd gradeX" align="center">
-                    <td>{{ ++$index }}</td>
+                    <td>{{ $index++ }}</td>
                     <td>
                         @if ($key == 'Monday')
                             <h3><span class="badge badge-primary">Thứ 2</span></h3>

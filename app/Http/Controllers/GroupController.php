@@ -57,9 +57,10 @@ class GroupController extends Controller
      * @param  \App\Group  $group
      * @return \Illuminate\Http\Response
      */
-    public function edit(Group $group)
+    public function edit(Group $group, $id)
     {
-        return view('admin.pages.manageGroup.update');
+        $group = Group::where('id', $id)->get()->first();
+        return view('admin.pages.manageGroup.update', ['group'=>$group]);
     }
 
     /**
@@ -98,4 +99,30 @@ class GroupController extends Controller
     public function getListEvaluate($id){
         return view('admin.pages.manageGroup.list-Evaluate');
     }
+
+    public function postSua(Request $request, $id)
+    {
+        
+        $this->validate($request,
+            [
+              
+                'name' =>'required',
+                'topic'=>'required',
+                'note'=>'required',
+                
+            ],
+            [
+                'name.required' =>'Bạn chưa nhập tên nhóm',
+                'topic.required' => 'Bạn chưa nhập tên đề tài',               
+            ]);
+        $group = Group::find($id);
+        $group->name = $request->name;
+        $group->end_day = $request->topic;
+        $group->note = $request->note;
+        $group->save();
+        return back()->with('thongbao','Cập nhật thành công');
+    }
+
+
+
 }

@@ -36,7 +36,7 @@
                         @csrf
                         @method('DELETE')
                         <input type="submit" value="Delete" class="btn btn-danger">
-                        <a href="" class="btn btn-info">Edit</a>
+                        <a href="{{route('manageGroup.edit', $gr->id)}}" class="btn btn-info">Edit</a>
                     </form>
                 </td>
             </tr>

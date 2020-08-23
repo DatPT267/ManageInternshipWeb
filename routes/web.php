@@ -39,12 +39,6 @@ Route::group(['prefix' => 'admin'], function () {
 
     //Quản lý nhóm
     Route::resource('manageGroup', 'GroupController');
-
- 
-
-
-
-    
     Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask');
     Route::get('manageGroup/list-evaluate/{id}', 'GroupController@getListEvaluate');
 

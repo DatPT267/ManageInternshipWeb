@@ -15,16 +15,19 @@
                 <th>Tên task</th>
                 <th>Thời gian check-in</th>
                 <th>Thời gian check-out</th>
-                <th>Action</th>
+                <th>Chi tiết</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($checks as $check)
                 <tr class="odd gradeX" align="center">
-                    <td>{{$check->id}}</td>
+                    <label id="note" style="visibility: hidden">{{$check->note}}</label>
+                    <td>{{$index++}}</td>
                     <td>{{$check->task->name}}</td>
                     <td>
-                        {{\Carbon\Carbon::parse($check->date_start)->isoFormat('D/M')}}
+                        <span class="badge badge-info">
+                            {{\Carbon\Carbon::parse($check->date_start)->isoFormat('D/M/Y')}}
+                        </span>
                         @switch(\Carbon\Carbon::parse($check->date_start)->isoFormat('dddd'))
                             @case('Monday')
                             - <span class="badge badge-primary">Thứ 2</span> -
@@ -48,7 +51,9 @@
                     </td>
                     <td>
                         @if ($check->date_end != null)
-                            {{\Carbon\Carbon::parse($check->date_end)->isoFormat('D/M')}}
+                            <span class="badge badge-info">
+                                {{\Carbon\Carbon::parse($check->date_end)->isoFormat('D/M/Y')}}
+                            </span>
                             @switch(\Carbon\Carbon::parse($check->date_end)->isoFormat('dddd'))
                                 @case('Monday')
                                     - <span class="badge badge-danger">Thứ 2</span> -
@@ -69,10 +74,12 @@
 
                             @endswitch
                             <span class="badge badge-info">{{\Carbon\Carbon::parse($check->date_end)->toTimeString()}}</span>
+                        @else
+                            <span class="badge badge-danger">Chưa check-out</span>
                         @endif
                     </td>
                     <td class="center">
-                        <a href="#" class="btn btn-info btn-circle">
+                        <a href="#" class="btn btn-info btn-circle" data-toggle="modal" data-target="#exampleModalCenter">
                             <i class="fas fa-info-circle"></i>
                         </a>
                     </td>
@@ -80,5 +87,48 @@
             @endforeach
         </tbody>
     </table>
-
+    <!-- Modal -->
+    {{-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th>Tên task</th>
+                    <td>Thanh tân</td>
+                </tr>
+                <tr>
+                    <th>Tên</th>
+                    <td>Thanh tân</td>
+                </tr>
+                <tr>
+                    <th>Tên</th>
+                    <td>Thanh tân</td>
+                </tr>
+            </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        </div>
+    </div> --}}
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function (){
+            $('#example').dataTable({
+                'paging': false,
+                'info': false,
+                'sort': false
+            });
+        });
+    </script>
 @endsection

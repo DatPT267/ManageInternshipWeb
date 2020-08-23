@@ -14,20 +14,26 @@
                 <tr class="odd gradeX" align="center">
                     <td>{{ $index++ }}</td>
                     <td>
-                        @if ($key == 'Monday')
-                            <h3><span class="badge badge-primary">Thứ 2</span></h3>
-                        @elseif($key == 'Tuesday')
-                            <h3><span class="badge badge-primary">Thứ 3</span></h3>
-                        @elseif($key == 'Wednesday')
-                            <h3><span class="badge badge-primary">Thứ 4</span></h3>
-                        @elseif($key == 'Thursday')
-                            <h3><span class="badge badge-primary">Thứ 5</span></h3>
-                        @elseif($key == 'Friday')
-                            <h3><span class="badge badge-primary">Thứ 6</span></h3>
-                        @elseif($key == 'Saturday')
-                            <h3><span class="badge badge-warning">Thứ 7</span></h3>
-                        @elseif($key == 'Sunday')
-                            <h3><span class="badge badge-warning">Chủ nhật</span></h3>
+                        @if (\Carbon\Carbon::parse($key)->englishDayOfWeek == 'Monday')
+                            <h3><span class="badge badge-primary">
+                                {{\Carbon\Carbon::parse($key)->isoFormat('D-M-Y')}} | Thứ 2
+                            </span></h3>
+                        @elseif(\Carbon\Carbon::parse($key)->englishDayOfWeek == 'Tuesday')
+                            <h3><span class="badge badge-primary">
+                                {{\Carbon\Carbon::parse($key)->isoFormat('D-M-Y')}} | Thứ 3
+                            </span></h3>
+                        @elseif(\Carbon\Carbon::parse($key)->englishDayOfWeek == 'Wednesday')
+                            <h3><span class="badge badge-primary">
+                                {{\Carbon\Carbon::parse($key)->isoFormat('D-M-Y')}} | Thứ 4
+                            </span></h3>
+                        @elseif(\Carbon\Carbon::parse($key)->englishDayOfWeek == 'Thursday')
+                            <h3><span class="badge badge-primary">
+                                {{\Carbon\Carbon::parse($key)->isoFormat('D-M-Y')}} | Thứ 5
+                            </span></h3>
+                        @elseif(\Carbon\Carbon::parse($key)->englishDayOfWeek == 'Friday')
+                            <h3><span class="badge badge-primary">
+                                {{\Carbon\Carbon::parse($key)->isoFormat('D-M-Y')}} | Thứ 6
+                            </span></h3>
                         @endif
                     </td>
                     <td>

@@ -19,9 +19,10 @@ class StudentController extends Controller
         foreach ($schedules as $value) {
             $now = Carbon::now();
             $time = Carbon::parse($value->date);
-            if($time->isCurrentMonth() && $time->weekNumberInMonth == $now->weekNumberInMonth){
+            if($time->isCurrentMonth() && $time->weekNumberInMonth >= $now->weekNumberInMonth){
                 $day = Carbon::parse($value->date)->englishDayOfWeek;
-                $arrayDayOfWeek[$day] = array('session'=>$value->session);
+                // $arrayDayOfWeek[$day] = array('session'=>$value->session);
+                $arrayDayOfWeek[$value->date] = array('session'=>$value->session);
             }
         }
         // dd($arrayDayOfWeek);
@@ -31,13 +32,16 @@ class StudentController extends Controller
 
     public function viewHisSchedule($id)
     {
-        $checks = Check::where('user_id', $id)->get();
-        // foreach ($checks as $check) {
-        //     dd($check->date_end);
-        //     dd(\Carbon\Carbon::parse($check->date_end)->isoFormat('M/D'));
-        // }
+        $now = Carbon::now();
+        $start = $now->startOfWeek()->format('Y-m-d');
+        $end = $now->addWeek()->endOfWeek()->format('Y-m-d');
+        // dd($start . " - " . $end);
+        // $checks = Check::where('user_id', $id)->get();
+        $checks = Check::whereRaw("date(date_start) BETWEEN '".$start."' AND '". $end ."'")->get();
+
         // dd($checks);
         $user = User::findOrFail($id);
-        return view('admin.pages.manageStudents.show-hisRegSchedule', ['checks'=>$checks, 'name'=>$user->name]);
+        $index=0;
+        return view('admin.pages.manageStudents.show-hisRegSchedule', ['checks'=>$checks, 'name'=>$user->name, 'index'=>$index]);
     }
 }

@@ -35,9 +35,9 @@
                                 </div>
                                 <select class="custom-select" name="thu2" id="thu2">
                                     <option selected value="null">Không làm</option>
+                                    <option value="0">Cả ngày</option>
                                     <option value="1">Ca sáng</option>
                                     <option value="2">Ca chiều</option>
-                                    <option value="0">Cả ngày</option>
                                 </select>
                             </div>
                         </td>
@@ -51,9 +51,9 @@
                                 </div>
                                 <select class="custom-select" name="thu3" id="thu3">
                                     <option selected value="null">Không làm</option>
+                                    <option value="0">Cả ngày</option>
                                     <option value="1">Ca sáng</option>
                                     <option value="2">Ca chiều</option>
-                                    <option value="0">Cả ngày</option>
                                 </select>
                             </div>
                         </td>
@@ -67,9 +67,9 @@
                                 </div>
                                 <select class="custom-select" name="thu4" id="thu4">
                                     <option selected value="null">Không làm</option>
+                                    <option value="0">Cả ngày</option>
                                     <option value="1">Ca sáng</option>
                                     <option value="2">Ca chiều</option>
-                                    <option value="0">Cả ngày</option>
                                 </select>
                             </div>
                         </td>
@@ -83,9 +83,9 @@
                                 </div>
                                 <select class="custom-select" name="thu5" id="thu5">
                                     <option selected value="null">Không làm</option>
+                                    <option value="0">Cả ngày</option>
                                     <option value="1">Ca sáng</option>
                                     <option value="2">Ca chiều</option>
-                                    <option value="0">Cả ngày</option>
                                 </select>
                             </div>
                         </td>
@@ -99,9 +99,9 @@
                                 </div>
                                 <select class="custom-select" name="thu6" id="thu6">
                                     <option selected value="null">Không làm</option>
+                                    <option value="0">Cả ngày</option>
                                     <option value="1">Ca sáng</option>
                                     <option value="2">Ca chiều</option>
-                                    <option value="0">Cả ngày</option>
                                 </select>
                             </div>
                         </td>
@@ -167,11 +167,11 @@
                 var thu5 = $('#thu5 option:selected').val();
                 var thu6 = $('#thu6 option:selected').val();
                 var output = "<ul class='list-group'>"+
-                "<li class='list-group-item'>Thứ 2: "+check(thu2)+"</li>"+
-                "<li class='list-group-item'>Thứ 3: "+check(thu3)+"</li>"+
-                "<li class='list-group-item'>Thứ 4: "+check(thu4)+"</li>"+
-                "<li class='list-group-item'>Thứ 5: "+check(thu5)+"</li>"+
-                "<li class='list-group-item'>Thứ 6: "+check(thu6)+"</li>"+
+                "<li class='list-group-item'>Thứ 2: <strong>"+check(thu2)+"</strong></li>"+
+                "<li class='list-group-item'>Thứ 3: <strong>"+check(thu3)+"</strong></li>"+
+                "<li class='list-group-item'>Thứ 4: <strong>"+check(thu4)+"</strong></li>"+
+                "<li class='list-group-item'>Thứ 5: <strong>"+check(thu5)+"</strong></li>"+
+                "<li class='list-group-item'>Thứ 6: <strong>"+check(thu6)+"</strong></li>"+
                 "<li class='list-group-item'><h2 style='color: orange'>Bạn chắc chắn muốn lưu lịch này?</h2></li>"
                 +"</ul>";
                 $('.modal-body').html(output);

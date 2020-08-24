@@ -10,4 +10,8 @@ class Assign extends Model
     const UPDATED_AT = null;
 
     protected $table = "assign";
+    public function task()
+    {
+        return $this->belongsTo('App\Task', 'task_id', 'id');
+    }
 }

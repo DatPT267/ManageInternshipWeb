@@ -90,3 +90,4 @@ Route::resource('user', 'UserController');
 
 //checkin - checkout
 Route::get('user/{id}/checkin', 'CheckController@checkin');
+Route::post('user/{id}/checkin', 'CheckController@postCheckin')->name('checkin.post');

@@ -89,5 +89,7 @@ Route::post('losspassword', 'UserController@postLosspassword')->name('losspasswo
 Route::resource('user', 'UserController');
 
 //checkin - checkout
-Route::get('user/{id}/checkin', 'CheckController@checkin');
-Route::post('user/{id}/checkin', 'CheckController@postCheckin')->name('checkin.post');
+Route::get('user/{id}/check-in', 'CheckController@checkin');
+Route::post('user/{id}/check-in', 'CheckController@postCheckin')->name('checkin.post');
+Route::get('user/{id}/check-out', 'CheckController@checkout');
+Route::post('user/{id}/check-out', 'CheckController@postCheckout')->name('checkout.post');

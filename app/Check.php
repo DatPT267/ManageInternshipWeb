@@ -11,8 +11,8 @@ class Check extends Model
 
     protected $table = "check";
 
-    public function task()
+    public function detailCheck()
     {
-        return $this->belongsTo('App\Task', 'task_id', 'id');
+        return $this->hasOne('App\DetailCheck', 'check_id', 'id');
     }
 }

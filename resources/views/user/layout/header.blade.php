@@ -15,8 +15,8 @@
                             <a href="" title="Quản lý">Quản Lý</a>
                                 <ul class="subMenu">
                                     <li><a href="" title="Bài tập">Bài tập</a></li>
-                                    <li><a href="user/{{Auth::id()}}/checkin">Check-in</a></li>
-                                    <li><a href="">Check-out</a></li>
+                                    <li><a href="user/{{Auth::id()}}/check-in">Check-in</a></li>
+                                    <li><a href="user/{{Auth::id()}}/check-out">Check-out</a></li>
                                     <li><a href="" title="Lịch đăng kí thực tập">Lịch đăng kí thực tập</a></li>
                                 </ul>
                         </li>

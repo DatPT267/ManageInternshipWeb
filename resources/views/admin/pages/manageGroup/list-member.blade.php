@@ -45,7 +45,7 @@
                     @endif
                 </td>
                 <td class="center">
-                    <button class="btn btn-danger btn-circle delete" id="{{$member->id}}"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-danger btn-circle delete" id="{{$member->id}}" data-name="{{$member->user->name}}"><i class="fas fa-trash"></i></button>
                 </td>
             </tr>
 
@@ -53,19 +53,39 @@
         </tbody>
     </table>
 <!-- Modal -->
-<div class="modal fade" id="confirmModal" role="dialog" aria-hidden="true">
+{{-- <div class="modal fade" id="confirmModal" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="staticBackdropLabel" style="text-align: center">Xác nhận xóa?</h5>
             </div>
             <div class="modal-body">
-            <h3> Bạn có thật sự muốn xóa?</h3>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cancel"><i class="far fa-window-close"></i> No, cancel</button>
                 <button type="button" class="btn btn-danger" name="btn-delete" id="btn-delete" data-idGroup="{{$group->id}}" > <i class="fas fa-trash-alt" ></i>Yes, Delete</button>
             </div>
+        </div>
+    </div>
+</div> --}}
+<div class="modal fade" id="confirmModal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel" style="text-align: center">Xác nhận xóa?</h5>
+            </div>
+            <form id="deleteMember">
+                <input type="hidden" id="_token" value="{{ csrf_token() }}">
+                @method('DELETE')
+                <div class="modal-body">
+                    <input type="text" id="idmember" value="" hidden>
+                    <h3 id="message" style="text-align: center"></h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cancel"><i class="far fa-window-close"></i> No, cancel</button>
+                    <button type="submit" class="btn btn-danger" name="btn-delete" id="btn-delete" data-idGroup="{{$group->id}}"> <i class="fas fa-trash-alt" ></i>Yes, Delete</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -78,19 +98,31 @@
             var member_id;
             $(document).on('click', '.delete', function(){
                 member_id = $(this).attr('id');
+                $('#idmember').val(member_id);
+                var name = $(this).attr('data-name');
+                $('h3#message').html("Bạn có thật sự muốn xóa thành viên <strong>"+name+"</strong>?");
                 $('#confirmModal').modal('show');
-
             });
-            $('#btn-delete').click(function(){
-                var idGroup = $(this).attr('data-idGroup');
-                var url = '/admin/group/' +idGroup+'/delMember/' + member_id;
+            $('#deleteMember').on('submit', function(e){
+                e.preventDefault();
+
+                var id = $('#idmember').val();
+                var idGroup = $('#btn-delete').attr('data-idGroup');
+                var url = '/admin/group/' +idGroup+'/delMember/' + id;
                 $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: "DELETE",
                     url: url,
+                    contentType: false,
+                    processData: false,
                     beforeSend:function(){
-                        $('#btn-delete').text('Deleting ....');
+                        $('#btn-delete').hide();
+                        $('#btn-cancel').hide();
                         $('.modal-body').html('<h2>Đang xóa ........</h2>');
                     },
-                    success:function(response){
+                    success: function (response) {
                         if(response.data == 0){
                             setTimeout(() => {
                                 $('#confirmModal').modal('show');
@@ -98,19 +130,18 @@
                                     '<div class="alert alert-success"> Bạn đã xóa thành công thành viên <strong>'+response.name+'</strong></div>'
                                 );
                                 $('#btn-delete').hide();
+                                $('#btn-cancel').show();
                                 $('#btn-cancel').text('Cancel');
                                 $('#btn-cancel').click(function (){
                                     window.location.reload(true);
-                                    // table.ajax.reload(null, false);
                                 });
-
                             }, 1000);
                         } else{
                             $('.modal-body').text('Xóa thất bại!');
                             $('#btn-cancel').text('Cancel');
                         }
                     }
-                })
+                });
             });
             // =====================================AJAX DELETE====================================
         } );

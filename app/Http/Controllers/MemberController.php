@@ -37,20 +37,30 @@ class MemberController extends Controller
         })->get();
 
         // dd($students);
-        return view('admin.pages.manageGroup.add-member', ['students'=>$students, 'group'=>$group->id]);
+        return view('admin.pages.manageGroup.add-member', ['students'=>$students, 'group'=>$group]);
     }
 
-    public function storeMember($id, $id_member){
-        $user = User::find($id_member);
-        $group = Group::find($id);
+    public function storeMember(Request $request, $id, $id_member){
+        // $user = User::find($id_member);
+        // $group = Group::find($id);
 
         $memberNew = new Member();
-        $memberNew->group_id = $group->id;
-        $memberNew->user_id = $user->id;
-        $memberNew->position = 0;
-        $memberNew->save();
-
-        return redirect('admin/group/'.$id.'/add-member')->with('success', 'Bạn đã thêm thành công thành viên <strong>'.$user->name.'</strong> vào nhóm <strong>'.$group->name.'</strong>');
+        $memberNew->group_id = $id;
+        $memberNew->user_id = $id_member;
+        if($request->position == 1){
+            $member = Member::where('position', 1)->first();
+            if($member == null){
+                $memberNew->position = $request->position;
+                $memberNew->save();
+                return response()->json(['data'=> 0, 'position'=> 0, 'name'=>$memberNew->user->name]);
+            }else{
+                return response()->json(['data'=> 1,'position'=> 1]);
+            }
+        } else{
+            $memberNew->position = $request->position;
+            $memberNew->save();
+            return response()->json(['data'=> 0, 'position'=> 0, 'name'=>$memberNew->user->name]);
+        }
     }
 
 }

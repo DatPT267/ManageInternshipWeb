@@ -49,5 +49,7 @@
             @endforeach
         </tbody>
     </table>
+@endsection
+@section('script')
 
 @endsection

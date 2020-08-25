@@ -78,7 +78,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $listStudent = User::all();
+        return view('admin.pages.manageStudents.list', ['listStudent'=>$listStudent]);
     }
 
     /**
@@ -119,10 +120,10 @@ class UserController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user, $id)
     {
-        $user = User::find($id);
-        return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
+        $user = User::where('id', $id)->get()->first();
+        return view('admin.pages.manageStudents.update', ['user'=>$user]);
     }
 
     /**
@@ -180,5 +181,50 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function postSua(Request $request, $id)
+    {
+        
+        $this->validate($request,
+            [
+                'name' =>'required',
+                'email'=>'required|email',
+                'phone'=>'required',
+            ],
+            [
+                'name.required' =>'Bạn chưa nhập tên sinh viên',
+                'email.required' => 'Bạn chưa nhập email sinh viên',  
+              
+                'email.unique' => 'Email đã tồn tại',
+                'phone.required' => 'Bạn chưa nhập số điện thoại'           
+            ]);
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->address= $request->address;
+              
+            if ($request->hasFile('image')) 
+            {   
+
+                $file =$request->file('image');
+                $duoi = $file->getClientOriginalExtension();
+                if ($duoi != 'jpg' && $duoi !='png' && $duoi != 'jpeg') {
+                    return redirect('admin/phong/sua/'.$phongtn->id)->with('thongbao' ,'Bạn chỉ chọn được file có đuôi  jpg, png, jpeg ');
+                }
+                $name = $file->getClientOriginalName();
+                $Hinh= Str::random(4)."_".$name;
+                while (file_exists("upload/tintuc".$Hinh)) 
+                {
+                    $Hinh= Str::random(4)."_".$name;
+                }
+                $file->move("image/user",$Hinh);
+                unlink("image/user/".$user->image);
+                $user->image = $Hinh;
+            }  
+            
+            $user->save();
+        return back()->with('thongbao','Cập nhật thành công');
     }
 }

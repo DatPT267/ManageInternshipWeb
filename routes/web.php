@@ -36,7 +36,7 @@ Route::group(['prefix' => 'admin'], function () {
 
     //Quản lý nhóm
     Route::resource('manageGroup', 'GroupController');
-    Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask');
+    Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');
     Route::get('manageGroup/list-evaluate/{id}', 'GroupController@getListEvaluate');
     Route::post('manageGroup/sua/{id}', 'GroupController@postSua')->name('updategroup');
     Route::post('them', 'GroupController@postThem')->name('addgroup');

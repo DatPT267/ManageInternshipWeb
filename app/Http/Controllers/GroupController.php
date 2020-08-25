@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Group;
 use App\Member;
+use App\Internshipclass;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -17,7 +18,6 @@ class GroupController extends Controller
     {
         
         $listGroup = Group::all();
-        
         return view('admin.pages.manageGroup.list', ['listGroup'=>$listGroup]);
     }
 
@@ -28,8 +28,9 @@ class GroupController extends Controller
      */
     public function create()
     {
-        return view('admin.pages.manageGroup.add');
-        
+        $name = Internshipclass::all();
+ 
+        return view('admin.pages.manageGroup.add',['name'=>$name]);
     }
 
     /**
@@ -125,6 +126,39 @@ class GroupController extends Controller
         $group->save();
         return back()->with('thongbao','Cập nhật thành công');
     }
+
+
+    public function postThem(Request $request)
+    {
+        $this->validate($request,
+        [
+          
+            'name' =>'required',
+            'topic'=>'required',
+            'note'=>'required',
+        
+        ],
+        [
+            'name.unique' => 'Tên nhóm đã tồn tại',
+            'name.required' =>'Bạn chưa nhập tên nhóm',
+            'topic.required' => 'Bạn chưa nhập đề tài nhóm',
+          
+        ]);
+       
+       
+        $group = new Group;
+        $group->name = $request->name;
+        $group->topic = $request->topic;
+        $group->note = $request->note;
+        $group->class_id = $request->namedotthuctap;
+        $group->status = $request->status;
+        $group->save();
+
+    
+        return back()->with('thongbao','Thêm thành công');
+    }
+
+
 
 
 

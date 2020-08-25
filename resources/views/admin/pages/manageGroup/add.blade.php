@@ -11,37 +11,42 @@
                         {{$err}} <br>
                     @endforeach
                 </div>
-            @endif
+                 @endif
 
-            @if(session('thongbao'))
-                <div class="alert alert-success">
-                    {{session('thongbao')}}
-                </div>
-            @endif
-            <form action="{{ route('addgroup') }}" method="POST" enctype="">
+                @if(session('thongbao'))
+                    <div class="alert alert-success">
+                        {{session('thongbao')}}
+                    </div>
+                @endif
+            <form action="{{ route('addgroup') }}" method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="form-group">
                         <label style="color: #000;">Tên Nhóm</label>
-                        <input class="form-control" name="" placeholder="Nhập Tên Đợt Thực Tập" />
+                        <input class="form-control" name="name" placeholder="Nhập Tên Đợt Thực Tập" />
                     </div>
 
                     <div class="form-group">
                         <label style="color: #000;">Đề Tài Nhóm</label>
-                        <input class="form-control" name="" placeholder="Nhập Số Lượng Sinh Viên" />
+                        <input class="form-control" name="topic" placeholder="Nhập Đề Tài Nhóm" />
                     </div>
                     <div class="form-group">
                         <label style="color: #000;">Ghi Chú</label>
-                        <input class="form-control" name="" placeholder="Nhập Ghi Chú" />
+                        <input class="form-control" name="note" placeholder="Nhập Ghi Chú" />
                     </div>
+                  
                     <div class="form-group">
                         <label style="color: #000;">Tên Đợt Thực Tập</label>
-                        
+                        <select class="form-control" id="district_choice" name="namedotthuctap">
+                            @foreach($name as $tr)
+                            <option value="{{$tr->id}}">{{$tr->name}}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
                         <label>Trạng Thái</label>
-                        <select class="form-control" id="district_choice" name="">
-                            <option value="Hòa Vang" >Đang hoạt động</option>
-                            <option value="Hoàng Sa" >Không hoạt động</option> 
+                        <select class="form-control" id="district_choice" name="status">
+                            <option value="1" >Đang hoạt động</option>
+                            <option value="0" >Không hoạt động</option> 
                         </select>
                     </div>
                     <div class="">

@@ -46,8 +46,9 @@
                         @method('DELETE')
                         <input type="submit" value="Xóa" class="btn btn-danger">
                         <a href="{{route('manageGroup.edit', $gr->id)}}" class="btn btn-info">Cập nhật</a>
-                        <a href="" class="btn btn-warning">Bài tập</a>
+                        <a href="{{ route('listtask', $gr->id) }}" class="btn btn-warning">Bài tập</a>
                     </form>
+                   
                 </td>
             </tr>
             @endforeach

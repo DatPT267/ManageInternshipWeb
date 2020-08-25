@@ -17,7 +17,7 @@
                     {{session('thongbao')}}
                 </div>
             @endif
-            <form action="../sua/{{$group->id}}" method="POST"  enctype="multipart/form-data">
+            <form action="../admin/manageGroup/sua/{{$group->id}}" method="POST"  enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <h2 style="text-align:center; font-weight: bold; color: #000;" >Cập nhật nhóm</h2>
                     <div class="form-group">
@@ -66,8 +66,6 @@
                 <form>
             </div>
         </div>
-      
     </div>
-
 </div>
 @endsection

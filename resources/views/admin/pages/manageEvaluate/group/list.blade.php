@@ -6,7 +6,6 @@
             <tr align="center">
                 <th>ID</th>
                 <th>Tên task</th>
-                <th>Tên group</th>
                 <th>Nội dung</th>
                 <th>Người đánh giá</th>
                 <th>Action</th>
@@ -17,7 +16,6 @@
             <tr class="odd gradeX" align="center">
                 <td>{{$r->id}}</td>
                 <td>{{$r->task->name}}</td>
-                <td>{{$r->group->name}}</td>
                 <td>{{$r->content}}</td>
                 <td>{{$r->member->user->name}}</td>
                 <td class="center">

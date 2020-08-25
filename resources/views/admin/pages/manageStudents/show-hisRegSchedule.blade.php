@@ -20,7 +20,6 @@
         <tbody>
             @foreach ($checks as $check)
                 <tr class="odd gradeX" align="center">
-                    <label id="note" style="visibility: hidden">{{$check->note}}</label>
                     <td>{{$index++}}</td>
                     <td>
                         <span class="badge badge-info">
@@ -90,7 +89,7 @@
         <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Thông tin chi tiết</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -104,17 +103,18 @@
                             <th>Trạng thái</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="show-detail">
 
                     </tbody>
                 </table>
-                <div id="note">
-                    <p></p>
+                <div id="note" style="display: flex">
+                    <label style="flex: 1; font-size: 15px"> <strong> Note:</strong></label>
+                    <p style="flex: 5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa laboriosam dicta corporis necessitatibus ea earum voluptas dolores omnis
+                        aliquid consequuntur nobis saepe, autem natus? Beatae reprehenderit tenetur molestias provident iusto.</p>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
         </div>
@@ -129,23 +129,38 @@
                 'sort': false
             });
 
+            function check (item){
+                if(item == 0) return "<span class='badge badge-primary'>To-do</span>";
+                else if(item == 1) return  "<span class='badge badge-info'>Doing</span>";
+                else if(item == 2) return  "<span class='badge badge-warning'>Review</span>";
+                else if(item == 3) return  "<span class='badge badge-success'>Success</span>";
+                else return  "<span class='badge badge-secondary'>Pending</span>";
+            }
+
             $('a.btn-show').click(function(){
                 var id_check = $(this).attr('data-id');
                 var url = $(this).attr('data-url');
-                // console.log(id_check);
+                console.log(id_check);
                 $.ajax({
                     url: url,
                     type: 'GET',
                     dataText: 'TEXT',
                     success: function(response){
                         var ouput = '';
-                        console.log(response.data);
-                        // response.data.forEach(item => {
-
-                        // });
-
+                        console.log(response);
+                        response.data.forEach(item => {
+                            // console.log(item);
+                            ouput+= "<tr>"+
+                                    "<td>"+item.id+"</td>"+
+                                    "<td>"+item.name+"</td>"+
+                                    "<td>"+check(item.status)+"</td>"
+                                +"</tr>";
+                        });
+                        $('#note p').text(response.note);
+                        $('tbody.show-detail').html(ouput);
                     }
                 })
+
             });
         });
     </script>

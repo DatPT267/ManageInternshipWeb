@@ -8,7 +8,7 @@ use App\Schedule;
 use App\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use DateTime;
+
 
 class StudentController extends Controller
 {
@@ -26,7 +26,6 @@ class StudentController extends Controller
                 $arrayDayOfWeek[$value->date] = array('session'=>$value->session);
             }
         }
-        // dd($arrayDayOfWeek);
         $index=0;
         return view('admin.pages.manageStudents.show-regSchedule', ['studentName'=>$student->name, 'arrayDayOfWeek'=>$arrayDayOfWeek, 'index'=>$index]);
     }
@@ -36,13 +35,7 @@ class StudentController extends Controller
         $now = Carbon::now();
         $start = $now->startOfWeek()->format('Y-m-d');
         $end = $now->addWeek()->endOfWeek()->format('Y-m-d');
-        // dd($start . " - " . $end);
-        // $checks = Check::where('user_id', $id)->get();
-        $checks = Check::whereRaw("date(date_start) BETWEEN '".$start."' AND '". $end ."'")->get();
-        // dd($checks);
-
-
-        // dd($arrTask);
+        $checks = Check::where('user_id', $id)->whereRaw("date(date_start) BETWEEN '".$start."' AND '". $end ."'")->get();
         $user = User::findOrFail($id);
         $index=0;
         return view('admin.pages.manageStudents.show-hisRegSchedule', ['checks'=>$checks, 'name'=>$user->name, 'index'=>$index]);
@@ -51,12 +44,16 @@ class StudentController extends Controller
     public function ajaxViewHisSchedule($id)
     {
         $arrTask = DetailCheck::where('check_id', $id)->get();
+        $check = Check::find($id);
         $data = [];
         foreach ($arrTask as $key => $value) {
-            $data[$key] = array(
-                $value->check_id => $value,
-            );
+            $data[$key] = [
+                'id' => $key,
+                'name' => $value->task->name,
+                'status' => $value->task->status
+            ];
         }
-        return response()->json(['data'=>$data]);
+        $note = $check->note;
+        return response()->json(['data'=>$data, 'note'=>$note], 200);
     }
 }

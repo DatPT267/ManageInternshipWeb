@@ -12,7 +12,6 @@
         <thead>
             <tr align="center">
                 <th>STT</th>
-                <th>Tên task</th>
                 <th>Thời gian check-in</th>
                 <th>Thời gian check-out</th>
                 <th>Chi tiết</th>
@@ -23,7 +22,6 @@
                 <tr class="odd gradeX" align="center">
                     <label id="note" style="visibility: hidden">{{$check->note}}</label>
                     <td>{{$index++}}</td>
-                    <td>{{$check->task->name}}</td>
                     <td>
                         <span class="badge badge-info">
                             {{\Carbon\Carbon::parse($check->date_start)->isoFormat('D/M/Y')}}
@@ -79,7 +77,7 @@
                         @endif
                     </td>
                     <td class="center">
-                        <a href="#" class="btn btn-info btn-circle" data-toggle="modal" data-target="#exampleModalCenter">
+                        <a href="#" class="btn btn-info btn-circle btn-show" data-toggle="modal" data-target="#exampleModalCenter" data-id="{{$check->id}}" data-url="{{route('ajax.view-his-schedule', $check->id)}}">
                             <i class="fas fa-info-circle"></i>
                         </a>
                     </td>
@@ -88,7 +86,7 @@
         </tbody>
     </table>
     <!-- Modal -->
-    {{-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -98,20 +96,21 @@
                 </button>
             </div>
             <div class="modal-body">
-            <table class="table table-bordered">
-                <tr>
-                    <th>Tên task</th>
-                    <td>Thanh tân</td>
-                </tr>
-                <tr>
-                    <th>Tên</th>
-                    <td>Thanh tân</td>
-                </tr>
-                <tr>
-                    <th>Tên</th>
-                    <td>Thanh tân</td>
-                </tr>
-            </table>
+                <table class="table table-striped table-bordered table-hover" id="detail">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên task</th>
+                            <th>Trạng thái</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <div id="note">
+                    <p></p>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -119,7 +118,7 @@
             </div>
         </div>
         </div>
-    </div> --}}
+    </div>
 @endsection
 @section('script')
     <script>
@@ -128,6 +127,25 @@
                 'paging': false,
                 'info': false,
                 'sort': false
+            });
+
+            $('a.btn-show').click(function(){
+                var id_check = $(this).attr('data-id');
+                var url = $(this).attr('data-url');
+                // console.log(id_check);
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataText: 'TEXT',
+                    success: function(response){
+                        var ouput = '';
+                        console.log(response.data);
+                        // response.data.forEach(item => {
+
+                        // });
+
+                    }
+                })
             });
         });
     </script>

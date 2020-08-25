@@ -43,6 +43,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::group(['prefix' => 'student'], function () {
         Route::get('/{id}/view-schedule', 'StudentController@viewSchedule');
         Route::get('/{id}/view-history-schedule', 'StudentController@viewHisSchedule');
+        Route::get('/ajax/{idcheck}/view-history-schedule', 'StudentController@ajaxViewHisSchedule')->name('ajax.view-his-schedule');
     });
 
 });

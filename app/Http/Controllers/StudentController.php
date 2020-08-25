@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Check;
+use App\DetailCheck;
 use App\Schedule;
 use App\User;
 use Illuminate\Http\Request;
@@ -38,10 +39,24 @@ class StudentController extends Controller
         // dd($start . " - " . $end);
         // $checks = Check::where('user_id', $id)->get();
         $checks = Check::whereRaw("date(date_start) BETWEEN '".$start."' AND '". $end ."'")->get();
-
         // dd($checks);
+
+
+        // dd($arrTask);
         $user = User::findOrFail($id);
         $index=0;
         return view('admin.pages.manageStudents.show-hisRegSchedule', ['checks'=>$checks, 'name'=>$user->name, 'index'=>$index]);
+    }
+
+    public function ajaxViewHisSchedule($id)
+    {
+        $arrTask = DetailCheck::where('check_id', $id)->get();
+        $data = [];
+        foreach ($arrTask as $key => $value) {
+            $data[$key] = array(
+                $value->check_id => $value,
+            );
+        }
+        return response()->json(['data'=>$data]);
     }
 }

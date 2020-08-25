@@ -15,7 +15,9 @@ class GroupController extends Controller
      */
     public function index()
     {
+        
         $listGroup = Group::all();
+        
         return view('admin.pages.manageGroup.list', ['listGroup'=>$listGroup]);
     }
 
@@ -105,7 +107,6 @@ class GroupController extends Controller
         
         $this->validate($request,
             [
-              
                 'name' =>'required',
                 'topic'=>'required',
                 'note'=>'required',
@@ -117,8 +118,9 @@ class GroupController extends Controller
             ]);
         $group = Group::find($id);
         $group->name = $request->name;
-        $group->end_day = $request->topic;
+        $group->topic = $request->topic;
         $group->note = $request->note;
+        $group->status = $request->status;
         $group->save();
         return back()->with('thongbao','Cập nhật thành công');
     }

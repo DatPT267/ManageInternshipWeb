@@ -27,7 +27,7 @@
 
                     <div class="form-group">
                         <label style="color: #000;">Tên Đề Tài</label>
-                        <input class="form-control" name="topic"  placeholder="Nhập Ghi Chú"  value="{{$group->topic}}"/>
+                        <input class="form-control" name="topic"  placeholder="Nhập Tên Đề Tài"  value="{{$group->topic}}"/>
                     </div>
                     
                     <div class="form-group">
@@ -37,7 +37,24 @@
 
                     <div class="form-group">
                         <label style="color: #000;">Tên Đợt Thực Tập</label>
-                        <input class="form-control" name="" eadonly  placeholder="Nhập Ghi Chú"  value=""/>
+                        <input class="form-control" name="" readonly  placeholder="Nhập Tên Đợt Thực Tập"  value="{{$group->internshipClass->name}}"/>
+                    </div>
+                    <div class="form-group">
+                        <label style="color: #000;">Trạng Thái</label>
+                        <select class="form-control" id="district_choice" name="status">
+                           
+                            <option value="1"  
+                            @if($group->status==1)
+                            {{"selected"}}
+                            @endif
+                            >Đang hoạt động</option>
+                            
+                            <option value="0" 
+                            @if($group->status==0)
+                            {{"selected"}}
+                            @endif
+                            >Không hoạt động</option>
+                        </select>
                     </div>
                     <div class="">
                         <button  style=" color: #fff;

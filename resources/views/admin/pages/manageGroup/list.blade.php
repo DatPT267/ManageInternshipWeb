@@ -21,6 +21,7 @@
                 <th>Đề Tài</th>
                 <th>Ghi nhớ</th>
                 <th>Tên đợt thực tập</th>
+                <th>Trạng thái</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -30,13 +31,22 @@
                 <td>{{$gr->name}}</td>
                 <td>{{$gr->topic}}</td>
                 <td>{{$gr->note}}</td>
-                <td></td>
+                <td>{{$gr->internshipClass->name}}</td>
+                <td>
+                    @if($gr->status==1)
+                    {{"Đang hoạt động"}}
+                    @endif
+                    @if($gr->status==0)
+                    {{"Không hoạt động"}}
+                    @endif
+                </td>
                 <td class="center">
                     <form action="{{route('manageGroup.destroy', $gr->id)}}" method="post">
                         @csrf
                         @method('DELETE')
-                        <input type="submit" value="Delete" class="btn btn-danger">
-                        <a href="{{route('manageGroup.edit', $gr->id)}}" class="btn btn-info">Edit</a>
+                        <input type="submit" value="Xóa" class="btn btn-danger">
+                        <a href="{{route('manageGroup.edit', $gr->id)}}" class="btn btn-info">Cập nhật</a>
+                        <a href="" class="btn btn-warning">Bài tập</a>
                     </form>
                 </td>
             </tr>

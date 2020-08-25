@@ -64,9 +64,8 @@ class GroupController extends Controller
     public function edit(Group $group, $id)
     {
         $group = Group::where('id', $id)->get()->first();
-        return view('admin.pages.manageGroup.update', ['group'=>$group]);
+        return view('admin.pages.manageGroup.update',['group'=>$group]);
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -112,7 +111,6 @@ class GroupController extends Controller
                 'name' =>'required',
                 'topic'=>'required',
                 'note'=>'required',
-                
             ],
             [
                 'name.required' =>'Bạn chưa nhập tên nhóm',
@@ -133,7 +131,7 @@ class GroupController extends Controller
         $this->validate($request,
         [
           
-            'name' =>'required',
+            'name' =>'required|unique:Group,name',
             'topic'=>'required',
             'note'=>'required',
         

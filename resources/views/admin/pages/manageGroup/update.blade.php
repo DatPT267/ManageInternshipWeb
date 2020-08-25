@@ -42,13 +42,11 @@
                     <div class="form-group">
                         <label style="color: #000;">Trạng Thái</label>
                         <select class="form-control" id="district_choice" name="status">
-                           
                             <option value="1"  
                             @if($group->status==1)
                             {{"selected"}}
                             @endif
                             >Đang hoạt động</option>
-                            
                             <option value="0" 
                             @if($group->status==0)
                             {{"selected"}}

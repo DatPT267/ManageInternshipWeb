@@ -29,6 +29,7 @@ class GroupController extends Controller
     public function create()
     {
         return view('admin.pages.manageGroup.add');
+        
     }
 
     /**

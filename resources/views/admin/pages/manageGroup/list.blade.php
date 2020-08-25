@@ -22,7 +22,7 @@
                 <th>Ghi nhớ</th>
                 <th>Tên đợt thực tập</th>
                 <th>Trạng thái</th>
-                <th>Action</th>
+                <th>Hoạt động</th>
             </tr>
         </thead>
         <tbody>

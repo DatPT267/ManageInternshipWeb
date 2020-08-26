@@ -13,8 +13,7 @@
             <div class="alert alert-success">
                 {{session('success')}}
             </div>
-        @endif
-        @if ($isCheck == 1)
+        @elseif ($isCheck == 1)
             <div class="alert alert-warning">
                 Hôm nay bạn đã checkin rồi !!!
             </div>
@@ -24,18 +23,19 @@
                 @csrf
                 @if ($isCheck == 0)
                     <div class="form-group" style="display: flex">
-                        <label style="flex: 1">Thời gian check-in</label>
+                        <label style="flex: 1"><strong>Thời gian checkin</strong></label>
                         <input type="text" name="ngaythuctap" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('Y-m-d')}}" style="flex: 5" hidden>
                         <input type="text" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('d-m-Y H:i:s')}}" style="flex: 5" disabled>
                     </div>
                 @else
                     <div class="form-group" style="display: flex">
-                        <label style="flex: 1">Thời gian check-in</label>
+                        <label style="flex: 1"><strong>Thời gian check-in</strong></label>
+                        {{-- <span style="flex: 5" class="badge badge-info"><strong>{{$date_start->date_start ?? ''}}</strong></span> --}}
                         <input type="text" class="form-control"  value="{{$date_start->date_start ?? ''}}" style="flex: 5" disabled>
                     </div>
                 @endif
                 <div class="form-group" style="display: flex">
-                    <label style="margin-right: 75px">Ca làm</label>
+                    <label style="margin-right: 75px"><strong>Ca làm</strong></label>
                     @if ($schedule->session == 0)
                         <span class="badge" style="background-color: #00FA9A; font-size: 15px">Cả ngày</span>
                     @elseif($schedule->session == 1)
@@ -46,7 +46,6 @@
                 </div>
                 @if ($isCheck == 0)
                     <div class="form-group">
-                        <label >Task</label>
                         <table class="table table-bordered"  id="listTask">
                             <thead>
                                 <tr>
@@ -142,7 +141,8 @@
                 scrollY:        200,
                 deferRender:    true,
                 scroller:       true,
-                'info': false
+                'info': false,
+                'paging': false
             });
         })
     </script>

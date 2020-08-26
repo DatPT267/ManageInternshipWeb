@@ -18,12 +18,12 @@
                     Hôm nay bạn đã check-out rồi !!!
                 </div>
                     <div class="form-group" style="display: flex">
-                        <label style="flex: 1">Thời gian check-out</label>
+                        <label style="flex: 1"><strong> Thời gian checkout</strong></label>
                         <input type="text" name="ngaythuctap" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('Y-m-d H:i:s')}}" style="flex: 5" hidden>
                         <input type="text" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('d-m-Y H:i:s')}}" style="flex: 5" disabled>
                     </div>
                     <div class="form-group" style="display: flex">
-                        <label style="margin-right: 75px">Ca làm</label>
+                        <label style="margin-right: 75px"><strong>Ca làm</strong></label>
                         @if ($schedule->session == 0)
                             <span class="badge" style="background-color: #00FA9A; font-size: 15px">Cả ngày</span>
                         @elseif($schedule->session == 1)
@@ -33,7 +33,7 @@
                         @endif
                     </div>
                     <div class="form-group" style="display: flex">
-                        <label style="flex: 1">Note</label>
+                        <label style="flex: 1"><strong>Note</strong></label>
                         <label style="flex: 5">{{$note}}</label>
                     </div>
                     <div class="form-group">
@@ -195,7 +195,8 @@
         $(document).ready(function(){
             $('#listTask').DataTable({
                 scrollY: 250,
-                'info': false
+                'info': false,
+                'paging': false
             });
         })
     </script>

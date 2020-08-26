@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -93,3 +94,7 @@ Route::get('user/{id}/check-in', 'CheckController@checkin');
 Route::post('user/{id}/check-in', 'CheckController@postCheckin')->name('checkin.post');
 Route::get('user/{id}/check-out', 'CheckController@checkout');
 Route::post('user/{id}/check-out', 'CheckController@postCheckout')->name('checkout.post');
+// Checkin-out
+Route::get('/user/{id}/reg-schedule', 'ScheduleController@getRegSchedule');
+Route::get('/user/{id}/test', 'ScheduleController@test');
+Route::post('/user/{id}/reg-schedule', 'ScheduleController@postRegSchedule')->name('reg.schedule');

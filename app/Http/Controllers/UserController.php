@@ -124,8 +124,7 @@ class UserController extends Controller
             $user = User::find(Auth::id());
             return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
         } else{
-            $user = User::find(Auth::id());
-            return redirect('user/'.Auth::id().'/edit')->with('user', $user);
+            return redirect('/#login');
         }
     }
 
@@ -142,8 +141,8 @@ class UserController extends Controller
             'email' => 'email'
         ],[
             'email.email' => 'Email chưa đúng'
-            ]);
-        $user = User::find(Auth::id());
+        ]);
+        $user = User::find($id);
 
         if($request->hasFile('image')){
             $file = $request->file('image');
@@ -167,7 +166,7 @@ class UserController extends Controller
         $user->address = $request->input('address');
         $user->save();
 
-        return redirect('user/'.Auth::id().'/edit')->with('success', 'Bạn đã cập nhật thành công');
+        return redirect('user/'.$id.'/edit')->with('success', 'Bạn đã cập nhật thành công');
     }
 
     /**

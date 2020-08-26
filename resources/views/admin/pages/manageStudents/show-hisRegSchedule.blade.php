@@ -12,6 +12,7 @@
         <thead>
             <tr align="center">
                 <th>STT</th>
+                <th>Lịch thực tập</th>
                 <th>Thời gian check-in</th>
                 <th>Thời gian check-out</th>
                 <th>Chi tiết</th>
@@ -22,55 +23,34 @@
                 <tr class="odd gradeX" align="center">
                     <td>{{$index++}}</td>
                     <td>
+                        @switch(\Carbon\Carbon::parse($check->date_start)->isoFormat('dddd'))
+                            @case('Monday')
+                                <span class="badge badge-primary">Thứ 2</span> -
+                                @break
+                            @case('Tuesday')
+                                <span class="badge badge-primary">Thứ 3</span> -
+                                @break
+                            @case('Wednesday')
+                                <span class="badge badge-primary">Thứ 4</span> -
+                                @break
+                            @case('Thursday')
+                                <span class="badge badge-primary">Thứ 5</span> -
+                                @break
+                            @case('Friday')
+                                <span class="badge badge-primary">Thứ 6</span> -
+                                @break
+                            @default
+                        @endswitch
                         <span class="badge badge-info">
                             {{\Carbon\Carbon::parse($check->date_start)->isoFormat('D/M/Y')}}
                         </span>
-                        @switch(\Carbon\Carbon::parse($check->date_start)->isoFormat('dddd'))
-                            @case('Monday')
-                            - <span class="badge badge-primary">Thứ 2</span> -
-                            @break
-                        @case('Tuesday')
-                            - <span class="badge badge-primary">Thứ 3</span> -
-                            @break
-                        @case('Wednesday')
-                            - <span class="badge badge-primary">Thứ 4</span> -
-                            @break
-                        @case('Thursday')
-                            - <span class="badge badge-primary">Thứ 5</span> -
-                            @break
-                        @case('Friday')
-                            - <span class="badge badge-primary">Thứ 6</span> -
-                            @break
-                        @default
-
-                    @endswitch
-                    <span class="badge badge-info">{{\Carbon\Carbon::parse($check->date_start)->toTimeString()}}</span>
+                    </td>
+                    <td>
+                        <span class="badge badge-info">{{\Carbon\Carbon::parse($check->date_start)->toTimeString()}}</span>
                     </td>
                     <td>
                         @if ($check->date_end != null)
-                            <span class="badge badge-info">
-                                {{\Carbon\Carbon::parse($check->date_end)->isoFormat('D/M/Y')}}
-                            </span>
-                            @switch(\Carbon\Carbon::parse($check->date_end)->isoFormat('dddd'))
-                                @case('Monday')
-                                    - <span class="badge badge-danger">Thứ 2</span> -
-                                    @break
-                                @case('Tuesday')
-                                    - <span class="badge badge-danger">Thứ 3</span> -
-                                    @break
-                                @case('Wednesday')
-                                    - <span class="badge badge-danger">Thứ 4</span> -
-                                    @break
-                                @case('Thursday')
-                                    - <span class="badge badge-danger">Thứ 5</span> -
-                                    @break
-                                @case('Friday')
-                                    - <span class="badge badge-danger">Thứ 6</span> -
-                                    @break
-                                @default
-
-                            @endswitch
-                            <span class="badge badge-info">{{\Carbon\Carbon::parse($check->date_end)->toTimeString()}}</span>
+                            <span class="badge badge-warning">{{\Carbon\Carbon::parse($check->date_end)->toTimeString()}}</span>
                         @else
                             <span class="badge badge-danger">Chưa check-out</span>
                         @endif
@@ -133,7 +113,7 @@
                 if(item == 0) return "<span class='badge badge-primary'>To-do</span>";
                 else if(item == 1) return  "<span class='badge badge-info'>Doing</span>";
                 else if(item == 2) return  "<span class='badge badge-warning'>Review</span>";
-                else if(item == 3) return  "<span class='badge badge-success'>Success</span>";
+                else if(item == 3) return  "<span class='badge badge-success'>Done</span>";
                 else return  "<span class='badge badge-secondary'>Pending</span>";
             }
 

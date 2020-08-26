@@ -267,9 +267,16 @@ class InternshipclassController extends Controller
               }
               $acronym .= $w[0];
             }
-
-          
             $lastName = $lastName .= $acronym;
+            $lastName1 = $lastName;
+            $dem = 0;
+
+            do {
+              $dem++;
+              
+              $lastName = $lastName1.''.$dem;
+              $user = User::where('account', $lastName)->get()->first();
+            } while ($user != null);
             $user = new User;
             $user->account = $lastName;
             $user->password = bcrypt("123456789");
@@ -279,11 +286,13 @@ class InternshipclassController extends Controller
             $user->status = 1;
             $user->save();
         }
-        
-        $usermember = User::Where('class_id', $interclass->id)->get();
- 
-        return view('admin/pages/internshipClass/memberclass',['usermember'=> $usermember] );
-
+        $class_id = $interclass->id;
+        return redirect()->route('list', ['class_id' => $class_id]);
+    }
+    public function getList($class_id)
+    {
+      $usermember = User::Where('class_id', $class_id)->get();
+      return view('admin/pages/internshipClass/memberclass',['usermember'=> $usermember] );
     }
 
    

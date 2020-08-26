@@ -48,7 +48,7 @@ class MemberController extends Controller
         $memberNew->group_id = $id;
         $memberNew->user_id = $id_member;
         if($request->position == 1){
-            $member = Member::where('position', 1)->first();
+            $member = Member::where('group_id', $id)->where('position', 1)->first();
             if($member == null){
                 $memberNew->position = $request->position;
                 $memberNew->save();

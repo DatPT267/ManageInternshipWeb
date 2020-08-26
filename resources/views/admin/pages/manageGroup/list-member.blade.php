@@ -118,9 +118,9 @@
                     contentType: false,
                     processData: false,
                     beforeSend:function(){
-                        $('#btn-delete').hide();
+                        $('#btn-delete').text('Deleting ......');
                         $('#btn-cancel').hide();
-                        $('.modal-body').html('<h2>Đang xóa ........</h2>');
+                        $('.modal-body').html('<div class="alert alert-danger">Đang xóa ........</div>');
                     },
                     success: function (response) {
                         if(response.data == 0){

@@ -33,8 +33,11 @@
                         @endif
                     </div>
                     <div class="form-group" style="display: flex">
-                        <label style="flex: 1">Task</label>
-                        <table class="table table-bordered" style="flex: 5">
+                        <label style="flex: 1">Note</label>
+                        <label style="flex: 5">{{$note}}</label>
+                    </div>
+                    <div class="form-group">
+                        <table class="table table-bordered table-hover"  id="listTask">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -92,10 +95,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="form-group" style="display: flex">
-                        <label style="flex: 1">Note</label>
-                        <label style="flex: 5">{{$note}}</label>
-                    </div>
+
             @else
                 <form action="{{route('checkout.post', Auth::id())}}" method="post">
                     @csrf
@@ -114,9 +114,8 @@
                             <span class="badge" style="background-color: #F4A460; font-size: 15px">Ca chiều</span>
                         @endif
                     </div>
-                    <div class="form-group" style="display: flex">
-                        <label style="flex: 1">Task</label>
-                        <table class="table table-bordered" style="flex: 5">
+                    <div class="form-group" >
+                        <table class="table table-bordered table-hover" id="listTask">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -126,55 +125,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($tasks as $key => $task)
-                                    <tr>
-                                        <td>{{$key}}</td>
-                                        <td>{{$task->task->name}}</td>
-                                        <td>
-                                            <select name="status">
-                                                @if ($task->task->status == 0)
-                                                    <option value="0" selected>To-do</option>
-                                                    <option value="1">Doing</option>
-                                                    <option value="2">Review</option>
-                                                    <option value="3">Done</option>
-                                                    <option value="4">Pending</option>
-                                                @elseif($task->task->status == 1)
-                                                    <option value="0">To-do</option>
-                                                    <option value="1" selected>Doing</option>
-                                                    <option value="2" >Review</option>
-                                                    <option value="3">Done</option>
-                                                    <option value="4">Pending</option>
-                                                @elseif($task->task->status == 2)
-                                                    <option value="0">To-do</option>
-                                                    <option value="1">Doing</option>
-                                                    <option value="2" selected>Review</option>
-                                                    <option value="3">Done</option>
-                                                    <option value="4">Pending</option>
-                                                @elseif($task->task->status == 3)
-                                                    <option value="0">To-do</option>
-                                                    <option value="1">Doing</option>
-                                                    <option value="2" >Review</option>
-                                                    <option value="3" selected>Done</option>
-                                                    <option value="4">Pending</option>
-                                                @else
-                                                    <option value="0">To-do</option>
-                                                    <option value="1">Doing</option>
-                                                    <option value="2">Review</option>
-                                                    <option value="3">Done</option>
-                                                    <option value="4" selected>Pending</option>
-                                                @endif
-                                            </select>
-                                        </td>
-                                        <td>
-                                            @foreach ($arrTask as $item)
-                                                @if ($task->task->id == $item->task_id)
-                                                    <strong style="color: red; font-size: 20px;">x</strong>
-                                                @endif
-                                            @endforeach
-                                        </td>
-                                    </tr>
-
-                                @endforeach --}}
                                 @foreach ($arrTask as $key => $task)
                                 <tr>
                                     <td>{{$key}}</td>
@@ -239,4 +189,14 @@
 
         @endif
     </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function(){
+            $('#listTask').DataTable({
+                scrollY: 250,
+                'info': false
+            });
+        })
+    </script>
 @endsection

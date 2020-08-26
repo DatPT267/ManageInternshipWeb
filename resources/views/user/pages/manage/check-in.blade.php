@@ -22,11 +22,18 @@
         @if ($schedule !== null)
             <form action="{{route('checkin.post', $id)}}" class="form-group" method="POST" >
                 @csrf
-                <div class="form-group" style="display: flex">
-                    <label style="flex: 1">Thời gian check-in</label>
-                    <input type="text" name="ngaythuctap" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('Y-m-d')}}" style="flex: 5" hidden>
-                    <input type="text" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('d-m-Y H:i:s')}}" style="flex: 5" disabled>
-                </div>
+                @if ($isCheck == 0)
+                    <div class="form-group" style="display: flex">
+                        <label style="flex: 1">Thời gian check-in</label>
+                        <input type="text" name="ngaythuctap" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('Y-m-d')}}" style="flex: 5" hidden>
+                        <input type="text" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('d-m-Y H:i:s')}}" style="flex: 5" disabled>
+                    </div>
+                @else
+                    <div class="form-group" style="display: flex">
+                        <label style="flex: 1">Thời gian check-in</label>
+                        <input type="text" class="form-control"  value="{{$date_start->date_start ?? ''}}" style="flex: 5" disabled>
+                    </div>
+                @endif
                 <div class="form-group" style="display: flex">
                     <label style="margin-right: 75px">Ca làm</label>
                     @if ($schedule->session == 0)
@@ -38,9 +45,9 @@
                     @endif
                 </div>
                 @if ($isCheck == 0)
-                    <div class="form-group" style="display: flex">
-                        <label style="flex: 1">Task</label>
-                        <table class="table table-bordered" style="flex: 5">
+                    <div class="form-group">
+                        <label >Task</label>
+                        <table class="table table-bordered"  id="listTask">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -51,7 +58,6 @@
                             </thead>
                             <tbody>
                                 @foreach ($tasks as $key => $task)
-                                    @if ($task->task->status == 0 || $task->task->status == 1 || $task->task->status == 2 || $task->task->status == 3)
                                         <tr>
                                             <td>{{$key}}</td>
                                             <td>{{$task->task->name}}</td>
@@ -72,15 +78,13 @@
                                                 <input type="checkbox" name="chon-task[{{$key}}]" value="{{$task->task->id}}">
                                             </td>
                                         </tr>
-                                    @endif
                                 @endforeach
                             </tbody>
                         </table>
                     </div>
                 @else
-                    <div class="form-group" style="display: flex">
-                        <label style="flex: 1">Task</label>
-                        <table class="table table-bordered" style="flex: 5">
+                    <div class="form-group">
+                        <table class="table table-bordered table-hover"  id="listTask">
                             <thead>
                                 <tr>
                                     <th>STT</th>
@@ -91,32 +95,30 @@
                             </thead>
                             <tbody>
                                 @foreach ($tasks as $key => $task)
-                                    @if ($task->task->status == 0 || $task->task->status == 1 || $task->task->status == 2 || $task->task->status == 3)
-                                        <tr>
-                                            <td>{{$key}}</td>
-                                            <td>{{$task->task->name}}</td>
-                                            <td>
-                                                @if ($task->task->status == 0)
-                                                    <span class="badge" style="background-color: #0000FF; font-size: 15px">To-do</span>
-                                                @elseif($task->task->status == 1)
-                                                    <span class="badge" style="background-color: #00BFFF; font-size: 15px">Doing</span>
-                                                @elseif($task->task->status == 2)
-                                                    <span class="badge" style="background-color: #FFA500; font-size: 15px">Review</span>
-                                                @elseif($task->task->status == 3)
-                                                    <span class="badge" style="background-color: #00FF7F; font-size: 15px">Done</span>
-                                                @elseif($task->task->status == 4)
-                                                    <span class="badge" style="background-color: #FF0000; font-size: 15px">Pending</span>
+                                    <tr>
+                                        <td>{{$key}}</td>
+                                        <td>{{$task->task->name}}</td>
+                                        <td>
+                                            @if ($task->task->status == 0)
+                                                <span class="badge" style="background-color: #0000FF; font-size: 15px">To-do</span>
+                                            @elseif($task->task->status == 1)
+                                                <span class="badge" style="background-color: #00BFFF; font-size: 15px">Doing</span>
+                                            @elseif($task->task->status == 2)
+                                                <span class="badge" style="background-color: #FFA500; font-size: 15px">Review</span>
+                                            @elseif($task->task->status == 3)
+                                                <span class="badge" style="background-color: #00FF7F; font-size: 15px">Done</span>
+                                            @elseif($task->task->status == 4)
+                                                <span class="badge" style="background-color: #FF0000; font-size: 15px">Pending</span>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @foreach ($arrTask as $item)
+                                                @if ($task->task->id == $item->task_id)
+                                                    <strong style="color: red; font-size: 20px;">x</strong>
                                                 @endif
-                                            </td>
-                                            <td>
-                                                @foreach ($arrTask as $item)
-                                                    @if ($task->task->id == $item->task_id)
-                                                        <strong style="color: red; font-size: 20px;">x</strong>
-                                                    @endif
-                                                @endforeach
-                                            </td>
-                                        </tr>
-                                    @endif
+                                            @endforeach
+                                        </td>
+                                    </tr>
                                 @endforeach
                             </tbody>
                         </table>
@@ -131,11 +133,17 @@
                 Hôm nay bạn không làm việc !!!
             </div>
         @endif
-
     </div>
 @endsection
 @section('script')
     <script>
-
+        $(document).ready(function(){
+            $('#listTask').DataTable({
+                scrollY:        200,
+                deferRender:    true,
+                scroller:       true,
+                'info': false
+            });
+        })
     </script>
 @endsection

@@ -30,8 +30,8 @@ class CheckController extends Controller
             // dd($schedule);
             $member_id = Member::where('user_id', $id)->first();
             $tasks = Assign::where('member_id', $member_id->id)->get();
-            // dd($tasks);
-            return view('user.pages.manage.check-in', ['schedule' => $schedule, 'tasks' => $tasks, 'id'=>$id, 'isCheck'=>$isCheck, 'arrTask' => $arrTask]);
+            // dd($checkin);
+            return view('user.pages.manage.check-in', ['schedule' => $schedule, 'tasks' => $tasks, 'id'=>$id, 'isCheck'=>$isCheck, 'arrTask' => $arrTask, 'date_start'=>$checkin]);
         }else{
             return redirect('/');
         }
@@ -112,7 +112,7 @@ class CheckController extends Controller
             $task->save();
         }
 
-        return redirect("user/".$id."/check-out")->with(['success'=>'Check-in thành công']);
+        return redirect("user/".$id."/check-out")->with(['success'=>'Check-out thành công']);
     }
     //========================================END Check-out=======================================
 }

@@ -17,7 +17,8 @@
                                     <li><a href="" title="Bài tập">Bài tập</a></li>
                                     <li><a href="user/{{Auth::id()}}/check-in">Check-in</a></li>
                                     <li><a href="user/{{Auth::id()}}/check-out">Check-out</a></li>
-                                    <li><a href="" title="Lịch đăng kí thực tập">Lịch đăng kí thực tập</a></li>
+                                    <li><a href="user/{{Auth::id()}}/reg-schedule" title="Đăng ký lịch thực tập">Đăng ký lịch thực tập</a></li>
+                                    <li><a href="user/{{Auth::id()}}/history-schedule" title="Đăng ký lịch thực tập">Lịch sử thực tập</a></li>
                                 </ul>
                         </li>
                         <li>

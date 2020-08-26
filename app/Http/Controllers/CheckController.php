@@ -115,4 +115,8 @@ class CheckController extends Controller
         return redirect("user/".$id."/check-out")->with(['success'=>'Check-out thành công']);
     }
     //========================================END Check-out=======================================
+
+    public function hisSchedule($id){
+        return view('user.pages.manage.view-history-check');
+    }
 }

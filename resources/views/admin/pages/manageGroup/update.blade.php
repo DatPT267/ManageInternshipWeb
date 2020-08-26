@@ -17,24 +17,22 @@
                     {{session('thongbao')}}
                 </div>
             @endif
-            <form action="../admin/manageGroup/sua/{{$group->id}}" method="POST"  enctype="multipart/form-data">
+            <form action="{{route('updategroup', $group->id)}}" method="POST"  enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <h2 style="text-align:center; font-weight: bold; color: #000;" >Cập nhật nhóm</h2>
                     <div class="form-group">
                         <label style="color: #000;">Tên Nhóm</label>
-                    <input class="form-control" name="name" placeholder="Nhập Tên Đợt Thực Tập" value="{{$group->name}}"/>
+                        <input class="form-control" name="name" placeholder="Nhập Nhóm" value="{{$group->name}}"/>
                     </div>
 
                     <div class="form-group">
-                        <label style="color: #000;">Tên Đề Tài</label>
-                        <input class="form-control" name="topic"  placeholder="Nhập Tên Đề Tài"  value="{{$group->topic}}"/>
+                        <label style="color: #000;">Đề tài</label>
+                        <input class="form-control" name="topic" placeholder="Nhập Đề Tài"  value="{{$group->topic}}"/>
                     </div>
-                    
                     <div class="form-group">
-                        <label style="color: #000;">Ghi Chú</label>
-                        <input class="form-control" name="note"  placeholder="Nhập Ghi Chú"  value="{{$group->note}}"/>
+                        <label style="color: #000;">Ghi chú</label>
+                        <input class="form-control" name="note" placeholder="Nhập Ghi Chú"  value="{{$group->note}}"/>
                     </div>
-
                     <div class="form-group">
                         <label style="color: #000;">Tên Đợt Thực Tập</label>
                         <input class="form-control" name="" readonly  placeholder="Nhập Tên Đợt Thực Tập"  value="{{$group->internshipClass->name}}"/>
@@ -66,6 +64,8 @@
                 <form>
             </div>
         </div>
+        <!-- /.row -->
     </div>
+    <!-- /.container-fluid -->
 </div>
 @endsection

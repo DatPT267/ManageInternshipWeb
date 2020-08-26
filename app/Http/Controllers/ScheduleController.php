@@ -54,7 +54,6 @@ class ScheduleController extends Controller
         $user = User::find($id);
         $arrCaLam = array($request->input('thu2'),$request->input('thu3'),$request->input('thu4'),$request->input('thu5'),$request->input('thu6'));
         $now = Carbon::now();
-        $check = 0;
         if($now->dayOfWeekIso >= 1){
             $now->addWeek();
             foreach ($arrCaLam as $key => $calam) {
@@ -69,12 +68,8 @@ class ScheduleController extends Controller
                     else if($key == 3) $scheduleSt->date = $now->addDay(3);
                     else if($key == 4) $scheduleSt->date = $now->addDay(4);
                     $scheduleSt->save();
-                    $check = 1;
                 }
             }
-        }
-        if($check == 0){
-            return redirect('user/'.$user->id.'/reg-schedule')->with(['user'=>$user, 'fail'=>'Bạn chưa đăng ký lịch thực tập']);
         }
         return redirect('user/'.$user->id.'/reg-schedule')->with(['user'=>$user, 'success'=>'Bạn đã tạo lịch đăng ký thực tập thành công']);
     }

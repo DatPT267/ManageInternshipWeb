@@ -11,11 +11,6 @@
                 {{$message}}
             </div>
         @endif
-        @if (session('fail'))
-            <div class="alert alert-warning">
-                {{session('fail')}}
-            </div>
-        @endif
         <form action="{{route('reg.schedule', $user)}}" method="post">
             @csrf
             <table class="table table-striped table-bordered table-hover">
@@ -127,8 +122,8 @@
                                 ...
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                    <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Không, thoát</button>
+                                    <button type="submit" class="btn btn-primary btn-submit">Đúng, lưu lại</button>
                                 </div>
                             </div>
                             </div>
@@ -166,15 +161,32 @@
                 var thu4 = $('#thu4 option:selected').val();
                 var thu5 = $('#thu5 option:selected').val();
                 var thu6 = $('#thu6 option:selected').val();
-                var output = "<ul class='list-group'>"+
-                "<li class='list-group-item'>Thứ 2: <strong>"+check(thu2)+"</strong></li>"+
-                "<li class='list-group-item'>Thứ 3: <strong>"+check(thu3)+"</strong></li>"+
-                "<li class='list-group-item'>Thứ 4: <strong>"+check(thu4)+"</strong></li>"+
-                "<li class='list-group-item'>Thứ 5: <strong>"+check(thu5)+"</strong></li>"+
-                "<li class='list-group-item'>Thứ 6: <strong>"+check(thu6)+"</strong></li>"+
-                "<li class='list-group-item'><h2 style='color: orange'>Bạn chắc chắn muốn lưu lịch này?</h2></li>"
-                +"</ul>";
-                $('.modal-body').html(output);
+                console.log(thu2);
+                if(thu2 == 'null' && thu3 == 'null' && thu4 == 'null' && thu5 == 'null' && thu6 == 'null'){
+                    var output = "<div class='alert alert-warning'>1 tuần phải có ít nhất 1 ngày làm!</div>"+
+                    "<ul class='list-group'>"+
+                        "<li class='list-group-item'>Thứ 2: <strong>"+check(thu2)+"</strong></li>"+
+                        "<li class='list-group-item'>Thứ 3: <strong>"+check(thu3)+"</strong></li>"+
+                        "<li class='list-group-item'>Thứ 4: <strong>"+check(thu4)+"</strong></li>"+
+                        "<li class='list-group-item'>Thứ 5: <strong>"+check(thu5)+"</strong></li>"+
+                        "<li class='list-group-item'>Thứ 6: <strong>"+check(thu6)+"</strong></li>"
+                    +"</ul>";
+                    $('.modal-body').html(output);
+                    $('.btn-submit').hide();
+                    $('.btn-close').text('Thoát');
+                }else{
+                    var output = "<ul class='list-group'>"+
+                    "<li class='list-group-item'>Thứ 2: <strong>"+check(thu2)+"</strong></li>"+
+                    "<li class='list-group-item'>Thứ 3: <strong>"+check(thu3)+"</strong></li>"+
+                    "<li class='list-group-item'>Thứ 4: <strong>"+check(thu4)+"</strong></li>"+
+                    "<li class='list-group-item'>Thứ 5: <strong>"+check(thu5)+"</strong></li>"+
+                    "<li class='list-group-item'>Thứ 6: <strong>"+check(thu6)+"</strong></li>"+
+                    "<li class='list-group-item'><h2 style='color: orange'>Bạn chắc chắn muốn lưu lịch này?</h2></li>"
+                    +"</ul>";
+                    $('.btn-close').text('Không, thoát');
+                    $('.btn-submit').show();
+                    $('.modal-body').html(output);
+                }
             });
         })
     </script>

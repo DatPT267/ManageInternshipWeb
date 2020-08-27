@@ -45,6 +45,7 @@ class CheckController extends Controller
         ],[
             'chon-task.required' => 'Bạn chưa chọn task làm việc trong ngày'
         ]);
+
         $schedule = Schedule::whereRaw("date(date) = '" . $request->input('ngaythuctap'). "'")->first();
         $input = $request->input('chon-task');
         $now = Carbon::now('asia/Ho_Chi_Minh')->toDateTimeString();
@@ -62,7 +63,9 @@ class CheckController extends Controller
             $detailCheck = new DetailCheck();
             $detailCheck->check_id = $check->id;
             $detailCheck->task_id = (int)$value;
-            // dd($detailCheck);
+            $status = Task::find((int)$value);
+            $detailCheck->status = $status->status;
+            // dd($detailCheck->status);
             $detailCheck->save();
         }
         // dd($check->id);
@@ -110,6 +113,10 @@ class CheckController extends Controller
             $task = Task::find((int)$value);
             $task->status = (int)$arrStatusTask[$key];
             // dd($task->status);
+            $detailCheck = DetailCheck::where('check_id',$checkout->id)->where('task_id', $task->id)->first();
+            // dd($detailCheck);
+            $detailCheck->status = (int)$arrStatusTask[$key];
+            $detailCheck->save();
             $task->save();
         }
 

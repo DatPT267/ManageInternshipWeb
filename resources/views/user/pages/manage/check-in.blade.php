@@ -62,15 +62,15 @@
                                             <td>{{$task->task->name}}</td>
                                             <td>
                                                 @if ($task->task->status == 0)
-                                                    <span class="badge" style="background-color: #0000FF; font-size: 15px">To-do</span>
+                                                    <span class="badge" style="background-color: #0000FF; font-size: 15px" >To-do</span>
                                                 @elseif($task->task->status == 1)
-                                                    <span class="badge" style="background-color: #00BFFF; font-size: 15px">Doing</span>
+                                                    <span class="badge" style="background-color: #00BFFF; font-size: 15px" >Doing</span>
                                                 @elseif($task->task->status == 2)
-                                                    <span class="badge" style="background-color: #FFA500; font-size: 15px">Review</span>
+                                                    <span class="badge" style="background-color: #FFA500; font-size: 15px" >Review</span>
                                                 @elseif($task->task->status == 3)
-                                                    <span class="badge" style="background-color: #00FF7F; font-size: 15px">Done</span>
+                                                    <span class="badge" style="background-color: #00FF7F; font-size: 15px" >Done</span>
                                                 @elseif($task->task->status == 4)
-                                                    <span class="badge" style="background-color: #FF0000; font-size: 15px">Pending</span>
+                                                    <span class="badge" style="background-color: #FF0000; font-size: 15px" >Pending</span>
                                                 @endif
                                             </td>
                                             <td>

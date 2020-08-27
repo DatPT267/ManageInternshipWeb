@@ -30,10 +30,19 @@
             <td>{{$ta->note}}</td>
             <td>
                 @if($ta->status==1)
-                {{"Đang hoạt động"}}
+                {{"Todo"}}
                 @endif
-                @if($ta->status==0)
-                {{"Không hoạt động"}}
+                @if($ta->status==2)
+                {{"Doing"}}
+                @endif
+                @if($ta->status==3)
+                {{"Review"}}
+                @endif
+                @if($ta->status==4)
+                {{"Done"}}
+                @endif
+                @if($ta->status==5)
+                {{"Pending"}}
                 @endif
             </td>
             <td class="center">

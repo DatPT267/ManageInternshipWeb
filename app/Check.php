@@ -15,4 +15,9 @@ class Check extends Model
     {
         return $this->hasOne('App\DetailCheck', 'check_id', 'id');
     }
+
+    public function schedule()
+    {
+        return $this->belongsTo('App\Schedule', 'schedule_id', 'id');
+    }
 }

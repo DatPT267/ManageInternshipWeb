@@ -11,8 +11,7 @@
                 {{$message}}
             </div>
         @endif
-        <form action="{{route('reg.schedule', $user)}}" method="post">
-            @csrf
+        @if ($check == 1)
             <table class="table table-striped table-bordered table-hover">
                 <thead>
                     <tr align="center">
@@ -21,119 +20,151 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="odd gradeX" align="center">
-                        <td>Thứ 2</td>
-                        <td>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="inputGroupSelect01">Ca làm</label>
+                    @foreach ($scheduleUser as $item)
+                        <tr class="odd gradeX" align="center">
+                            <td>
+                                @switch(\Carbon\Carbon::parse($item->date)->isoFormat('dddd'))
+                                    @case('Monday')
+                                        Thứ 2
+                                        @break
+                                    @case('Tuesday')
+                                        Thứ 3
+                                        @break
+                                    @case('Wednesday')
+                                        Thứ 4
+                                        @break
+                                    @case('Thursday')
+                                        Thứ 5
+                                        @break
+                                    @case('Friday')
+                                        Thứ 6
+                                        @break
+                                    @default
+                                @endswitch
+                            </td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    @if ($item->session == 0)
+                                        Cả ngày
+                                    @elseif($item->session == 1)
+                                        Ca sáng
+                                    @else
+                                        Ca chiều
+                                    @endif
                                 </div>
-                                <select class="custom-select" name="thu2" id="thu2">
-                                    <option selected value="null">Không làm</option>
-                                    <option value="0">Cả ngày</option>
-                                    <option value="1">Ca sáng</option>
-                                    <option value="2">Ca chiều</option>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="odd gradeX" align="center">
-                        <td>Thứ 3</td>
-                        <td>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="inputGroupSelect01">Ca làm</label>
-                                </div>
-                                <select class="custom-select" name="thu3" id="thu3">
-                                    <option selected value="null">Không làm</option>
-                                    <option value="0">Cả ngày</option>
-                                    <option value="1">Ca sáng</option>
-                                    <option value="2">Ca chiều</option>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="odd gradeX" align="center">
-                        <td>Thứ 4</td>
-                        <td>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="inputGroupSelect01">Ca làm</label>
-                                </div>
-                                <select class="custom-select" name="thu4" id="thu4">
-                                    <option selected value="null">Không làm</option>
-                                    <option value="0">Cả ngày</option>
-                                    <option value="1">Ca sáng</option>
-                                    <option value="2">Ca chiều</option>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="odd gradeX" align="center">
-                        <td>Thứ 5</td>
-                        <td>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="inputGroupSelect01">Ca làm</label>
-                                </div>
-                                <select class="custom-select" name="thu5" id="thu5">
-                                    <option selected value="null">Không làm</option>
-                                    <option value="0">Cả ngày</option>
-                                    <option value="1">Ca sáng</option>
-                                    <option value="2">Ca chiều</option>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="odd gradeX" align="center">
-                        <td>Thứ 6</td>
-                        <td>
-                            <div class="input-group mb-3">
-                                <div class="input-group-prepend">
-                                    <label class="input-group-text" for="inputGroupSelect01">Ca làm</label>
-                                </div>
-                                <select class="custom-select" name="thu6" id="thu6">
-                                    <option selected value="null">Không làm</option>
-                                    <option value="0">Cả ngày</option>
-                                    <option value="1">Ca sáng</option>
-                                    <option value="2">Ca chiều</option>
-                                </select>
-                            </div>
-                        </td>
-                    </tr>
-                    @if ($check == 0)
-                    <tr class="odd gradeX" align="center" >
-                        <td colspan="3">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" id="confirm">
-                                Lưu
-                            </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalCenterTitle">Bạn chắc chắn với điều này?</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                ...
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Không, thoát</button>
-                                    <button type="submit" class="btn btn-primary btn-submit">Đúng, lưu lại</button>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                        </td>
-                    </tr>
-                    @endif
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
-        </form>
+        @else
+            <form action="{{route('reg.schedule', $user)}}" method="post">
+                @csrf
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr align="center">
+                            <th>Ngày ({{$day_start}} -> {{$day_end}})</th>
+                            <th>Ca Làm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="odd gradeX" align="center">
+                            <td>Thứ 2</td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select" name="thu2" id="thu2">
+                                        <option selected value="null">Không làm</option>
+                                        <option value="0">Cả ngày</option>
+                                        <option value="1">Ca sáng</option>
+                                        <option value="2">Ca chiều</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd gradeX" align="center">
+                            <td>Thứ 3</td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select" name="thu3" id="thu3">
+                                        <option selected value="null">Không làm</option>
+                                        <option value="0">Cả ngày</option>
+                                        <option value="1">Ca sáng</option>
+                                        <option value="2">Ca chiều</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd gradeX" align="center">
+                            <td>Thứ 4</td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select" name="thu4" id="thu4">
+                                        <option selected value="null">Không làm</option>
+                                        <option value="0">Cả ngày</option>
+                                        <option value="1">Ca sáng</option>
+                                        <option value="2">Ca chiều</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd gradeX" align="center">
+                            <td>Thứ 5</td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select" name="thu5" id="thu5">
+                                        <option selected value="null">Không làm</option>
+                                        <option value="0">Cả ngày</option>
+                                        <option value="1">Ca sáng</option>
+                                        <option value="2">Ca chiều</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd gradeX" align="center">
+                            <td>Thứ 6</td>
+                            <td>
+                                <div class="input-group mb-3">
+                                    <select class="custom-select" name="thu6" id="thu6">
+                                        <option selected value="null">Không làm</option>
+                                        <option value="0">Cả ngày</option>
+                                        <option value="1">Ca sáng</option>
+                                        <option value="2">Ca chiều</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="odd gradeX" align="center" >
+                            <td colspan="3">
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" id="confirm">
+                                    Lưu
+                                </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Bạn chắc chắn với điều này?</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                    ...
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Không, thoát</button>
+                                        <button type="submit" class="btn btn-primary btn-submit">Đúng, lưu lại</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </form>
+        @endif
     </div>
 @endsection
 @section('script')

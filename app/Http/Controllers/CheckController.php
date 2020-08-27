@@ -9,6 +9,7 @@ use App\Member;
 use App\Schedule;
 use App\Task;
 use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -117,6 +118,52 @@ class CheckController extends Controller
     //========================================END Check-out=======================================
 
     public function hisSchedule($id){
-        return view('user.pages.manage.view-history-check');
+        $now = Carbon::now('asia/Ho_Chi_Minh');
+        $start_week = $now->startOfWeek()->format('Y-m-d');
+        $end_week = $now->endOfWeek()->format('Y-m-d');
+        $checks = Check::whereRaw("date(date_start) BETWEEN '" . $start_week. "' AND '".$end_week."'")->where('user_id', $id)->get();
+        // dd($checks);
+        $timeTotal = 0;
+        foreach ($checks as $key => $check) {
+            $t1 = 0;
+            $t2 = 0;
+            if($check->date_start !== null && $check->date_end !== null){
+                $arrTime = explode(" ", $check->date_start);
+                $arrYMD = explode("-", $arrTime[0]);
+                $year = (int)$arrYMD[0];
+                $month = (int)$arrYMD[1];
+                $day = (int)$arrYMD[2];
+                $tz = 'asia/ho_chi_minh';
+                $time_sang = Carbon::create($year, $month, $day, 12, 00, 00, $tz);
+                $time_chieu = Carbon::create($year, $month, $day, 13, 30, 00, $tz);
+
+                $hour_start = (int)Carbon::parse($check->date_start)->hour;
+                $minute_start = (int)Carbon::parse($check->date_start)->minute;
+                $hour_end = (int)Carbon::parse($check->date_end)->hour;
+                $minute_end = (int)Carbon::parse($check->date_end)->minute;
+
+                $start = Carbon::create($year, $month, $day, $hour_start, $minute_start, 00, $tz);
+                $end = Carbon::create($year, $month, $day, $hour_end, $minute_end, 00, $tz);
+                // dd($start);
+                $t1 = $time_sang->diffInMinutes($start);
+                // $t1 = $time_sang->diffInHours($start);
+                $t2 = $time_chieu->diffInMinutes($end);
+                $timeTotal += $t1 + $t2;
+            }
+        }
+        // dd($timeTotal);
+        $ngay = 0;
+        $gio = 0;
+        $phut = 0;
+        //kiểm tra xem có qua ngày không
+        $gio = floor($timeTotal / 60);
+        $phut = $timeTotal % 60;
+
+        if($gio >= 24){
+            $ngay = floor($gio / 24);
+            $gio = $gio % 24;
+        }
+
+        return view('user.pages.manage.view-history-check', ['checks' => $checks, 'timeTotal' => $timeTotal, 'ngay'=>$ngay, 'gio' => $gio, 'phut'=>$phut]);
     }
 }

@@ -35,13 +35,12 @@ class ScheduleController extends Controller
                 $now->addWeek();
                 $startDayOfWeek = $now->startOfWeek()->format('Y-m-d');
                 $endDayOfWeek = $now->endOfWeek()->format('Y-m-d');
-                $scheduleUser = Schedule::select('date')
-                            ->where('user_id', $id)
+                $scheduleUser = Schedule::where('user_id', $id)
                             ->whereBetween('date', [$startDayOfWeek, $endDayOfWeek])
                             ->get();
                 if(count($scheduleUser) > 0){
                     $check = 1;
-                    return view('user.pages.manage.register-schedule', ['user'=>$id, 'check'=>$check, 'day_start'=>$startDayOfWeek, 'day_end'=>$endDayOfWeek, 'message'=> 'Bạn đã đăng ký lịch thực tập trước đó!']);
+                    return view('user.pages.manage.register-schedule', ['user'=>$id, 'check'=>$check, 'day_start'=>$startDayOfWeek, 'day_end'=>$endDayOfWeek, 'scheduleUser'=>$scheduleUser, 'message'=> 'Bạn đã đăng ký lịch thực tập trước đó!']);
                 }
             }
             return view('user.pages.manage.register-schedule', ['user'=>$id, 'check'=> 0, 'message'=> '','day_start'=>$startDayOfWeek, 'day_end'=>$endDayOfWeek ]);

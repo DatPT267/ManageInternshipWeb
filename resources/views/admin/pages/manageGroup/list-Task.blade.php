@@ -1,7 +1,7 @@
 @extends('admin.layout.index')
 @section('content')
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Danh sách bài tập nhóm</h1>
+    <h1 class="h3 mb-0 text-gray-800">Danh sách bài tập: {{$group}}</h1>
 </div>
 
 @if (session('success'))
@@ -23,5 +23,27 @@
             <th>Hoạt động</th>
         </tr>
     </thead>
+    <tbody>
+        @foreach ($listTask as $ta)
+        <tr class="odd gradeX" align="center">
+            <td>{{$ta->name}}</td>
+            <td>{{$ta->note}}</td>
+            <td>
+                @if($ta->status==1)
+                {{"Đang hoạt động"}}
+                @endif
+                @if($ta->status==0)
+                {{"Không hoạt động"}}
+                @endif
+            </td>
+            <td class="center">
+                <form action="" method="post">
+                    <a href="" class="btn btn-info">Cập nhật</a>
+                </form>
+               
+            </td>
+        </tr>
+        @endforeach
+    </tbody>
 </table>
 @endsection

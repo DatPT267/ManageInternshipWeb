@@ -15,4 +15,6 @@ class Group extends Model
     {
         return $this->belongsTo('App\Internshipclass', 'class_id', 'id');
     }
+  
+
 }

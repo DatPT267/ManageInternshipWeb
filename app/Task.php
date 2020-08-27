@@ -10,4 +10,10 @@ class Task extends Model
     const UPDATED_AT = null;
 
     protected $table = "task";
+
+
+    public function group()
+    {
+        return $this->hasMany('App\Group', 'id', 'group_id');
+    }
 }

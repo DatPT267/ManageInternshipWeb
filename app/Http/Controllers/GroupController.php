@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Group;
 use App\Member;
+use App\Task;
 use App\Internshipclass;
 use Illuminate\Http\Request;
 
@@ -97,7 +97,10 @@ class GroupController extends Controller
     }
 
     public function getListTask($id){
-        return view('admin.pages.manageGroup.list-task');
+        $listTask = Task::where('group_id', $id)->get();
+        $group = Group::find($id);
+        // return $listTask->group->name->first();
+        return view('admin.pages.manageGroup.list-task', ['listTask'=>$listTask, 'group'=>$group->name ]);
     }
     public function getListEvaluate($id){
         return view('admin.pages.manageGroup.list-Evaluate');
@@ -131,19 +134,25 @@ class GroupController extends Controller
         $this->validate($request,
         [
           
-            'name' =>'required|unique:Group,name',
+            'name' =>'required',
             'topic'=>'required',
             'note'=>'required',
         
         ],
         [
-            'name.unique' => 'Tên nhóm đã tồn tại',
             'name.required' =>'Bạn chưa nhập tên nhóm',
             'topic.required' => 'Bạn chưa nhập đề tài nhóm',
           
         ]);
-       
-       
+        $grounpcheck = Group::where('class_id', $request->namedotthuctap)->get();
+        foreach ($grounpcheck as $gr) {
+            if ($gr->name == $request->name) {
+                return back()->with('thongbao', 'Tên nhóm đã tồn tại');
+            }
+        }
+
+        
+        
         $group = new Group;
         $group->name = $request->name;
         $group->topic = $request->topic;

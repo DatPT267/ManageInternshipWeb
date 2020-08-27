@@ -37,8 +37,8 @@
                     <form action="{{route('internshipClass.destroy', $lc->id)}}" method="post">
                         @csrf
                         @method('DELETE')
-                        <input type="submit" value="Delete" class="btn btn-danger">
-                        <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Edit</a>
+                        <input type="submit" value="Xóa" class="btn btn-danger">
+                        <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
                     </form>
                 </td>
             </tr>

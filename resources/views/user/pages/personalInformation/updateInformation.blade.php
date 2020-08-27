@@ -21,6 +21,8 @@
             </div>
         @endif
         <form action="{{route('user.update', $user->id)}}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
             <center>
                 <img src="image/user/{{$user->image}}" name="aboutme" width="200" height="200" class="avatar img-circle">
                 <div class="d-flex justify-content-center">
@@ -33,11 +35,6 @@
                 </h3>
             </center>
             <hr>
-            @csrf
-            {{-- <div class="form-group">
-                <label for="image">Thay ảnh đại diện</label>
-                <input type="file" class="form-control file-upload" name="image" id="image">
-            </div> --}}
             <div class="form-group">
                 <label for="account">Tên đăng nhập</label>
                 <input type="email" id="account" disabled class="form-control" name="account" value="{{$user->account}}">

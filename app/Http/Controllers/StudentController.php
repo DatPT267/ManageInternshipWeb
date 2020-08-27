@@ -94,7 +94,7 @@ class StudentController extends Controller
             $data[$key] = [
                 'id' => $key,
                 'name' => $value->task->name,
-                'status' => $value->task->status
+                'status' => $value->status
             ];
         }
         $note = $check->note;

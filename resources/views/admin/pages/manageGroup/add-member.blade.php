@@ -55,6 +55,7 @@
                             <select name="position" id="position" style="flex: 5" class="form-control">
                                 <option value="0" selected>Thành viên</option>
                                 <option value="1">Nhóm trưởng</option>
+                                <option value="2">GVHD</option>
                             </select>
                         </div>
                         <h3 style="text-align: center" id="message">Bạn muốn thêm thành viên vào nhóm</h3>
@@ -74,9 +75,18 @@
         $('#list-member').DataTable({
             'info': false
         });
+        function check(postion){
+            if(postion == '0'){
+                return  'Thành viên';
+            } else if(postion == '1'){
+                return 'Nhóm trưởng';
+            }else{
+                return 'GVHD';
+            }
+        }
         $(document).ready(function (){
             var url = $('.btn-addmember').attr('data-url');
-            console.log(url);
+            // console.log(url);
             $('.btn-addmember').click(function(){
                 $('#confirmModal').modal('show');
                 $('.message2').hide();
@@ -89,7 +99,7 @@
 
             $('#addmember').on('submit', function (e) {
                 e.preventDefault();
-
+                var position = check($('#position option:selected').val());
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -100,6 +110,7 @@
                     beforeSend:function(){
                         $('.message2').hide();
                         $('.btn-add').text('Adding ....');
+                        $('.btn-add').prop('disabled', true);
                         $('.btn-close').hide();
                         $('.modal-body').hide();
                         $('.modal-body-2').show();
@@ -108,11 +119,12 @@
                     success: function (response) {
                         if(response.data == 0 && response.position == 0){
                             setTimeout(() => {
+                                console.log('ok');
                                 $('#confirmModal').modal('show');
                                 $('.modal-body').show();
                                 $('.modal-body-2').hide();
                                 $('.modal-body').html(
-                                    '<div class="alert alert-success"> Bạn đã thêm thành công thành viên <strong>'+response.name+'</strong></div>'
+                                    '<div class="alert alert-success"> Bạn đã thêm thành công '+position+' <strong>'+response.name+'</strong></div>'
                                 );
                                 $('.btn-add').hide();
                                 $('.btn-close').show();
@@ -120,11 +132,12 @@
                                 $('.btn-close').click(function(){
                                     location.reload(true);
                                 });
-                            }, 1000);
+                            }, 500);
                         }else if(response.data == 1 && response.position == 1){
+                            $('.btn-add').prop('disabled', false);
                             $('.message2').show();
                             $('.modal-body').show();
-                            $('.message2').text('Nhóm đã có trưởng nhóm!!!');
+                            $('.message2').text("Nhóm đã có "+position+"!!!");
                             $('.btn-add').text('Đúng, thêm vào');
                             $('.modal-body-2').hide();
                             $('.btn-close').show();

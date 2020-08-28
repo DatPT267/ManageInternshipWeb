@@ -45,7 +45,7 @@
                     @endif
                 </td>
                 <td class="center">
-                    <button class="btn btn-danger btn-circle delete" id="{{$member->id}}" data-name="{{$member->user->name}}"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-danger btn-circle delete" id="{{$member->id}}" data-name="{{$member->user->name}}" data-url="{{route('member.delete', [$group->id, $member->id])}}"><i class="fas fa-trash"></i></button>
                 </td>
             </tr>
 
@@ -75,7 +75,7 @@
                 <h5 class="modal-title" id="staticBackdropLabel" style="text-align: center">Xác nhận xóa?</h5>
             </div>
             <form id="deleteMember">
-                <input type="hidden" id="_token" value="{{ csrf_token() }}">
+                <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
                 @method('DELETE')
                 <div class="modal-body">
                     <input type="text" id="idmember" value="" hidden>
@@ -108,7 +108,14 @@
 
                 var id = $('#idmember').val();
                 var idGroup = $('#btn-delete').attr('data-idGroup');
-                var url = '/admin/group/' +idGroup+'/delMember/' + id;
+                var url = $('.delete').attr('data-url');
+                var token = $('#_token').val();
+                console.log(url);
+                // $.ajaxSetup({
+                //     headers: {
+                //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                //     }
+                // });
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -118,6 +125,7 @@
                     contentType: false,
                     processData: false,
                     beforeSend:function(){
+                        $('#btn-delete').prop('disabled', true);
                         $('#btn-delete').text('Deleting ......');
                         $('#btn-cancel').hide();
                         $('.modal-body').html('<div class="alert alert-danger">Đang xóa ........</div>');
@@ -135,7 +143,7 @@
                                 $('#btn-cancel').click(function (){
                                     window.location.reload(true);
                                 });
-                            }, 1000);
+                            }, 500);
                         } else{
                             $('.modal-body').text('Xóa thất bại!');
                             $('#btn-cancel').text('Cancel');

@@ -19,9 +19,6 @@
                 <td>{{$r->content}}</td>
                 <td>{{$r->member->user->name}}</td>
                 <td class="center">
-                    {{-- <a href="#" class="btn btn-danger btn-circle">
-                        <i class="fas fa-trash"></i>
-                    </a> --}}
                     <a href="#" class="btn btn-info btn-circle" data-toggle="modal" data-target=".show-detail">
                         <i class="fas fa-info-circle"></i>
                     </a>
@@ -53,7 +50,9 @@
 @endsection
 @section('script')
     <script>
-        $('#list-review').dataTable({
-        });
+        $(document).ready(function(){
+            $('#list-review').dataTable({});
+
+        })
     </script>
 @endsection

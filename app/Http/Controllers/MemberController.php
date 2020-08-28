@@ -30,7 +30,7 @@ class MemberController extends Controller
 
     public function addMember($id){
         $group = Group::find($id);
-        $students = User::where('class_id', $group->class_id)->where('status', '=', '0')->whereNotExists(function ($query){
+        $students = User::where('class_id', $group->class_id)->where('status', '=', '1')->whereNotExists(function ($query){
             $query->select('*')
                 ->from('member')
                 ->whereRaw('member.user_id = users.id');
@@ -41,15 +41,18 @@ class MemberController extends Controller
     }
 
     public function storeMember(Request $request, $id, $id_member){
-        // $user = User::find($id_member);
-        // $group = Group::find($id);
 
         $memberNew = new Member();
         $memberNew->group_id = $id;
         $memberNew->user_id = $id_member;
-        if($request->position == 1){
-            // $member = Member::where('group_id', $id)->where('position', 1)->first();
-            $member = Member::where('group_id', $id)->where('position', 1)->first();
+
+        $position = $request->input('position');
+        if($position == 0){
+            $memberNew->position = $position;
+            $memberNew->save();
+            return response()->json(['data'=> 0, 'position'=> 0, 'name'=>$memberNew->user->name]);
+        } else{
+            $member = Member::where('group_id', $id)->where('position', $position)->first();
             if($member == null){
                 $memberNew->position = $request->position;
                 $memberNew->save();
@@ -57,10 +60,6 @@ class MemberController extends Controller
             }else{
                 return response()->json(['data'=> 1,'position'=> 1]);
             }
-        } else{
-            $memberNew->position = $request->position;
-            $memberNew->save();
-            return response()->json(['data'=> 0, 'position'=> 0, 'name'=>$memberNew->user->name]);
         }
     }
 

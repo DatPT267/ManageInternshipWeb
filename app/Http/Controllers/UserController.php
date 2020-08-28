@@ -88,8 +88,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        //
+    {   
+        $class = Internshipclass::all();
+        return view('admin.pages.manageStudents.add', ['class'=>$class]);
     }
 
     /**
@@ -211,11 +212,11 @@ class UserController extends Controller
                 $file =$request->file('image');
                 $duoi = $file->getClientOriginalExtension();
                 if ($duoi != 'jpg' && $duoi !='png' && $duoi != 'jpeg') {
-                    return redirect('admin/phong/sua/'.$phongtn->id)->with('thongbao' ,'Bạn chỉ chọn được file có đuôi  jpg, png, jpeg ');
+                    return redirect('admin/manageStudents/'.$id.'/edit')->with('thongbao' ,'Bạn chỉ chọn được file có đuôi  jpg, png, jpeg ');
                 }
                 $name = $file->getClientOriginalName();
                 $Hinh= Str::random(4)."_".$name;
-                while (file_exists("upload/tintuc".$Hinh)) 
+                while (file_exists("image/user".$Hinh)) 
                 {
                     $Hinh= Str::random(4)."_".$name;
                 }
@@ -227,4 +228,55 @@ class UserController extends Controller
             $user->save();
         return back()->with('thongbao','Cập nhật thành công');
     }
+
+    public function postThem(Request $request)
+    {
+    
+            $this->validate($request,
+                [
+                    'name' =>'required',
+                    'email'=>'required|email',
+                    'phone'=>'required',
+                    'address'=>'required'
+                ],
+                [
+                    'name.required' =>'Bạn chưa nhập tên sinh viên',
+                    'email.email' => 'Bạn chưa nhập Email',
+                    'phone' => 'Bạn chưa nhập SĐT',
+                    'address'=> 'Bạn chưa nhập địa chỉ',
+                ]);
+            
+            
+            $user = new User();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->address = $request->address;
+            $user->account = "aa";
+            if ($request->hasFile('image')) 
+            {   
+
+                $file =$request->file('image');
+                $duoi = $file->getClientOriginalExtension();
+                if ($duoi != 'jpg' && $duoi !='png' && $duoi != 'jpeg') {
+                    return redirect('admin/manageStudents/create')->with('thongbao' ,'Bạn chỉ chọn được file có đuôi  jpg, png, jpeg ');
+                }
+                $name = $file->getClientOriginalName();
+                $Hinh= Str::random(4)."_".$name;
+                while (file_exists("image/user".$Hinh)) 
+                {
+                    $Hinh= Str::random(4)."_".$name;
+                }
+                $file->move("image/user",$Hinh);
+                $user->image = $Hinh;
+            }  
+            else
+            {   
+                $user->image="";
+            }
+            $user->save();
+    
+      
+            return back()->with('thongbao','Thêm thành công');
+    }   
 }

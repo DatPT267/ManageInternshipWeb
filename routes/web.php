@@ -42,6 +42,7 @@ Route::group(['prefix' => 'admin'], function () {
     //Quản lý sinh viên
     Route::resource('manageStudents', 'UserController');
     Route::post('manageStudents/sua/{id}', 'UserController@postSua')->name('updatestudent');
+    Route::post('them', 'UserController@postThem')->name('addstudent');
 
     //Quản lý giảng viên
     // Route::resource('manageLecturers', 'UserController');

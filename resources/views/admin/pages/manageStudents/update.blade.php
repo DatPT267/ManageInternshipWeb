@@ -37,9 +37,7 @@
 
                     <div class="form-group">
                         <label style="color: #000;">Ảnh cá nhân</label>
-                        
-                            <p><img src="image/user/{{$user->image}}" alt="" width="300px" height="300px"></p>
-                     
+                        <p><img src="image/user/{{$user->image}}" alt="" width="300px" height="300px"></p>
                         <input type="file" name="image" class="form-control">
                     </div>
                     <div class="form-group">

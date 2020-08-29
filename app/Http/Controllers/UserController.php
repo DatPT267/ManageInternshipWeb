@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -180,4 +181,40 @@ class UserController extends Controller
     {
         //
     }
+
+    public function changepassword( Request $request, $id){
+        $this->validate($request, [
+            'password' => 'required',
+            'password1' => 'required|min:6|max:50',
+            'password2'=> 'required|same:password1',
+        ],[
+            'password.required' => 'Bạn chưa nhập mật khẩu cũ',
+            'password1.required' => 'Bạn chưa nhập mật khẩu mới',
+            'password1.min' => 'Mật khẩu ít nhất phải có 6 kí tự',
+            'password1.max' => 'Mật khẩu nhiều nhất chỉ có 50 kí tự',
+            'password2.required' => 'Bạn chưa nhập mật khẩu mới',
+            'password2.min' => 'Mật khẩu ít nhất phải có 6 kí tự',
+            'password2.max' => 'Mật khẩu nhiều nhất chỉ có 50 kí tự',
+            'password2.same'=>  'Mật khẩu mới không khớp',
+        ]);
+
+        if(Auth::check()){
+            $matkhau = $request->password;
+            $password = Auth::User()->password;
+            $id = Auth::user()->id;
+            if(Hash::check($matkhau, $password)){
+
+                $user = User::find(Auth::user()->id);
+                $user->password =  bcrypt($request->password2);
+                $user->save();
+                return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Đổi mật khẩu thành công ');
+            }
+
+            else{
+                return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Mật khẩu cũ không đúng');
+            }
+        }
+           
+    }
+
 }

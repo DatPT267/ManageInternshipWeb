@@ -33,6 +33,11 @@ Route::get('/admin',function ()
 Route::group(['prefix' => 'admin'], function () {
     //quản lý đợt thực tập
     Route::resource('internshipClass', 'internshipclassController');
+    Route::post('them', 'internshipclassController@postThem')->name('addclass');
+    Route::post('internshipClass/sua/{id}', 'internshipclassController@postSua')->name('updateclass');
+    Route::post('internshipClass/member/{nameclass}/{amount}', 'internshipclassController@postMember')->name('member');
+    Route::get('internshipClass/list-member/{class_id}', 'internshipclassController@getList')->name('list');
+
 
     //Quản lý nhóm
     Route::resource('manageGroup', 'GroupController');
@@ -70,7 +75,6 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 
-
 //User
 
 Route::get('/updateInformation', function () {
@@ -85,5 +89,18 @@ Route::get('logout', 'UserController@getLogout')->name('logout');
 Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
 
 
+
+Route::get('/user/{id}/edit', 'UserController@edit');
+Route::post('/user/{id}', 'UserController@update')->name('user.update');
+
+Route::post('/users/{id}/edit/changepassword', 'UserController@changepassword')->name('changepassword');
+
+
+
+//cập nhật thông tin user và update mật khẩu
+
+
+
 //cập nhật thông tin user và update mật khẩu
 Route::resource('user', 'UserController');
+

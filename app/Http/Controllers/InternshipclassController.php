@@ -7,7 +7,7 @@ use App\Internshipclass;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use App \ Http \ Controllers \ changeTitle;
+use App\Controllers\changeTitle;
 
 
 class InternshipclassController extends Controller

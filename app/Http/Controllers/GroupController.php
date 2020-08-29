@@ -14,7 +14,8 @@ class GroupController extends Controller
      */
     public function index()
     {
-        return view('admin.pages.manageGroup.list');
+        $listGroup = Group::all();
+        return view('admin.pages.manageGroup.list', ['listGroup'=>$listGroup]);
     }
 
     /**

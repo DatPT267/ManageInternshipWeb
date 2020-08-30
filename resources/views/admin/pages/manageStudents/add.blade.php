@@ -40,6 +40,14 @@
                         <label style="color: #000;">Địa chỉ</label>
                         <input class="form-control" name="address" placeholder="Nhập địa chỉ" />
                     </div>
+                    <div class="form-group">
+                        <label style="color: #000;">Lớp Thực Tập</label>
+                        <select class="form-control" id="district_choice" name="namedotthuctap">
+                            @foreach($class as $tr)
+                            <option value="{{$tr->id}}">{{$tr->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <div class="">
                         <button  style=" color: #fff;
                         background-color: #6499ff;

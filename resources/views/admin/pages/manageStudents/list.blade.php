@@ -41,7 +41,7 @@
                         @csrf
                         @method('DELETE')
                         <input type="submit" value="Delete" class="btn btn-danger">
-                        <a href="{{route('manageStudents.edit', $ls->id)}}" class="btn btn-info">Edit</a>
+                        <a href="{{route('editUser', $ls->id)}}" class="btn btn-info">Edit</a>
                     </form>
                 </td>
             </tr>

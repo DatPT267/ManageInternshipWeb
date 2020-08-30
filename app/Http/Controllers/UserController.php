@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
-use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
+use App\Internshipclass;
 
 class UserController extends Controller
 {
@@ -123,8 +124,14 @@ class UserController extends Controller
      */
     public function edit(User $user, $id)
     {
-        $user = User::where('id', $id)->get()->first();
-        return view('admin.pages.manageStudents.update', ['user'=>$user]);
+
+        if($id == Auth::id()){
+            $user = User::find(Auth::id());
+            return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
+        } else{
+            $user = User::find(Auth::id());
+            return redirect('user/'.Auth::id().'/edit')->with('user', $user);
+        }
     }
 
     /**
@@ -137,21 +144,17 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required|min:2|max:50',
             'email' => 'email'
         ],[
-            'name.required' => 'Bạn chưa nhập tên',
-            'name.min' => 'Tên ký tự bắt buộc trên 2 ký tự',
-            'name.max' => 'Tên ký tự bắt buộc trên 2 ký tự',
             'email.email' => 'Email chưa đúng'
             ]);
-        $user = User::find($id);
+        $user = User::find(Auth::id());
 
         if($request->hasFile('image')){
             $file = $request->file('image');
             $duoi = $file->getClientOriginalExtension();
             if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg'){
-                return redirect('user/'.$id)->with('fail', 'Bạn chỉ được chọn file có đuổi png, jpg, jpeg');
+                return redirect('user/'.Auth::id())->with('fail', 'Bạn chỉ được chọn file có đuổi png, jpg, jpeg');
             }
             $imgName = $file->getClientOriginalName();
             $hinh = Str::random(3).'_'.Carbon::now()->timestamp."_".$imgName;
@@ -164,13 +167,12 @@ class UserController extends Controller
             $user->image = $hinh;
         }
 
-        $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
         $user->address = $request->input('address');
         $user->save();
 
-        return redirect('user/'.$id.'/edit')->with('success', 'Bạn đã cập nhật thành công');
+        return redirect('user/'.Auth::id().'/edit')->with('success', 'Bạn đã cập nhật thành công');
     }
 
     /**
@@ -183,6 +185,7 @@ class UserController extends Controller
     {
         //
     }
+    
 
     public function postSua(Request $request, $id)
     {
@@ -221,7 +224,7 @@ class UserController extends Controller
                     $Hinh= Str::random(4)."_".$name;
                 }
                 $file->move("image/user",$Hinh);
-                unlink("image/user/".$user->image);
+                // unlink("image/user/".$user->image);
                 $user->image = $Hinh;
             }  
             
@@ -246,13 +249,119 @@ class UserController extends Controller
                     'address'=> 'Bạn chưa nhập địa chỉ',
                 ]);
             
-            
+                $fullName = $request->name;
+                $name = changeTitle($fullName);
+                $words = explode("-", $name);
+                $lastName = array_pop($words); 
+                $lastName = ucfirst( $lastName );
+                $acronym = "";
+                foreach ($words as $w) {
+                
+                  switch ($w[0]) {
+                    case "a":
+                        $w[0] = "A";
+                      break;
+                      case "b":
+                        $w[0] = "B";
+                      break;
+                      case "c":
+                        $w[0] = "C";
+                      break;
+                      case "d":
+                        $w[0] = "D";
+                      break;
+                      case "e":
+                        $w[0] = "E";
+                      break;
+                      case "f":
+                        $w[0] = "F";
+                      break;
+                      case "g":
+                        $w[0] = "G";
+                      break;
+                      case "h":
+                        $w[0] = "H";
+                      break;
+                      case "i":
+                        $w[0] = "I";
+                      break;
+                      case "j":
+                        $w[0] = "J";
+                      break;
+                      case "k":
+                        $w[0] = "K";
+                      break;
+                      case "l":
+                        $w[0] = "L";
+                      break;
+                      case "m":
+                        $w[0] = "M";
+                      break;
+                      case "n":
+                        $w[0] = "N";
+                      break;
+                      case "o":
+                        $w[0] = "O";
+                      break;
+                      case "p":
+                        $w[0] = "P";
+                      break;
+                      case "q":
+                        $w[0] = "Q";
+                      break;
+                      case "r":
+                        $w[0] = "R";
+                      break;
+                      case "s":
+                        $w[0] = "S";
+                      break;
+                      case "t":
+                        $w[0] = "T";
+                      break;
+                      case "u":
+                        $w[0] = "U";
+                      break;
+                      case "v":
+                        $w[0] = "V";
+                      break;
+                      case "w":
+                        $w[0] = "W";
+                      break;
+                      case "x":
+                        $w[0] = "X";
+                      break;
+                      case "y":
+                        $w[0] = "Y";
+                      break;
+                    default:
+                      $w[0] = "Z";
+                  }
+                  $acronym .= $w[0];
+                }
+                $lastName = $lastName .= $acronym;
+                $lastName1 = $lastName;
+                $dem = 0;
+    
+                do {
+                  $dem++;
+                  
+                  $lastName = $lastName1.''.$dem;
+                  $user = User::where('account', $lastName)->get()->first();
+                } while ($user != null);
+
             $user = new User();
             $user->name = $request->name;
             $user->email = $request->email;
             $user->phone = $request->phone;
             $user->address = $request->address;
-            $user->account = "aa";
+          
+            $user->password = bcrypt("123456789");
+            $user->status = 1;
+            $user->position = 1;
+            $user->class_id = $request->namedotthuctap;
+            $user->account = $lastName;
+
+
             if ($request->hasFile('image')) 
             {   
 
@@ -279,4 +388,47 @@ class UserController extends Controller
       
             return back()->with('thongbao','Thêm thành công');
     }   
+
+
+    public function changepassword( Request $request, $id){
+        $this->validate($request, [
+            'password' => 'required',
+            'password1' => 'required|min:6|max:50',
+            'password2'=> 'required|same:password1',
+        ],[
+            'password.required' => 'Bạn chưa nhập mật khẩu cũ',
+            'password1.required' => 'Bạn chưa nhập mật khẩu mới',
+            'password1.min' => 'Mật khẩu ít nhất phải có 6 kí tự',
+            'password1.max' => 'Mật khẩu nhiều nhất chỉ có 50 kí tự',
+            'password2.required' => 'Bạn chưa nhập mật khẩu mới',
+            'password2.min' => 'Mật khẩu ít nhất phải có 6 kí tự',
+            'password2.max' => 'Mật khẩu nhiều nhất chỉ có 50 kí tự',
+            'password2.same'=>  'Mật khẩu mới không khớp',
+        ]);
+
+        if(Auth::check()){
+            $matkhau = $request->password;
+            $password = Auth::User()->password;
+            $id = Auth::user()->id;
+            if(Hash::check($matkhau, $password)){
+
+                $user = User::find(Auth::user()->id);
+                $user->password =  bcrypt($request->password2);
+                $user->save();
+                return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Đổi mật khẩu thành công ');
+            }
+
+            else{
+                return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Mật khẩu cũ không đúng');
+            }
+        }
+           
+    }
+    public function editUser(User $user, $id)
+    {
+        $user = User::where('id', $id)->get()->first();
+        return view('admin.pages.manageStudents.update', ['user'=>$user]);
+    }
+
 }
+

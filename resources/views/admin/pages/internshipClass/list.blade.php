@@ -1,6 +1,5 @@
 @extends('admin.layout.index')
 @section('content')
-    <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Danh sách các đợt thực tập</h1>
     </div>
@@ -22,6 +21,7 @@
                 <th>Name</th>
                 <th>Start day</th>
                 <th>End day</th>
+                <th>Note</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -32,13 +32,13 @@
                 <td>{{$lc->name}}</td>
                 <td>{{$lc->start_day}}</td>
                 <td>{{$lc->end_day}}</td>
+                <td>{{$lc->note}}</td>
                 <td class="center">
-                    {{-- <a href="{{route('internshipClass.destroy', $lc->id)}}" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i></a> --}}
                     <form action="{{route('internshipClass.destroy', $lc->id)}}" method="post">
                         @csrf
                         @method('DELETE')
-                        <input type="submit" value="Delete" class="btn btn-danger">
-                        <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Edit</a>
+                        <input type="submit" value="Xóa" class="btn btn-danger">
+                        <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
                     </form>
                 </td>
             </tr>

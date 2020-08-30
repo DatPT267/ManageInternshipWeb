@@ -39,14 +39,13 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask');
     Route::get('manageGroup/list-evaluate/{id}', 'GroupController@getListEvaluate');
 
-    //Quản lý sinh viên
+    //lịch sử thực tập, lịch đăng ký thực tập của sinh viên (14-15)
     Route::group(['prefix' => 'student'], function () {
-        Route::get('/{id}/view-schedule', 'StudentController@viewSchedule');
-        // Route::get('/{id}/view-schedule/{page}', 'StudentController@ajaxViewSchedule')->name('ajax.schedule');
-        Route::get('/{id}/view-history-schedule', 'StudentController@viewHisSchedule');
-        Route::get('/ajax/{idcheck}/view-history-schedule', 'StudentController@ajaxViewHisSchedule')->name('ajax.view-his-schedule');
+        Route::get('/{id}/view-schedule', 'ScheduleController@viewSchedule');
+        Route::get('/{id}/view-history-schedule', 'ScheduleController@viewHisSchedule');
+        Route::get('/ajax/{idcheck}/view-history-schedule', 'ScheduleController@ajaxTask')->name('ajax.view-task');
+        Route::get('/{id}/view-history-schedule/{number}', 'ScheduleController@ajaxViewHisSchedule')->name('ajax.view-schedule');
     });
-
 });
 
     //Quản lý task

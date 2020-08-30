@@ -18,10 +18,9 @@ class MemberController extends Controller
     }
 
     public function deleteMemberGroup($id, $id_member){
-        $member = Member::find($id_member);
+        $member = Member::findOrFail($id_member);
         $name = $member->user->name;
-        if(isset($member)){
-            $member->delete();
+        if($member->delete()){
             return response()->json(['data'=>0, 'name'=>$name]);
         } else{
             return response()->json(['data'=>1]);

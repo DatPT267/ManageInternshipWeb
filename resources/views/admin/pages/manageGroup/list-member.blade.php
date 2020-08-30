@@ -52,43 +52,27 @@
             @endforeach
         </tbody>
     </table>
-<!-- Modal -->
-{{-- <div class="modal fade" id="confirmModal" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel" style="text-align: center">Xác nhận xóa?</h5>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cancel"><i class="far fa-window-close"></i> No, cancel</button>
-                <button type="button" class="btn btn-danger" name="btn-delete" id="btn-delete" data-idGroup="{{$group->id}}" > <i class="fas fa-trash-alt" ></i>Yes, Delete</button>
+    <div class="modal fade" id="confirmModal" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel" style="text-align: center">Xác nhận xóa?</h5>
+                </div>
+                <form id="deleteMember">
+                    <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
+                    @method('DELETE')
+                    <div class="modal-body">
+                        <input type="text" id="idmember" value="" hidden>
+                        <h3 id="message" style="text-align: center"></h3>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cancel"><i class="far fa-window-close"></i> No, cancel</button>
+                        <button type="submit" class="btn btn-danger" name="btn-delete" id="btn-delete" data-idGroup="{{$group->id}}"> <i class="fas fa-trash-alt" ></i>Yes, Delete</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div> --}}
-<div class="modal fade" id="confirmModal" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel" style="text-align: center">Xác nhận xóa?</h5>
-            </div>
-            <form id="deleteMember">
-                <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
-                @method('DELETE')
-                <div class="modal-body">
-                    <input type="text" id="idmember" value="" hidden>
-                    <h3 id="message" style="text-align: center"></h3>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cancel"><i class="far fa-window-close"></i> No, cancel</button>
-                    <button type="submit" class="btn btn-danger" name="btn-delete" id="btn-delete" data-idGroup="{{$group->id}}"> <i class="fas fa-trash-alt" ></i>Yes, Delete</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 @endsection
 @section('script')
     <script>
@@ -111,15 +95,12 @@
                 var url = $('.delete').attr('data-url');
                 var token = $('#_token').val();
                 console.log(url);
-                // $.ajaxSetup({
-                //     headers: {
-                //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                //     }
-                // });
-                $.ajax({
+                $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
+                    }
+                });
+                $.ajax({
                     type: "DELETE",
                     url: url,
                     contentType: false,
@@ -131,6 +112,7 @@
                         $('.modal-body').html('<div class="alert alert-danger">Đang xóa ........</div>');
                     },
                     success: function (response) {
+                        console.log(response);
                         if(response.data == 0){
                             setTimeout(() => {
                                 $('#confirmModal').modal('show');

@@ -122,6 +122,11 @@
                 else return  "<span class='badge badge-secondary'>Pending</span>";
             }
 
+            function formatDate(date)
+            {
+
+            }
+
             function callAjax(url){
                 $.ajaxSetup({
                     headers: {
@@ -143,10 +148,9 @@
                             for (var i = 0; i < response.data.length; i++) {
                                 output = "<tr style = 'text-align: center'>"+
                                     "<td>"+i+"</td>"+
-                                    "<td>"+i+"</td>"+
                                     "<td>"+response.data[i].date_start+"</td>"+
                                     "<td>"+response.data[i].date_end+"</td>"+
-                                    "<td><a href='#' class='btn btn-info btn-circle btn-show' data-toggle='modal' data-target='#exampleModalCenter'data-id='"+response.data[i].id+"' data-url='{{route('ajax.view-task', "+response.data[i].id+")}}'><i class='fas fa-info-circle'></i></a></td>"
+                                    "<td><a href='#' class='btn btn-info btn-circle btn-show' data-toggle='modal' data-target='#exampleModalCenter' data-id='"+response.data[i].id+"' data-url='{{ route('ajax.view-task', "response.data[i].id") }}'><i class='fas fa-info-circle'></i></a></td>"
                                 +"</tr>";
                             }
                             $('tbody#body').html(output);

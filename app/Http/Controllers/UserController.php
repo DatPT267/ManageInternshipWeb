@@ -208,6 +208,7 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->phone = $request->phone;
             $user->address= $request->address;
+            $user->status = $request->status;
               
             if ($request->hasFile('image')) 
             {   
@@ -428,6 +429,12 @@ class UserController extends Controller
     {
         $user = User::where('id', $id)->get()->first();
         return view('admin.pages.manageStudents.update', ['user'=>$user]);
+    }
+    public function resetpassword( $id)
+    { 
+      $user = User::find($id);
+      $user->password = bcrypt("123456789");
+      return back()->with('thongbao', 'Mật khẩu mới là: 123456789');
     }
 
 }

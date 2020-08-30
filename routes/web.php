@@ -51,6 +51,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('manageStudents/sua/{id}', 'UserController@postSua')->name('updatestudent');
     Route::post('them', 'UserController@postThem')->name('addstudent');
     Route::get('manageStudents/edit/{id}', 'UserController@editUser')->name('editUser');
+    Route::get('manageStudents/resetpassword/{id}','UserController@resetpassword')->name('resetpass');
 
 
 });

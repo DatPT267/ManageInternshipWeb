@@ -44,14 +44,41 @@
                         <label style="color: #000;">Địa Chỉ</label>
                         <input class="form-control" name="address"  placeholder="Nhập Địa Chỉ"  value="{{$user->address}}"/>
                     </div>
-                    <div class="">
-                        <button  style=" color: #fff;
-                        background-color: #6499ff;
-                        font-weight: 700;
-                        padding: 10px 30px;
-                        font-size: 16px;
-                        border: none;
-                        width: 100%;">Cập nhật</button>
+                    <div class="form-group">
+                        <label style="color: #000;">Trạng Thái</label>
+                        <select class="form-control" id="district_choice" name="status">
+                            <option value="1"  
+                            @if($user->status==1)
+                            {{"selected"}}
+                            @endif
+                            >Tài Khoản Đang Hoạt Động</option>
+                            <option value="0" 
+                            @if($user->status==0)
+                            {{"selected"}}
+                            @endif
+                            >Tài Khoản Không hoạt động</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                     <table>
+                        <tr>
+                            <button  style=" color: #fff;
+                           background-color: #6499ff;
+                           font-weight: 700;
+                           padding: 10px 30px;
+                           font-size: 16px;
+                           border: none;
+                           width: 45%;">Cập nhật</button>
+                        
+                        <a href="{{ route('resetpass', $user->id)}}" class="btn btn-warning" style=" font-weight: 700;
+                            font-size: 16px;
+                            padding: 10px 30px;
+                            margin-left: 5px;
+                            width: 45%;">Reset mật khẩu</a>
+                        </tr>
+                          
+                     </table>
                     </div>
                 <form>
             </div>

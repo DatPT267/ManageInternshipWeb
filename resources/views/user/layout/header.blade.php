@@ -23,7 +23,7 @@
                         <li>
                             <a href="" title="Nhóm">Nhóm</a>
                             <ul class="subMenu">
-                                <li><a href="/user/{{Auth::id()}}/group" title="Dự án">thông tin nhóm</a></li>
+                                <li><a href="/user/{{Auth::id()}}/list-group" title="Dự án">Danh sách nhóm</a></li>
                                 <li><a href="" title="Thành viên">Thành viên</a></li>
                             </ul>
                         </li>

@@ -93,7 +93,8 @@ Route::post('losspassword', 'UserController@postLosspassword')->name('losspasswo
 Route::get('/user/{id}/edit', 'UserController@edit');
 Route::post('/user/{id}', 'UserController@update')->name('user.update');
 
-Route::get('/user/{id}/group', 'StudentController@infoGroupOfStudent')->name('user.group');
-Route::get('/user/{id}/show', 'UserController@show')->name('infoUser');
-Route::get('/user/{id}/group/list-task', 'GroupController@getListTask')->name('view-list-task');
+Route::get('/user/{id}/list-group', 'GroupController@listGroup')->name('list.group');
+Route::get('/user/{id}/group/{id_group}', 'StudentController@infoGroupOfStudent')->name('user.group');
+Route::get('/user/{id}/show', 'MemberController@show')->name('info.member');
+Route::get('/user/{id}/group/{id_group}/list-task', 'GroupController@getListTask')->name('view-list-task');
 Route::get('/test/{id}', 'GroupController@getListTask');

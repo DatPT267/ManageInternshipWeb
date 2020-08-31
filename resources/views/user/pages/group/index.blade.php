@@ -1,6 +1,6 @@
 @extends('user.layout.index')
 @section('content')
-    <div style="margin: 20px 10%;">
+    <div style="margin: 20px 20%;">
         <h1 style="text-align: center; margin-bottom: 20px">Thông tin nhóm của sinh viên</h1>
             <div class="card mb-3">
                 <div class="card-body">
@@ -27,7 +27,7 @@
                             <h4 class="mb-0">Tên đề tài</h4>
                         </div>
                         <div class="col-sm-10 text-secondary">
-                            {{$group->project->name}}
+                            {{$group->topic}}
                         </div>
                     </div>
                     <hr>
@@ -37,10 +37,10 @@
                             <h4 class="mb-0">Trạng thái</h4>
                         </div>
                         <div class="col-sm-10 text-secondary">
-                            @if ($group->status == 0)
-                            <button class="btn btn-success">Hoạt động</button>
+                            @if ($group->status == 1)
+                                <button class="btn btn-success">Hoạt động</button>
                             @else
-                            <button class="btn btn-danger">Không hoạt động</button>
+                                <button class="btn btn-danger">Không hoạt động</button>
                             @endif
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                             <h4 class="mb-0">Danh sách task</h4>
                         </div>
                         <div class="col-sm-10 text-secondary">
-                            <button data-url="{{route('view-list-task', $user)}}" class="btn btn-primary btn-show-task" data-toggle="modal" data-target=".bd-example-modal-xl">Danh sách task</button>
+                            <button data-url="{{route('view-list-task', [$user, $group->id])}}" class="btn btn-primary btn-show-task" data-toggle="modal" data-target=".bd-example-modal-xl">Danh sách task</button>
                         </div>
                         <!-- Extra large modal -->
                         @include('user.pages.manage.manageTask.listTask')

@@ -12,12 +12,13 @@ use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
-    public function infoGroupOfStudent($id)
+    public function infoGroupOfStudent($id, $id_group)
     {
         if(Auth::id() == $id){
             $member = Member::where('user_id', $id)->firstOrFail();
-            $group = Group::findOrFail($member->group_id);
-            $members = Member::where('group_id', $group->id)->get();
+            $group = Group::findOrFail($id_group);
+            $members = Member::where('group_id', $id_group)->get();
+            // dd($members);
             return view('user.pages.group.index',['group'=>$group, 'members'=>$members, 'user'=>$member->user_id]);
         } else{
             return redirect('/#login');

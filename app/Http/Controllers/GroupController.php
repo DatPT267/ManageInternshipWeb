@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Assign;
+use App\DetailGroup;
 use App\Group;
 use App\Member;
 use App\Task;
@@ -87,15 +88,19 @@ class GroupController extends Controller
         //
     }
 
-    public function getListTask($id){
-        $member = Member::where('user_id', $id)->firstOrFail();
-        $project_id = $member->group->project->id;
-        $tasks = Task::select("id", "name", "status", "note")->where('project_id', $project_id)->get();
+    public function getListTask($id, $group_id){
+        $tasks = Task::where('group_id', $group_id)->get();
 
         return response()->json(['data'=>$tasks]);
         // return datatables($tasks)->make(true);
     }
     public function getListEvaluate($id){
         return view('admin.pages.manageGroup.list-Evaluate');
+    }
+
+    public function listGroup($id)
+    {
+        $groups = DetailGroup::where('user_id', $id)->get();
+        return view('user.pages.group.listGroup', ['groups' => $groups]);
     }
 }

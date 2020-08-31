@@ -34,7 +34,9 @@
         $('.btn-show-task').click(function (){
             var url = $(this).attr('data-url');
             $("#listTask").dataTable({
-                "scrollY":        "50vh",
+                'destroy': true,
+                "scrollY": "50vh",
+                'info': false,
                 "scrollCollapse": true,
                 "paging":         false,
                 "ajax":{

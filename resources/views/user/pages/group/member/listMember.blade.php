@@ -14,16 +14,16 @@
                 <td>{{$member->user->id}}</td>
                 <td>{{$member->user->name}}</td>
                 <td>
-                    @if ($member->user->position == 0)
+                    @if ($member->position == 0)
                         Thành viên
-                    @elseif($member->user->position == 1)
+                    @elseif($member->position == 1)
                         Nhóm trưởng
                     @else
                         GVHD
                     @endif
                 </td>
                 <td class="center">
-                    <button class="btn btn-primary btn-show" data-url="{{route('infoUser', $member->user->id)}}" data-toggle="modal" data-target=".bd-example-modal-lg">Thông tin</button>
+                    <button class="btn btn-primary btn-show" data-idgroup="{{$member->group_id}}" data-url="{{route('info.member', $member->user->id)}}" data-toggle="modal" data-target=".bd-example-modal-lg">Thông tin</button>
                 </td>
             </tr>
             @endforeach
@@ -81,7 +81,12 @@
 @section('script')
 <script>
     $(document).ready(function() {
-        $('#example').DataTable();
+        $('#example').DataTable({
+            'info': false,
+            "bInfo": false,
+            "bLengthChange": false,
+            "bFilter": true,
+        });
     } );
 </script>
     <script>
@@ -91,7 +96,9 @@
             $.ajax({
                 type: 'GET',
                 url: url,
+                data: {group_id: $(this).attr('data-idgroup')},
                 success: function(response){
+                    console.log(response);
                     $('td#name').text(response.data.name)
                     $('td#email').text(response.data.email)
                     $('td#address').text(response.data.address)

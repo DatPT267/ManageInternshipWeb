@@ -91,5 +91,4 @@ Route::resource('user', 'UserController');
 
 // Checkin-out
 Route::get('/user/{id}/reg-schedule', 'ScheduleController@getRegSchedule');
-Route::get('/user/{id}/test', 'ScheduleController@test');
 Route::post('/user/{id}/reg-schedule', 'ScheduleController@postRegSchedule')->name('reg.schedule');

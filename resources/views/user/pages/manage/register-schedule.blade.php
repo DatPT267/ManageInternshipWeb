@@ -11,8 +11,9 @@
                 {{$message}}
             </div>
         @endif
+
         @if ($check == 1)
-            <table class="table table-striped table-bordered table-hover">
+            <table class="table table-striped table-bordered table-hover" id="list-schedule">
                 <thead>
                     <tr align="center">
                         <th>Ngày ({{$day_start}} -> {{$day_end}})</th>
@@ -20,38 +21,36 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($scheduleUser as $item)
+                    @foreach ($schedules as $schedule)
                         <tr class="odd gradeX" align="center">
                             <td>
-                                @switch(\Carbon\Carbon::parse($item->date)->isoFormat('dddd'))
+                                @switch(\Carbon\Carbon::parse($schedule->date)->isoFormat('dddd'))
                                     @case('Monday')
-                                        Thứ 2
+                                        Thứ 2 ({{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}})
                                         @break
                                     @case('Tuesday')
-                                        Thứ 3
+                                        Thứ 3 ({{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}})
                                         @break
                                     @case('Wednesday')
-                                        Thứ 4
+                                        Thứ 4 ({{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}})
                                         @break
                                     @case('Thursday')
-                                        Thứ 5
+                                        Thứ 5 ({{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}})
                                         @break
                                     @case('Friday')
-                                        Thứ 6
+                                        Thứ 6 ({{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}})
                                         @break
                                     @default
                                 @endswitch
                             </td>
                             <td>
-                                <div class="input-group mb-3">
-                                    @if ($item->session == 0)
-                                        Cả ngày
-                                    @elseif($item->session == 1)
-                                        Ca sáng
-                                    @else
-                                        Ca chiều
-                                    @endif
-                                </div>
+                                @if ($schedule->session == 0)
+                                    Cả ngày
+                                @elseif ($schedule->session == 1)
+                                    Ca sáng
+                                @else
+                                    Ca chiều
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -60,9 +59,10 @@
         @else
             <form action="{{route('reg.schedule', $user)}}" method="post">
                 @csrf
-                <table class="table table-striped table-bordered table-hover">
+                <table class="table table-striped table-bordered table-hover" >
                     <thead>
                         <tr align="center">
+                            <input type="hidden" name="week" value="{{$week}}">
                             <th>Ngày ({{$day_start}} -> {{$day_end}})</th>
                             <th>Ca Làm</th>
                         </tr>
@@ -72,6 +72,9 @@
                             <td>Thứ 2</td>
                             <td>
                                 <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputGroupSelect01">Ca làm</label>
+                                    </div>
                                     <select class="custom-select" name="thu2" id="thu2">
                                         <option selected value="null">Không làm</option>
                                         <option value="0">Cả ngày</option>
@@ -85,6 +88,9 @@
                             <td>Thứ 3</td>
                             <td>
                                 <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputGroupSelect01">Ca làm</label>
+                                    </div>
                                     <select class="custom-select" name="thu3" id="thu3">
                                         <option selected value="null">Không làm</option>
                                         <option value="0">Cả ngày</option>
@@ -98,6 +104,9 @@
                             <td>Thứ 4</td>
                             <td>
                                 <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputGroupSelect01">Ca làm</label>
+                                    </div>
                                     <select class="custom-select" name="thu4" id="thu4">
                                         <option selected value="null">Không làm</option>
                                         <option value="0">Cả ngày</option>
@@ -111,6 +120,9 @@
                             <td>Thứ 5</td>
                             <td>
                                 <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputGroupSelect01">Ca làm</label>
+                                    </div>
                                     <select class="custom-select" name="thu5" id="thu5">
                                         <option selected value="null">Không làm</option>
                                         <option value="0">Cả ngày</option>
@@ -124,6 +136,9 @@
                             <td>Thứ 6</td>
                             <td>
                                 <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="inputGroupSelect01">Ca làm</label>
+                                    </div>
                                     <select class="custom-select" name="thu6" id="thu6">
                                         <option selected value="null">Không làm</option>
                                         <option value="0">Cả ngày</option>
@@ -133,6 +148,7 @@
                                 </div>
                             </td>
                         </tr>
+                        @if ($check == 0)
                         <tr class="odd gradeX" align="center" >
                             <td colspan="3">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" id="confirm">
@@ -161,15 +177,23 @@
                             </div>
                             </td>
                         </tr>
+                        @endif
                     </tbody>
                 </table>
             </form>
+
         @endif
     </div>
 @endsection
 @section('script')
     <script>
         $(document).ready(function (){
+            $('#list-schedule').dataTable({
+                'info': false,
+                'lengthChange': false,
+                "bSort" : false
+            });
+
             function check(thu){
                 switch (thu) {
                     case '1':

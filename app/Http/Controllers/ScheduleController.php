@@ -48,8 +48,8 @@ class ScheduleController extends Controller
         $now = Carbon::now();
         $start = $now->startOfWeek()->format('Y-m-d');
         $end = $now->addWeek()->endOfWeek()->format('Y-m-d');
-        $checks = Check::where('user_id', $id)->whereRaw("date(date_start) BETWEEN '".$start."' AND '". $end ."'")->get();
-        // $checks = Check::where('user_id', $id)->get();
+        // $checks = Check::where('user_id', $id)->whereRaw("date(date_start) BETWEEN '".$start."' AND '". $end ."'")->get();
+        $checks = Check::where('user_id', $id)->get();
         // dd($checks);
         $user = User::findOrFail($id);
         $index=0;

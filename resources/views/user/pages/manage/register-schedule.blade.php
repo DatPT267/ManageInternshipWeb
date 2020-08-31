@@ -45,11 +45,11 @@
                             </td>
                             <td>
                                 @if ($schedule->session == 0)
-                                    Cả ngày
+                                    <p style="color: cadetblue"><b>Cả ngày</b></p>
                                 @elseif ($schedule->session == 1)
-                                    Ca sáng
+                                    <p style="color: cornflowerblue"><b>Ca sáng</b></p>
                                 @else
-                                    Ca chiều
+                                    <p style="color: orange"><b>Ca chiều</b></p>
                                 @endif
                             </td>
                         </tr>

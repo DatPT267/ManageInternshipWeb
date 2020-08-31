@@ -9,6 +9,7 @@
                 <th>Lịch thực tập</th>
                 <th>Thời gian check-in</th>
                 <th>Thời gian check-out</th>
+                <th>Chi tiết</th>
             </tr>
         </thead>
         <tbody>
@@ -44,6 +45,9 @@
                         @else
                             Chưa check-out
                         @endif
+                    </td>
+                    <td>
+                        <a href="" class="btn btn-info">Chi tiết</a>
                     </td>
                 </tr>
             @endforeach

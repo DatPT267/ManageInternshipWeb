@@ -34,7 +34,7 @@ class CheckController extends Controller
             // dd($checkin);
             return view('user.pages.manage.check-in', ['schedule' => $schedule, 'tasks' => $tasks, 'id'=>$id, 'isCheck'=>$isCheck, 'arrTask' => $arrTask, 'date_start'=>$checkin]);
         }else{
-            return redirect('/');
+            return redirect('/#login');
         }
     }
 

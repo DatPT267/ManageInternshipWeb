@@ -9,7 +9,6 @@ use App\Member;
 use App\Schedule;
 use App\Task;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,7 +17,7 @@ class CheckController extends Controller
     //=============================================Check-in===============================================
     public function checkin($id)
     {
-        if($id == Auth::id()){
+           if($id == Auth::id()){
             $now = Carbon::now()->isoFormat('Y-M-D', 'asia/Ho_Chi_Minh');
             $checkin = Check::whereRaw("date(date_start) = '".$now."'")->first();
             $isCheck = 0;
@@ -29,10 +28,15 @@ class CheckController extends Controller
             }
             $schedule = Schedule::whereRaw("date(date) = '" . $now. "'")->first();
             // dd($schedule);
-            $member_id = Member::where('user_id', $id)->first();
-            $tasks = Assign::where('member_id', $member_id->id)->get();
+            $member = Member::where('user_id', $id)->first();
+            if($member !== null){
+                $tasks = Assign::where('member_id', $member->id)->get();
+                // dd($tasks);
+                return view('user.pages.manage.check-in', ['schedule' => $schedule, 'tasks' => $tasks, 'isCheck'=>$isCheck, 'arrTask' => $arrTask, 'date_start'=>$checkin]);
+            } else{
+                return view('user.pages.manage.check-in', ['schedule' => $schedule, 'tasks' => 0, 'isCheck'=>$isCheck, 'arrTask' => $arrTask, 'date_start'=>$checkin]);
+            }
             // dd($checkin);
-            return view('user.pages.manage.check-in', ['schedule' => $schedule, 'tasks' => $tasks, 'id'=>$id, 'isCheck'=>$isCheck, 'arrTask' => $arrTask, 'date_start'=>$checkin]);
         }else{
             return redirect('/#login');
         }
@@ -40,12 +44,6 @@ class CheckController extends Controller
 
     public function postCheckin(Request $request, $id)
     {
-        $this->validate($request, [
-            'chon-task' => 'required'
-        ],[
-            'chon-task.required' => 'Bạn chưa chọn task làm việc trong ngày'
-        ]);
-
         $schedule = Schedule::whereRaw("date(date) = '" . $request->input('ngaythuctap'). "'")->first();
         $input = $request->input('chon-task');
         $now = Carbon::now('asia/Ho_Chi_Minh')->toDateTimeString();
@@ -59,14 +57,16 @@ class CheckController extends Controller
         $check->schedule_id = $schedule->id;
 
         $check->save();
-        foreach($input as $value){
-            $detailCheck = new DetailCheck();
-            $detailCheck->check_id = $check->id;
-            $detailCheck->task_id = (int)$value;
-            $status = Task::find((int)$value);
-            $detailCheck->status = $status->status;
-            // dd($detailCheck->status);
-            $detailCheck->save();
+        if($input !== null){
+            foreach($input as $value){
+                $detailCheck = new DetailCheck();
+                $detailCheck->check_id = $check->id;
+                $detailCheck->task_id = (int)$value;
+                $status = Task::find((int)$value);
+                $detailCheck->status = $status->status;
+                // dd($detailCheck->status);
+                $detailCheck->save();
+            }
         }
         // dd($check->id);
 
@@ -80,21 +80,25 @@ class CheckController extends Controller
         $now = Carbon::now()->isoFormat('Y-M-D', 'asia/Ho_Chi_Minh');
         $schedule = Schedule::whereRaw("date(date) = '" . $now. "'")->first();
 
-        $member_id = Member::where('user_id', $id)->first();
-        $tasks = Assign::where('member_id', $member_id->id)->get();
-        // dd($tasks);
-        $checkin = Check::whereRaw("date(date_start) = '".$now."'")->first();
-        // dd($checkin);
-        $isCheckout = 0;
-        $arrTask = null;
-        if($checkin !== null){
-            $arrTask = DetailCheck::where('check_id', $checkin->id)->get();
+        $member = Member::where('user_id', $id)->first();
+        $tasks = [];
+        if($member !== null){
+            $tasks = Assign::where('member_id', $member->id)->get();
         }
-        if($checkin->date_end !== null){
-            $isCheckout = 1;
+        // dd($tasks);
+        $checkout = Check::whereRaw("date(date_start) = '".$now."'")->first();
+        // dd($checkout);
+        $arrTask = null;
+        if($checkout !== null){
+            $arrTask = DetailCheck::where('check_id', $checkout->id)->get();
+            if($checkout->date_end !== null){
+                return view('user.pages.manage.check-out', ['schedule'=>$schedule, 'tasks'=>$tasks, 'arrTask'=>$arrTask, 'isCheckout'=> 1, 'checkout' => $checkout]);
+            }
+            return view('user.pages.manage.check-out', ['schedule'=>$schedule, 'tasks'=>$tasks, 'arrTask'=>$arrTask, 'isCheckout'=> 2, 'checkout' => $checkout]);
+        } else{
+            return view('user.pages.manage.check-out', ['schedule'=>$schedule, 'tasks'=>$tasks, 'arrTask'=>$arrTask, 'isCheckout'=> 0, 'checkout' => $checkout]);
         }
         // dd($arrTask);
-        return view('user.pages.manage.check-out', ['schedule'=>$schedule, 'tasks'=>$tasks, 'arrTask'=>$arrTask, 'isCheckout'=>$isCheckout, 'note' => $checkin->note]);
     }
 
     public function postCheckout(Request $request, $id)
@@ -105,19 +109,22 @@ class CheckController extends Controller
         $checkout->note = $request->input('note');
         $checkout->date_end = $request->input('ngaythuctap');
         $checkout->save();
+
         $arrTask = $request->input('idTask');
         $arrStatusTask = $request->input('status');
         // dd($arrTask);
-        foreach($arrTask as $key => $value)
-        {
-            $task = Task::find((int)$value);
-            $task->status = (int)$arrStatusTask[$key];
-            // dd($task->status);
-            $detailCheck = DetailCheck::where('check_id',$checkout->id)->where('task_id', $task->id)->first();
-            // dd($detailCheck);
-            $detailCheck->status = (int)$arrStatusTask[$key];
-            $detailCheck->save();
-            $task->save();
+        if($arrTask !== null){
+            foreach($arrTask as $key => $value)
+            {
+                $task = Task::find((int)$value);
+                $task->status = (int)$arrStatusTask[$key];
+                // dd($task->status);
+                $detailCheck = DetailCheck::where('check_id',$checkout->id)->where('task_id', $task->id)->first();
+                // dd($detailCheck);
+                $detailCheck->status = (int)$arrStatusTask[$key];
+                $detailCheck->save();
+                $task->save();
+            }
         }
 
         return redirect("user/".$id."/check-out")->with(['success'=>'Check-out thành công']);

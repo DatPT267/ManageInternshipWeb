@@ -154,8 +154,7 @@
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" id="confirm">
                                     Lưu
                                 </button>
-
-                            <!-- Modal -->
+                            </td>
                             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
@@ -175,7 +174,6 @@
                                 </div>
                                 </div>
                             </div>
-                            </td>
                         </tr>
                         @endif
                     </tbody>
@@ -210,13 +208,14 @@
                         break;
                 }
             }
+
             $('#confirm').click(function(){
                 var thu2 = $('#thu2 option:selected').val();
                 var thu3 = $('#thu3 option:selected').val();
                 var thu4 = $('#thu4 option:selected').val();
                 var thu5 = $('#thu5 option:selected').val();
                 var thu6 = $('#thu6 option:selected').val();
-                console.log(thu2);
+                // console.log(thu2);
                 if(thu2 == 'null' && thu3 == 'null' && thu4 == 'null' && thu5 == 'null' && thu6 == 'null'){
                     var output = "<div class='alert alert-warning'>1 tuần phải có ít nhất 1 ngày làm!</div>"+
                     "<ul class='list-group'>"+

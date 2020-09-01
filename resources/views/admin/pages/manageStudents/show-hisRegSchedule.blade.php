@@ -103,9 +103,9 @@
 @section('script')
     <script>
         $(document).ready(function (){
-            // $('#week').attr('disabled','disabled');
 
             $('#example').dataTable({
+                "scrollY" : "50vh",
                 'paging': false,
                 'info': false,
                 'sort': false
@@ -122,7 +122,7 @@
             $('a.btn-show').click(function(){
                 var id_check = $(this).attr('data-id');
                 var url = $(this).attr('data-url');
-                console.log(id_check);
+                // console.log(id_check);
                 $.ajax({
                     url: url,
                     type: 'GET',
@@ -141,7 +141,6 @@
                         $('tbody.show-detail').html(ouput);
                     }
                 })
-
             });
         });
     </script>

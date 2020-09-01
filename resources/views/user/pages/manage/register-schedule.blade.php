@@ -218,7 +218,7 @@
                 // console.log(thu2);
                 if(thu2 == 'null' && thu3 == 'null' && thu4 == 'null' && thu5 == 'null' && thu6 == 'null'){
                     var output = "<div class='alert alert-warning'>1 tuần phải có ít nhất 1 ngày làm!</div>"+
-                    "<ul class='list-group'>"+
+                    "<ul class='list-group' style='text-align: center'>"+
                         "<li class='list-group-item'>Thứ 2: <strong>"+check(thu2)+"</strong></li>"+
                         "<li class='list-group-item'>Thứ 3: <strong>"+check(thu3)+"</strong></li>"+
                         "<li class='list-group-item'>Thứ 4: <strong>"+check(thu4)+"</strong></li>"+
@@ -229,7 +229,7 @@
                     $('.btn-submit').hide();
                     $('.btn-close').text('Thoát');
                 }else{
-                    var output = "<ul class='list-group'>"+
+                    var output = "<ul class='list-group' style='text-align: center'>"+
                     "<li class='list-group-item'>Thứ 2: <strong>"+check(thu2)+"</strong></li>"+
                     "<li class='list-group-item'>Thứ 3: <strong>"+check(thu3)+"</strong></li>"+
                     "<li class='list-group-item'>Thứ 4: <strong>"+check(thu4)+"</strong></li>"+

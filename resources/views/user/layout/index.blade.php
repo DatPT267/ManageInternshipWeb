@@ -141,7 +141,7 @@
         ga('send', 'pageview');
 
     </script>
-    <script type="text/javascript" src="admin_asset1/css/Content/html/js/bootstrap2.min.js"></script>
+    {{-- <script type="text/javascript" src="admin_asset1/css/Content/html/js/bootstrap2.min.js"></script> --}}
     <script type="text/javascript" src="{{ asset('admin_asset1/css/Content/html/js/jquery.dataTables.min.js') }}"></script>
     {{-- <script type="text/javascript" src="{{ asset('admin_asset1/css/Content/html/js/jquery-3.5.1.min.js') }}"></script> --}}
     <script type="text/javascript" src="admin_asset1/css/s7.addthis.com/js/300/addthis_widget.js#pubid=ra-546c6a3a3551dec6"></script>

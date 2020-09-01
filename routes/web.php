@@ -52,7 +52,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/{id}/list-review', 'ReviewController@listReviewGroup');
         Route::get('/{id}/list-member', 'MemberController@listMemberGroup');
         // Route::get('/{id}/delMember/{id_member}', 'MemberController@deleteMemberGroup')->name('member.delete');
-        Route::delete('/{id}/delMember/{id_member}', 'MemberController@deleteMemberGroup')->name('member.delete');
+        Route::get('/{id}/delMember/{id_member}', 'MemberController@deleteMemberGroup')->name('member.delete');
     });
 
 });

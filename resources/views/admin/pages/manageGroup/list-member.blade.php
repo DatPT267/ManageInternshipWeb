@@ -45,7 +45,7 @@
                     @endif
                 </td>
                 <td class="center">
-                    <button class="btn btn-danger btn-circle delete" id="{{$member->id}}" data-name="{{$member->user->name}}" data-url="{{route('member.delete', [$group->id, $member->id])}}"><i class="fas fa-trash"></i></button>
+                    <button class="btn btn-danger btn-circle delete" data-id="{{$member->id}}" data-name="{{$member->user->name}}" data-url="{{route('member.delete', [$group->id, $member->id])}}"><i class="fas fa-trash"></i></button>
                 </td>
             </tr>
 
@@ -58,18 +58,13 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="staticBackdropLabel" style="text-align: center">Xác nhận xóa?</h5>
                 </div>
-                <form id="deleteMember">
-                    <input type="hidden" id="_token" name="_token" value="{{ csrf_token() }}">
-                    @method('DELETE')
                     <div class="modal-body">
-                        <input type="text" id="idmember" value="" hidden>
                         <h3 id="message" style="text-align: center"></h3>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cancel"><i class="far fa-window-close"></i> No, cancel</button>
-                        <button type="submit" class="btn btn-danger" name="btn-delete" id="btn-delete" data-idGroup="{{$group->id}}"> <i class="fas fa-trash-alt" ></i>Yes, Delete</button>
+                        <button type="button" class="btn btn-danger" id="btn-delete" data-idGroup="{{$group->id}}"> <i class="fas fa-trash-alt" ></i>Yes, Delete</button>
                     </div>
-                </form>
             </div>
         </div>
     </div>
@@ -80,31 +75,21 @@
             var table = $('#list-member').DataTable();
             // =====================================AJAX DELETE====================================
             var member_id;
+
             $(document).on('click', '.delete', function(){
-                member_id = $(this).attr('id');
-                $('#idmember').val(member_id);
+                member_id = $(this).attr('data-id');
                 var name = $(this).attr('data-name');
                 $('h3#message').html("Bạn có thật sự muốn xóa thành viên <strong>"+name+"</strong>?");
                 $('#confirmModal').modal('show');
             });
-            $('#deleteMember').on('submit', function(e){
-                e.preventDefault();
-
-                var id = $('#idmember').val();
+            $('#btn-delete').click(function(){
                 var idGroup = $('#btn-delete').attr('data-idGroup');
-                var url = $('.delete').attr('data-url');
-                var token = $('#_token').val();
-                console.log(url);
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+                var url = "/admin/group/"+idGroup+"/delMember/"+member_id;
+                // console.log(url);
+
                 $.ajax({
-                    type: "DELETE",
+                    type: "GET",
                     url: url,
-                    contentType: false,
-                    processData: false,
                     beforeSend:function(){
                         $('#btn-delete').prop('disabled', true);
                         $('#btn-delete').text('Deleting ......');
@@ -133,8 +118,8 @@
                     }
                 });
             });
-            // =====================================AJAX DELETE====================================
-        } );
+        });
+        // =====================================AJAX DELETE====================================
 
 
 

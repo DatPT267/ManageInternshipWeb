@@ -135,7 +135,7 @@ class CheckController extends Controller
         $now = Carbon::now('asia/Ho_Chi_Minh');
         $start_week = $now->startOfWeek()->format('Y-m-d');
         $end_week = $now->endOfWeek()->format('Y-m-d');
-        $checks = Check::whereRaw("date(date_start) BETWEEN '" . $start_week. "' AND '".$end_week."'")->where('user_id', $id)->get();
+        $checks = Check::whereRaw("date(date_start) BETWEEN '" . $start_week. "' AND '".$end_week."'")->where('user_id', $id)->orderByDesc('id')->get();
         // dd($checks);
         $timeTotal = 0;
         foreach ($checks as $key => $check) {

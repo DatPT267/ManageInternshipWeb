@@ -47,15 +47,29 @@
                         @endif
                     </td>
                     <td>
-                        <a href="" class="btn btn-info">Chi tiết</a>
+                        <button type="button" class="btn btn-primary btn-show-detail" data-toggle="modal" data-target=".bd-example-modal-lg">Chi tiết</button>
                     </td>
                 </tr>
             @endforeach
+
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="model-header">
+                            <h3 class="modal-title" style="text-align: center">Chi tiết</h3>
+                        </div>
+                        <div class="modal-body">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </tbody>
         <tfoot>
             <tr>
                 <th colspan="2">Tổng thời gian làm việc:</th>
-                {{-- <th colspan="2">{{\Carbon\Carbon::parse($timeTotal)->format('d H:m:s')}} </th> --}}
                 <th colspan="2">{{$ngay}} ngày {{$gio}} giờ {{$phut}} phút</th>
             </tr>
         </tfoot>
@@ -66,10 +80,25 @@
 @endsection
 @section('script')
     <script>
-        // $(document).ready(function(){
-        //     $('.btn-show').click({
-        //         $('.modal-show').modal('show');
-        //     })
-        // })
+        $(document).ready(function(){
+            $('.btn-show-detail').click(function (){
+                $('.modal-body').html("<table class='table table-hover table-bordered table-striped'>"+
+                    "<thead>"+
+                        "<tr>"+
+                            "<th>STT</th>"+
+                            "<th>Tên Task</th>"+
+                            "<th>Trạng thái</th>"
+                        +"</tr>"
+                    +"</thead>"
+                    +"<tbody>"+
+                        "<tr>"+
+                            "<td>1</td>"+
+                            "<td>Task 1</td>"+
+                            "<td>Doing</td>"
+                        +"</tr>"
+                    +"</tbody>"
+                +"</table>");
+            })
+        })
     </script>
 @endsection

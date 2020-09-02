@@ -46,17 +46,25 @@
                         </span>
                     </td>
                     <td id="checkin">
-                        <span class="badge badge-info">{{\Carbon\Carbon::parse($check->date_start)->toTimeString()}}</span>
+                        <span class="badge badge-info">
+                            {{\Carbon\Carbon::parse($check->date_start)->toTimeString()}}
+                        </span>
                     </td>
                     <td id="checkout">
                         @if ($check->date_end != null)
-                            <span class="badge badge-warning">{{\Carbon\Carbon::parse($check->date_end)->toTimeString()}}</span>
+                            <span class="badge badge-warning">
+                                {{\Carbon\Carbon::parse($check->date_end)->toTimeString()}}
+                            </span>
                         @else
                             <span class="badge badge-danger">Chưa check-out</span>
                         @endif
                     </td>
                     <td class="center" id="btn-detail">
-                        <a href="#" class="btn btn-info btn-circle btn-show" data-toggle="modal" data-target="#exampleModalCenter" data-id="{{$check->id}}" data-url="{{route('ajax.view-task', $check->id)}}">
+                        <a href="#" class="btn btn-info btn-circle btn-show"
+                                    data-toggle="modal"
+                                    data-target="#exampleModalCenter"
+                                    data-id="{{$check->id}}"
+                                    data-url="{{route('ajax.view-task', $check->id)}}">
                             <i class="fas fa-info-circle"></i>
                         </a>
                     </td>
@@ -69,7 +77,7 @@
         <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Thông tin chi tiết</h5>
+                <h5 class="modal-title">Thông tin chi tiết</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -118,7 +126,6 @@
                 else if(item == 3) return  "<span class='badge badge-success'>Done</span>";
                 else return  "<span class='badge badge-secondary'>Pending</span>";
             }
-
             $('a.btn-show').click(function(){
                 var id_check = $(this).attr('data-id');
                 var url = $(this).attr('data-url');
@@ -137,8 +144,11 @@
                                     "<td>"+check(item.status)+"</td>"
                                 +"</tr>";
                         });
+                        const date = new Date(response.day_check);
+                        console.log(date);
                         $('#note p').text(response.note);
                         $('tbody.show-detail').html(ouput);
+                        $('h5.modal-title').text("Thông tin chi tiết ngày " + date.getDate() + " - " + (date.getMonth()+1) + " - " + date.getFullYear());
                     }
                 })
             });

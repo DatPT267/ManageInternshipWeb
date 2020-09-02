@@ -45,9 +45,9 @@ class ScheduleController extends Controller
 
     public function viewHisSchedule($id)
     {
-        $now = Carbon::now();
-        $start = $now->startOfWeek()->format('Y-m-d');
-        $end = $now->addWeek()->endOfWeek()->format('Y-m-d');
+        // $now = Carbon::now();
+        // $start = $now->startOfWeek()->format('Y-m-d');
+        // $end = $now->addWeek()->endOfWeek()->format('Y-m-d');
         // $checks = Check::where('user_id', $id)->whereRaw("date(date_start) BETWEEN '".$start."' AND '". $end ."'")->get();
         $checks = Check::where('user_id', $id)->orderByDesc('id')->get();
         // dd($checks);
@@ -69,27 +69,9 @@ class ScheduleController extends Controller
             ];
         }
         $note = $check->note;
-        return response()->json(['data'=>$data, 'note'=>$note], 200);
+        $day_check = $check->schedule->date;
+        return response()->json(['data'=>$data, 'note'=>$note, 'day_check' => $day_check], 200);
     }
 
-    public function ajaxViewHisSchedule($id, $number)
-    {
-        $now = Carbon::now();
-        if($number == 0){
-            $start = $now->startOfWeek()->format('Y-m-d');
-            $end = $now->endOfWeek()->format('Y-m-d');
-            $checks = Check::where('user_id', $id)->whereRaw("date(date_start) BETWEEN '".$start."' AND '". $end ."'")->get();
-            return response()->json(['data'=>$checks]);
-        } else if($number == 2){
-            $start = $now->addWeek()->startOfWeek()->format('Y-m-d');
-            $end = $now->addWeek()->endOfWeek()->format('Y-m-d');
-            $checks = Check::where('user_id', $id)->whereRaw("date(date_start) BETWEEN '".$start."' AND '". $end ."'")->get();
-            return response()->json(['data'=>$checks]);
-        } else{
-            $start = $now->subWeek()->startOfWeek()->format('Y-m-d');
-            $end = $now->subWeek()->endOfWeek()->format('Y-m-d');
-            $checks = Check::where('user_id', $id)->whereRaw("date(date_start) BETWEEN '".$start."' AND '". $end ."'")->get();
-            return response()->json(['data'=>$checks]);
-        }
-    }
+
 }

@@ -99,3 +99,4 @@ Route::get('/user/{id}/reg-schedule', 'ScheduleController@getRegSchedule');
 Route::post('/user/{id}/reg-schedule', 'ScheduleController@postRegSchedule')->name('reg.schedule');
 //history checkin-out
 Route::get('user/{id}/history-schedule', 'CheckController@hisSchedule');
+Route::get('ajax/{id}/history-schedule', 'CheckController@ajaxHisSchedule')->name('ajax.His-schedule');

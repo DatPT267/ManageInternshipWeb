@@ -130,6 +130,7 @@ class CheckController extends Controller
         return redirect("user/".$id."/check-out")->with(['success'=>'Check-out thành công']);
     }
     //========================================END Check-out=======================================
+    //========================================START HISTORY SCHEDULE=======================================
 
     public function hisSchedule($id){
         $now = Carbon::now('asia/Ho_Chi_Minh');
@@ -159,9 +160,13 @@ class CheckController extends Controller
                 $start = Carbon::create($year, $month, $day, $hour_start, $minute_start, 00, $tz);
                 $end = Carbon::create($year, $month, $day, $hour_end, $minute_end, 00, $tz);
                 // dd($start);
-                $t1 = $time_sang->diffInMinutes($start);
+                if($start < $time_sang){
+                    $t1 = $time_sang->diffInMinutes($start);
+                }
+                if($end > $time_chieu){
+                    $t2 = $time_chieu->diffInMinutes($end);
+                }
                 // $t1 = $time_sang->diffInHours($start);
-                $t2 = $time_chieu->diffInMinutes($end);
                 $timeTotal += $t1 + $t2;
             }
         }
@@ -180,4 +185,22 @@ class CheckController extends Controller
 
         return view('user.pages.manage.view-history-check', ['checks' => $checks, 'timeTotal' => $timeTotal, 'ngay'=>$ngay, 'gio' => $gio, 'phut'=>$phut]);
     }
+
+    public function ajaxHisSchedule($id)
+    {
+        $details = DetailCheck::where('check_id', $id)->get();
+        $check = Check::find($id);
+        $data = [];
+        foreach ($details as $key => $value) {
+            $data[$key] = [
+                'id' => $value->task_id,
+                'name' => $value->task->name,
+                'status' => $value->status
+            ];
+        }
+        $note = $check->note;
+        return response()->json(['data'=>$data, 'note'=>$note], 200);
+    }
+    //========================================START HISTORY SCHEDULE=======================================
+
 }

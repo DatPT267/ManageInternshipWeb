@@ -10,4 +10,9 @@ class Schedule extends Model
     const UPDATED_AT = null;
 
     protected $table = "schedule";
+
+    public function user()
+    {
+        return $this->belongsTo('App\user', 'user_id', 'id');
+    }
 }

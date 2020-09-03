@@ -10,4 +10,13 @@ class Check extends Model
     const UPDATED_AT = null;
 
     protected $table = "check";
+
+    public function user()
+    {
+        return $this->belongsTo('App\User', 'user_id', 'id');
+    }
+
+    public function schedule(){
+        return $this->belongsTo('App\Schedule', 'schedule_id', 'id');
+    }
 }

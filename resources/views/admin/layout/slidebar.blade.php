@@ -96,8 +96,8 @@
                 {{--
                 <h6 class="collapse-header">Custom Components:</h6>
                 --}}
-                <a class="collapse-item" href="{{route('manageSchedule.index')}}">Danh sách đăng ký</a>
-                <a class="collapse-item" href="{{route('manageSchedule.checkin-out')}}">Lịch checkin-out</a>
+                <a class="collapse-item" href="{{route('list-schedule.index')}}">Danh sách đăng ký</a>
+                <a class="collapse-item" href="{{route('statistical.checkin-out')}}">Thống kê checkin-checkout</a>
             </div>
         </div>
     </li>

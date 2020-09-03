@@ -45,16 +45,16 @@ Route::group(['prefix' => 'admin'], function () {
 
     //     });
     // });
-
-
+    Route::get('list-schedule', 'ScheduleController@index')->name('list-schedule.index');
+    Route::get('statistical-checkin-checkout', 'CheckController@index')->name('statistical.checkin-out');
+    Route::get('statistical-checkin-checkout/student/{id}', 'CheckController@detail')->name('detail.checkin-checkout');
+    Route::get('ajax/student/detail-checkin-checkout', 'CheckController@AjaxDetail')->name('ajax.detail');
 });
 
     //Quản lý task
     Route::resource('manageTask', 'TaskController');
 
     //Quản lý lịch thực tập
-    Route::get('manageSchedule', 'ScheduleController@index')->name('manageSchedule.index');
-    Route::get('manageSchedule/checkin-out', 'ScheduleController@getCheckinOut')->name('manageSchedule.checkin-out');
 
     //Quản lý đánh giá
 

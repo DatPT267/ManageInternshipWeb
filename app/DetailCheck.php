@@ -16,7 +16,8 @@ class DetailCheck extends Model
         return $this->belongsTo('App\Task', 'task_id', 'id');
     }
 
-    public function check(){
+    public function check()
+    {
         return $this->belongsTo('App\Check', 'check_id', 'id');
     }
 }

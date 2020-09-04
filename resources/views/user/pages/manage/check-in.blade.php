@@ -24,7 +24,7 @@
                 @if ($isCheck == 0)
                     <div class="form-group" style="display: flex">
                         <label style="flex: 1"><strong>Thời gian checkin</strong></label>
-                        <input type="text" name="ngaythuctap" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('Y-m-d')}}" style="flex: 5" hidden>
+                        <input type="hidden" name="ngaythuctap" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('Y-m-d')}}" style="flex: 5">
                         <input type="text" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('d-m-Y H:i:s')}}" style="flex: 5" disabled>
                     </div>
                 @else

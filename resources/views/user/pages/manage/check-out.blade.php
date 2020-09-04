@@ -107,7 +107,7 @@
                     @csrf
                     <div class="form-group" style="display: flex">
                         <label style="flex: 1">Thời gian check-out</label>
-                        <input type="text" name="ngaythuctap" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('Y-m-d H:i:s')}}" style="flex: 5" hidden>
+                        <input type="hidden" name="ngaythuctap" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('Y-m-d H:i:s')}}" style="flex: 5" hidden>
                         <input type="text" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('d-m-Y H:i:s')}}" style="flex: 5" disabled>
                     </div>
                     <div class="form-group" style="display: flex">

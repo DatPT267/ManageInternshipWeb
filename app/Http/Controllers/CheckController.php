@@ -11,6 +11,7 @@ use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\Foreach_;
 
 class CheckController extends Controller
 {
@@ -92,11 +93,32 @@ class CheckController extends Controller
         if($checkout !== null){
             $arrTask = DetailCheck::where('check_id', $checkout->id)->get();
             if($checkout->date_end !== null){
-                return view('user.pages.manage.check-out', ['schedule'=>$schedule, 'tasks'=>$tasks, 'arrTask'=>$arrTask, 'isCheckout'=> 1, 'checkout' => $checkout]);
+                return view('user.pages.manage.check-out',
+                            [
+                                'schedule'=>$schedule,
+                                'tasks'=>$tasks,
+                                'arrTask'=>$arrTask,
+                                'isCheckout'=> 1,
+                                'checkout' => $checkout
+                            ]);
             }
-            return view('user.pages.manage.check-out', ['schedule'=>$schedule, 'tasks'=>$tasks, 'arrTask'=>$arrTask, 'isCheckout'=> 2, 'checkout' => $checkout]);
+            return view('user.pages.manage.check-out',
+                        [
+                            'schedule'=>$schedule,
+                            'tasks'=>$tasks,
+                            'arrTask'=>$arrTask,
+                            'isCheckout'=> 2,
+                            'checkout' => $checkout
+                        ]);
         } else{
-            return view('user.pages.manage.check-out', ['schedule'=>$schedule, 'tasks'=>$tasks, 'arrTask'=>$arrTask, 'isCheckout'=> 0, 'checkout' => $checkout]);
+            return view('user.pages.manage.check-out',
+                        [
+                            'schedule'=>$schedule,
+                            'tasks'=>$tasks,
+                            'arrTask'=>$arrTask,
+                            'isCheckout'=> 0,
+                            'checkout' => $checkout
+                        ]);
         }
         // dd($arrTask);
     }
@@ -119,7 +141,9 @@ class CheckController extends Controller
                 $task = Task::find((int)$value);
                 $task->status = (int)$arrStatusTask[$key];
                 // dd($task->status);
-                $detailCheck = DetailCheck::where('check_id',$checkout->id)->where('task_id', $task->id)->first();
+                $detailCheck = DetailCheck::where('check_id',$checkout->id)
+                                    ->where('task_id', $task->id)
+                                    ->first();
                 // dd($detailCheck);
                 $detailCheck->status = (int)$arrStatusTask[$key];
                 $detailCheck->save();
@@ -134,10 +158,27 @@ class CheckController extends Controller
 
     public function hisSchedule($id){
         $now = Carbon::now('asia/Ho_Chi_Minh');
-        $start_week = $now->startOfWeek()->format('Y-m-d');
-        $end_week = $now->endOfWeek()->format('Y-m-d');
-        $checks = Check::whereRaw("date(date_start) BETWEEN '" . $start_week. "' AND '".$end_week."'")->where('user_id', $id)->orderByDesc('id')->get();
+        $start_month = $now->startOfMonth()->format('Y-m-d');
+        $end_month = $now->endOfMonth()->format('Y-m-d');
+        $checks = Check::whereRaw("date(date_start) BETWEEN '" . $start_month. "' AND '".$end_month."'")
+                        ->where('user_id', $id)
+                        ->orderByDesc('id')
+                        ->get();
         // dd($checks);
+        $schedules = Schedule::where('user_id', $id)
+                            ->whereRaw("date(date) BETWEEN '" . $start_month. "' AND '".$end_month."'")
+                            ->orderByDesc('id')
+                            ->get();
+        $count = 0;
+        foreach ($schedules as $key => $schedule) {
+            foreach ($checks as $key => $check) {
+                if($check->schedule_id === $schedule->id){
+                    $count += 1;
+                    // break;
+                }
+            }
+        }
+
         $timeTotal = 0;
         foreach ($checks as $key => $check) {
             $t1 = 0;
@@ -159,15 +200,25 @@ class CheckController extends Controller
 
                 $start = Carbon::create($year, $month, $day, $hour_start, $minute_start, 00, $tz);
                 $end = Carbon::create($year, $month, $day, $hour_end, $minute_end, 00, $tz);
-                // dd($start);
+
                 if($start < $time_sang){
-                    $t1 = $time_sang->diffInMinutes($start);
+                    if($end <= $time_sang){
+                        $t1 = $end->diffInMinutes($start);
+                    } else {
+                        $t1 = $time_sang->diffInMinutes($start);
+                    }
                 }
+
                 if($end > $time_chieu){
-                    $t2 = $time_chieu->diffInMinutes($end);
+                    if($start >= $time_chieu){
+                        $t2 = $start->diffInMinutes($end);
+                    } else {
+                        $t2 = $time_chieu->diffInMinutes($end);
+                    }
                 }
-                // $t1 = $time_sang->diffInHours($start);
+
                 $timeTotal += $t1 + $t2;
+                // $timeTotal = 31*24*31;
             }
         }
         // dd($timeTotal);
@@ -183,7 +234,15 @@ class CheckController extends Controller
             $gio = $gio % 24;
         }
 
-        return view('user.pages.manage.view-history-check', ['checks' => $checks, 'timeTotal' => $timeTotal, 'ngay'=>$ngay, 'gio' => $gio, 'phut'=>$phut]);
+        return view('user.pages.manage.view-history-check',
+                    [
+                        'schedules' => $schedules,
+                        'checks' => $checks,
+                        'timeTotal' => $timeTotal,
+                        'ngay'=>$ngay,
+                        'gio' => $gio,
+                        'phut'=>$phut
+                    ]);
     }
 
     public function ajaxHisSchedule($id)

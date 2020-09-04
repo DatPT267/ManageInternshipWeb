@@ -46,18 +46,23 @@ Route::group(['prefix' => 'admin'], function () {
     //     });
     // });
     Route::get('list-schedule', 'ScheduleController@index')->name('list-schedule.index');
+    Route::get('/ajax-view-schedule', 'ScheduleController@ajaxViewListSchedule')->name('ajax.view.schedule');
+
     Route::get('statistical-checkin-checkout', 'CheckController@index')->name('statistical.checkin-out');
-    Route::get('statistical-checkin-checkout/student/{id}', 'CheckController@detail')->name('detail.checkin-checkout');
-    Route::get('ajax/student/detail-checkin-checkout', 'CheckController@AjaxDetail')->name('ajax.detail');
+    Route::get('ajax/statistical-checkin-checkout', 'CheckController@ajaxStatistical')->name('ajax.statistical');
     //lịch sử thực tập, lịch đăng ký thực tập của sinh viên (14-15)
     Route::group(['prefix' => 'student'], function () {
-        Route::get('/{id}/view-schedule', 'ScheduleController@viewSchedule');
-        Route::get('/{id}/view-history-schedule', 'ScheduleController@viewHisSchedule');
-        Route::get('/ajax/{idcheck}/view-history-schedule', 'ScheduleController@ajaxTask')->name('ajax.view-task');
-        Route::get('/{id}/view-history-schedule/{number}', 'ScheduleController@ajaxViewHisSchedule')->name('ajax.view-schedule');
+        Route::get('/{id}/view-schedule/month={number}', 'ScheduleController@viewSchedule')->name('view-schedule');
+        Route::get('/ajax/view-schedule/', 'ScheduleController@ajaxViewSchedule')->name('ajax.schedule');
+
+        Route::get('/{id}/view-history-schedule/month={number}', 'CheckController@viewHisCheck')->name('view-history-check');
+        Route::get('/ajax/{idcheck}/view-history-schedule', 'CheckController@ajaxTask')->name('ajax.view-task');
     });
 });
 
+// Route::get('/test/month={number}', function ($number){
+//     return $number;
+// });
     //Quản lý task
     Route::resource('manageTask', 'TaskController');
 

@@ -11,67 +11,78 @@ use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
 {
-    public function viewSchedule($id)
-    {
-        $student = User::findOrFail($id);
-        $arrayDayOfWeek = array();
-        $i = 0;
+    public function index(){
         $now = Carbon::now();
-        for($i = 0; $i < 2; $i++){
-            $day_start = $now->startOfWeek()->isoFormat('Y-M-D');
-            $day_end = $now->endOfWeek()->isoFormat('Y-M-D');
-            $schedules = Schedule::where('user_id', $id)
-                                ->whereRaw("date(date) BETWEEN '".$day_start."' AND '".$day_end."'")
-                                ->get();
-            foreach($schedules as $key => $value)
-            {
-                array_push($arrayDayOfWeek, array('session'=> $value->session, 'ngay' => $value->date, 'tuan' => $i));
-            }
-            $now->addWeek();
-        }
-        $arrWeek1 = [];
-        $arrWeek2 = [];
-        foreach ($arrayDayOfWeek as $value) {
-            if($value['tuan'] == 0){
-                array_push($arrWeek1, $value);
-            } else{
-                array_push($arrWeek2, $value);
-            }
-        }
-
-        $index=0;
-        return view('admin.pages.manageStudents.show-regSchedule', ['studentName'=>$student->name, 'arrWeek1' => $arrWeek1, 'arrWeek2' => $arrWeek2, 'index'=>$index]);
+        $month = $now->month;
+        $day_start_month = $now->startOfMonth()->isoFormat('Y-M-D');
+        $day_end_month = $now->endOfMonth()->isoFormat('Y-M-D');
+        // dd($day_end_week);
+        $schedules = Schedule::select('user_id')
+                        ->whereBetween('date', [$day_start_month, $day_end_month])
+                        ->distinct()
+                        ->get();
+        // dd($schedules);
+        return view('admin.pages.manageSchedule.list',['schedules' => $schedules, 'month' => $month]);
     }
 
-    public function viewHisSchedule($id)
-    {
-        // $now = Carbon::now();
-        // $start = $now->startOfWeek()->format('Y-m-d');
-        // $end = $now->addWeek()->endOfWeek()->format('Y-m-d');
-        // $checks = Check::where('user_id', $id)->whereRaw("date(date_start) BETWEEN '".$start."' AND '". $end ."'")->get();
-        $checks = Check::where('user_id', $id)->orderByDesc('id')->get();
-        // dd($checks);
-        $user = User::findOrFail($id);
-        $index=0;
-        return view('admin.pages.manageStudents.show-hisRegSchedule', ['checks'=>$checks, 'user'=>$user, 'index'=>$index]);
-    }
-
-    public function ajaxTask($id)
-    {
-        $arrTask = DetailCheck::where('check_id', $id)->get();
-        $check = Check::find($id);
+    public function ajaxViewListSchedule(Request $request){
+        $date_input = $request->input('date');
+        $date = Carbon::createFromDate(null, $date_input, 1, 'asia/Ho_Chi_Minh');
+        $day_start_month = $date->startOfMonth()->isoFormat('YYYY-MM-DD');
+        $day_end_month = $date->endOfMonth()->isoFormat('YYYY-MM-DD');
+        $schedules = Schedule::select('user_id')
+                            ->whereBetween('date', [$day_start_month, $day_end_month])
+                            ->distinct()
+                            ->get();
         $data = [];
-        foreach ($arrTask as $key => $value) {
+        foreach ($schedules as $key => $value) {
             $data[$key] = [
                 'id' => $key,
-                'name' => $value->task->name,
-                'status' => $value->status
+                'user_id' => $value->user_id,
+                'name' => $value->user->name
             ];
         }
-        $note = $check->note;
-        $day_check = $check->schedule->date;
-        return response()->json(['data'=>$data, 'note'=>$note, 'day_check' => $day_check], 200);
+        return response()->json(['data' => $data]);
     }
 
+    public function viewSchedule($id, $month){
+        $now = Carbon::createFromDate(null, $month, 1);
+        $day_start_week = $now->startOfWeek()->isoFormat('Y-M-D');
+        $day_end_week = $now->endOfWeek()->isoFormat('Y-M-D');
+        $name = User::find($id);
+        $schedules = Schedule::where('user_id', $id)
+                            ->whereRaw("date(date) BETWEEN '".$day_start_week."' AND '".$day_end_week."'")
+                            ->get();
+        // dd($schedules);
+        return view('admin.pages.manageStudents.show-regSchedule',
+                        [
+                            'schedules' => $schedules,
+                            'name' => $name->name,
+                            'month' => $month,
+                            'id' => $id
+                        ]);
+    }
+
+    public function ajaxViewSchedule(Request $request){
+        $month = $request->input('month');
+        $week = $request->input('week');
+        $id = $request->input('id');
+        $date = Carbon::createFromDate(null, $month, 1)->week($week)->month($month);
+        $day_start_week = $date->startOfWeek()->isoFormat('Y-M-D');
+        $day_end_week = $date->endOfWeek()->isoFormat('Y-M-D');
+        $schedules = Schedule::where('user_id', $id)
+                    ->whereRaw("date(date) BETWEEN '".$day_start_week."' AND '".$day_end_week."'")
+                    ->get();
+        $data = [];
+        foreach ($schedules as $key => $value) {
+            $data[$key] = [
+                'index' => $key,
+                'englishDayOfWeek' => Carbon::parse($value->date)->englishDayOfWeek,
+                'date' => Carbon::parse($value->date)->isoFormat('DD-MM-YYYY'),
+                'session' => $value->session
+            ];
+        }
+        return response()->json(['data' => $data, 'day_start_week' => $day_start_week, 'day_end_week' => $day_end_week]);
+    }
 
 }

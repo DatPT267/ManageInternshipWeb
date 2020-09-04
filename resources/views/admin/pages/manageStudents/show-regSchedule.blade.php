@@ -1,96 +1,37 @@
 @extends('admin.layout.index')
+@section('style')
+    <style>
+        tr, td{
+            font-size: 20px;
+            text-align: center;
+        }
+    </style>
+@endsection
 @section('content')
-    <h1 style="text-align: center">Lịch thực tập của sinh viên <strong style="color: red">{{$studentName}}</strong></h1>
-    {{-- <table class="table table-striped table-bordered table-hover mt-5" id="list-schedule">
-        <thead>
-            <tr align="center" >
-                <th>Ngày đăng ký thực tập</th>
-                <th>Ca làm</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($arrayDayOfWeek as $key => $value)
-                <tr class="odd gradeX" align="center">
-                    @if (\Carbon\Carbon::parse($key)->englishDayOfWeek == 'Monday')
-                        <td>
-                            <h3><span class="badge badge-primary">
-                                Thứ 2 | {{\Carbon\Carbon::parse($key)->isoFormat('D-M-Y')}}
-                            </span></h3>
-                        </td>
-                        <td>
-                            @if ($value['session']==0)
-                                <h3><span class="badge badge-success">Cả ngày</span></h3>
-                            @elseif($value['session']==1)
-                                <h3><span class="badge badge-info">Ca sáng</span></h3>
-                            @else
-                                <h3><span class="badge badge-warning">Ca chiều</span></h3>
-                            @endif
-                        </td>
-                    @elseif(\Carbon\Carbon::parse($key)->englishDayOfWeek == 'Tuesday')
-                        <td>
-                            <h3><span class="badge badge-primary">
-                                Thứ 3 | {{\Carbon\Carbon::parse($key)->isoFormat('D-M-Y')}}
-                            </span></h3>
-                        </td>
-                        <td>
-                            @if ($value['session']==0)
-                                <h3><span class="badge badge-success">Cả ngày</span></h3>
-                            @elseif($value['session']==1)
-                                <h3><span class="badge badge-info">Ca sáng</span></h3>
-                            @else
-                                <h3><span class="badge badge-warning">Ca chiều</span></h3>
-                            @endif
-                        </td>
-                    @elseif(\Carbon\Carbon::parse($key)->englishDayOfWeek == 'Wednesday')
-                        <td>
-                            <h3><span class="badge badge-primary">
-                                Thứ 4 | {{\Carbon\Carbon::parse($key)->isoFormat('D-M-Y')}}
-                            </span></h3>
-                        </td>
-                        <td>
-                            @if ($value['session']==0)
-                                <h3><span class="badge badge-success">Cả ngày</span></h3>
-                            @elseif($value['session']==1)
-                                <h3><span class="badge badge-info">Ca sáng</span></h3>
-                            @else
-                                <h3><span class="badge badge-warning">Ca chiều</span></h3>
-                            @endif
-                        </td>
-                    @elseif(\Carbon\Carbon::parse($key)->englishDayOfWeek == 'Thursday')
-                        <td>
-                            <h3><span class="badge badge-primary">
-                                Thứ 5 | {{\Carbon\Carbon::parse($key)->isoFormat('D-M-Y')}}
-                            </span></h3>
-                        </td>
-                        <td>
-                            @if ($value['session']==0)
-                                <h3><span class="badge badge-success">Cả ngày</span></h3>
-                            @elseif($value['session']==1)
-                                <h3><span class="badge badge-info">Ca sáng</span></h3>
-                            @else
-                                <h3><span class="badge badge-warning">Ca chiều</span></h3>
-                            @endif
-                        </td>
-                    @elseif(\Carbon\Carbon::parse($key)->englishDayOfWeek == 'Friday')
-                        <td>
-                            <h3><span class="badge badge-primary">
-                                Thứ 6 | {{\Carbon\Carbon::parse($key)->isoFormat('D-M-Y')}}
-                            </span></h3>
-                        </td>
-                        <td>
-                            @if ($value['session']==0)
-                                <h3><span class="badge badge-success">Cả ngày</span></h3>
-                            @elseif($value['session']==1)
-                                <h3><span class="badge badge-info">Ca sáng</span></h3>
-                            @else
-                                <h3><span class="badge badge-warning">Ca chiều</span></h3>
-                            @endif
-                        </td>
-                    @endif
-                </tr>
-            @endforeach
-        </tbody>
-    </table> --}}
+    <a href="{{url()->previous()}}" class="btn btn-light btn-icon-split">
+        <span class="icon text-gray-600">
+        <i class="fas fa-arrow-left"></i>
+        Trở về
+        </span>
+    </a>
+    <h1 style="text-align: center">Lịch thực tập của sinh viên <strong style="color: red">{{$name}}</strong></h1>
+    <button class="btn btn-light btn-icon-split" id="btn-before" >
+        <span class="icon text-gray-600">
+            <i class="fas fa-arrow-left"></i>
+        </span>
+    </button>
+    Tuần <input type="text" id="week"
+                            style="text-align: center; width: 3rem"
+                            value="{{\Carbon\Carbon::now()->weekNumberInMonth}}"
+                            data-month="{{$month}}"
+                            data-url="{{route('ajax.schedule')}}"
+                            data-id="{{$id}}"
+                            disabled>
+    <button class="btn btn-light btn-icon-split" id="btn-after">
+        <span class="icon text-gray-600">
+            <i class="fas fa-arrow-right"></i>
+        </span>
+    </button>
     <table class="table table-striped table-bordered table-hover mt-5" id="list-schedule">
         <thead>
             <tr class="odd gradeX" align="center">
@@ -100,126 +41,53 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="odd gradeX">
-                <th></th>
-                <th style="text-align: center; color: blue; font-size: 25px; font-weight: 1000">
-                    TUẦN HIỆN TẠI ({{\Carbon\Carbon::now()->startOfWeek()->isoFormat('D-M-Y')}} đến {{\Carbon\Carbon::now()->endOfWeek()->isoFormat('D-M-Y')}})
-                </th>
-                <th></th>
-            </tr>
-            @if ($arrWeek1 == null)
+            @foreach ($schedules as $index => $schedule)
                 <tr>
-                    <th></th>
-                    <th style="text-align: center; font-weight: 1000">Tuần này không đăng ký lịch thực tập</th>
-                    <th></th>
+                    <td>{{$index}}</td>
+                    @switch(\Carbon\Carbon::parse($schedule->date)->englishDayOfWeek)
+                        @case('Monday')
+                            <td>
+                                <span class="badge badge-primary">Thứ 2</span>
+                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}}</span>
+                            </td>
+                            @break
+                        @case('Wednesday')
+                            <td>
+                                <span class="badge badge-primary">Thứ 3</span>
+                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}}</span>
+                            </td>
+                            @break
+                        @case('Tuesday')
+                            <td>
+                                <span class="badge badge-primary">Thứ 4</span>
+                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}}</span>
+                            </td>
+                            @break
+                        @case('Thursday')
+                            <td>
+                                <span class="badge badge-primary">Thứ 5</span>
+                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}}</span>
+                            </td>
+                            @break
+                        @case('Friday')
+                            <td>
+                                <span class="badge badge-primary">Thứ 6</span>
+                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}}</span>
+                            </td>
+                            @break
+                        @default
+                    @endswitch
+                    <td>
+                        @if ($schedule->session == 0)
+                            <span class="badge badge-success">Cả ngày</span>
+                        @elseif($schedule->session == 1)
+                            <span class="badge badge-info">Ca sáng</span>
+                        @else
+                            <span class="badge badge-warning">Ca chiều</span>
+                        @endif
+                    </td>
                 </tr>
-            @else
-                @foreach ($arrWeek1 as $key => $value)
-                    <tr class="odd gradeX" align="center">
-                        <td>{{$key}}</td>
-                        @if (\Carbon\Carbon::parse($value['ngay'])->englishDayOfWeek == 'Monday')
-                            <td>
-                                <h3><span class="badge badge-primary">
-                                    Thứ 2 | {{\Carbon\Carbon::parse($value['ngay'])->isoFormat('D-M-Y')}}
-                                </span></h3>
-                            </td>
-                        @elseif(\Carbon\Carbon::parse($value['ngay'])->englishDayOfWeek == 'Tuesday')
-                            <td>
-                                <h3><span class="badge badge-primary">
-                                    Thứ 3 | {{\Carbon\Carbon::parse($value['ngay'])->isoFormat('D-M-Y')}}
-                                </span></h3>
-                            </td>
-                        @elseif(\Carbon\Carbon::parse($value['ngay'])->englishDayOfWeek == 'Wednesday')
-                            <td>
-                                <h3><span class="badge badge-primary">
-                                    Thứ 4 | {{\Carbon\Carbon::parse($value['ngay'])->isoFormat('D-M-Y')}}
-                                </span></h3>
-                            </td>
-                        @elseif(\Carbon\Carbon::parse($value['ngay'])->englishDayOfWeek == 'Thursday')
-                            <td>
-                                <h3><span class="badge badge-primary">
-                                    Thứ 5 | {{\Carbon\Carbon::parse($value['ngay'])->isoFormat('D-M-Y')}}
-                                </span></h3>
-                            </td>
-                        @elseif(\Carbon\Carbon::parse($value['ngay'])->englishDayOfWeek == 'Friday')
-                            <td>
-                                <h3><span class="badge badge-primary">
-                                    Thứ 6 | {{\Carbon\Carbon::parse($value['ngay'])->isoFormat('D-M-Y')}}
-                                </span></h3>
-                            </td>
-                        @endif
-                        <td>
-                            @if ($value['session']==0)
-                                <h3><span class="badge badge-success">Cả ngày</span></h3>
-                            @elseif($value['session']==1)
-                                <h3><span class="badge badge-info">Ca sáng</span></h3>
-                            @else
-                                <h3><span class="badge badge-warning">Ca chiều</span></h3>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            @endif
-            <tr class="odd gradeX">
-                <th></th>
-                <th style="text-align: center; color: blue; font-size: 25px; font-weight: 1000">
-                    TUẦN SAU ({{\Carbon\Carbon::now()->addWeek()->startOfWeek()->isoFormat('D-M-Y')}} đến {{\Carbon\Carbon::now()->addWeek()->endOfWeek()->isoFormat('D-M-Y')}})
-                </th>
-                <th></th>
-            </tr>
-            @if ($arrWeek2 !== null)
-                @foreach ($arrWeek2 as $key => $value)
-                    <tr class="odd gradeX" align="center">
-                        <td>{{$key}}</td>
-                        @if (\Carbon\Carbon::parse($value['ngay'])->englishDayOfWeek == 'Monday')
-                            <td>
-                                <h3><span class="badge badge-primary">
-                                    Thứ 2 | {{\Carbon\Carbon::parse($value['ngay'])->isoFormat('D-M-Y')}}
-                                </span></h3>
-                            </td>
-                        @elseif(\Carbon\Carbon::parse($value['ngay'])->englishDayOfWeek == 'Tuesday')
-                            <td>
-                                <h3><span class="badge badge-primary">
-                                    Thứ 3 | {{\Carbon\Carbon::parse($value['ngay'])->isoFormat('D-M-Y')}}
-                                </span></h3>
-                            </td>
-                        @elseif(\Carbon\Carbon::parse($value['ngay'])->englishDayOfWeek == 'Wednesday')
-                            <td>
-                                <h3><span class="badge badge-primary">
-                                    Thứ 4 | {{\Carbon\Carbon::parse($value['ngay'])->isoFormat('D-M-Y')}}
-                                </span></h3>
-                            </td>
-                        @elseif(\Carbon\Carbon::parse($value['ngay'])->englishDayOfWeek == 'Thursday')
-                            <td>
-                                <h3><span class="badge badge-primary">
-                                    Thứ 5 | {{\Carbon\Carbon::parse($value['ngay'])->isoFormat('D-M-Y')}}
-                                </span></h3>
-                            </td>
-                        @elseif(\Carbon\Carbon::parse($value['ngay'])->englishDayOfWeek == 'Friday')
-                            <td>
-                                <h3><span class="badge badge-primary">
-                                    Thứ 6 | {{\Carbon\Carbon::parse($value['ngay'])->isoFormat('D-M-Y')}}
-                                </span></h3>
-                            </td>
-                        @endif
-                        <td>
-                            @if ($value['session']==0)
-                                <h3><span class="badge badge-success">Cả ngày</span></h3>
-                            @elseif($value['session']==1)
-                                <h3><span class="badge badge-info">Ca sáng</span></h3>
-                            @else
-                                <h3><span class="badge badge-warning">Ca chiều</span></h3>
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            @else
-                    <tr>
-                        <th></th>
-                        <th>Tuần này không đăng ký lịch thực tập</th>
-                        <th></th>
-                    </tr>
-            @endif
+            @endforeach
         </tbody>
     </table>
 @endsection
@@ -232,33 +100,98 @@
                 'paging': false,
                 "bLengthChange": false,
                 "searching": false,
+                "language": {
+                    "emptyTable": "Tuần này không đăng ký thực tập"
+                }
             });
 
-            // $('button#btn-show-week').click(function (){
+            function checkDay(day){
+                switch (day) {
+                    case 'Monday':
+                        return "<span class='badge badge-primary'>Thứ 2</span> |";
+                        break;
+                    case 'Wednesday':
+                        return "<span class='badge badge-primary'>Thứ 3</span> |";
+                        break;
+                    case 'Tuesday':
+                        return "<span class='badge badge-primary'>Thứ 4</span> |";
+                        break;
+                    case 'Thursday':
+                        return "<span class='badge badge-primary'>Thứ 5</span> |";
+                        break;
+                    case 'Friday':
+                        return "<span class='badge badge-primary'>Thứ 6</span> |";
+                        break;
+                }
+            }
+            function checkSession(session){
+                switch (session) {
+                    case 0:
+                        return "<span class='badge badge-success'>Cả ngày</span>";
+                        break;
+                    case 1:
+                        return "<span class='badge badge-info'>Ca sáng</span>";
+                        break;
+                    case 2:
+                        return "<span class='badge badge-warning'>Ca chiều</span>";
+                        break;
 
-            //     var nameWeek = $(this).attr('data-name');
-            //     console.log(nameWeek);
-            //     if(nameWeek == 'after'){
-            //         $(this).text('Tuần hiện tại');
-            //         $(this).attr('data-name', 'current');
-            //         $(this).attr('data-id', 1);
-            //     }else if(nameWeek == 'current'){
-            //         $(this).text('Tuần sau');
-            //         $(this).attr('data-name', 'after');
-            //         $(this).attr('data-id', 0);
-            //     }
-            //     var idShow = $(this).attr('data-id');
-            //     console.log(idShow);
-            //     $.ajax({
-            //         type: "GET",
-            //         url: "url",
-            //         data: "data",
-            //         dataType: "dataType",
-            //         success: function (response) {
+                }
+            }
+            //========================AJAX==============================
+            function ajax(url, month, week, id){
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    data: {
+                        month: month,
+                        week: week,
+                        id: id
+                    },
+                    success: function (response) {
+                        console.log(response);
+                        var output = "";
+                        if(response.data.length != 0){
+                            for (let i = 0; i < response.data.length; i++) {
+                                output += "<tr>"+
+                                    "<td>"+response.data[i].index+"</td>"+
+                                    "<td>"+checkDay(response.data[i].englishDayOfWeek)+" <span class='badge badge-info'>"+response.data[i].date+"</span>"+"</td>"+
+                                    "<td>"+checkSession(response.data[i].session)+"</td>"
+                                +"</tr>"
 
-            //         }
-            //     });
-            // })
+                            }
+                        } else{
+                            output = "<tr><th colspan='3'>Tuần này không đăng ký thực tập</th></tr>";
+                        }
+                        $('tbody').html(output);
+                    }
+                });
+            }
+            //========================AJAX==============================
+            $('#btn-before').click(function (){
+                if( $('#week').val() > 1 ){
+                    $('#week').val( $('#week').val() - 1);
+                    var week = $('#week').val();
+                    var month = $('#week').attr('data-month');
+                    var id = $('#week').attr('data-id');
+                    var url = $('#week').attr('data-url');
+                    ajax(url, month, week, id);
+                } else{
+                    alert('Tuần phải lớn hơn 0!');
+                }
+            })
+            $('#btn-after').click(function (){
+                if( $('#week').val() < 4 ){
+                    $('#week').val( parseInt($('#week').val()) + 1);
+                    var week = $('#week').val();
+                    var month = $('#week').attr('data-month');
+                    var id = $('#week').attr('data-id');
+                    var url = $('#week').attr('data-url');
+                    ajax(url, month, week, id);
+                } else{
+                    alert('Tuần phải nhỏ hơn 5!');
+                }
+            })
         })
     </script>
 @endsection

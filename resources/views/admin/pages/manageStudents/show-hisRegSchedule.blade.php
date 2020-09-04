@@ -7,6 +7,12 @@
     </style>
 @endsection
 @section('content')
+    <a href="{{url()->previous()}}" class="btn btn-light btn-icon-split">
+        <span class="icon text-gray-600">
+        <i class="fas fa-arrow-left"></i>
+        Trở về
+        </span>
+    </a>
     <h1>Lịch sử thực tập của sinh viên <strong>{{$user->name}}</strong></h1>
     <table class="table table-striped table-bordered table-hover" id="example">
         <thead>
@@ -19,11 +25,11 @@
             </tr>
         </thead>
         <tbody id="body">
-            @foreach ($checks as $check)
+            @foreach ($schedules as $schedule)
                 <tr class="odd gradeX" align="center">
                     <td id="index">{{$index++}}</td>
                     <td id="lichthuctap">
-                        @switch(\Carbon\Carbon::parse($check->date_start)->isoFormat('dddd'))
+                        @switch(\Carbon\Carbon::parse($schedule->date)->isoFormat('dddd'))
                             @case('Monday')
                                 <span class="badge badge-primary">Thứ 2</span> -
                                 @break
@@ -42,35 +48,55 @@
                             @default
                         @endswitch
                         <span class="badge badge-info">
-                            {{\Carbon\Carbon::parse($check->date_start)->isoFormat('D/M/Y')}}
+                            {{\Carbon\Carbon::parse($schedule->date)->isoFormat('D/M/Y')}}
                         </span>
                     </td>
-                    <td id="checkin">
-                        <span class="badge badge-info">
-                            {{\Carbon\Carbon::parse($check->date_start)->toTimeString()}}
-                        </span>
-                    </td>
-                    <td id="checkout">
-                        @if ($check->date_end != null)
-                            <span class="badge badge-warning">
-                                {{\Carbon\Carbon::parse($check->date_end)->toTimeString()}}
-                            </span>
-                        @else
+                    @if (in_array($schedule->id, $dataSch))
+                        @foreach ($checks as $check)
+                            @if ($check->schedule_id == $schedule->id)
+                                <td id="checkin">
+                                    <span class="badge badge-info">
+                                        {{\Carbon\Carbon::parse($check->date_start)->toTimeString()}}
+                                    </span>
+                                </td>
+                                <td id="checkout">
+                                    @if ($check->date_end != null)
+                                        <span class="badge badge-warning">
+                                            {{\Carbon\Carbon::parse($check->date_end)->toTimeString()}}
+                                        </span>
+                                    @else
+                                        <span class="badge badge-danger">Chưa check-out</span>
+                                    @endif
+                                </td>
+                                <td class="center" id="btn-detail">
+                                    <a href="#" class="btn btn-info btn-circle btn-show"
+                                                data-toggle="modal"
+                                                data-target="#exampleModalCenter"
+                                                data-id="{{$check->id}}"
+                                                data-url="{{route('ajax.view-task', $check->id)}}">
+                                        <i class="fas fa-info-circle"></i>
+                                    </a>
+                                </td>
+                            @endif
+                        @endforeach
+                    @else
+                        <td>
+                            <span class="badge badge-danger">Chưa check-in</span>
+                        </td>
+                        <td>
                             <span class="badge badge-danger">Chưa check-out</span>
-                        @endif
-                    </td>
-                    <td class="center" id="btn-detail">
-                        <a href="#" class="btn btn-info btn-circle btn-show"
-                                    data-toggle="modal"
-                                    data-target="#exampleModalCenter"
-                                    data-id="{{$check->id}}"
-                                    data-url="{{route('ajax.view-task', $check->id)}}">
-                            <i class="fas fa-info-circle"></i>
-                        </a>
-                    </td>
+                        </td>
+                        <td></td>
+                    @endif
                 </tr>
             @endforeach
         </tbody>
+        <tfoot>
+            <tr>
+                <th style="float: right">Tổng số ngày tham gia:</th>
+                <th colspan="4">{{$sum_check}} ngày</th>
+            </tr>
+        </tfoot>
     </table>
     <!-- Modal -->
     <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -113,8 +139,8 @@
         $(document).ready(function (){
 
             $('#example').dataTable({
-                "scrollY" : "50vh",
-                'paging': false,
+                "bLengthChange": false,
+                'paging': true,
                 'info': false,
                 'sort': false
             });

@@ -158,8 +158,8 @@ class CheckController extends Controller
 
     public function hisSchedule($id){
         $now = Carbon::now('asia/Ho_Chi_Minh');
+        $end_month = $now->subDay()->format('Y-m-d');
         $start_month = $now->startOfMonth()->format('Y-m-d');
-        $end_month = $now->endOfMonth()->format('Y-m-d');
         $checks = Check::whereRaw("date(date_start) BETWEEN '" . $start_month. "' AND '".$end_month."'")
                         ->where('user_id', $id)
                         ->orderByDesc('id')
@@ -169,6 +169,8 @@ class CheckController extends Controller
                             ->whereRaw("date(date) BETWEEN '" . $start_month. "' AND '".$end_month."'")
                             ->orderByDesc('id')
                             ->get();
+        // dd($schedules);
+
         $count = 0;
         foreach ($schedules as $key => $schedule) {
             foreach ($checks as $key => $check) {
@@ -180,10 +182,12 @@ class CheckController extends Controller
         }
 
         $timeTotal = 0;
+        $arrCheck = [];
         foreach ($checks as $key => $check) {
             $t1 = 0;
             $t2 = 0;
             if($check->date_start !== null && $check->date_end !== null){
+                $arrCheck[$key] = $check->schedule_id;
                 $arrTime = explode(" ", $check->date_start);
                 $arrYMD = explode("-", $arrTime[0]);
                 $year = (int)$arrYMD[0];
@@ -221,7 +225,7 @@ class CheckController extends Controller
                 // $timeTotal = 31*24*31;
             }
         }
-        // dd($timeTotal);
+        // dd($arrCheck);
         $ngay = 0;
         $gio = 0;
         $phut = 0;
@@ -238,7 +242,9 @@ class CheckController extends Controller
                     [
                         'schedules' => $schedules,
                         'checks' => $checks,
+                        'arrCheck' => $arrCheck,
                         'timeTotal' => $timeTotal,
+                        'count' => $count,
                         'ngay'=>$ngay,
                         'gio' => $gio,
                         'phut'=>$phut

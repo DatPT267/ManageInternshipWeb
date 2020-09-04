@@ -16,7 +16,7 @@
             <i class="fas fa-arrow-right"></i>
         </span>
     </button>
-    <table class="table table-striped table-hover table-bordered" id="list-student">
+    <table class="table table-hover table-bordered" id="list-student">
         <thead>
             <tr>
                 <th>STT</th>
@@ -45,6 +45,7 @@
         $(document).ready(function (){
             $('#list-student').dataTable({
                 'info': false,
+                'order' : false,
                 'paging': false,
                 "bLengthChange": false,
                 "searching": false,
@@ -61,6 +62,7 @@
                     url: url,
                     data: {date: date},
                     success: function (response) {
+                        // console.log(response);
                         var output = '';
                         if(response.data.length != 0){
                             for (let i = 0; i < response.data.length; i++) {
@@ -85,37 +87,30 @@
                     $('#month').val( $('#month').val() - 1);
                     date = $('#month').val();
                     var url = $('#month').attr('data-url');
-                    console.log(date);
+                    // console.log(date);
                     $('h1#title').text("Danh sách đăng ký thực tập trong tháng "+date);
                     ajax(url, date);
-                } else{
-                    alert('Tháng phải lớn hơn 0!');
+                }
+                if($('#month').val() == 1){
+                    $('#btn-before').attr('disabled', true);
+                    // alert('Tháng phải lớn hơn 0!');
                 }
             })
             $('#btn-after').click(function (){
                 var today = new Date();
                 var month = today.getMonth() + 1;
+                $('#btn-before').attr('disabled', false);
                 if( $('#month').val() < month){
                     $('#month').val( parseInt($('#month').val()) + 1);
                     date = $('#month').val();
                     var url = $('#month').attr('data-url');
-                    console.log(date);
+                    // console.log(date);
                     $('h1#title').text("Danh sách đăng ký thực tập trong tháng "+date);
                     ajax(url, date);
                 }
                 if($('#month').val() == month){
                     $('#btn-after').attr('disabled', true);
                 }
-                // if( $('#month').val() < 12 ){
-                //     $('#month').val( parseInt($('#month').val()) + 1);
-                //     date = $('#month').val();
-                //     var url = $('#month').attr('data-url');
-                //     console.log(date);
-                //     $('h1#title').text("Danh sách đăng ký thực tập trong tháng "+date);
-                //     ajax(url, date);
-                // } else{
-                //     alert('tháng phải nhỏ hơn 13!');
-                // }
             })
         })
     </script>

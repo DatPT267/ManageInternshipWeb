@@ -15,14 +15,14 @@
         </span>
     </a>
     <h1 style="text-align: center">Lịch thực tập của sinh viên <strong style="color: red">{{$name}}</strong></h1>
-    <button class="btn btn-light btn-icon-split" id="btn-before" >
+    <button class="btn btn-light btn-icon-split" id="btn-before" disabled>
         <span class="icon text-gray-600">
             <i class="fas fa-arrow-left"></i>
         </span>
     </button>
     Tuần <input type="text" id="week"
                             style="text-align: center; width: 3rem"
-                            value="{{\Carbon\Carbon::now()->weekNumberInMonth}}"
+                            value="1"
                             data-month="{{$month}}"
                             data-url="{{route('ajax.schedule')}}"
                             data-id="{{$id}}"
@@ -48,31 +48,31 @@
                         @case('Monday')
                             <td>
                                 <span class="badge badge-primary">Thứ 2</span>
-                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}}</span>
+                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('DD-MM-YYYY')}}</span>
                             </td>
                             @break
                         @case('Wednesday')
                             <td>
                                 <span class="badge badge-primary">Thứ 3</span>
-                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}}</span>
+                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('DD-MM-YYYY')}}</span>
                             </td>
                             @break
                         @case('Tuesday')
                             <td>
                                 <span class="badge badge-primary">Thứ 4</span>
-                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}}</span>
+                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('DD-MM-YYYY')}}</span>
                             </td>
                             @break
                         @case('Thursday')
                             <td>
                                 <span class="badge badge-primary">Thứ 5</span>
-                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}}</span>
+                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('DD-MM-YYYY')}}</span>
                             </td>
                             @break
                         @case('Friday')
                             <td>
                                 <span class="badge badge-primary">Thứ 6</span>
-                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('D-M-Y')}}</span>
+                                | <span class="badge badge-info">{{\Carbon\Carbon::parse($schedule->date)->isoFormat('DD-MM-YYYY')}}</span>
                             </td>
                             @break
                         @default
@@ -157,8 +157,7 @@
                                     "<td>"+response.data[i].index+"</td>"+
                                     "<td>"+checkDay(response.data[i].englishDayOfWeek)+" <span class='badge badge-info'>"+response.data[i].date+"</span>"+"</td>"+
                                     "<td>"+checkSession(response.data[i].session)+"</td>"
-                                +"</tr>"
-
+                                +"</tr>";
                             }
                         } else{
                             output = "<tr><th colspan='3'>Tuần này không đăng ký thực tập</th></tr>";
@@ -169,6 +168,7 @@
             }
             //========================AJAX==============================
             $('#btn-before').click(function (){
+                $('#btn-after').attr('disabled', false);
                 if( $('#week').val() > 1 ){
                     $('#week').val( $('#week').val() - 1);
                     var week = $('#week').val();
@@ -176,11 +176,13 @@
                     var id = $('#week').attr('data-id');
                     var url = $('#week').attr('data-url');
                     ajax(url, month, week, id);
-                } else{
-                    alert('Tuần phải lớn hơn 0!');
+                }
+                if($('#week').val() == 1){
+                    $('#btn-before').attr('disabled', true);
                 }
             })
             $('#btn-after').click(function (){
+                $('#btn-before').attr('disabled', false);
                 if( $('#week').val() < 4 ){
                     $('#week').val( parseInt($('#week').val()) + 1);
                     var week = $('#week').val();
@@ -188,8 +190,9 @@
                     var id = $('#week').attr('data-id');
                     var url = $('#week').attr('data-url');
                     ajax(url, month, week, id);
-                } else{
-                    alert('Tuần phải nhỏ hơn 5!');
+                }
+                if($('#week').val() == 4){
+                    $('#btn-after').attr('disabled', true);
                 }
             })
         })

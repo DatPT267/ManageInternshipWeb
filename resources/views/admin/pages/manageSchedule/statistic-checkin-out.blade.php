@@ -92,15 +92,6 @@
                 if($('input#month').val() == month){
                     $('#btn-after').attr('disabled', true);
                 }
-                // if($('input#month').val() < 12){
-                //     $('input#month').val(parseInt($('input#month').val()) + 1);
-                //     date = $('input#month').val();
-                //     var url = $('#month').attr('data-url');
-                //     $('h1#title').text('Thống kê lịch sử checkin-checkout tháng ' +date);
-                //     callAjax(url, date);
-                // }else{
-                //     alert('Tháng phải nhỏ hơn 12');
-                // }
             })
         })
     </script>

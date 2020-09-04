@@ -18,13 +18,13 @@ class CreateReviewTable extends Migration
             $table->string('content');
 
             $table->bigInteger('task_id')->unsigned();
-            $table->foreign('task_id')->references('id')->on('task');
+            $table->foreign('task_id')->references('id')->on('task')->onDelete('cascade')->onUpdate('cascade');
 
             $table->bigInteger('group_id')->unsigned();
-            $table->foreign('group_id')->references('id')->on('group');
+            $table->foreign('group_id')->references('id')->on('group')->onDelete('cascade')->onUpdate('cascade');
 
             $table->bigInteger('reviewer_id')->unsigned();
-            $table->foreign('reviewer_id')->references('id')->on('member');
+            $table->foreign('reviewer_id')->references('id')->on('member')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -19,13 +19,13 @@ class CreateFeedbackTable extends Migration
             $table->dateTime('time');
 
             $table->bigInteger('review_id')->unsigned();
-            $table->foreign('review_id')->references('id')->on('review');
+            $table->foreign('review_id')->references('id')->on('review')->onDelete('cascade')->onUpdate('cascade');
 
             $table->bigInteger('feedback_id')->unsigned();
-            $table->foreign('feedback_id')->references('id')->on('feedback');
+            $table->foreign('feedback_id')->references('id')->on('feedback')->onDelete('cascade')->onUpdate('cascade');
 
             $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

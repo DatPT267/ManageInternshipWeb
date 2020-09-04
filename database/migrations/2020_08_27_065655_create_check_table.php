@@ -20,10 +20,10 @@ class CreateCheckTable extends Migration
             $table->dateTime('date_end')->nullable();
 
             $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->bigInteger('schedule_id')->unsigned();
-            $table->foreign('schedule_id')->references('id')->on('schedule');
+            $table->foreign('schedule_id')->references('id')->on('schedule')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

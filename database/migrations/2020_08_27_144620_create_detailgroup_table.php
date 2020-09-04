@@ -17,10 +17,10 @@ class CreateDetailgroupTable extends Migration
             $table->id();
 
             $table->bigInteger('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
 
             $table->bigInteger('group_id')->unsigned();
-            $table->foreign('group_id')->references('id')->on('group');
+            $table->foreign('group_id')->references('id')->on('group')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

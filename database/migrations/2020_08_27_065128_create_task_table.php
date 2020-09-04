@@ -19,7 +19,7 @@ class CreateTaskTable extends Migration
             $table->string('note');
             $table->integer('status');
             $table->bigInteger('group_id')->unsigned();
-            $table->foreign('group_id')->references('id')->on('group');
+            $table->foreign('group_id')->references('id')->on('group')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

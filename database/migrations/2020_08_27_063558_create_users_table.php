@@ -25,7 +25,7 @@ class CreateUsersTable extends Migration
             $table->integer('position');
             $table->bigInteger('class_id')->unsigned();
             $table->integer('status');
-            $table->foreign('class_id')->references('id')->on('internshipclass');
+            $table->foreign('class_id')->references('id')->on('internshipclass')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -21,7 +21,7 @@ class CreateGroupTable extends Migration
             $table->integer('status')->default(0);
 
             $table->bigInteger('class_id')->unsigned();
-            $table->foreign('class_id')->references('id')->on('internshipclass');
+            $table->foreign('class_id')->references('id')->on('internshipclass')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -17,10 +17,10 @@ class CreateDetailcheckTable extends Migration
             $table->id();
             $table->integer('status');
             $table->bigInteger('check_id')->unsigned();
-            $table->foreign('check_id')->references('id')->on('check');
+            $table->foreign('check_id')->references('id')->on('check')->onDelete('cascade')->onUpdate('cascade');
 
             $table->bigInteger('task_id')->unsigned();
-            $table->foreign('task_id')->references('id')->on('task');
+            $table->foreign('task_id')->references('id')->on('task')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

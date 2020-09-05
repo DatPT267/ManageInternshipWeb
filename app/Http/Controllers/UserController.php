@@ -157,7 +157,8 @@ class UserController extends Controller
             // $imgPath = $file->store('profiles', 'public');
             // $image = Image::make('storage/'.$imgPath)->fit(1000, 1000);
             $file->move("image/user/", $hinh);
-            if($user->image != null){
+            $imageDefault = "image-default.png";
+            if($user->image != $imageDefault){
                 unlink('image/user/'.$user->image);
             }
             $user->image = $hinh;

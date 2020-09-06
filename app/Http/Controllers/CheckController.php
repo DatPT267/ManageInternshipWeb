@@ -174,20 +174,19 @@ class CheckController extends Controller
         $count = 0;
         foreach ($schedules as $key => $schedule) {
             foreach ($checks as $key => $check) {
-                if($check->schedule_id === $schedule->id){
+                if($check->schedule_id === $schedule->id && $check->date_end != null){
                     $count += 1;
                     // break;
                 }
             }
         }
-
         $timeTotal = 0;
         $arrCheck = [];
         foreach ($checks as $key => $check) {
             $t1 = 0;
             $t2 = 0;
+            $arrCheck[$key] = $check->schedule_id;
             if($check->date_start !== null && $check->date_end !== null){
-                $arrCheck[$key] = $check->schedule_id;
                 $arrTime = explode(" ", $check->date_start);
                 $arrYMD = explode("-", $arrTime[0]);
                 $year = (int)$arrYMD[0];

@@ -90,8 +90,24 @@ class GroupController extends Controller
 
     public function getListTask($id, $group_id){
         $tasks = Task::where('group_id', $group_id)->get();
-
-        return response()->json(['data'=>$tasks]);
+        $data = [];
+        foreach ($tasks as $key => $task) {
+            $assigns = Assign::where('task_id', $task->id)->get();
+            $name_member = [];
+            if(count($assigns) > 0){
+                foreach ($assigns as $key => $assign) {
+                    $name_member[$key] = $assign->member->user->name;
+                }
+            }
+            $data[$key] = [
+                'index' => $key,
+                'name' => $task->name,
+                'status' => $task->status,
+                'name_member' => $name_member,
+                'note' => $task->note
+            ];
+        }
+        return response()->json(['data'=>$data]);
         // return datatables($tasks)->make(true);
     }
     public function getListEvaluate($id){

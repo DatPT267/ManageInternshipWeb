@@ -9,11 +9,12 @@
             </div>
             <div class="modal-body">
                 <table class="table table-striped table-bordered table-hover" id="listTask" style="text-align: center">
-                    <thead>
+                    <thead style="text-align: center">
                         <tr>
                             <th>ID</th>
                             <th>Tên task</th>
                             <th>Trạng thái</th>
+                            <th>Thành viên tham gia</th>
                             <th>Ghi chú</th>
                         </tr>
                     </thead>
@@ -38,7 +39,7 @@
                 "scrollY": "50vh",
                 'info': false,
                 "scrollCollapse": true,
-                "paging":         false,
+                "paging": false,
                 "ajax":{
                     "url": url,
                     "type": "GET",
@@ -47,7 +48,7 @@
                     "datetype": "json"
                 },
                 "columns": [
-                    {"data": "id"},
+                    {"data": "index"},
                     {"data": "name"},
                     {"data": "status",
                     render: function (data, type, row) {
@@ -57,7 +58,19 @@
                         else if(data == 3) return "<button class='btn btn-success'>Done</button>";
                         else return "<button class='btn btn-danger'>Pending</button>";
                     }},
-                    {"data": "note"},
+                    {"data": "name_member",
+                    render: function (data, type, row) {
+                        var name_member = '';
+                        if(data.length > 0){
+                            for (let i = 0; i < data.length; i++) {
+                                name_member += data[i] + ", ";
+                            }
+                            return name_member;
+                        } else{
+                            return '<strong>Chưa ai nhận task</strong>';
+                        }
+                    }},
+                    {"data": "note", "width": "40%"},
                 ]
 
             });

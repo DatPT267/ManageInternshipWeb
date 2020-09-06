@@ -38,9 +38,9 @@
                         </div>
                         <div class="col-sm-10 text-secondary">
                             @if ($group->status == 1)
-                                <button class="btn btn-success">Hoạt động</button>
+                                <button class="btn btn-success" disabled>Hoạt động</button>
                             @else
-                                <button class="btn btn-danger">Không hoạt động</button>
+                                <button class="btn btn-danger" disabled>Không hoạt động</button>
                             @endif
                         </div>
                     </div>

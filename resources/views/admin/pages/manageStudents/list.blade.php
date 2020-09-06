@@ -22,6 +22,7 @@
                 <th>Tên Sinh Viên</th>
                 <th>Email</th>
                 <th>SĐT</th>
+                <th>Lớp Thực Tập</th>
                 <th>Ảnh cá nhân</th>
                 <th>Địa Chỉ</th>
                 <th>Hành động</th>
@@ -34,10 +35,11 @@
                 <td>{{$ls->name}} </td>
                 <td>{{$ls->email}}</td>
                 <td>{{$ls->phone}}</td>
+                <td>{{$ls->internshipClass->name}}</td>
                 <td>  <img width="100px" src="image/user/{{$ls->image}}" ></td>
                 <td>{{$ls->address}}</td>
                 <td class="center">
-                    <form action="" method="post">
+                    <form action="{{route('manageStudents.destroy', $ls->id)}}" method="post">
                         @csrf
                         @method('DELETE')
                         <input type="submit" value="Delete" class="btn btn-danger">

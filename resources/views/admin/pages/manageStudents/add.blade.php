@@ -21,7 +21,7 @@
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="form-group">
                         <label style="color: #000;">Tên Sinh Viên</label>
-                        <input class="form-control" name="name" placeholder="Nhập Tên SInh Viên" />
+                        <input class="form-control" name="name" placeholder="Nhập Tên Sinh Viên" />
                     </div>
                     <div class="form-group">
                         <label style="color: #000;">Email</label>
@@ -29,7 +29,7 @@
                     </div>
                     <div class="form-group">
                         <label style="color: #000;">SĐT</label>
-                        <input class="form-control" name="phone" placeholder="Nhập SĐT" />
+                        <input class="form-control" type="phone_number" name="phone" placeholder="Nhập SĐT" />
                     </div>
                     <div class="form-group">
                         <label style="color: #000;">Ảnh cá nhân</label>

@@ -182,9 +182,12 @@ class UserController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(User $user , $id)
     {
-        //
+      $user = User::find($id);
+      unlink("image/user/".$user->image);
+      $user->delete();
+      return back()->with('success', 'Xóa thành công');
     }
     
 
@@ -195,12 +198,12 @@ class UserController extends Controller
             [
                 'name' =>'required',
                 'email'=>'required|email',
-                'phone'=>'required',
+                'phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/',
             ],
             [
                 'name.required' =>'Bạn chưa nhập tên sinh viên',
                 'email.required' => 'Bạn chưa nhập email sinh viên',  
-              
+                'phone.regex' => 'Số điện thoại sai định dạng',
                 'email.unique' => 'Email đã tồn tại',
                 'phone.required' => 'Bạn chưa nhập số điện thoại'           
             ]);
@@ -226,7 +229,7 @@ class UserController extends Controller
                     $Hinh= Str::random(4)."_".$name;
                 }
                 $file->move("image/user",$Hinh);
-                // unlink("image/user/".$user->image);
+                unlink("image/user/".$user->image);
                 $user->image = $Hinh;
             }  
             
@@ -241,15 +244,20 @@ class UserController extends Controller
                 [
                     'name' =>'required',
                     'email'=>'required|email',
-                    'phone'=>'required',
+                    'phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/',
                     'address'=>'required'
                 ],
                 [
                     'name.required' =>'Bạn chưa nhập tên sinh viên',
-                    'email.email' => 'Bạn chưa nhập Email',
-                    'phone' => 'Bạn chưa nhập SĐT',
-                    'address'=> 'Bạn chưa nhập địa chỉ',
+                    'email.required' => 'Bạn chưa nhập email',
+                    'email.email' => 'Bạn nhập sai định dạng email',
+                    'phone.required' => 'Bạn chưa nhập SĐT',
+                    'phone.regex' => 'Số điện thoại sai định dạng',
+                    'address.required'=> 'Bạn chưa nhập địa chỉ',
+
                 ]);
+
+
             
                 $fullName = $request->name;
                 $name = changeTitle($fullName);
@@ -383,7 +391,16 @@ class UserController extends Controller
             }  
             else
             {   
-                $user->image="";
+                $name = 'avatar';
+                $Hinh= Str::random(4)."_".$name;
+                while (file_exists("image/user".$Hinh)) 
+                {
+                    $Hinh= Str::random(4)."_".$name;
+                }
+                $file = \File::copy(base_path('public\image\user\avatar.jpg'),base_path('public/image/user/'.$Hinh));
+              
+            
+                $user->image = $Hinh;
             }
             $user->save();
     
@@ -435,6 +452,7 @@ class UserController extends Controller
     { 
       $user = User::find($id);
       $user->password = bcrypt("123456789");
+      $user->save();
       return back()->with('thongbao', 'Mật khẩu mới là: 123456789');
     }
 

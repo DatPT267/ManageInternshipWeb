@@ -25,6 +25,7 @@
                             value="1"
                             data-month="{{$month}}"
                             data-url="{{route('ajax.schedule')}}"
+                            data-week="{{$numberWeekOfMonth}}"
                             data-id="{{$id}}"
                             disabled>
     <button class="btn btn-light btn-icon-split" id="btn-after">
@@ -183,7 +184,9 @@
             })
             $('#btn-after').click(function (){
                 $('#btn-before').attr('disabled', false);
-                if( $('#week').val() < 4 ){
+                var numberWeek = $('#week').attr('data-week');
+                console.log(numberWeek);
+                if( $('#week').val() < numberWeek ){
                     $('#week').val( parseInt($('#week').val()) + 1);
                     var week = $('#week').val();
                     var month = $('#week').attr('data-month');
@@ -191,7 +194,7 @@
                     var url = $('#week').attr('data-url');
                     ajax(url, month, week, id);
                 }
-                if($('#week').val() == 4){
+                if($('#week').val() == numberWeek){
                     $('#btn-after').attr('disabled', true);
                 }
             })

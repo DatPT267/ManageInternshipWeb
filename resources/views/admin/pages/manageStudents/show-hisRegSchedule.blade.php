@@ -93,7 +93,7 @@
         </tbody>
         <tfoot>
             <tr>
-                <th style="float: right">Tổng số ngày tham gia:</th>
+                <th style="float: right">Tổng số ngày tham gia thực tập:</th>
                 <th colspan="4">{{$sum_check}} ngày</th>
             </tr>
         </tfoot>
@@ -161,20 +161,24 @@
                     type: 'GET',
                     dataText: 'TEXT',
                     success: function(response){
-                        var ouput = '';
-                        console.log(response);
-                        response.data.forEach(item => {
-                            ouput+= "<tr>"+
-                                    "<td>"+item.id+"</td>"+
-                                    "<td>"+item.name+"</td>"+
-                                    "<td>"+check(item.status)+"</td>"
-                                +"</tr>";
-                        });
                         const date = new Date(response.day_check);
-                        console.log(date);
-                        $('#note p').text(response.note);
-                        $('tbody.show-detail').html(ouput);
                         $('h5.modal-title').text("Thông tin chi tiết ngày " + date.getDate() + " - " + (date.getMonth()+1) + " - " + date.getFullYear());
+
+                        console.log(response);
+                        $('#detail').attr('hidden', true);
+                        if(response.data.length != 0){
+                            var ouput = '';
+                            $('#detail').attr('hidden', false);
+                            response.data.forEach(item => {
+                                ouput+= "<tr>"+
+                                            "<td>"+item.id+"</td>"+
+                                            "<td>"+item.name+"</td>"+
+                                            "<td>"+check(item.status)+"</td>"
+                                        +"</tr>";
+                            });
+                            $('tbody.show-detail').html(ouput);
+                        }
+                        $('#note p').text(response.note);
                     }
                 })
             });

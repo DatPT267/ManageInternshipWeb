@@ -49,6 +49,7 @@
                     url: url,
                     data: {date: date},
                     success: function (response) {
+                        console.log(response);
                         var output = "";
                         if(response.data.length !== 0){
                             for (let i = 0; i < response.data.length; i++) {
@@ -74,14 +75,16 @@
                     $('h1#title').text('Thống kê lịch sử checkin-checkout tháng ' +date);
                     callAjax(url, date);
                     $('#btn-after').attr('disabled', false);
-                }else{
-                    alert('Tháng phải lớn hơn 1');
+                }
+                if($('input#month').val() == 1){
+                    $('#btn-before').attr('disabled', true);
                 }
             })
 
             $('#btn-after').click(function (){
                 var today = new Date();
                 var month = today.getMonth() + 1;
+                $('#btn-before').attr('disabled', false);
                 if($('input#month').val() < month){
                     $('input#month').val(parseInt($('input#month').val()) + 1);
                     date = $('input#month').val();

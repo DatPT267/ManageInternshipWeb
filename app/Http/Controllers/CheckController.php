@@ -21,19 +21,22 @@ class CheckController extends Controller
                         ->distinct()
                         ->get();
         //    dd($checks);
-        return view('admin.pages.manageSchedule.statistic-checkin-out', ['checks' => $checks]);
+        return view('admin.pages.manageSchedule.statistic-checkin-out',
+                    [
+                        'checks' => $checks
+                    ]);
     }
 
     public function ajaxStatistical(Request $request)
     {
-        $data_input = $request->input('date');
-        $date = Carbon::createFromDate(null, $data_input, 1, 'asia/Ho_Chi_Minh');
+        $month_input = $request->input('date');
+        $date = Carbon::createFromDate(null, $month_input, 1, 'asia/Ho_Chi_Minh');
         $day_start_month = $date->startOfMonth()->isoFormat('YYYY-MM-DD');
         $day_end_month = $date->endOfMonth()->isoFormat('YYYY-MM-DD');
         $checks = Check::select('user_id')
-                ->whereRaw("date(date_start) BETWEEN '".$day_start_month."' AND '".$day_end_month."'")
-                ->distinct()
-                ->get();
+                        ->whereRaw("date(date_start) BETWEEN '".$day_start_month."' AND '".$day_end_month."'")
+                        ->distinct()
+                        ->get();
         $data = [];
         foreach ($checks as $key => $value) {
             $data[$key] = [
@@ -42,7 +45,11 @@ class CheckController extends Controller
                 'user_id' => $value->user_id
             ];
         }
-        return response()->json(['data' => $data]);
+        return response()->json([
+            'data' => $data,
+            'day_start_month' => $day_start_month,
+            'day_end_month' => $day_end_month
+        ]);
     }
 
     public function viewHisCheck($id, $number)
@@ -53,32 +60,28 @@ class CheckController extends Controller
         $day_end = $date->endOfMonth()->isoFormat('YYYY-MM-DD');
         if($number == $monthNow){
             $checks = Check::where('user_id', $id)
-                        ->where('date_end', '!=', 'null')
                         ->whereRaw("date(date_start) BETWEEN '".$day_start."'AND'".Carbon::now()->subDay()->isoFormat('YYYY-MM-DD')."'")
                         ->orderByDesc('id')
                         ->get();
             // dd($checks);
-            $sum_check = count($checks);
-            // dd($sum_check);
-            $schedules = Schedule::where('user_id', $id)
-                        ->whereBetween('date', [$day_start, Carbon::now()->subDay()->isoFormat('YYYY-MM-DD')])
-                        ->orderByDesc('id')
-                        ->get();
         } else{
-            // dd($date);
             $checks = Check::where('user_id', $id)
-                        ->where('date_end', '!=', 'null')
                         ->whereRaw("date(date_start) BETWEEN '".$day_start."'AND'".$day_end."'")
                         ->orderByDesc('id')
                         ->get();
             // dd($checks);
-            $sum_check = count($checks);
-            // dd($sum_check);
-            $schedules = Schedule::where('user_id', $id)
-                        ->whereBetween('date', [$day_start, $day_end])
-                        ->orderByDesc('id')
-                        ->get();
         }
+        $sum_check = 0;
+        foreach ($checks as $check) {
+            if($check->date_end != null){
+                $sum_check++;
+            }
+        }
+        // dd($sum_check);
+        $schedules = Schedule::where('user_id', $id)
+                    ->whereBetween('date', [$day_start, Carbon::now()->subDay()->isoFormat('YYYY-MM-DD')])
+                    ->orderByDesc('id')
+                    ->get();
         // dd($schedules);
         $dataSch = [];
         foreach ($checks as $key => $value) {
@@ -112,6 +115,11 @@ class CheckController extends Controller
         }
         $note = $check->note;
         $day_check = $check->schedule->date;
-        return response()->json(['data'=>$data, 'note'=>$note, 'day_check' => $day_check], 200);
+        return response()->json(
+                        [
+                            'data'=>$data,
+                            'note'=>$note,
+                            'day_check' => $day_check
+                        ], 200);
     }
 }

@@ -62,7 +62,7 @@
                     url: url,
                     data: {date: date},
                     success: function (response) {
-                        // console.log(response);
+                        console.log(response);
                         var output = '';
                         if(response.data.length != 0){
                             for (let i = 0; i < response.data.length; i++) {

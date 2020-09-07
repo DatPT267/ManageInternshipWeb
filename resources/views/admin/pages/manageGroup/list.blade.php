@@ -48,7 +48,7 @@
                         <a href="{{route('manageGroup.edit', $gr->id)}}" class="btn btn-info">Cập nhật</a>
                         <a href="{{ route('listtask', $gr->id) }}" class="btn btn-warning">Bài tập</a>
                     </form>
-                   
+                    <a href="{{route('group.list-review', $gr->id)}}" class="btn btn-secondary">Đánh giá</a>
                 </td>
             </tr>
             @endforeach

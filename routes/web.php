@@ -42,16 +42,16 @@ Route::group(['prefix' => 'admin'], function () {
     //Quản lý nhóm
     Route::resource('manageGroup', 'GroupController');
     Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');;
-    Route::get('manageGroup/list-evaluate/{id}', 'GroupController@getListEvaluate');
     Route::post('manageGroup/sua/{id}', 'GroupController@postSua')->name('updategroup');
     Route::post('them', 'GroupController@postThem')->name('addgroup');
 
-    //Quản lý sinh viên
-    // Route::group(['prefix' => 'manageStudent'], function () {
-    //     Route::get('/', function ($id) {
+    Route::get('manageGroup/list-review-of-group/{id}', 'ReviewController@getListReviewOfGroup')->name('group.list-review');
+    Route::post('manageGroup/list-review-of-group/{id}/create', 'ReviewController@postReviewOfGroup')->name('post.group.list-review');
 
-    //     });
-    // });
+    Route::get('manageGroup/review/{id_review}/list-feedback', 'FeedbackController@showlist')->name('list.feedback');
+    Route::post('manageGroup/review/{id_review}/list-feedback/feedback/create', 'FeedbackController@createFeedbackOfFeedback')->name('create-feedback');
+    Route::post('manageGroup/review/{id_review}/list-feedback/review/create', 'FeedbackController@createFeedback')->name('create-feedback-review');
+    Route::get('ajax/detail-feedback/{id}', 'FeedbackController@getAjaxFeedback')->name('ajax-feedback');
 
 
 });

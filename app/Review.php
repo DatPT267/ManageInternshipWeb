@@ -10,4 +10,8 @@ class Review extends Model
     const UPDATED_AT = null;
 
     protected $table = "review";
+
+    public function user(){
+        return $this->belongsTo('App\User','reviewer_id', 'id');
+    }
 }

@@ -29,7 +29,7 @@ class GroupController extends Controller
     public function create()
     {
         $name = Internshipclass::all();
- 
+
         return view('admin.pages.manageGroup.add',['name'=>$name]);
     }
 
@@ -103,13 +103,11 @@ class GroupController extends Controller
         // return $listTask->group->name->first();
         return view('admin.pages.manageGroup.list-task', ['listTask'=>$listTask, 'group'=>$group->name ]);
     }
-    public function getListEvaluate($id){
-        return view('admin.pages.manageGroup.list-Evaluate');
-    }
+
 
     public function postSua(Request $request, $id)
     {
-        
+
         $this->validate($request,
             [
                 'name' =>'required',
@@ -118,7 +116,7 @@ class GroupController extends Controller
             ],
             [
                 'name.required' =>'Bạn chưa nhập tên nhóm',
-                'topic.required' => 'Bạn chưa nhập tên đề tài',               
+                'topic.required' => 'Bạn chưa nhập tên đề tài',
             ]);
         $group = Group::find($id);
         $group->name = $request->name;
@@ -133,16 +131,16 @@ class GroupController extends Controller
     {
         $this->validate($request,
         [
-          
+
             'name' =>'required',
             'topic'=>'required',
             'note'=>'required',
-        
+
         ],
         [
             'name.required' =>'Bạn chưa nhập tên nhóm',
             'topic.required' => 'Bạn chưa nhập đề tài nhóm',
-          
+
         ]);
         $grounpcheck = Group::where('class_id', $request->namedotthuctap)->get();
         foreach ($grounpcheck as $gr) {
@@ -151,8 +149,8 @@ class GroupController extends Controller
             }
         }
 
-        
-        
+
+
         $group = new Group;
         $group->name = $request->name;
         $group->topic = $request->topic;
@@ -161,7 +159,7 @@ class GroupController extends Controller
         $group->status = $request->status;
         $group->save();
 
-    
+
         return back()->with('thongbao','Thêm thành công');
     }
 }

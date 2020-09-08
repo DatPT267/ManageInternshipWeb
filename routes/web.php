@@ -45,10 +45,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('manageGroup/sua/{id}', 'GroupController@postSua')->name('updategroup');
     Route::post('them', 'GroupController@postThem')->name('addgroup');
 
-    Route::get('manageGroup/list-review-of-group/{id}', 'ReviewController@getListReviewOfGroup')->name('group.list-review');
-    Route::post('manageGroup/list-review-of-group/{id}/create', 'ReviewController@postReviewOfGroup')->name('post.group.list-review');
+    //đánh giá group
+    Route::get('manageGroup/list-reviews-of-group/{id}', 'ReviewController@getListReviewOfGroup')->name('group.list-review');
+    Route::post('manageGroup/list-reviews-of-group/{id}/create', 'ReviewController@postReviewOfGroup')->name('post.group.list-review');
 
-
+    //đánh giá task
     Route::resource('manageTask', 'TaskController');
     Route::get('manageTask/list-reviews-of-task/{id}', 'ReviewController@getListReviewOfTask')->name('list-review');
     Route::post('manageTask/list-reviews-of-task/{id}/create', 'ReviewController@postReviewOfTask')->name('post-review');

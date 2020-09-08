@@ -26,6 +26,7 @@
             <th>STT</th>
             <th>Người feedback</th>
             <th>Nội dung feedback</th>
+            <th>Thời gian feedback</th>
             <th>action</th>
         </tr>
     </thead>
@@ -36,6 +37,7 @@
                     <td>{{$key}}</td>
                     <td>{{$feedback->user->name}}</td>
                     <td>{{$feedback->content}}</td>
+                    <td>{{\Carbon\Carbon::parse($feedback->time)->isoFormat('HH:mm:ss D/M/Y')}}</td>
                     <td>
                         <button type="button"
                                 data-content="{{$feedback->content}}"

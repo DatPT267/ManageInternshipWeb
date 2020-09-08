@@ -1,8 +1,10 @@
 @extends('admin.layout.index')
 @section('content')
     <h1>Danh sách feedback</h1>
+    <hr>
     <span>Nội dung: <strong>{{$review->content}}</strong></span><br>
     <span>Người viết: <strong>{{$review->user->name}}</strong></span>
+    <hr>
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             @foreach ($errors->all() as $error)
@@ -16,8 +18,6 @@
             {{session('success')}}
         </div>
     @endif
-    <br>
-    <br>
     <button class="btn btn-primary" data-target=".modal-create" data-toggle="modal">Thêm feedback</button>
     @include('admin.pages.manageGroup.feedbacks.add-feedback')
     <table class="table table-hover table-bordered table-striped" id="list-feedback">
@@ -26,6 +26,7 @@
                 <th>STT</th>
                 <th>Người feedback</th>
                 <th>Nội dung feedback</th>
+                <th>Thời gian feedback</th>
                 <th></th>
             </tr>
         </thead>
@@ -36,6 +37,7 @@
                         <td>{{$key}}</td>
                         <td>{{$feedback->user->name}}</td>
                         <td>{{$feedback->content}}</td>
+                        <td>{{\Carbon\Carbon::parse($feedback->time)->isoFormat('HH:mm:ss D/M/Y')}}</td>
                         <td>
                             <button class="btn btn-primary btn-show"
                             data-content="{{$feedback->content}}"

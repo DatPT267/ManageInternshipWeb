@@ -13,7 +13,12 @@ class ReviewController extends Controller
 {
     public function getListReviewOfGroup($id_group){
         $reviews = Review::where('group_id', $id_group)->where('task_id', null)->orderByDESC('id')->get();
-        return view('admin.pages.manageGroup.list-reviewOfGroup', ['reviews' => $reviews, 'id_group' => $id_group]);
+        $name_group = '';
+        foreach($reviews as $review){
+            $name_group = $review->group->name;
+            break;
+        }
+        return view('admin.pages.manageGroup.list-reviewOfGroup', ['reviews' => $reviews, 'id_group' => $id_group, 'name_group' => $name_group]);
     }
 
     public function postReviewOfGroup($id, Request $request){
@@ -52,7 +57,11 @@ class ReviewController extends Controller
     //=============================TASK=====================
     public function getListReviewOfTask($id_task){
         $reviews = Review::where('task_id', $id_task)->where('group_id', null)->orderByDESC('id')->get();
-        return view('admin.pages.manageTasks.list-reviews', ['reviews' => $reviews, 'id_task' => $id_task]);
+        $name_task = '';
+        foreach ($reviews as $key => $review) {
+            $name_task = $review->task->name;
+        }
+        return view('admin.pages.manageTasks.list-reviews', ['reviews' => $reviews, 'id_task' => $id_task, 'name_task' => $name_task]);
     }
 
     public function postReviewOfTask($id_task, Request $request){

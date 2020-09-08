@@ -6,7 +6,7 @@
     </style>
 @endsection
 @section('content')
-    <h1>Danh sách đánh giá</h1>
+    <h1>Danh sách đánh giá <strong>{{$name_group}}</strong></h1>
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             @foreach ($errors->all() as $error)

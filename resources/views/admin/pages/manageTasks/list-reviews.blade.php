@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 @section('content')
-    <h1>Danh sách review</h1>
+    <h1>Danh sách review <strong>{{$name_task}}</strong></h1>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".modal-create-review">Thêm review</button>
 
     @if (count($errors) > 0)

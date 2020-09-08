@@ -1,7 +1,8 @@
 @extends('admin.layout.index')
 @section('content')
     <h1>Danh sách feedback</h1>
-    <span>Nội dung: <strong>{{$content_review}}</strong></span>
+    <span>Nội dung: <strong>{{$review->content}}</strong></span><br>
+    <span>Người viết: <strong>{{$review->user->name}}</strong></span>
     @if (count($errors) > 0)
         <div class="alert alert-danger">
             @foreach ($errors->all() as $error)
@@ -125,7 +126,8 @@
             $('#list-feedback').dataTable({
                 'info': false,
                 'order': false,
-                'bLengthChange': false
+                'bLengthChange': false,
+                'pageLength': 5
             })
             //=================Overlay modal===================================
             $('.modal').on('show.bs.modal', function(event) {

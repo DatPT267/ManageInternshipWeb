@@ -7,7 +7,10 @@
             <div class="modal-body">
                 <form action="{{route('post.group.list-review', $id_group)}}" method="POST">
                     @csrf
-                    <textarea name="content" id="" cols="105" rows="5" placeholder="Viết reivew"></textarea>
+                    <div class="form-group">
+                        <textarea class="form-control" cols="105" rows="3" placeholder="Viết review"></textarea>
+                    </div>
+
                     <button type="submit" class="btn btn-success">Đăng</button>
                 </form>
             </div>

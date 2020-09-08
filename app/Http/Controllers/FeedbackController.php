@@ -15,7 +15,7 @@ class FeedbackController extends Controller
         $feedbacks = Feedback::where('review_id', $id_review)->where('feedback_id', null)->orderByDESC('id')->get();
         return view('admin.pages.manageGroup.feedbacks.list-feedbackOfReview', [
             'feedbacks' => $feedbacks,
-            'content_review' => $review->content,
+            'review' => $review,
             'id_review' => $id_review
         ]);
     }

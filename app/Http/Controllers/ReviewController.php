@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Feedback;
 use App\Review;
+use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,6 @@ class ReviewController extends Controller
     }
 
     public function postReviewOfGroup($id, Request $request){
-        // dd($request->input('content'));
         $this->validate($request, [
             'content' => 'required'
         ], [
@@ -47,5 +47,28 @@ class ReviewController extends Controller
             ];
         }
         return response()->json(['data' => $data]);
+    }
+
+    //=============================TASK=====================
+    public function getListReviewOfTask($id_task){
+        $reviews = Review::where('task_id', $id_task)->where('group_id', null)->orderByDESC('id')->get();
+        return view('admin.pages.manageTasks.list-reviews', ['reviews' => $reviews, 'id_task' => $id_task]);
+    }
+
+    public function postReviewOfTask($id_task, Request $request){
+        $this->validate($request, [
+            'content' => 'required'
+        ], [
+            'content.required' => 'Nội dung review không được để trống'
+        ]);
+
+        $review = new Review();
+        $review->content = $request->input('content');
+        $review->task_id = $id_task;
+        $review->reviewer_id = Auth::id();
+        $review->save();
+
+        return redirect('admin/manageTask/list-reviews-of-task/'.$id_task)->with('success', 'Thêm thành công');
+
     }
 }

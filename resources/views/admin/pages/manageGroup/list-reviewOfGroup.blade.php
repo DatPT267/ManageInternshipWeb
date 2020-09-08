@@ -19,7 +19,7 @@
             {{session('success')}}
         </div>
     @endif
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Thêm review</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".modal-create-review">Thêm review</button>
     @include('admin.pages.manageGroup.reviews.add-reviewOfGroup')
     <table class="table table-bordered table-hover table-striped" id="list-review">
         <thead>
@@ -32,14 +32,27 @@
         </thead>
         <tbody>
             @foreach ($reviews as $index => $review)
-                <tr>
-                    <td>{{$index}}</td>
-                    <td>{{$review->content}}</td>
-                    <td>{{$review->user->name}}</td>
-                    <td>
-                        <a href="{{route('list.feedback', $review->id)}}" class="btn btn-primary">Detail</a>
-                    </td>
-                </tr>
+                @if ($review->reviewer_id == Auth::id())
+                    <tr style="font-weight: 700; background-color: #ffb366">
+                        <td>{{$index}}</td>
+                        <td>{{$review->content}}</td>
+                        <td>{{$review->user->name}}</td>
+                        <td>
+                            <a href="{{route('list.feedback', $review->id)}}" class="btn btn-primary">Detail</a>
+                        </td>
+                    </tr>
+
+                @else
+                    <tr>
+                        <td>{{$index}}</td>
+                        <td>{{$review->content}}</td>
+                        <td>{{$review->user->name}}</td>
+                        <td>
+                            <a href="{{route('list.feedback', $review->id)}}" class="btn btn-primary">Detail</a>
+                        </td>
+                    </tr>
+
+                @endif
             @endforeach
         </tbody>
     </table>

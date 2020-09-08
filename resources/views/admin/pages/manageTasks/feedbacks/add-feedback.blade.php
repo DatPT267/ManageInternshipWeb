@@ -1,16 +1,15 @@
-<div class="modal fade modal-create-review" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div class="modal fade modal-create-feedback" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Thêm review</h5>
+                <h5 class="modal-title">Thêm feedback</h5>
             </div>
             <div class="modal-body">
-                <form action="{{route('post.group.list-review', $id_group)}}" method="POST">
+                <form action="{{route('create-feedback-review', $review->id)}}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <textarea class="form-control" name="content" cols="105" rows="3" placeholder="Viết review"></textarea>
+                        <textarea class="form-control" name="content" cols="105" rows="3" placeholder="Viết feedback"></textarea>
                     </div>
-
                     <button type="submit" class="btn btn-success">Đăng</button>
                 </form>
             </div>

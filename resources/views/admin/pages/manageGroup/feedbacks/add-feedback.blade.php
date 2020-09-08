@@ -7,7 +7,9 @@
             <div class="modal-body">
                 <form action="{{route('create-feedback-review', $id_review)}}" method="POST">
                     @csrf
-                    <textarea name="content" id="" cols="105" rows="5" placeholder="Viết feedback"></textarea>
+                    <div class="form-group">
+                        <textarea name="content" class="form-control" cols="105" rows="5" placeholder="Viết feedback"></textarea>
+                    </div>
                     <button type="submit" class="btn btn-success">Đăng</button>
                 </form>
             </div>

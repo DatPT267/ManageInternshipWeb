@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 class FeedbackController extends Controller
 {
     public function showlist($id_review){
-        $review = Review::find($id_review)->first();
+        $review = Review::find($id_review);
         $feedbacks = Feedback::where('review_id', $id_review)->where('feedback_id', null)->orderByDESC('id')->get();
         return view('admin.pages.manageGroup.feedbacks.list-feedbackOfReview', [
             'feedbacks' => $feedbacks,
@@ -29,12 +29,12 @@ class FeedbackController extends Controller
 
         $feedback = new Feedback();
         $feedback->content = $request->input('content');
-        $feedback->time = Carbon::now()->isoFormat('Y-M-D H:m:s');
+        $feedback->time = Carbon::now('asia/Ho_Chi_Minh')->isoFormat('Y-M-D H:m:s');
         $feedback->review_id = $id;
         $feedback->user_id = Auth::id();
         $feedback->save();
 
-        return redirect('admin/manageGroup/review/'.$id."/list-feedback")->with('success', 'Thêm thành công');
+        return back()->with('success', 'Thêm thành công');
     }
 
     public function getAjaxFeedback($id){
@@ -62,11 +62,23 @@ class FeedbackController extends Controller
 
         $feedback = new Feedback();
         $feedback->content = $request->input('content');
-        $feedback->time = Carbon::now()->isoFormat('Y-M-D H:m:s');
+        $feedback->time = Carbon::now('asia/Ho_Chi_Minh')->isoFormat('Y-M-D H:m:s');
         $feedback->review_id = $id;
         $feedback->feedback_id = $request->input('id_feedback');
         $feedback->user_id = Auth::id();
         $feedback->save();
-        return redirect('admin/manageGroup/review/'.$id."/list-feedback")->with('success', 'Thêm thành công');
+        return back()->with('success', 'Thêm thành công');
     }
+
+    //===========================Task==============================
+    public function getListFeedBackOfTask($id_review){
+        $review = Review::find($id_review);
+        $feedbacks = Feedback::where('review_id', $id_review)->where('feedback_id', null)->orderByDESC('id')->get();
+        return view('admin.pages.manageTasks.feedbacks.list-feedbackOfTask', [
+            'feedbacks' => $feedbacks,
+            'review' => $review,
+            'id_review' => $id_review
+        ]);
+    }
+
 }

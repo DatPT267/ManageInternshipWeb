@@ -31,7 +31,7 @@
                             <a href="" title="">Thông tin cá nhân</a>
                         </li>
                         <li>
-                            <a href="" title="">Đánh giá</a>
+                            <a href="user/{{Auth::id()}}/list-review" title="">Đánh giá</a>
 
                         </li>
                 </ul>

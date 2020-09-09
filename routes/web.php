@@ -105,4 +105,7 @@ Route::post('/users/{id}/edit/changepassword', 'UserController@changepassword')-
 
 //cập nhật thông tin user và update mật khẩu
 Route::resource('user', 'UserController');
+Route::get('user/{id}/list-review', 'ReviewController@getListReviewOfUser')->name('list-review-of-user');
+Route::post('user/{id}/list-review/feedback/create', 'FeedbackController@postCreateFeedback')->name('post-create-feedback');
 
+Route::get('ajax/detail-review', 'FeedbackController@ajaxDetailReview')->name('ajax-detail-review');

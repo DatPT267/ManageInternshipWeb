@@ -16,7 +16,6 @@
                 <th>Email</th>
                 <th>Địa chỉ</th>
                 <th>Số điện thoại</th>
-                <th>Đợt thực tập</th>
                 <th>Chức vụ</th>
                 <th>Action</th>
             </tr>
@@ -32,7 +31,6 @@
                 <td>{{$member->user->email}}</td>
                 <td>{{$member->user->address}}</td>
                 <td>{{$member->user->phone}}</td>
-                <td>{{$member->user->internshipClass->name}}</td>
                 <td>
                     @if ($member->position == 0)
                         Thành viên
@@ -72,7 +70,10 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            var table = $('#list-member').DataTable();
+            $('#list-member').dataTable({
+                'info': false,
+                'bLengthChange': false
+            });
             // =====================================AJAX DELETE====================================
             var member_id;
 

@@ -5,7 +5,6 @@
         <thead>
             <tr align="center">
                 <th>ID</th>
-                <th>Tên task</th>
                 <th>Nội dung</th>
                 <th>Người đánh giá</th>
                 <th>Action</th>
@@ -15,7 +14,6 @@
             @foreach ($review as $r)
             <tr class="odd gradeX" align="center">
                 <td>{{$r->id}}</td>
-                <td>{{$r->task->name}}</td>
                 <td>{{$r->content}}</td>
                 <td>{{$r->member->user->name}}</td>
                 <td class="center">
@@ -51,7 +49,10 @@
 @section('script')
     <script>
         $(document).ready(function(){
-            $('#list-review').dataTable({});
+            $('#list-review').dataTable({
+                'info': false,
+                'bLengthChange': false
+            });
 
         })
     </script>

@@ -22,6 +22,7 @@
                 <th>Ghi nhớ</th>
                 <th>Tên đợt thực tập</th>
                 <th>Trạng thái</th>
+                <th>Đánh giá</th>
                 <th>Hoạt động</th>
             </tr>
         </thead>
@@ -40,6 +41,9 @@
                     {{"Không hoạt động"}}
                     @endif
                 </td>
+                <td>
+                    <a href="{{route('group.list-review', $gr->id)}}" class="btn btn-secondary">Đánh giá</a>
+                </td>
                 <td class="center">
                     <form action="{{route('manageGroup.destroy', $gr->id)}}" method="post">
                         @csrf
@@ -48,7 +52,7 @@
                         <a href="{{route('manageGroup.edit', $gr->id)}}" class="btn btn-info">Cập nhật</a>
                         <a href="{{ route('listtask', $gr->id) }}" class="btn btn-warning">Bài tập</a>
                     </form>
-                    <a href="{{route('group.list-review', $gr->id)}}" class="btn btn-secondary">Đánh giá</a>
+
                 </td>
             </tr>
             @endforeach

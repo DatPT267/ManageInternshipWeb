@@ -53,6 +53,7 @@
                         <td>{{$key}}</td>
                         <td>{{$feedback->user->name}}</td>
                         <td>{{$feedback->content}}</td>
+                        <td>{{\Carbon\Carbon::parse($feedback->time)->isoFormat('HH:mm:ss D/M/Y')}}</td>
                         <td>
                             <button class="btn btn-primary btn-show"
                             data-content="{{$feedback->content}}"

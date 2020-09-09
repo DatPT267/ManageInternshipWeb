@@ -12,7 +12,11 @@ use Illuminate\Support\Facades\Auth;
 class ReviewController extends Controller
 {
     public function getListReviewOfGroup($id_group){
-        $reviews = Review::where('group_id', $id_group)->where('task_id', null)->orderByDESC('id')->get();
+        $reviews = Review::where('group_id', $id_group)
+                        ->where('task_id', null)
+                        ->where('user_id', null)
+                        ->orderByDESC('id')
+                        ->get();
         $name_group = '';
         foreach($reviews as $review){
             $name_group = $review->group->name;
@@ -56,7 +60,11 @@ class ReviewController extends Controller
 
     //=============================TASK=====================
     public function getListReviewOfTask($id_task){
-        $reviews = Review::where('task_id', $id_task)->where('group_id', null)->orderByDESC('id')->get();
+        $reviews = Review::where('task_id', $id_task)
+                        ->where('group_id', null)
+                        ->where('user_id', null)
+                        ->orderByDESC('id')
+                        ->get();
         $name_task = '';
         foreach ($reviews as $key => $review) {
             $name_task = $review->task->name;

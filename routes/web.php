@@ -33,7 +33,7 @@ Route::get('/admin',function ()
 Route::group(['prefix' => 'admin'], function () {
     //quản lý đợt thực tập
     Route::resource('internshipClass', 'internshipclassController');
-    Route::post('them', 'internshipclassController@postThem')->name('addclass');
+    Route::post('them1', 'internshipclassController@postThem')->name('addClass');
     Route::post('internshipClass/sua/{id}', 'internshipclassController@postSua')->name('updateclass');
     Route::post('internshipClass/member/{nameclass}/{amount}', 'internshipclassController@postMember')->name('member');
     Route::get('internshipClass/list-member/{class_id}', 'internshipclassController@getList')->name('list');

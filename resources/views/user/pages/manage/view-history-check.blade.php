@@ -125,28 +125,34 @@
                     url: url,
                     datatype: 'TEXT',
                     success: function (response) {
-                        console.log(response.note);
+                        // console.log(response.note);
                         var output  = "";
-                        response.data.forEach(item => {
-                            output += "<tr>"+
-                                "<td>"+item.id+"</td>"+
-                                "<td>"+item.name+"</td>"+
-                                "<td>"+checkStatus(item.status)+"</td>"
-                            +"</tr>";
-                        });
-                        $('.modal-body').html("<table class='table table-hover table-bordered table-striped'>"+
-                            "<thead>"+
-                                "<tr>"+
-                                    "<th>STT</th>"+
-                                    "<th>Tên Task</th>"+
-                                    "<th>Trạng thái</th>"
-                                +"</tr>"
-                            +"</thead>"
-                            +"<tbody>"+
-                                output
-                            +"</tbody>"
-                        +"</table>"+
-                        "<strong>Note</strong>: "+response.note);
+                        if(response.data.length == 0 && response.note == null){
+                            $('.modal-body').html("<h2>Hôm nay không có làm task nào và chưa ghi chú</h2>");
+                        } else if(response.data.length == 0 && response.note != null){
+                            $('.modal-body').html("<strong>Note: </strong>"+ response.note);
+                        } else{
+                            response.data.forEach(item => {
+                                output += "<tr>"+
+                                    "<td>"+item.id+"</td>"+
+                                    "<td>"+item.name+"</td>"+
+                                    "<td>"+checkStatus(item.status)+"</td>"
+                                +"</tr>";
+                            });
+                            $('.modal-body').html("<table class='table table-hover table-bordered table-striped'>"+
+                                "<thead>"+
+                                    "<tr>"+
+                                        "<th>STT</th>"+
+                                        "<th>Tên Task</th>"+
+                                        "<th>Trạng thái</th>"
+                                    +"</tr>"
+                                +"</thead>"
+                                +"<tbody>"+
+                                    output
+                                +"</tbody>"
+                            +"</table>"+
+                            "<strong>Note</strong>: "+response.note);
+                        }
                     }
                 });
             })

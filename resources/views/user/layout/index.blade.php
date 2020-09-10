@@ -70,38 +70,33 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));</script>
 
+    @include('user.layout.header')
     <div class="wrapper">
-        <!-- header -->
-@include('user.layout.header')
-<!-- end header -->
+        @include('user.layout.timkiem')
 
-@include('user.layout.timkiem')
-
-
-@yield('content')
-<!-- main content -->
+        @yield('content')
 
     </div>
-<script>
-    $(function () {
-        $(".ClosePopup")
-            .click(function () {
-                $("#showPop").addClass("display");
-            });
-    });
-</script>
-<style>
-    .display {
-        display: none;
-    }
+    <script>
+        $(function () {
+            $(".ClosePopup")
+                .click(function () {
+                    $("#showPop").addClass("display");
+                });
+        });
+    </script>
+    <style>
+        .display {
+            display: none;
+        }
 
-</style>
+    </style>
 
         <!-- slyder-home -->
         <!-- footer -->
 
 <!-- footter -->
-@include('user.layout.footer')
+    @include('user.layout.footer')
 <!-- end footter -->
 
         <!-- end footer -->

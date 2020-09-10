@@ -185,7 +185,11 @@ class UserController extends Controller
     public function destroy(User $user , $id)
     {
       $user = User::find($id);
-      unlink("image/user/".$user->image);
+      if(file_exists("image/user".$user->image)==false){
+       
+        unlink("image/user/".$user->image);
+      }
+    
       $user->delete();
       return back()->with('success', 'Xóa thành công');
     }

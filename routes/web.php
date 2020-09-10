@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 //ADMIN and GVHD
 
-Route::get('admin/login', 'AuthenticationController@getLogin');
+Route::get('admin/login', 'AuthenticationController@getLogin')->name('login.admin');
 Route::post('admin/login', 'AuthenticationController@postLogin');
 
 Route::get('admin/logout', 'AuthenticationController@getLogout');
@@ -26,11 +26,11 @@ Route::post('admin/sendemail/{email}', 'SendEmailController@send');
 
 
 
-Route::get('/admin',function ()
-{
-	return view('admin.layout.index');
-});
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
+    Route::get('/',function ()
+    {
+        return view('admin.layout.index');
+    })->name('home.admin');
     //quản lý đợt thực tập
     Route::resource('internshipClass', 'internshipclassController');
     Route::post('them', 'internshipclassController@postThem')->name('addclass');

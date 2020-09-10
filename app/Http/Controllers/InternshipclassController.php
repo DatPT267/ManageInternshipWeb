@@ -8,10 +8,14 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Controllers\changeTitle;
-
+use App\Http\Middleware\checkIsAdmin;
 
 class InternshipclassController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(checkIsAdmin::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -98,17 +102,17 @@ class InternshipclassController extends Controller
         return redirect('admin/internshipClass')->with('success', 'Xóa thành công');
     }
 
-   
+
     public function postThem(Request $request)
     {
         $this->validate($request,
             [
-              
+
                 'name' =>'required|unique:Internshipclass,name',
                 'start_day'=>'required|date',
                 'end_day'=>'required|date',
                 'student_amount'=>'required'
-                
+
             ],
             [
                 'name.unique' => 'Tên đợt thực tập đã tồn tại',
@@ -116,13 +120,13 @@ class InternshipclassController extends Controller
                 'start_day.required' => 'Bạn chưa nhập ngày bắt đầu',
                 'end_day.required' => 'Bạn chưa nhập ngày kết thúc',
                 'student_amount.required'=> 'Bạn chưa nhập số lượng sinh viên'
-                
+
             ]);
-           
+
             for( $i=0 ; $i < $request->student_amount ; $i++){
                 $member[$i] = $i;
-            }   
-             
+            }
+
         $internshipclass = new Internshipclass;
         $internshipclass->name = $request->name;
         $internshipclass->start_day = $request->start_day;
@@ -131,27 +135,27 @@ class InternshipclassController extends Controller
         $name_unsigned = changeTitle($request->name);
         $internshipclass->name_unsigned = $name_unsigned;
         $internshipclass->save();
-  
-        
+
+
         return view('admin/pages/internshipClass/memberinternshipclass', ['member' => $member, 'nameclass' => $name_unsigned ])->with('thongbao','Thêm thành công');
     }
 
     public function postSua(Request $request, $id)
     {
-        
+
         $this->validate($request,
             [
-              
+
                 'name' =>'required',
                 'start_day'=>'required|date',
                 'end_day'=>'required|date',
-                
+
             ],
             [
                 'name.required' =>'Bạn chưa nhập tên đợt thực tập',
                 'start_day.required' => 'Bạn chưa nhập ngày bắt đầu',
                 'end_day.required' => 'Bạn chưa nhập ngày kết thúc',
-                
+
             ]);
 
 
@@ -159,14 +163,14 @@ class InternshipclassController extends Controller
         $internshipclass->name = $request->name;
         $internshipclass->end_day = $request->end_day;
         $internshipclass->note = $request->note;
-       
-      
+
+
         $internshipclass->save();
         return back()->with('thongbao','Cập nhật thành công');
     }
 
     public function postMember(Request $request, $nameclass, $amount){
-       
+
         $interclass = Internshipclass::where('name_unsigned', $nameclass)->get()->first();
         for($i =0 ; $i<= $amount; $i++){
             $a = "name".$i;
@@ -176,16 +180,16 @@ class InternshipclassController extends Controller
             }
             $name = changeTitle($fullName);
             $words = explode("-", $name);
-            $lastName = array_pop($words); 
+            $lastName = array_pop($words);
             $lastName = ucfirst( $lastName );
             $acronym = "";
 
-         
-       
 
-          
+
+
+
             foreach ($words as $w) {
-            
+
               switch ($w[0]) {
                 case "a":
                     $w[0] = "A";
@@ -273,7 +277,7 @@ class InternshipclassController extends Controller
 
             do {
               $dem++;
-              
+
               $lastName = $lastName1.''.$dem;
               $user = User::where('account', $lastName)->get()->first();
             } while ($user != null);
@@ -295,7 +299,7 @@ class InternshipclassController extends Controller
       return view('admin/pages/internshipClass/memberclass',['usermember'=> $usermember] );
     }
 
-   
-    
-    
+
+
+
 }

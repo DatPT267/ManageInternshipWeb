@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Assign extends Model
+class Member extends Model
 {
     const CREATED_AT = null;
     const UPDATED_AT = null;
 
-    protected $table = "assign";
+    protected $table = "member";
 }

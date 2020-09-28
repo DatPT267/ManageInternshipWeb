@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -40,6 +40,6 @@ class User extends Authenticatable
 
     public function internshipClass()
     {
-        return $this->belongsTo('App\Internshipclass', 'class_id', 'id');
+        return $this->belongsTo('App\Models\Internshipclass', 'class_id', 'id');
     }
 }

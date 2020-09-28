@@ -1,5 +1,6 @@
 <?php
 
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,11 +33,12 @@ Route::get('/admin',function ()
 });
 Route::group(['prefix' => 'admin'], function () {
     //quản lý đợt thực tập
-    Route::resource('internshipClass', 'internshipclassController');
-    Route::post('them1', 'internshipclassController@postThem')->name('addClass');
-    Route::post('internshipClass/sua/{id}', 'internshipclassController@postSua')->name('updateclass');
-    Route::post('internshipClass/member/{nameclass}/{amount}', 'internshipclassController@postMember')->name('member');
-    Route::get('internshipClass/list-member/{class_id}', 'internshipclassController@getList')->name('list');
+    Route::resource('internship', 'InternshipclassController');
+    Route::post('them1', 'InternshipController@postThem')->name('addClass');
+    Route::post('internshipClass/sua/{id}', 'InternshipController@postSua')->name('updateclass');
+    Route::post('internshipClass/member/{nameclass}/{amount}', 'InternshipController@postMember')->name('member');
+    Route::get('internshipClass/list-member/{class_id}', 'InternshipController@getList')->name('list');
+
 
 
     //Quản lý nhóm
@@ -46,12 +48,12 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('manageGroup/sua/{id}', 'GroupController@postSua')->name('updategroup');
     Route::post('them', 'GroupController@postThem')->name('addgroup');
 
-    //Quản lý sinh viên
-    // Route::group(['prefix' => 'manageStudent'], function () {
-    //     Route::get('/', function ($id) {
+    // Quản lý sinh viên
+    Route::group(['prefix' => 'manageStudent'], function () {
+        Route::get('/', function ($id) {
 
-    //     });
-    // });
+        });
+    });
 
 
 });
@@ -77,7 +79,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 
-//User
+// //User
 
 Route::get('/updateInformation', function () {
     return view('user.pages.personalInformation.updateInformation');

@@ -1,4 +1,4 @@
-@extends('admin.layout.index')
+    @extends('admin.layout.index')
 @section('content')
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Danh sách các đợt thực tập</h1>
@@ -34,11 +34,11 @@
                 <td>{{$lc->end_day}}</td>
                 <td>{{$lc->note}}</td>
                 <td class="center">
-                    <form action="{{route('internshipClass.destroy', $lc->id)}}" method="post">
+                    <form action="{{route('internship.destroy', $lc->id)}}" method="post">
                         @csrf
                         @method('DELETE')
                         <input type="submit" value="Xóa" class="btn btn-danger">
-                        <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
+                        <a href="{{route('internship.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
                     </form>
                 </td>
             </tr>

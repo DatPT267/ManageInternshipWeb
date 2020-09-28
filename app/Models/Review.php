@@ -1,13 +1,13 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Feedback extends Model
+class Review extends Model
 {
     const CREATED_AT = null;
     const UPDATED_AT = null;
 
-    protected $table = "feedback";
+    protected $table = "review";
 }

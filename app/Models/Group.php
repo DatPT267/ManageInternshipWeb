@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,6 +13,6 @@ class Group extends Model
 
     public function internshipClass()
     {
-        return $this->belongsTo('App\Internshipclass', 'class_id', 'id');
+        return $this->belongsTo('App\Models\Internship', 'class_id', 'id');
     }
 }

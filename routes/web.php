@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +32,7 @@ Route::get('/admin',function ()
 });
 Route::group(['prefix' => 'admin'], function () {
     //quản lý đợt thực tập
-    Route::resource('internship', 'InternshipclassController');
+    Route::resource('internship', 'admin\InternshipController');
     Route::post('them1', 'InternshipController@postThem')->name('addClass');
     Route::post('internshipClass/sua/{id}', 'InternshipController@postSua')->name('updateclass');
     Route::post('internshipClass/member/{nameclass}/{amount}', 'InternshipController@postMember')->name('member');
@@ -42,7 +41,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
     //Quản lý nhóm
-    Route::resource('manageGroup', 'GroupController');
+    Route::resource('manageGroup', 'admin\GroupController');
     Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');;
     Route::get('manageGroup/list-evaluate/{id}', 'GroupController@getListEvaluate');
     Route::post('manageGroup/sua/{id}', 'GroupController@postSua')->name('updategroup');
@@ -81,21 +80,21 @@ Route::group(['prefix' => 'admin'], function () {
 
 // //User
 
-Route::get('/updateInformation', function () {
-    return view('user.pages.personalInformation.updateInformation');
-});
+
+//cập nhật thông tin user và update mật khẩu
+Route::resource('user', 'client\UserController');
+
 Route::get('/',function ()
 {
 	return view('user/pages/trangchu');
 })->name('home');
-Route::post('login', 'UserController@postLogin');
-Route::get('logout', 'UserController@getLogout')->name('logout');
-Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
+Route::post('login', 'client\UserController@postLogin');
+Route::get('logout', 'client\UserController@getLogout')->name('logout');
+Route::post('losspassword', 'client\UserController@postLosspassword')->name('losspassword');
 
 
-
-Route::get('/user/{id}/edit', 'UserController@edit');
-Route::post('/user/{id}', 'UserController@update')->name('user.update');
+// Route::get('/user/{id}/edit', 'client\UserController@edit');
+// Route::post('/user/{id}', 'client\UserController@update')->name('user.update');
 
 Route::post('/users/{id}/edit/changepassword', 'UserController@changepassword')->name('changepassword');
 
@@ -105,6 +104,5 @@ Route::post('/users/{id}/edit/changepassword', 'UserController@changepassword')-
 
 
 
-//cập nhật thông tin user và update mật khẩu
-Route::resource('user', 'UserController');
+
 

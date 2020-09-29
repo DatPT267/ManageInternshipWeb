@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
-use App\Group;
-use App\Internship;
-use App\User;
+use App\Http\Controllers\Controller;
+
+use App\Models\Group;
+use App\Models\Internship;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Controllers\changeTitle;
@@ -12,6 +14,7 @@ use App\Controllers\changeTitle;
 
 class InternshipController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +22,7 @@ class InternshipController extends Controller
      */
     public function index()
     {
-        $listClass = Internshipclass::all();
+        $listClass = Internship::all();
         return view('admin.pages.internshipClass.list', ['listClass'=>$listClass]);
     }
 
@@ -50,7 +53,7 @@ class InternshipController extends Controller
      * @param  \App\Internshipclass  $internshipclass
      * @return \Illuminate\Http\Response
      */
-    public function show(Internshipclass $internshipclass)
+    public function show(Internship $internshipclass)
     {
         return view('admin.pages.internshipClass.show');
 
@@ -62,9 +65,9 @@ class InternshipController extends Controller
      * @param  \App\Internshipclass  $internshipclass
      * @return \Illuminate\Http\Response
      */
-    public function edit(Internshipclass $internshipclass, $id)
+    public function edit(Internship $internshipclass, $id)
     {
-       $class = Internshipclass::where('id', $id)->get()->first();
+       $class = Internship::where('id', $id)->get()->first();
         return view('admin.pages.internshipClass.update', ['class'=>$class]);
     }
 
@@ -83,19 +86,19 @@ class InternshipController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Internshipclass  $internshipclass
+     * @param  \App\Internship  $internship
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $a = Internshipclass::find($id);
-        $user = User::where('class_id', $a->id)->get();
+        $internship = Internship::find($id);
+        $user = User::where('class_id', $internship->id)->get();
         $count = count($user);
         if($count != 0){
-            return redirect('admin/internshipClass')->with('fail', 'Xóa không thành công. Đợt có nhóm hoặc sinh viên đang hoạt động');
+            return redirect()->route('internship.index')->with('fail', 'Xóa không thành công. Đợt có nhóm hoặc sinh viên đang hoạt động');
         }
-        $a->delete();
-        return redirect('admin/internshipClass')->with('success', 'Xóa thành công');
+        $internship->delete();
+        return redirect()->route('internship.index')->with('success', 'Xóa thành công');
     }
 
 
@@ -124,7 +127,7 @@ class InternshipController extends Controller
                 $member[$i] = $i;
             }
 
-        $internshipclass = new Internshipclass;
+        $internshipclass = new Internship;
         $internshipclass->name = $request->name;
         $internshipclass->start_day = $request->start_day;
         $internshipclass->end_day = $request->end_day;
@@ -156,7 +159,7 @@ class InternshipController extends Controller
             ]);
 
 
-        $internshipclass = Internshipclass::find($id);
+        $internshipclass = Internship::find($id);
         $internshipclass->name = $request->name;
         $internshipclass->end_day = $request->end_day;
         $internshipclass->note = $request->note;
@@ -168,7 +171,7 @@ class InternshipController extends Controller
 
     public function postMember(Request $request, $nameclass, $amount){
 
-        $interclass = Internshipclass::where('name_unsigned', $nameclass)->get()->first();
+        $interclass = Internship::where('name_unsigned', $nameclass)->get()->first();
         for($i =0 ; $i<= $amount; $i++){
             $a = "name".$i;
             $fullName = $request->$a;

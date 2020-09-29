@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -10,10 +12,10 @@ use Illuminate\Support\Str;
 
 class SendEmailController extends Controller
 {
-   
+
     function send($email)
-    {   
-        
+    {
+
         $user = User::where('email', $email)->get()->first();
         $str = Str::random(10);
         $data = array(

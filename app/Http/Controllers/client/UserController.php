@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\client;
 
-use App\User;
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -121,13 +122,13 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if($id == Auth::id()){
-            $user = User::find(Auth::id());
+        // if($id == Auth::id()){
+            $user = User::find($id);
             return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
-        } else{
-            $user = User::find(Auth::id());
-            return redirect('user/'.Auth::id().'/edit')->with('user', $user);
-        }
+        // } else{
+        //     $user = User::find(Auth::id());
+        //     return redirect('user/'.Auth::id().'/edit')->with('user', $user);
+        // }
     }
 
     /**
@@ -215,7 +216,7 @@ class UserController extends Controller
                 return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Mật khẩu cũ không đúng');
             }
         }
-           
+
     }
 
 }

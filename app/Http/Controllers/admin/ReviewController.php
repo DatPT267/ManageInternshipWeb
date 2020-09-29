@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
+
+use App\Http\Controllers\Controller;
 
 use App\Review;
 use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
-    
+
 }

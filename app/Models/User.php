@@ -40,6 +40,6 @@ class User extends Authenticatable
 
     public function internshipClass()
     {
-        return $this->belongsTo('App\Models\Internshipclass', 'class_id', 'id');
+        return $this->belongsTo('App\Models\Internship', 'class_id', 'id');
     }
 }

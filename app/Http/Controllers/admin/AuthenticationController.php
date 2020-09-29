@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
+
+use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +20,7 @@ class AuthenticationController extends Controller
     	return "Đăng xuất thành công";
     }
     public function postLogin(Request $request)
-    {   
+    {
         $this->validate($request,
     		[
     			'account'=>'required',
@@ -41,29 +43,29 @@ class AuthenticationController extends Controller
             else
             {
                 return back()->with('thongbao', 'Đăng Nhập Không Thành Công');
-            }  
-        }  
+            }
+        }
     }
     public function getLosspassword()
-    {   
+    {
         return view('admin/authentication/losspassword');
     }
     public function postLosspassword(Request $request)
-    {   
+    {
         $this->validate($request,
             [
                 'email'=>'required|email',
-               
+
             ],
             [
                 'email.required'=>'Bạn Chưa Nhập Email',
                 'email.email'=>'Email không đúng',
             ]);
-        
+
         $user = User::where('email', $request->email)->get()->first();
         if($user == null){
             return redirect()->back()->with('thongbao', 'Email chưa đăng ký tài khoản');
-        }  
+        }
         else
             return view('admin/authentication/confirmemail', ['user'=> $user]);
     }

@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\admin;
 
-use App\User;
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -121,13 +122,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        if($id == Auth::id()){
-            $user = User::find(Auth::id());
-            return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
-        } else{
-            $user = User::find(Auth::id());
-            return redirect('user/'.Auth::id().'/edit')->with('user', $user);
-        }
+
     }
 
     /**
@@ -139,37 +134,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'email' => 'email'
-        ],[
-            'email.email' => 'Email chưa đúng'
-            ]);
-        $user = User::find(Auth::id());
 
-        if($request->hasFile('image')){
-            $file = $request->file('image');
-            $duoi = $file->getClientOriginalExtension();
-            if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg'){
-                return redirect('user/'.Auth::id())->with('fail', 'Bạn chỉ được chọn file có đuổi png, jpg, jpeg');
-            }
-            $imgName = $file->getClientOriginalName();
-            $hinh = Str::random(3).'_'.Carbon::now()->timestamp."_".$imgName;
-            // $imgPath = $file->store('profiles', 'public');
-            // $image = Image::make('storage/'.$imgPath)->fit(1000, 1000);
-            $file->move("image/user/", $hinh);
-            $imageDefault = "image-default.png";
-            if($user->image != $imageDefault){
-                unlink('image/user/'.$user->image);
-            }
-            $user->image = $hinh;
-        }
-
-        $user->email = $request->input('email');
-        $user->phone = $request->input('phone');
-        $user->address = $request->input('address');
-        $user->save();
-
-        return redirect('user/'.Auth::id().'/edit')->with('success', 'Bạn đã cập nhật thành công');
     }
 
     /**
@@ -215,7 +180,7 @@ class UserController extends Controller
                 return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Mật khẩu cũ không đúng');
             }
         }
-           
+
     }
 
 }

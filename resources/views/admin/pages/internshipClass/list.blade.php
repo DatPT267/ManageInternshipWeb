@@ -21,6 +21,7 @@
                 <th>Name</th>
                 <th>Start day</th>
                 <th>End day</th>
+                <th>Note</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -31,12 +32,13 @@
                 <td>{{$lc->name}}</td>
                 <td>{{$lc->start_day}}</td>
                 <td>{{$lc->end_day}}</td>
+                <td>{{$lc->note}}</td>
                 <td class="center">
                     <form action="{{route('internshipClass.destroy', $lc->id)}}" method="post">
                         @csrf
                         @method('DELETE')
-                        <input type="submit" value="Delete" class="btn btn-danger">
-                        <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Edit</a>
+                        <input type="submit" value="Xóa" class="btn btn-danger">
+                        <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
                     </form>
                 </td>
             </tr>

@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -106,3 +107,16 @@ Route::post('/users/{id}/edit/changepassword', 'UserController@changepassword')-
 //cập nhật thông tin user và update mật khẩu
 Route::resource('user', 'UserController');
 
+Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
+    //checkin - checkout
+    Route::get('{id}/check-in', 'CheckController@checkin');
+    Route::post('{id}/check-in', 'CheckController@postCheckin')->name('checkin.post');
+    Route::get('{id}/check-out', 'CheckController@checkout');
+    Route::post('{id}/check-out', 'CheckController@postCheckout')->name('checkout.post');
+    // register Checkin-out
+    Route::get('{id}/reg-schedule', 'ScheduleController@getRegSchedule');
+    Route::post('{id}/reg-schedule', 'ScheduleController@postRegSchedule')->name('reg.schedule');
+    //history checkin-out
+    Route::get('{id}/history-schedule', 'CheckController@hisSchedule');
+    Route::get('ajax/{id}/history-schedule', 'CheckController@ajaxHisSchedule')->name('ajax.His-schedule');
+});

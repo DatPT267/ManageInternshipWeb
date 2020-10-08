@@ -18,29 +18,26 @@ class CheckController extends Controller
     //=============================================Check-in===============================================
     public function checkin($id)
     {
-           if($id == Auth::id()){
-            $now = Carbon::now()->isoFormat('Y-M-D', 'asia/Ho_Chi_Minh');
-            $checkin = Check::whereRaw("date(date_start) = '".$now."'")->first();
-            $isCheck = 0;
-            $arrTask = null;
-            if($checkin !== null){
-                $isCheck = 1;
-                $arrTask = DetailCheck::where('check_id', $checkin->id)->get();
-            }
-            $schedule = Schedule::whereRaw("date(date) = '" . $now. "'")->first();
-            // dd($schedule);
-            $member = Member::where('user_id', $id)->first();
-            if($member !== null){
-                $tasks = Assign::where('member_id', $member->id)->get();
-                // dd($tasks);
-                return view('user.pages.manage.check-in', ['schedule' => $schedule, 'tasks' => $tasks, 'isCheck'=>$isCheck, 'arrTask' => $arrTask, 'date_start'=>$checkin]);
-            } else{
-                return view('user.pages.manage.check-in', ['schedule' => $schedule, 'tasks' => 0, 'isCheck'=>$isCheck, 'arrTask' => $arrTask, 'date_start'=>$checkin]);
-            }
-            // dd($checkin);
-        }else{
-            return redirect('/#login');
+        $now = Carbon::now()->isoFormat('Y-M-D', 'asia/Ho_Chi_Minh');
+        $checkin = Check::whereRaw("date(date_start) = '".$now."'")->first();
+        $isCheck = 0;
+        $arrTask = null;
+        if($checkin !== null){
+            $isCheck = 1;
+            $arrTask = DetailCheck::where('check_id', $checkin->id)->get();
         }
+        $schedule = Schedule::whereRaw("date(date) = '" . $now. "'")->first();
+        // dd($schedule);
+        $member = Member::where('user_id', $id)->first();
+        if($member !== null){
+            $tasks = Assign::where('member_id', $member->id)->get();
+            // dd($tasks);
+            return view('user.pages.manage.check-in', ['schedule' => $schedule, 'tasks' => $tasks, 'isCheck'=>$isCheck, 'arrTask' => $arrTask, 'date_start'=>$checkin]);
+        } else{
+            return view('user.pages.manage.check-in', ['schedule' => $schedule, 'tasks' => 0, 'isCheck'=>$isCheck, 'arrTask' => $arrTask, 'date_start'=>$checkin]);
+        }
+            // dd($checkin);
+
     }
 
     public function postCheckin(Request $request, $id)

@@ -15,7 +15,7 @@
             </div>
         @elseif ($isCheck == 1)
             <div class="alert alert-warning">
-                Hôm nay bạn đã checkin rồi !!! <a href='user/{{Auth::id()}}/check-out' class="btn btn-danger">Check-out</a>
+                Hôm nay bạn đã checkin rồi !!! <a href='{{route('checkout', Auth::id())}}' class="btn btn-danger">Check-out</a>
             </div>
         @endif
         @if ($schedule !== null)

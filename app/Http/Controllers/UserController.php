@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('auth');
+    }
     public function postLogin(Request $request)
     {
         $this->validate($request,
@@ -122,11 +126,17 @@ class UserController extends Controller
     public function edit($id)
     {
         if($id == Auth::id()){
-            $user = User::find(Auth::id());
-            return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
+            $user = User::find($id);
+            return view('user.pages.profiles.edit', ['user'=>$user]);
         } else{
-            return redirect('/#login');
+            return abort('403');
         }
+
+        // if($id == Auth::id()){
+        //     return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
+        // } else{
+        //     return redirect('/#login');
+        // }
     }
 
     /**
@@ -139,9 +149,15 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'email' => 'email'
+            'email' => 'email',
+            'name' => 'required',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11'
         ],[
-            'email.email' => 'Email chưa đúng'
+            'email.email' => 'Email chưa đúng',
+            'name.required' => 'Bạn chưa nhập tên',
+            'phone.required' => "Bạn chưa nhập số điện thoại",
+            'phone.regex' => "Số điện thoại không đúng",
+            'phone.min' => 'Số điện thoại từ 10 kí tự số.'
         ]);
         $user = User::find($id);
 
@@ -156,13 +172,12 @@ class UserController extends Controller
             // $imgPath = $file->store('profiles', 'public');
             // $image = Image::make('storage/'.$imgPath)->fit(1000, 1000);
             $file->move("image/user/", $hinh);
-            $imageDefault = "image-default.png";
-            if($user->image != $imageDefault){
+            if($user->image != ""){
                 unlink('image/user/'.$user->image);
             }
             $user->image = $hinh;
         }
-
+        $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
         $user->address = $request->input('address');
@@ -214,7 +229,7 @@ class UserController extends Controller
                 return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Mật khẩu cũ không đúng');
             }
         }
-           
+
     }
 
 }

@@ -203,7 +203,6 @@
     <script>
         $(document).ready(function(){
             $('#listTask').DataTable({
-                scrollY: 250,
                 'info': false,
                 'paging': false
             });

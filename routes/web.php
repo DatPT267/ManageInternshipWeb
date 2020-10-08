@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 //ADMIN and GVHD
 
-Route::get('admin/login', 'AuthenticationController@getLogin');
+Route::get('admin/login', 'AuthenticationController@getLogin')->name('login');
 Route::post('admin/login', 'AuthenticationController@postLogin');
 
 Route::get('admin/logout', 'AuthenticationController@getLogout');
@@ -78,45 +78,35 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 
-//User
-
-Route::get('/updateInformation', function () {
-    return view('user.pages.personalInformation.updateInformation');
-});
+//=======================================USER=================================================
 Route::get('/',function ()
 {
-	return view('user/pages/trangchu');
+	return view('user.layout.index');
 })->name('home');
-Route::post('login', 'UserController@postLogin');
-Route::get('logout', 'UserController@getLogout')->name('logout');
-Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
 
 
-
-Route::get('/user/{id}/edit', 'UserController@edit');
-Route::post('/user/{id}', 'UserController@update')->name('user.update');
-
-Route::post('/users/{id}/edit/changepassword', 'UserController@changepassword')->name('changepassword');
-
-
-
-//cập nhật thông tin user và update mật khẩu
-
-
-
-//cập nhật thông tin user và update mật khẩu
-Route::resource('user', 'UserController');
-
+Route::resource('user', 'UserController')->middleware('auth');
 Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
+    Route::post('{id}/edit/changepassword', 'UserController@changepassword')->name('changepassword');
     //checkin - checkout
-    Route::get('{id}/check-in', 'CheckController@checkin');
+    Route::get('{id}/check-in', 'CheckController@checkin')->name('checkin');
     Route::post('{id}/check-in', 'CheckController@postCheckin')->name('checkin.post');
-    Route::get('{id}/check-out', 'CheckController@checkout');
+    Route::get('{id}/check-out', 'CheckController@checkout')->name('checkout');
     Route::post('{id}/check-out', 'CheckController@postCheckout')->name('checkout.post');
     // register Checkin-out
-    Route::get('{id}/reg-schedule', 'ScheduleController@getRegSchedule');
+    Route::get('{id}/reg-schedule', 'ScheduleController@getRegSchedule')->name('user.regSchedule');
     Route::post('{id}/reg-schedule', 'ScheduleController@postRegSchedule')->name('reg.schedule');
     //history checkin-out
     Route::get('{id}/history-schedule', 'CheckController@hisSchedule');
     Route::get('ajax/{id}/history-schedule', 'CheckController@ajaxHisSchedule')->name('ajax.His-schedule');
 });
+
+//=======================================USER=================================================
+
+
+// Route::get('/updateInformation', function () {
+//     return view('user.pages.personalInformation.updateInformation');
+// });
+// Route::post('login', 'UserController@postLogin');
+// Route::get('logout', 'UserController@getLogout')->name('logout');
+// Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');

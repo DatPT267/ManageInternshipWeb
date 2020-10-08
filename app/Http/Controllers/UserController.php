@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
+use App\Member;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -112,9 +114,11 @@ class UserController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Request $request, $id)
     {
-        //
+        $members = Member::where('group_id', $request->input("group_id"))->where('user_id', $id)->first();
+        $users = User::find($id);
+        return response()->json(['data'=>$users, 'position'=>$members->position], 200);
     }
 
     /**

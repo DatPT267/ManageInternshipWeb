@@ -1,5 +1,8 @@
 <?php
 
+use App\Assign;
+use App\Task;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
@@ -83,6 +86,22 @@ Route::get('/',function ()
 {
 	return view('user.layout.index');
 })->name('home');
+Route::post('login', 'UserController@postLogin');
+Route::get('logout', 'UserController@getLogout')->name('logout');
+Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
+
+
+
+Route::get('/user/{id}/edit', 'UserController@edit');
+Route::post('/user/{id}', 'UserController@update')->name('user.update');
+
+Route::get('/user/{id}/list-group', 'GroupController@listGroup')->name('list.group');
+Route::get('/user/{id}/group/{id_group}', 'StudentController@infoGroupOfStudent')->name('user.group');
+Route::get('/user/{id}/show', 'MemberController@show')->name('info.member');
+Route::get('/user/{id}/group/{id_group}/list-task', 'GroupController@getListTask')->name('view-list-task');
+Route::get('/test/{id}', 'GroupController@getListTask');
+Route::post('/users/{id}/edit/changepassword', 'UserController@changepassword')->name('changepassword');
+
 
 
 Route::resource('user', 'UserController')->middleware('auth');

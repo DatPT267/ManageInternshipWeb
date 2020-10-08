@@ -11,8 +11,8 @@ class Task extends Model
 
     protected $table = "task";
 
-
-    public function assign(){
+    public function assign()
+    {
         return $this->hasMany('App\Assign', 'task_id', 'id');
     }
 }

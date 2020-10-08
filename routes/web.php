@@ -3,6 +3,7 @@
 use App\Assign;
 use App\Task;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,11 +37,18 @@ Route::get('/admin',function ()
 Route::group(['prefix' => 'admin'], function () {
     //quản lý đợt thực tập
     Route::resource('internshipClass', 'internshipclassController');
+    Route::post('them1', 'internshipclassController@postThem')->name('addClass');
+    Route::post('internshipClass/sua/{id}', 'internshipclassController@postSua')->name('updateclass');
+    Route::post('internshipClass/member/{nameclass}/{amount}', 'internshipclassController@postMember')->name('member');
+    Route::get('internshipClass/list-member/{class_id}', 'internshipclassController@getList')->name('list');
+
 
     //Quản lý nhóm
     Route::resource('manageGroup', 'GroupController');
-    Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask');
+    Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');;
     Route::get('manageGroup/list-evaluate/{id}', 'GroupController@getListEvaluate');
+    Route::post('manageGroup/sua/{id}', 'GroupController@postSua')->name('updategroup');
+    Route::post('them', 'GroupController@postThem')->name('addgroup');
 
     //Quản lý sinh viên
     // Route::group(['prefix' => 'manageStudent'], function () {
@@ -49,9 +57,7 @@ Route::group(['prefix' => 'admin'], function () {
     //     });
     // });
 
-    //Quản lý giảng viên
-    // Route::resource('manageLecturers', 'UserController');
-    Route::resource('internshipClass', 'InternshipclassController');
+
 });
 
     //Quản lý task
@@ -75,7 +81,6 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 
-
 //User
 
 Route::get('/updateInformation', function () {
@@ -90,6 +95,7 @@ Route::get('logout', 'UserController@getLogout')->name('logout');
 Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
 
 
+
 Route::get('/user/{id}/edit', 'UserController@edit');
 Route::post('/user/{id}', 'UserController@update')->name('user.update');
 
@@ -98,3 +104,27 @@ Route::get('/user/{id}/group/{id_group}', 'StudentController@infoGroupOfStudent'
 Route::get('/user/{id}/show', 'MemberController@show')->name('info.member');
 Route::get('/user/{id}/group/{id_group}/list-task', 'GroupController@getListTask')->name('view-list-task');
 Route::get('/test/{id}', 'GroupController@getListTask');
+Route::post('/users/{id}/edit/changepassword', 'UserController@changepassword')->name('changepassword');
+
+
+
+//cập nhật thông tin user và update mật khẩu
+
+
+
+//cập nhật thông tin user và update mật khẩu
+Route::resource('user', 'UserController');
+
+Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
+    //checkin - checkout
+    Route::get('{id}/check-in', 'CheckController@checkin');
+    Route::post('{id}/check-in', 'CheckController@postCheckin')->name('checkin.post');
+    Route::get('{id}/check-out', 'CheckController@checkout');
+    Route::post('{id}/check-out', 'CheckController@postCheckout')->name('checkout.post');
+    // register Checkin-out
+    Route::get('{id}/reg-schedule', 'ScheduleController@getRegSchedule');
+    Route::post('{id}/reg-schedule', 'ScheduleController@postRegSchedule')->name('reg.schedule');
+    //history checkin-out
+    Route::get('{id}/history-schedule', 'CheckController@hisSchedule');
+    Route::get('ajax/{id}/history-schedule', 'CheckController@ajaxHisSchedule')->name('ajax.His-schedule');
+});

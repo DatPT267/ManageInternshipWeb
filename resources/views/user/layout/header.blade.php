@@ -11,21 +11,25 @@
             <nav id="mainMenu">
                 <ul class="mainMenu delay">
                         <li><a href="trangchu" title="Trang chủ">Trang chủ</a></li>
-                        <li>
-                            <a href="" title="Quản lý">Quản Lý</a>
-                                <ul class="subMenu">
-                                    <li><a href="" title="Bài tập">Bài tập</a></li>
-                                    <li><a href="" title="Check">Checkin - checkout</a></li>
-                                    <li><a href="" title="Lịch đăng kí thực tập">Lịch đăng kí thực tập</a></li>
-                                </ul>
-                        </li>
                         @if (Auth::check())
+                            <li>
+                                <a href="" title="Quản lý">Quản Lý</a>
+                                    <ul class="subMenu">
+                                        <li><a href="" title="Bài tập">Bài tập</a></li>
+                                        <li><a href="user/{{Auth::id()}}/check-in">Check-in</a></li>
+                                        <li><a href="user/{{Auth::id()}}/check-out">Check-out</a></li>
+                                        <li><a href="user/{{Auth::id()}}/reg-schedule" title="Đăng ký lịch thực tập">Đăng ký lịch thực tập</a></li>
+                                        <li><a href="user/{{Auth::id()}}/history-schedule" title="Đăng ký lịch thực tập">Lịch sử thực tập</a></li>
+                                    </ul>
+                            </li>
+                        @endif
                         <li>
                             <a href="" title="Nhóm">Nhóm</a>
                             <ul class="subMenu">
-                                <li><a href="/user/{{Auth::id()}}/list-group" title="Dự án">Danh sách nhóm</a></li>
-                                <li><a href="" title="Thành viên">Thành viên</a></li>
-                            </ul>
+
+                                        <li><a href="" title="Dự án">Dự án</a></li>
+                                        <li><a href="" title="Thành viên">Thành viên</a></li>
+                                </ul>
                         </li>
                         @endif
                         <li>
@@ -57,7 +61,7 @@
                         @if(Auth::check())
                         <ul class="dropdown-menu">
                             <li style="color: black;padding:10px;">Xin chào, {{Auth::user()->name}}</li>
-                            <li><a href="thongtintaikhoan" title="Thông tin tài khoản">Thông tin tài khoản</a></li>
+                            <li><a href="user/{{Auth::id()}}/edit" title="Thông tin tài khoản">Thông tin tài khoản</a></li>
                             <li><a href="{{ route('logout') }}" class="log-out-acc" title="Đăng xuất">Đăng Xuất</a></li>
                         </ul>
                         @else

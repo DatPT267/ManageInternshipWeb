@@ -11,6 +11,7 @@ use App\Member;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -124,8 +125,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
+        if($id == Auth::id()){
+            $user = User::find(Auth::id());
+            return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
+        } else{
+            return redirect('/#login');
+        }
     }
 
     /**
@@ -141,21 +146,22 @@ class UserController extends Controller
             'email' => 'email'
         ],[
             'email.email' => 'Email chưa đúng'
-            ]);
+        ]);
         $user = User::find($id);
 
         if($request->hasFile('image')){
             $file = $request->file('image');
             $duoi = $file->getClientOriginalExtension();
             if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg'){
-                return redirect('user/'.$id)->with('fail', 'Bạn chỉ được chọn file có đuổi png, jpg, jpeg');
+                return redirect('user/'.Auth::id())->with('fail', 'Bạn chỉ được chọn file có đuổi png, jpg, jpeg');
             }
             $imgName = $file->getClientOriginalName();
             $hinh = Str::random(3).'_'.Carbon::now()->timestamp."_".$imgName;
             // $imgPath = $file->store('profiles', 'public');
             // $image = Image::make('storage/'.$imgPath)->fit(1000, 1000);
             $file->move("image/user/", $hinh);
-            if($user->image != null){
+            $imageDefault = "image-default.png";
+            if($user->image != $imageDefault){
                 unlink('image/user/'.$user->image);
             }
             $user->image = $hinh;
@@ -179,4 +185,40 @@ class UserController extends Controller
     {
         //
     }
+
+    public function changepassword( Request $request, $id){
+        $this->validate($request, [
+            'password' => 'required',
+            'password1' => 'required|min:6|max:50',
+            'password2'=> 'required|same:password1',
+        ],[
+            'password.required' => 'Bạn chưa nhập mật khẩu cũ',
+            'password1.required' => 'Bạn chưa nhập mật khẩu mới',
+            'password1.min' => 'Mật khẩu ít nhất phải có 6 kí tự',
+            'password1.max' => 'Mật khẩu nhiều nhất chỉ có 50 kí tự',
+            'password2.required' => 'Bạn chưa nhập mật khẩu mới',
+            'password2.min' => 'Mật khẩu ít nhất phải có 6 kí tự',
+            'password2.max' => 'Mật khẩu nhiều nhất chỉ có 50 kí tự',
+            'password2.same'=>  'Mật khẩu mới không khớp',
+        ]);
+
+        if(Auth::check()){
+            $matkhau = $request->password;
+            $password = Auth::User()->password;
+            $id = Auth::user()->id;
+            if(Hash::check($matkhau, $password)){
+
+                $user = User::find(Auth::user()->id);
+                $user->password =  bcrypt($request->password2);
+                $user->save();
+                return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Đổi mật khẩu thành công ');
+            }
+
+            else{
+                return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Mật khẩu cũ không đúng');
+            }
+        }
+
+    }
+
 }

@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,7 +34,7 @@ Route::get('/admin',function ()
 Route::group(['prefix' => 'admin'], function () {
     //quản lý đợt thực tập
     Route::resource('internshipClass', 'internshipclassController');
-    Route::post('them', 'internshipclassController@postThem')->name('addclass');
+    Route::post('them1', 'internshipclassController@postThem')->name('addClass');
     Route::post('internshipClass/sua/{id}', 'internshipclassController@postSua')->name('updateclass');
     Route::post('internshipClass/member/{nameclass}/{amount}', 'internshipclassController@postMember')->name('member');
     Route::get('internshipClass/list-member/{class_id}', 'internshipclassController@getList')->name('list');
@@ -109,3 +110,16 @@ Route::get('user/{id}/list-review', 'ReviewController@getListReviewOfUser')->nam
 Route::post('user/{id}/list-review/feedback/create', 'FeedbackController@postCreateFeedback')->name('post-create-feedback');
 
 Route::get('ajax/detail-review', 'FeedbackController@ajaxDetailReview')->name('ajax-detail-review');
+Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
+    //checkin - checkout
+    Route::get('{id}/check-in', 'CheckController@checkin');
+    Route::post('{id}/check-in', 'CheckController@postCheckin')->name('checkin.post');
+    Route::get('{id}/check-out', 'CheckController@checkout');
+    Route::post('{id}/check-out', 'CheckController@postCheckout')->name('checkout.post');
+    // register Checkin-out
+    Route::get('{id}/reg-schedule', 'ScheduleController@getRegSchedule');
+    Route::post('{id}/reg-schedule', 'ScheduleController@postRegSchedule')->name('reg.schedule');
+    //history checkin-out
+    Route::get('{id}/history-schedule', 'CheckController@hisSchedule');
+    Route::get('ajax/{id}/history-schedule', 'CheckController@ajaxHisSchedule')->name('ajax.His-schedule');
+});

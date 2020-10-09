@@ -19,7 +19,7 @@
     <hr class="sidebar-divider">
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{route('user.listGroup', Auth::id())}}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Danh sách nhóm tham gia</span></a>
     </li>
@@ -54,6 +54,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{route('checkin', Auth::user()->id)}}">Checkin</a>
                 <a class="collapse-item" href="{{route('checkout', Auth::user()->id)}}">Checkout</a>
+                <a class="collapse-item" href="{{route('user.hisSchedule', Auth::user()->id)}}">Lịch sử thực tập</a>
             </div>
         </div>
     </li>

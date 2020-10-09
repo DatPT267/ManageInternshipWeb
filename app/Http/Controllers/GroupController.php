@@ -99,13 +99,28 @@ class GroupController extends Controller
         $a->delete();
         return redirect('admin/manageGroup')->with('success', 'Xóa thành công');
     }
-
-    public function getListTask($id){
-        $listTask = Task::where('group_id', $id)->get();
-        $group = Group::find($id);
-        // return $listTask->group->name->first();
-        return view('admin.pages.manageGroup.list-task', ['listTask'=>$listTask, 'group'=>$group->name ]);
+    public function getListTask($id, $group_id){
+        $tasks = Task::where('group_id', $group_id)->get();
+        $data = [];
+        foreach ($tasks as $key => $task) {
+            $assigns = Assign::where('task_id', $task->id)->get();
+            $name_member = [];
+            if(count($assigns) > 0){
+                foreach ($assigns as $index => $assign) {
+                    $name_member[$index] = $assign->member->user->name;
+                }
+            }
+            $data[$key] = [
+                'index' => $key + 1,
+                'name' => $task->name,
+                'status' => $task->status,
+                'name_member' => $name_member,
+                'note' => $task->note
+            ];
+        }
+        return response()->json(['data'=>$data]);
     }
+
     public function getListEvaluate($id){
         return view('admin.pages.manageGroup.list-Evaluate');
     }

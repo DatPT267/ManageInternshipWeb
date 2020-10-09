@@ -1,17 +1,17 @@
 <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLongTitle" style="text-align: center">Danh sách task</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h2 class="modal-title" id="exampleModalLongTitle" style="text-align: center">Danh sách task</h2>
             </div>
             <div class="modal-body">
                 <table class="table table-striped table-bordered table-hover" id="listTask" style="text-align: center">
                     <thead style="text-align: center">
                         <tr>
-                            <th>ID</th>
+                            <th>STT</th>
                             <th>Tên task</th>
                             <th>Trạng thái</th>
                             <th>Thành viên tham gia</th>
@@ -30,10 +30,12 @@
 </div>
 <!-- Modal -->
 
+@section('script')
 <script>
     $(document).ready(function() {
         $('.btn-show-task').click(function (){
             var url = $(this).attr('data-url');
+            console.log(url);
             $("#listTask").dataTable({
                 'destroy': true,
                 "scrollY": "50vh",
@@ -49,7 +51,7 @@
                 },
                 "columns": [
                     {"data": "index"},
-                    {"data": "name"},
+                    {"data": "name",  "orderable": false},
                     {"data": "status",
                     render: function (data, type, row) {
                         if(data == 0) return "<button class='btn btn-secondary'>To-do</button>";
@@ -58,7 +60,7 @@
                         else if(data == 3) return "<button class='btn btn-success'>Done</button>";
                         else return "<button class='btn btn-danger'>Pending</button>";
                     }},
-                    {"data": "name_member",
+                    {"data": "name_member", "orderable": false,
                     render: function (data, type, row) {
                         var name_member = '';
                         if(data.length > 0){
@@ -70,10 +72,12 @@
                             return '<strong>Chưa ai nhận task</strong>';
                         }
                     }},
-                    {"data": "note", "width": "40%"},
+                    {"data": "note", "width": "40%", "orderable": false},
                 ]
 
             });
         });
     });
 </script>
+
+@endsection

@@ -154,14 +154,20 @@ class UserController extends Controller
     {
         $this->validate($request, [
             'email' => 'email',
-            'name' => 'required',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:11'
+            'name' => 'required|regex:/^([aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆ
+                                fFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTu
+                                UùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ\s]*)$/',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:11',
+            'address' => 'required'
         ],[
             'email.email' => 'Email chưa đúng',
             'name.required' => 'Bạn chưa nhập tên',
             'phone.required' => "Bạn chưa nhập số điện thoại",
             'phone.regex' => "Số điện thoại không đúng",
-            'phone.min' => 'Số điện thoại từ 10 kí tự số.'
+            'name.regex' => "Tên không đúng",
+            'phone.min' => 'Số điện thoại từ 10-11 kí tự số.',
+            'phone.max' => 'Số điện thoại từ 10-11 kí tự số.',
+            'address.required' => 'Bạn chưa nhập địa chỉ.'
         ]);
         $user = User::find($id);
 
@@ -173,8 +179,6 @@ class UserController extends Controller
             }
             $imgName = $file->getClientOriginalName();
             $hinh = Str::random(3).'_'.Carbon::now()->timestamp."_".$imgName;
-            // $imgPath = $file->store('profiles', 'public');
-            // $image = Image::make('storage/'.$imgPath)->fit(1000, 1000);
             $file->move("image/user/", $hinh);
             if($user->image != ""){
                 unlink('image/user/'.$user->image);

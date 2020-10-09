@@ -21,7 +21,7 @@ class StudentController extends Controller
             // dd($members);
             return view('user.pages.group.index',['group'=>$group, 'members'=>$members, 'user'=>$member->user_id]);
         } else{
-            return redirect('/#login');
+            return redirect()->route('login');
         }
     }
 }

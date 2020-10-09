@@ -2,16 +2,16 @@
     <table class="table table-striped table-bordered table-hover" id="example">
         <thead>
             <tr align="center">
-                <th>ID</th>
+                <th>STT</th>
                 <th>Tên</th>
                 <th>Vị trí</th>
-                <th>Action</th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($members as $member)
+            @foreach ($members as $key => $member)
             <tr class="odd gradeX" align="center">
-                <td>{{$member->user->id}}</td>
+                <td>{{$key + 1}}</td>
                 <td>{{$member->user->name}}</td>
                 <td>
                     @if ($member->position == 0)
@@ -23,7 +23,11 @@
                     @endif
                 </td>
                 <td class="center">
-                    <button class="btn btn-primary btn-show" data-idgroup="{{$member->group_id}}" data-url="{{route('info.member', $member->user->id)}}" data-toggle="modal" data-target=".bd-example-modal-lg">Thông tin</button>
+                    <button class="btn btn-primary btn-show"
+                            data-idgroup="{{$member->group_id}}"
+                            data-url="{{route('info.member', $member->user->id)}}"
+                            data-toggle="modal"
+                            data-target=".bd-example-modal-lg">Thông tin</button>
                 </td>
             </tr>
             @endforeach
@@ -34,10 +38,10 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
+                <h2 class="modal-title" id="exampleModalLongTitle" >Thông tin sinh viên</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h2 class="modal-title" id="exampleModalLongTitle" style="text-align: center">Thông tin sinh viên</h2>
             </div>
             <div class="modal-body">
                 <div class="row">
@@ -80,19 +84,17 @@
 </div>
 @section('script')
 <script>
-    $(document).ready(function() {
+    jQuery(document).ready(function() {
         $('#example').DataTable({
             'info': false,
             "bInfo": false,
             "bLengthChange": false,
             "bFilter": true,
         });
-    } );
-</script>
-    <script>
         $('.btn-show').click(function(){
+            console.log("ok");
             var url = $(this).attr('data-url');
-            // console.log(url);
+            console.log(url);
             $.ajax({
                 type: 'GET',
                 url: url,
@@ -109,9 +111,10 @@
                     else $('td#position').text('GVHD')
 
                     var img = document.getElementById('img');
-                    img.src = "image/user/"+ response.data.image
+                    img.src = "{{asset('image/user')}}/"+response.data.image
                 }
             });
         });
-    </script>
+    } );
+</script>
 @endsection

@@ -85,27 +85,19 @@ Route::group(['prefix' => 'admin'], function () {
 Route::get('/',function ()
 {
 	return view('user.layout.index');
-})->name('home');
+})->name('home')->middleware('auth');
 Route::post('login', 'UserController@postLogin');
 Route::get('logout', 'UserController@getLogout')->name('logout');
 Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
 
 
-
-Route::get('/user/{id}/edit', 'UserController@edit');
-Route::post('/user/{id}', 'UserController@update')->name('user.update');
-
-Route::get('/user/{id}/list-group', 'GroupController@listGroup')->name('list.group');
-Route::get('/user/{id}/group/{id_group}', 'StudentController@infoGroupOfStudent')->name('user.group');
-Route::get('/user/{id}/show', 'MemberController@show')->name('info.member');
-Route::get('/user/{id}/group/{id_group}/list-task', 'GroupController@getListTask')->name('view-list-task');
-Route::get('/test/{id}', 'GroupController@getListTask');
-Route::post('/users/{id}/edit/changepassword', 'UserController@changepassword')->name('changepassword');
-
-
-
 Route::resource('user', 'UserController')->middleware('auth');
 Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
+    Route::get('{id}/list-group', 'GroupController@listGroup')->name('user.listGroup');
+    Route::get('{id}/group/{id_group}', 'StudentController@infoGroupOfStudent')->name('user.group');
+    Route::get('{id}/show', 'MemberController@show')->name('info.member');
+    Route::get('{id}/group/{id_group}/list-task', 'GroupController@getListTask')->name('view-list-task');
+
     Route::post('{id}/edit/changepassword', 'UserController@changepassword')->name('changepassword');
     //checkin - checkout
     Route::get('{id}/check-in', 'CheckController@checkin')->name('checkin');
@@ -116,16 +108,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::get('{id}/reg-schedule', 'ScheduleController@getRegSchedule')->name('user.regSchedule');
     Route::post('{id}/reg-schedule', 'ScheduleController@postRegSchedule')->name('reg.schedule');
     //history checkin-out
-    Route::get('{id}/history-schedule', 'CheckController@hisSchedule');
+    Route::get('{id}/history-schedule', 'CheckController@hisSchedule')->name('user.hisSchedule');
     Route::get('ajax/{id}/history-schedule', 'CheckController@ajaxHisSchedule')->name('ajax.His-schedule');
 });
 
 //=======================================USER=================================================
-
-
-// Route::get('/updateInformation', function () {
-//     return view('user.pages.personalInformation.updateInformation');
-// });
-// Route::post('login', 'UserController@postLogin');
-// Route::get('logout', 'UserController@getLogout')->name('logout');
-// Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');

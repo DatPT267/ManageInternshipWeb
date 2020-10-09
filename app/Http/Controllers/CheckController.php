@@ -154,97 +154,44 @@ class CheckController extends Controller
     //========================================START HISTORY SCHEDULE=======================================
 
     public function hisSchedule($id){
-        $now = Carbon::now('asia/Ho_Chi_Minh');
-        $end_month = $now->subDay()->format('Y-m-d');
-        $start_month = $now->startOfMonth()->format('Y-m-d');
-        $checks = Check::whereRaw("date(date_start) BETWEEN '" . $start_month. "' AND '".$end_month."'")
-                        ->where('user_id', $id)
-                        ->orderByDesc('id')
-                        ->get();
-        // dd($checks);
-        $schedules = Schedule::where('user_id', $id)
-                            ->whereRaw("date(date) BETWEEN '" . $start_month. "' AND '".$end_month."'")
+        if($id == Auth::id()){
+            $now = Carbon::now('asia/Ho_Chi_Minh');
+            $end_month = $now->subDay()->format('Y-m-d');
+            $start_month = $now->startOfMonth()->format('Y-m-d');
+            $checks = Check::whereRaw("date(date_start) BETWEEN '" . $start_month. "' AND '".$end_month."'")
+                            ->where('user_id', $id)
                             ->orderByDesc('id')
                             ->get();
-        // dd($schedules);
+            // dd($checks);
+            $schedules = Schedule::where('user_id', $id)
+                                ->whereRaw("date(date) BETWEEN '" . $start_month. "' AND '".$end_month."'")
+                                ->orderByDesc('id')
+                                ->get();
+            // dd($schedules);
 
-        $count = 0;
-        foreach ($schedules as $key => $schedule) {
+            $day_work = 0;
+            foreach ($schedules as $key => $schedule) {
+                foreach ($checks as $key => $check) {
+                    if($check->schedule_id === $schedule->id && $check->date_end != null){
+                        $day_work += 1;
+                    }
+                }
+            }
+            $arrCheck = [];
             foreach ($checks as $key => $check) {
-                if($check->schedule_id === $schedule->id && $check->date_end != null){
-                    $count += 1;
-                    // break;
-                }
+                $arrCheck[$key] = $check->schedule_id;
             }
+
+            return view('user.pages.manage.view-history-check',
+                        [
+                            'schedules' => $schedules,
+                            'checks' => $checks,
+                            'arrCheck' => $arrCheck,
+                            'count' => $day_work,
+                        ]);
+        } else{
+            return redirect()->route('/');
         }
-        $timeTotal = 0;
-        $arrCheck = [];
-        foreach ($checks as $key => $check) {
-            $t1 = 0;
-            $t2 = 0;
-            $arrCheck[$key] = $check->schedule_id;
-            if($check->date_start !== null && $check->date_end !== null){
-                $arrTime = explode(" ", $check->date_start);
-                $arrYMD = explode("-", $arrTime[0]);
-                $year = (int)$arrYMD[0];
-                $month = (int)$arrYMD[1];
-                $day = (int)$arrYMD[2];
-                $tz = 'asia/ho_chi_minh';
-                $time_sang = Carbon::create($year, $month, $day, 12, 00, 00, $tz);
-                $time_chieu = Carbon::create($year, $month, $day, 13, 30, 00, $tz);
-
-                $hour_start = (int)Carbon::parse($check->date_start)->hour;
-                $minute_start = (int)Carbon::parse($check->date_start)->minute;
-                $hour_end = (int)Carbon::parse($check->date_end)->hour;
-                $minute_end = (int)Carbon::parse($check->date_end)->minute;
-
-                $start = Carbon::create($year, $month, $day, $hour_start, $minute_start, 00, $tz);
-                $end = Carbon::create($year, $month, $day, $hour_end, $minute_end, 00, $tz);
-
-                if($start < $time_sang){
-                    if($end <= $time_sang){
-                        $t1 = $end->diffInMinutes($start);
-                    } else {
-                        $t1 = $time_sang->diffInMinutes($start);
-                    }
-                }
-
-                if($end > $time_chieu){
-                    if($start >= $time_chieu){
-                        $t2 = $start->diffInMinutes($end);
-                    } else {
-                        $t2 = $time_chieu->diffInMinutes($end);
-                    }
-                }
-
-                $timeTotal += $t1 + $t2;
-                // $timeTotal = 31*24*31;
-            }
-        }
-        // dd($arrCheck);
-        $ngay = 0;
-        $gio = 0;
-        $phut = 0;
-        //kiểm tra xem có qua ngày không
-        $gio = floor($timeTotal / 60);
-        $phut = $timeTotal % 60;
-
-        if($gio >= 24){
-            $ngay = floor($gio / 24);
-            $gio = $gio % 24;
-        }
-
-        return view('user.pages.manage.view-history-check',
-                    [
-                        'schedules' => $schedules,
-                        'checks' => $checks,
-                        'arrCheck' => $arrCheck,
-                        'timeTotal' => $timeTotal,
-                        'count' => $count,
-                        'ngay'=>$ngay,
-                        'gio' => $gio,
-                        'phut'=>$phut
-                    ]);
     }
 
     public function ajaxHisSchedule($id)

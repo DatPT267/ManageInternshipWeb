@@ -24,4 +24,5 @@ class Member extends Model
     {
         return $this->hasMany('App\Assign', 'member_id', 'id');
     }
+
 }

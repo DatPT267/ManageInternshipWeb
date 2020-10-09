@@ -91,13 +91,16 @@ Route::get('logout', 'UserController@getLogout')->name('logout');
 Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
 
 
+
+
 Route::resource('user', 'UserController')->middleware('auth');
 Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
+
     Route::get('{id}/list-group', 'GroupController@listGroup')->name('user.listGroup');
     Route::get('{id}/group/{id_group}', 'StudentController@infoGroupOfStudent')->name('user.group');
     Route::get('{id}/show', 'MemberController@show')->name('info.member');
     Route::get('{id}/group/{id_group}/list-task', 'GroupController@getListTask')->name('view-list-task');
-
+    //đổi mật khẩu
     Route::post('{id}/edit/changepassword', 'UserController@changepassword')->name('changepassword');
     //checkin - checkout
     Route::get('{id}/check-in', 'CheckController@checkin')->name('checkin');
@@ -110,6 +113,10 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     //history checkin-out
     Route::get('{id}/history-schedule', 'CheckController@hisSchedule')->name('user.hisSchedule');
     Route::get('ajax/{id}/history-schedule', 'CheckController@ajaxHisSchedule')->name('ajax.His-schedule');
+    //đánh giá
+    Route::get('{id}/list-review', 'ReviewController@getListReviewOfUser')->name('list-review-of-user');
+    Route::post('{id}/list-review/feedback/create', 'FeedbackController@postCreateFeedback')->name('post-create-feedback');
+    Route::get('ajax/detail-review', 'FeedbackController@ajaxDetailReview')->name('ajax-detail-review');
 });
 
 //=======================================USER=================================================

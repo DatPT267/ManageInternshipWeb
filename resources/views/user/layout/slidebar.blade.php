@@ -61,7 +61,7 @@
     <hr class="sidebar-divider">
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{route('list-review-of-user', Auth::id())}}">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Danh sách review</span></a>
     </li>

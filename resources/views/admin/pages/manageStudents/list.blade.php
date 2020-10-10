@@ -18,7 +18,7 @@
     <table class="table table-striped table-bordered table-hover" id="example">
         <thead>
             <tr align="center">
-                <th>ID</th>
+                <th>STT</th>
                 <th>Tên Sinh Viên</th>
                 <th>Email</th>
                 <th>SĐT</th>
@@ -29,9 +29,11 @@
             </tr>
         </thead>
          <tbody>
+            <input type="hidden" value=" {{ $i = 1}}">
+            
             @foreach ($listStudent as $ls)
             <tr class="odd gradeX" align="center">
-                <td>{{$ls->id}}</td>
+                <td>{{$i++}}</td>
                 <td>{{$ls->name}} </td>
                 <td>{{$ls->email}}</td>
                 <td>{{$ls->phone}}</td>

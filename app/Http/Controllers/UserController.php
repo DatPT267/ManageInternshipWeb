@@ -79,8 +79,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        $listStudent = User::all();
-        return view('admin.pages.manageStudents.list', ['listStudent'=>$listStudent]);
+        $listStudent = User::orderBy('id', 'desc')->get();
+        $stt[] =0; 
+        for($i=1 ; $i< sizeof($listStudent); $i++){
+          $stt[$i] = $i;
+        }
+        return view('admin.pages.manageStudents.list', ['listStudent'=>$listStudent, 'stt' => $stt]);
     }
 
     /**
@@ -204,9 +208,11 @@ class UserController extends Controller
                 'email'=>'required|email',
                 'phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/',
             ],
-            [
+            [ 
+              
                 'name.required' =>'Bạn chưa nhập tên sinh viên',
                 'email.required' => 'Bạn chưa nhập email sinh viên',  
+                'email.email' => 'Mail sai định dạng',
                 'phone.regex' => 'Số điện thoại sai định dạng',
                 'email.unique' => 'Email đã tồn tại',
                 'phone.required' => 'Bạn chưa nhập số điện thoại'           
@@ -233,7 +239,10 @@ class UserController extends Controller
                     $Hinh= Str::random(4)."_".$name;
                 }
                 $file->move("image/user",$Hinh);
-                unlink("image/user/".$user->image);
+                if(file_exists("image/user".$user->image)==false){
+       
+                  unlink("image/user/".$user->image);
+                }
                 $user->image = $Hinh;
             }  
             

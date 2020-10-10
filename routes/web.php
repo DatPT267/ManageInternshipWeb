@@ -49,7 +49,7 @@ Route::group(['prefix' => 'admin'], function () {
     //Quản lý sinh viên
     Route::resource('manageStudents', 'UserController');
     Route::post('manageStudents/sua/{id}', 'UserController@postSua')->name('updatestudent');
-    Route::post('them', 'UserController@postThem')->name('addstudent');
+    Route::post('addStudent', 'UserController@postThem')->name('addstudent');
     Route::get('manageStudents/edit/{id}', 'UserController@editUser')->name('editUser');
     Route::get('manageStudents/resetpassword/{id}','UserController@resetpassword')->name('resetpass');
 

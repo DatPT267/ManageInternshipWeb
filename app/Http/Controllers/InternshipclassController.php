@@ -100,7 +100,8 @@ class InternshipclassController extends Controller
 
    
     public function postThem(Request $request)
-    {
+    {   
+ 
         $this->validate($request,
             [
               

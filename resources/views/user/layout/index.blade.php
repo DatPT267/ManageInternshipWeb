@@ -19,6 +19,8 @@
     <!--css-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic&subset=latin,vietnamese' rel='stylesheet' type='text/css' />
     <link rel="stylesheet" type="text/css" href="admin_asset1/css/Content/html/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="admin_asset1/css/Content/html/css/jquery.dataTables.min.css">
+    {{-- <link rel="stylesheet" type="text/css" href="admin_asset1/css/Content/html/css/bootstrap.min.css"> --}}
     <link rel="stylesheet" type="text/css" href="admin_asset1/css/Content/html/css/font-awesome.css">
     <link rel="stylesheet" type="text/css" href="admin_asset1/css/Content/html/css/jquery.simplyscroll.css">
     <link rel="stylesheet" type="text/css" href="admin_asset1/css/Content/html/css/jquery.mmenu.all.css">
@@ -39,6 +41,7 @@
 
     <script type="text/javascript" src="admin_asset1/css/Content/html/js/jquery-2.1.3.min.js"></script>
     <script type="text/javascript" src="admin_asset1/css/Content/html/js/bootstrap.min.js"></script>
+
     <script type="text/javascript" src="admin_asset1/css/Content/html/js/jquery.mmenu.min.all.js"></script>
     <script type="text/javascript" src="admin_asset1/css/Content/html/js/owl.carousel.min.js"></script>
     <script type="text/javascript" src="admin_asset1/css/Content/html/js/remodal.min.js"></script>
@@ -138,6 +141,9 @@
         ga('send', 'pageview');
 
     </script>
+    {{-- <script type="text/javascript" src="admin_asset1/css/Content/html/js/bootstrap2.min.js"></script> --}}
+    <script type="text/javascript" src="{{ asset('admin_asset1/css/Content/html/js/jquery.dataTables.min.js') }}"></script>
+    {{-- <script type="text/javascript" src="{{ asset('admin_asset1/css/Content/html/js/jquery-3.5.1.min.js') }}"></script> --}}
     <script type="text/javascript" src="admin_asset1/css/s7.addthis.com/js/300/addthis_widget.js#pubid=ra-546c6a3a3551dec6"></script>
     @yield('script')
 </body>

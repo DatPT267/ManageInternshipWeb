@@ -29,7 +29,6 @@ class GroupController extends Controller
     public function create()
     {
         $name = Internshipclass::all();
- 
         return view('admin.pages.manageGroup.add',['name'=>$name]);
     }
 

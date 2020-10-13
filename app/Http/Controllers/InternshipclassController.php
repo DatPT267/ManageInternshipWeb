@@ -181,6 +181,10 @@ class InternshipclassController extends Controller
             $lastName = ucfirst( $lastName );
             $acronym = "";
 
+         
+       
+
+          
             foreach ($words as $w) {
             
               switch ($w[0]) {

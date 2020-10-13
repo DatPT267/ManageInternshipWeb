@@ -45,8 +45,8 @@
                 {{--
                 <h6 class="collapse-header">Custom Components:</h6>
                 --}}
-                <a class="collapse-item" href="#">Danh sách sinh viên</a>
-                <a class="collapse-item" href="#">Thêm sinh viên</a>
+                <a class="collapse-item" href="{{route('manageStudents.index')}}">Danh sách sinh viên</a>
+                <a class="collapse-item" href="{{route('manageStudents.create')}}">Thêm sinh viên</a>
                 <a class="collapse-item" href="#">Lịch đăng ký thực tập</a>
                 <a class="collapse-item" href="#">Lịch sử thực tập</a>
             </div>

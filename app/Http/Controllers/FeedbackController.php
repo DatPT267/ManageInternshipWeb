@@ -16,6 +16,7 @@ class FeedbackController extends Controller
         foreach ($feedbacks as $key => $feedback) {
             $data[$key] = [
                 'index' => $key,
+                'id' => $feedback->user->id,
                 'name' => $feedback->user->name,
                 'content' => $feedback->content,
                 'time' => Carbon::parse($feedback->time)->isoFormat('HH:mm:ss D/M/Y')

@@ -19,7 +19,7 @@
                     </div>
                 @endif
 
-                <table class="table table-bordered table-hover table-striped">
+                <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>STT</th>
@@ -30,7 +30,7 @@
                     </thead>
                     <tbody>
                         @foreach ($reviews as $key => $review)
-                            <tr>
+                            <tr >
                                 <td>{{$key}}</td>
                                 <td>{{$review->member->user->name}}</td>
                                 <td>{{$review->content}}</td>
@@ -57,11 +57,10 @@
                             <div class="modal-body">
                                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Thêm feedback</button>
                                 <br>
-
                                 <span>Nội dung: <strong>review 1</strong></span><br>
                                 <span>Người review: <strong>admin</strong></span>
                                 <hr>
-                                <table class="table table-hover table-bordered table-striped">
+                                <table class="table table-bordered ">
                                     <thead>
                                         <tr>
                                             <th>STT</th>
@@ -70,7 +69,7 @@
                                             <th>Thời gian feedback</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="list-feedback"></tbody>
+                                    <tbody id="list-feedback" style="color: black"></tbody>
                                 </table>
                             </div>
                             <div class="modal-footer">
@@ -109,7 +108,6 @@
 @section('script')
     <script>
         $(document).ready(function (){
-
             $('.modal').on('show.bs.modal', function(event) {
                 var idx = $('.modal:visible').length;
                 $(this).css('z-index', 1040 + (10 * idx));
@@ -120,11 +118,13 @@
                 $('.modal-backdrop').not('.stacked').addClass('stacked');
             });
 
+
             $('.btn-show-review').click(function (){
                 var url = $(this).attr('data-url');
                 var id = $(this).attr('data-id');
                 $('#id_review').val(id);
                 console.log(url);
+                var idUser = "{{Auth::id()}}";
                 $.ajax({
                     type: "GET",
                     url: url,
@@ -134,12 +134,22 @@
                         var output = '';
                         if(response.data.length != 0){
                             for (let i = 0; i < response.data.length; i++) {
-                                output += "<tr>"+
-                                            "<td>"+response.data[i].index+"</td>"+
-                                            "<td>"+response.data[i].name+"</td>"+
-                                            "<td>"+response.data[i].content+"</td>"+
-                                            "<td>"+response.data[i].time+"</td>"
-                                        +"</tr>";
+                                if(response.data[i].id == idUser){
+                                    output += "<tr style='background-color: #0084FF'>"+
+                                                "<td>"+response.data[i].index+"</td>"+
+                                                "<td>"+response.data[i].name+"</td>"+
+                                                "<td>"+response.data[i].content+"</td>"+
+                                                "<td>"+response.data[i].time+"</td>"
+                                            +"</tr>";
+
+                                } else{
+                                    output += "<tr>"+
+                                                "<td>"+response.data[i].index+"</td>"+
+                                                "<td>"+response.data[i].name+"</td>"+
+                                                "<td>"+response.data[i].content+"</td>"+
+                                                "<td>"+response.data[i].time+"</td>"
+                                            +"</tr>";
+                                }
 
                             }
                         }else{

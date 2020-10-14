@@ -2,7 +2,7 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Danh sách sinh viên của đợt thực tập</h1>
+        <h1 class="h3 mb-0 text-gray-800">Danh sách giảng viên của đợt thực tập</h1>
     </div>
 
     @if (session('success'))
@@ -50,4 +50,5 @@
             @endforeach
         </tbody> 
     </table>
+   
 @endsection

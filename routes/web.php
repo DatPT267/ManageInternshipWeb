@@ -82,10 +82,6 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 //=======================================USER=================================================
-Route::get('/',function ()
-{
-	return view('user.layout.index');
-})->name('home')->middleware('auth');
 Route::post('login', 'UserController@postLogin');
 Route::get('logout', 'UserController@getLogout')->name('logout');
 Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
@@ -93,8 +89,12 @@ Route::post('losspassword', 'UserController@postLosspassword')->name('losspasswo
 
 
 
+Route::get('/',function ()
+{
+	return view('user.pages.index');
+})->name('home')->middleware('auth', 'can:isUser');
 Route::resource('user', 'UserController')->middleware('auth');
-Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => 'user', 'middleware' => ['auth', 'can:isUser']], function () {
 
     Route::get('{id}/list-group', 'GroupController@listGroup')->name('user.listGroup');
     Route::get('{id}/group/{id_group}', 'StudentController@infoGroupOfStudent')->name('user.group');

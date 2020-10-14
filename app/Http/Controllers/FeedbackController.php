@@ -15,7 +15,7 @@ class FeedbackController extends Controller
         $data = [];
         foreach ($feedbacks as $key => $feedback) {
             $data[$key] = [
-                'index' => $key,
+                'index' => $key+1,
                 'id' => $feedback->user->id,
                 'name' => $feedback->user->name,
                 'content' => $feedback->content,
@@ -24,6 +24,7 @@ class FeedbackController extends Controller
         }
         return response()->json(['data' => $data]);
     }
+
     public function postCreateFeedback($id, Request $request){
         $this->validate($request, [
             'content' => 'required'

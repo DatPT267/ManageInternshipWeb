@@ -40,11 +40,11 @@
                 <div class="form-group row" >
                     <label class="col-sm-2 col-form-label"><strong>Ca làm</strong></label>
                     @if ($schedule->session == 0)
-                        <span class="badge" style="background-color: #00FA9A; font-size: 15px">Cả ngày</span>
+                        <span class="badge badge-success" style="font-size: 15px">Cả ngày</span>
                     @elseif($schedule->session == 1)
-                        <span class="badge" style="background-color: #87CEFA; font-size: 15px">Ca sáng</span>
+                        <span class="badge badge-primary" style=" font-size: 15px">Ca sáng</span>
                     @else
-                        <span class="badge" style="background-color: #F4A460; font-size: 15px">Ca chiều</span>
+                        <span class="badge badge-warning" style="font-size: 15px">Ca chiều</span>
                     @endif
                 </div>
                 @if ($isCheck == 0)

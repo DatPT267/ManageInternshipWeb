@@ -54,10 +54,17 @@
                                         @endif
                                         <h6>Upload a different photo...</h6>
                                         <input type="file" class="text-center center-block file-upload" name="image" id="image">
-
                                     </div>
                                 </div>
                                 <div class="col-sm-8" >
+                                    @if(session('success'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{session('success')}}
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                    @endif
                                     <div class="form-group">
                                         <label for="account">Tên đăng nhập</label>
                                         <input type="email" id="account" disabled class="form-control" name="account" value="{{$user->account}}">

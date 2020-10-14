@@ -17,11 +17,11 @@
                 <tbody>
                     @foreach ($groups as $i => $item)
                         <tr>
-                            <td>{{$i}}</td>
+                            <td>{{$i+1}}</td>
                             <td>{{$item->group->name}}</td>
                             <td>
                                 @if ($item->group->status == 0)
-                                    <span class="badge badge-warning" style="padding: 10px">Không hoạt động</span>
+                                    <span class="badge badge-danger" style="padding: 10px">Không hoạt động</span>
                                 @else
                                     <span class="badge badge-primary" style="padding: 10px">Đang hoạt động</span>
                                 @endif

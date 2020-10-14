@@ -41,17 +41,17 @@
                                     @default
 
                                 @endswitch -
-                                {{\Carbon\Carbon::parse($schedule->date)->format('d-m-Y')}}
+                                {{\Carbon\Carbon::parse($schedule->date)->format('d/m/Y')}}
                             </td>
                             @if (in_array($schedule->id, $arrCheck))
                                 @foreach ($checks as $check)
                                     @if ($check->schedule_id === $schedule->id)
-                                        <td>{{\Carbon\Carbon::parse($check->date_start)->isoFormat('HH:mm:ss')}}</td>
+                                        <td>{{\Carbon\Carbon::parse($check->date_start)->isoFormat('HH:mm')}}</td>
                                         <td>
                                             @if ($check->date_end != null)
-                                                {{\Carbon\Carbon::parse($check->date_end)->isoFormat('HH:mm:ss')}}
+                                                {{\Carbon\Carbon::parse($check->date_end)->isoFormat('HH:mm')}}
                                             @else
-                                            <span class="badge badge-danger">
+                                            <span class="badge badge-danger" style="padding: 10px">
                                                 Chưa check-out
                                             </span>
                                             @endif
@@ -63,17 +63,17 @@
                                 @endforeach
                             @else
                                 <td>
-                                    <span class="badge badge-danger">
+                                    <span class="badge badge-danger" style="padding: 10px">
                                         Chưa check-in
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="badge badge-danger">
+                                    <span class="badge badge-danger" style="padding: 10px">
                                         Chưa check-out
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="badge badge-danger">
+                                    <span class="badge badge-danger" style="padding: 10px">
                                         Vắng
                                     </span>
                                 </td>

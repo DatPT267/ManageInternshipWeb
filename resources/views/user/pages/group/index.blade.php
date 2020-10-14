@@ -40,7 +40,7 @@
                         @if ($group->status == 1)
                             <span class="badge badge-success" style="padding: 10px">Hoạt động</span>
                         @else
-                            <span class="badge badge-warning" style="padding: 10px">Không hoạt động</span>
+                            <span class="badge badge-danger" style="padding: 10px">Không hoạt động</span>
                         @endif
                     </div>
                 </div>

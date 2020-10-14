@@ -8,18 +8,28 @@
                 @if (count($errors) > 0)
                     <div class="alert alert-danger">
                         @foreach ($errors->all() as $error)
-                            <li>{{$error}}</li>
+                            <li>
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                    {{$error}}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            </li>
                         @endforeach
                     </div>
                 @endif
 
                 @if (session('success'))
-                    <div class="alert alert-success">
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{session('success')}}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                 @endif
 
-                <table class="table table-bordered table-hover">
+                <table class="table table-bordered table-hover" id="list-review">
                     <thead>
                         <tr>
                             <th>STT</th>
@@ -31,14 +41,16 @@
                     <tbody>
                         @foreach ($reviews as $key => $review)
                             <tr >
-                                <td>{{$key}}</td>
-                                <td>{{$review->member->user->name}}</td>
-                                <td>{{$review->content}}</td>
+                                <td>{{$key+1}}</td>
+                                <td >{{$review->member->user->name}}</td>
+                                <td >{{$review->content}}</td>
                                 <td>
                                     <button type="button"
                                             class="btn btn-primary btn-show-review"
                                             data-url="{{route('ajax-detail-review')}}"
                                             data-id="{{$review->id}}"
+                                            data-content-review="{{$review->content}}"
+                                            data-reviewer="{{$review->member->user->name}}"
                                             data-toggle="modal"
                                             data-target=".bd-example-modal-xl">Detail</button>
                                 </td>
@@ -55,22 +67,30 @@
                                 <h5>Thông tin review</h5>
                             </div>
                             <div class="modal-body">
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Thêm feedback</button>
-                                <br>
-                                <span>Nội dung: <strong>review 1</strong></span><br>
-                                <span>Người review: <strong>admin</strong></span>
-                                <hr>
-                                <table class="table table-bordered ">
-                                    <thead>
-                                        <tr>
-                                            <th>STT</th>
-                                            <th>Tên người feeback</th>
-                                            <th>Nội dung feedback</th>
-                                            <th>Thời gian feedback</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="list-feedback" style="color: black"></tbody>
-                                </table>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Thêm feedback</button>
+                                        </div>
+                                        <div class="col-9">
+                                            <span>Nội dung: <strong id="content-review">review 1</strong></span><br>
+                                            <span>Người review: <strong id="reviewer">admin</strong></span>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <table class="table table-bordered ">
+                                            <thead>
+                                                <tr>
+                                                    <th>STT</th>
+                                                    <th>Tên người feeback</th>
+                                                    <th>Nội dung feedback</th>
+                                                    <th>Thời gian feedback</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="list-feedback" style="color: black"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -108,6 +128,17 @@
 @section('script')
     <script>
         $(document).ready(function (){
+            $('#list-review').dataTable({
+                'bLengthChange': false,
+                'info': false,
+                'columns': [
+                    {'orderable': true},
+                    {'orderable': false},
+                    {'orderable': false},
+                    {'orderable': false},
+                ]
+            });
+
             $('.modal').on('show.bs.modal', function(event) {
                 var idx = $('.modal:visible').length;
                 $(this).css('z-index', 1040 + (10 * idx));
@@ -123,7 +154,9 @@
                 var url = $(this).attr('data-url');
                 var id = $(this).attr('data-id');
                 $('#id_review').val(id);
-                console.log(url);
+                $('#content-review').text($(this).attr('data-content-review'));
+                $('#reviewer').text($(this).attr('data-reviewer'));
+
                 var idUser = "{{Auth::id()}}";
                 $.ajax({
                     type: "GET",
@@ -153,7 +186,7 @@
 
                             }
                         }else{
-                            output = "<tr><th colspan='4'>Chưa có ai trả lời</th></tr>";
+                            output = "<tr><th colspan='4' class='text-center'>Chưa có ai trả lời</th></tr>";
                         }
                         $('#list-feedback').html(output);
                     }

@@ -30,7 +30,7 @@
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
-        @include('user.layout.login')
+        @include('user.layout.logout')
         <!-- Bootstrap core JavaScript-->
         <script src="{{ asset('admin_asset/vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('admin_asset/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

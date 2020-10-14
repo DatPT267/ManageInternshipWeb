@@ -11,9 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class ReviewController extends Controller
 {
     public function getListReviewOfUser($id){
+        $this->authorize('isAuthor', $id);
         $reviews = Review::where('user_id', $id)->where('group_id', null)->where('task_id', null)->orderByDESC('id')->get();
         return view('user.pages.review.list-review', ['reviews' => $reviews]);
     }
-
-
 }

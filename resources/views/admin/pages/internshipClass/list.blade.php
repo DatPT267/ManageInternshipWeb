@@ -31,8 +31,8 @@
             <tr class="odd gradeX" align="center">
                 <td>{{++$i}}</td>
                 <td>{{$lc->name}}</td>
-                <td>{{$lc->start_day}}</td>
-                <td>{{$lc->end_day}}</td>
+                <td>{{\Carbon\Carbon::parse($lc->start_day)->format('d-m-Y')}}</td>
+                <td>{{\Carbon\Carbon::parse($lc->end_day)->format('d-m-Y')}}</td>
                 <td>{{$lc->note}}</td>
                 <td class="center">
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
@@ -74,7 +74,15 @@
         $(document).ready(function (){
             $('#list-internship').dataTable({
                 'info': false,
-                'blengthChange': false
+                'bLengthChange': false,
+                'columns': [
+                    {'orderable': true},
+                    {'orderable': false},
+                    {'orderable': false},
+                    {'orderable': false},
+                    {'orderable': false},
+                    {'orderable': false},
+                ]
             });
         })
     </script>

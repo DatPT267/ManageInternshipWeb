@@ -5,7 +5,13 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fab fa-audible"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">USER</div>
+        <div class="sidebar-brand-text mx-3">
+            @if (Auth::user()->position === 1)
+                USER
+            @else
+                ADMIN
+            @endif
+        </div>
     </a>
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
@@ -20,14 +26,15 @@
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link" href="{{route('user.listGroup', Auth::id())}}">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
-        <span>Danh sách nhóm tham gia</span></a>
+            <i class="fas fa-list"></i>
+            <span>Danh sách nhóm tham gia</span>
+        </a>
     </li>
     <hr class="sidebar-divider">
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#QLSV" aria-expanded="true" aria-controls="collapseTwo">
-        <i class="fas fa-fw fa-cog"></i>
+            <i class="fas fa-tasks"></i>
         <span>Quản lý task</span>
         </a>
         <div id="QLSV" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -41,13 +48,13 @@
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link" href="{{route('user.regSchedule', Auth::id())}}">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-calendar-alt"></i>
         <span>Đăng ký lịch thực tập</span></a>
     </li>
     <hr class="sidebar-divider">
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#checkinOut" aria-expanded="true" aria-controls="collapseTwo">
-        <i class="fas fa-fw fa-cog"></i>
+            <i class="fas fa-check"></i>
         <span>Checkin - Checkout</span>
         </a>
         <div id="checkinOut" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
@@ -62,7 +69,7 @@
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link" href="{{route('list-review-of-user', Auth::id())}}">
-        <i class="fas fa-fw fa-tachometer-alt"></i>
+            <i class="fas fa-list"></i>
         <span>Danh sách review</span></a>
     </li>
 

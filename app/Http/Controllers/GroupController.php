@@ -127,6 +127,7 @@ class GroupController extends Controller
 
     public function listGroup($id)
     {
+        $this->authorize('isAuthor', $id);
         $groups = DetailGroup::where('user_id', $id)->get();
         return view('user.pages.group.listGroup', ['groups' => $groups]);
     }

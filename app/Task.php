@@ -14,4 +14,8 @@ class Task extends Model
     public function review(){
         return $this->hasMany('App\Review', 'task_id', 'id');
     }
+    public function assign()
+    {
+        return $this->hasMany('App\Assign', 'task_id', 'id');
+    }
 }

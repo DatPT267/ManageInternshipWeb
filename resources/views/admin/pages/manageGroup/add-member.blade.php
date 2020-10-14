@@ -1,42 +1,41 @@
 @extends('admin.layout.index')
 @section('content')
-<h1>Thêm thành viên vào nhóm <strong>{{session('nameGroup')}}</strong></h1>
-@if (session('success'))
-<div class="alert alert-success">
+    <h1>Thêm thành viên vào nhóm <strong>{{session('nameGroup')}}</strong></h1>
+    @if (session('success'))
+    <div class="alert alert-success">
     {!! session('success') !!}
-    {{-- {{session('success')}} --}}
-</div>
-@endif
-<table class="table table-striped table-bordered table-hover" id="list-member">
-    <thead>
-        <tr align="center">
-            <th>ID</th>
-            <th>Ảnh đại diện</th>
-            <th>Tên</th>
-            <th>Email</th>
-            <th>Địa chỉ</th>
-            <th>Số điện thoại</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($students as $key => $student)
-            <tr class="odd gradeX" align="center">
-                <td>{{$key}}</td>
-                <td>
-                    <img src="/image/user/{{$student->image}}" width="100px" height="100px">
-                </td>
-                <td>{{$student->name}}</td>
-                <td>{{$student->email}}</td>
-                <td>{{$student->address}}</td>
-                <td>{{$student->phone}}</td>
-                <td class="center">
-                    <button class="btn btn-success btn-addmember" data-url="{{route('post.add-member', [$group->id, $student->id])}}" data-id="{{$student->id}}" data-name="{{$student->name}}" data-name-group="{{$group->name}}"><i class="fas fa-plus"></i> Thêm</button>
-                </td>
+    </div>
+    @endif
+    <table class="table table-striped table-bordered table-hover" id="list-member">
+        <thead>
+            <tr align="center">
+                <th>ID</th>
+                <th>Ảnh đại diện</th>
+                <th>Tên</th>
+                <th>Email</th>
+                <th>Địa chỉ</th>
+                <th>Số điện thoại</th>
+                <th>Action</th>
             </tr>
-        @endforeach
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach ($students as $key => $student)
+                <tr class="odd gradeX" align="center">
+                    <td>{{$key+1}}</td>
+                    <td>
+                        <img src="/image/user/{{$student->image}}" width="100px" height="100px">
+                    </td>
+                    <td>{{$student->name}}</td>
+                    <td>{{$student->email}}</td>
+                    <td>{{$student->address}}</td>
+                    <td>{{$student->phone}}</td>
+                    <td class="center">
+                        <button class="btn btn-success btn-addmember" data-url="{{route('post.add-member', [$group->id, $student->id])}}" data-id="{{$student->id}}" data-name="{{$student->name}}" data-name-group="{{$group->name}}"><i class="fas fa-plus"></i> Thêm</button>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
     <div class="modal fade bd-example-modal-lg" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -72,22 +71,26 @@
 @endsection
 @section('script')
     <script>
-        $('#list-member').DataTable({
-            'info': false
-        });
-        function check(postion){
-            if(postion == '0'){
-                return  'Thành viên';
-            } else if(postion == '1'){
-                return 'Nhóm trưởng';
-            }else{
-                return 'GVHD';
-            }
-        }
         $(document).ready(function (){
-            var url = $('.btn-addmember').attr('data-url');
-            // console.log(url);
+            $('#list-member').dataTable({
+                'info': false,
+                'bLengthChange': false
+            });
+            function check(postion){
+                if(postion == '0'){
+                    return  'Thành viên';
+                } else if(postion == '1'){
+                    return 'Nhóm trưởng';
+                }else{
+                    return 'GVHD';
+                }
+            }
+            var url;
+            $('.them').click(function(){
+                alert('them');
+            })
             $('.btn-addmember').click(function(){
+                url = $(this).attr('data-url');
                 $('#confirmModal').modal('show');
                 $('.message2').hide();
                 var id = $(this).attr('data-id');
@@ -97,9 +100,11 @@
                 $('#message').html("Bạn muốn thêm thành viên <strong>"+name+"</strong> vào nhóm <strong>"+name_group+"</strong>");
             });
 
+
             $('#addmember').on('submit', function (e) {
                 e.preventDefault();
                 var position = check($('#position option:selected').val());
+                console.log(url);
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -117,9 +122,9 @@
                         $('.modal-body-2').html('<div class="alert alert-info"> Đang thêm ......</div>');
                     },
                     success: function (response) {
+                        console.log(response.data);
                         if(response.data == 0 && response.position == 0){
                             setTimeout(() => {
-                                console.log('ok');
                                 $('#confirmModal').modal('show');
                                 $('.modal-body').show();
                                 $('.modal-body-2').hide();

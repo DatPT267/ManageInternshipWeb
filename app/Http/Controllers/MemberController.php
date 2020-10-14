@@ -14,8 +14,7 @@ class MemberController extends Controller
     public function listMemberGroup($id){
         $members = Member::where('group_id', $id)->get();
         $group = Group::where('id', $id)->firstOrFail();
-        $index = 0;
-        return view('admin.pages.manageGroup.list-member', ['members'=>$members, 'group'=>$group, 'index'=>$index]);
+        return view('admin.pages.manageGroup.list-member', ['members'=>$members, 'group'=>$group]);
     }
 
     public function deleteMemberGroup($id, $id_member){
@@ -36,7 +35,7 @@ class MemberController extends Controller
 
     public function addMember($id){
         $group = Group::find($id);
-        $students = User::where('class_id', $group->class_id)->where('status', '=', '1')->whereNotExists(function ($query){
+        $students = User::where('class_id', $group->class_id)->where('status', '=', '1')->where('position', "<>", '3')->whereNotExists(function ($query){
             $query->select('*')
                 ->from('member')
                 ->whereRaw('member.user_id = users.id');

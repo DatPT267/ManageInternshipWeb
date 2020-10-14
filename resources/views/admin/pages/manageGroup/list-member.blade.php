@@ -1,12 +1,13 @@
 @extends('admin.layout.index')
 @section('content')
+<div class="container-fluid">
     <h1>Danh sách thành viên nhóm <strong>{{$group->name}}</strong></h1>
     @if (session('success'))
         <div class="alert alert-danger">
             {!! session('success') !!}
-            {{-- {{session('success')}} --}}
         </div>
     @endif
+    <a href="{{ route('group.addMember', $group->id) }}" class="btn btn-primary">Thêm sinh viên vào nhóm</a>
     <table class="table table-striped table-bordered table-hover" id="list-member">
         <thead>
             <tr align="center">
@@ -21,11 +22,12 @@
             </tr>
         </thead>
         <tbody>
+            <?php $index = 1; ?>
             @foreach ($members as $member)
             <tr class="odd gradeX" align="center">
                 <td>{{$index++}}</td>
                 <td>
-                    <img src="/image/user/{{$member->user->image}}" width="100px" height="100px">
+                    <img src="{{asset('image/user')}}/{{$member->user->image}}" width="100px" height="100px">
                 </td>
                 <td>{{$member->user->name}}</td>
                 <td>{{$member->user->email}}</td>
@@ -66,13 +68,14 @@
             </div>
         </div>
     </div>
+</div>
 @endsection
 @section('script')
     <script>
         $(document).ready(function() {
             $('#list-member').dataTable({
-                'info': false,
-                'bLengthChange': false
+                info: false,
+                bLengthChange: false
             });
             // =====================================AJAX DELETE====================================
             var member_id;

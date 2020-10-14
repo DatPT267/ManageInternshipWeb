@@ -26,71 +26,69 @@ class ScheduleController extends Controller
     }
 
     public function getRegSchedule($id){
-        if($id == Auth::id()){
-            $now = Carbon::now();
+
+        $this->authorize('isAuthor', $id);
+
+        $now = Carbon::now();
+        $startDayOfWeek = $now->startOfWeek()->format('Y-m-d');
+        $endDayOfWeek = $now->endOfWeek()->format('Y-m-d');
+        $scheduleUser = Schedule::where('user_id', $id)
+                        ->whereBetween('date', [$startDayOfWeek, $endDayOfWeek])
+                        ->get();
+        //kiểm tra tuần hiện tại đã đăng ký chưa.
+        // Nếu chưa cho đăng ký tuần hiện tại.
+        // nếu đăng ký rồi. cho đăng ký tuần tiếp theo
+        if(count($scheduleUser) > 0)
+        {
+            $now->addWeek();
             $startDayOfWeek = $now->startOfWeek()->format('Y-m-d');
             $endDayOfWeek = $now->endOfWeek()->format('Y-m-d');
             $scheduleUser = Schedule::where('user_id', $id)
-                            ->whereBetween('date', [$startDayOfWeek, $endDayOfWeek])
-                            ->get();
-            //kiểm tra tuần hiện tại đã đăng ký chưa.
-            // Nếu chưa cho đăng ký tuần hiện tại.
-            // nếu đăng ký rồi. cho đăng ký tuần tiếp theo
+                        ->whereBetween('date', [$startDayOfWeek, $endDayOfWeek])
+                        ->get();
+            //Kiểm tra tuần tiếp theo đã đăng ký chưa.
+            // nếu chưa cho đăng ký,
+            // nếu rồi. show danh sách lịch đăng ký từ tuần này đến tuần sau đã đăng ký
             if(count($scheduleUser) > 0)
             {
-                $now->addWeek();
-                $startDayOfWeek = $now->startOfWeek()->format('Y-m-d');
-                $endDayOfWeek = $now->endOfWeek()->format('Y-m-d');
+                $check = 1;
+                $startDayOfWeek = $now->subWeek()->startOfWeek()->format('Y-m-d');
+                $endDayOfWeek = $now->addWeek()->endOfWeek()->format('Y-m-d');
                 $scheduleUser = Schedule::where('user_id', $id)
                             ->whereBetween('date', [$startDayOfWeek, $endDayOfWeek])
                             ->get();
-                //Kiểm tra tuần tiếp theo đã đăng ký chưa.
-                // nếu chưa cho đăng ký,
-                // nếu rồi. show danh sách lịch đăng ký từ tuần này đến tuần sau đã đăng ký
-                if(count($scheduleUser) > 0)
-                {
-                    $check = 1;
-                    $startDayOfWeek = $now->subWeek()->startOfWeek()->format('Y-m-d');
-                    $endDayOfWeek = $now->addWeek()->endOfWeek()->format('Y-m-d');
-                    $scheduleUser = Schedule::where('user_id', $id)
-                                ->whereBetween('date', [$startDayOfWeek, $endDayOfWeek])
-                                ->get();
 
-                    return view('user.pages.manage.register-schedule',
-                                ['user'=>$id,
-                                'check'=>$check,
-                                'day_start'=>$startDayOfWeek,
-                                'day_end'=>$endDayOfWeek,
-                                'schedules' => $scheduleUser,
-                                'message'=> 'Bạn đã đăng ký lịch thực tập tuần này và tuần sau rồi!']);
-                }
-                else
-                {
-                    $startDayOfWeek = $now->startOfWeek()->format('Y-m-d');
-                    $endDayOfWeek = $now->endOfWeek()->format('Y-m-d');
-                    return view('user.pages.manage.register-schedule',
+                return view('user.pages.manage.register-schedule',
                             ['user'=>$id,
-                            'check'=> 0,
-                            'message'=> 'Bạn nên đăng ký lịch thực tập cho tuần sau',
-                            'week' => 1,
+                            'check'=>$check,
                             'day_start'=>$startDayOfWeek,
-                            'day_end'=>$endDayOfWeek ]);
-                }
+                            'day_end'=>$endDayOfWeek,
+                            'schedules' => $scheduleUser,
+                            'message'=> 'Bạn đã đăng ký lịch thực tập tuần này và tuần sau rồi!']);
             }
             else
             {
+                $startDayOfWeek = $now->startOfWeek()->format('Y-m-d');
+                $endDayOfWeek = $now->endOfWeek()->format('Y-m-d');
                 return view('user.pages.manage.register-schedule',
-                            ['user'=>$id,
-                            'check'=> 0,
-                            'week' => 0,
-                            'message'=> '',
-                            'day_start'=>$startDayOfWeek,
-                            'day_end'=>$endDayOfWeek ]);
+                        ['user'=>$id,
+                        'check'=> 0,
+                        'message'=> 'Bạn nên đăng ký lịch thực tập cho tuần sau',
+                        'week' => 1,
+                        'day_start'=>$startDayOfWeek,
+                        'day_end'=>$endDayOfWeek ]);
             }
-        } else{
-            return redirect("/#login");
         }
-
+        else
+        {
+            return view('user.pages.manage.register-schedule',
+                        ['user'=>$id,
+                        'check'=> 0,
+                        'week' => 0,
+                        'message'=> '',
+                        'day_start'=>$startDayOfWeek,
+                        'day_end'=>$endDayOfWeek ]);
+        }
     }
 
     public function postRegSchedule(Request $request, $id){

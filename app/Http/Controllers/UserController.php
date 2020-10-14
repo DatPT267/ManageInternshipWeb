@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\UserUpdateRequest;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendMail;
+use App\Member;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
@@ -14,6 +17,10 @@ use App\Internshipclass;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('auth');
+    }
     public function postLogin(Request $request)
     {
         $this->validate($request,
@@ -80,7 +87,7 @@ class UserController extends Controller
     public function index()
     {
         $listStudent = User::orderBy('id', 'desc')->get();
-        $stt[] =0; 
+        $stt[] =0;
         for($i=1 ; $i< sizeof($listStudent); $i++){
           $stt[$i] = $i;
         }
@@ -93,7 +100,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
         $class = Internshipclass::all();
         return view('admin.pages.manageStudents.add', ['class'=>$class]);
     }
@@ -115,9 +122,11 @@ class UserController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Request $request, $id)
     {
-        //
+        $members = Member::where('group_id', $request->input("group_id"))->where('user_id', $id)->first();
+        $users = User::find($id);
+        return response()->json(['data'=>$users, 'position'=>$members->position], 200);
     }
 
     /**
@@ -126,15 +135,21 @@ class UserController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user, $id)
+    public function edit( $id)
     {
 
         if($id == Auth::id()){
-            $user = User::find(Auth::id());
-            return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
+            $user = User::find($id);
+            return view('user.pages.profiles.edit', ['user'=>$user]);
         } else{
-            return redirect('/#login');
+            return abort('403');
         }
+
+        // if($id == Auth::id()){
+        //     return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
+        // } else{
+        //     return redirect('/#login');
+        // }
     }
 
     /**
@@ -144,13 +159,8 @@ class UserController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, $id)
     {
-        $this->validate($request, [
-            'email' => 'email'
-        ],[
-            'email.email' => 'Email chưa đúng'
-        ]);
         $user = User::find($id);
 
         if($request->hasFile('image')){
@@ -161,16 +171,13 @@ class UserController extends Controller
             }
             $imgName = $file->getClientOriginalName();
             $hinh = Str::random(3).'_'.Carbon::now()->timestamp."_".$imgName;
-            // $imgPath = $file->store('profiles', 'public');
-            // $image = Image::make('storage/'.$imgPath)->fit(1000, 1000);
             $file->move("image/user/", $hinh);
-            $imageDefault = "image-default.png";
-            if($user->image != $imageDefault){
+            if($user->image != ""){
                 unlink('image/user/'.$user->image);
             }
             $user->image = $hinh;
         }
-
+        $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->phone = $request->input('phone');
         $user->address = $request->input('address');
@@ -189,32 +196,32 @@ class UserController extends Controller
     {
       $user = User::find($id);
       if(file_exists("image/user".$user->image)==false){
-       
+
         unlink("image/user/".$user->image);
       }
-    
+
       $user->delete();
       return back()->with('success', 'Xóa thành công');
     }
-    
+
 
     public function postSua(Request $request, $id)
     {
-        
+
         $this->validate($request,
             [
                 'name' =>'required',
                 'email'=>'required|email',
                 'phone'=>'required|regex:/^([0-9\s\-\+\(\)]*)$/',
             ],
-            [ 
-              
+            [
+
                 'name.required' =>'Bạn chưa nhập tên sinh viên',
-                'email.required' => 'Bạn chưa nhập email sinh viên',  
+                'email.required' => 'Bạn chưa nhập email sinh viên',
                 'email.email' => 'Mail sai định dạng',
                 'phone.regex' => 'Số điện thoại sai định dạng',
                 'email.unique' => 'Email đã tồn tại',
-                'phone.required' => 'Bạn chưa nhập số điện thoại'           
+                'phone.required' => 'Bạn chưa nhập số điện thoại'
             ]);
             $user = User::find($id);
             $user->name = $request->name;
@@ -222,9 +229,9 @@ class UserController extends Controller
             $user->phone = $request->phone;
             $user->address= $request->address;
             $user->status = $request->status;
-              
-            if ($request->hasFile('image')) 
-            {   
+
+            if ($request->hasFile('image'))
+            {
 
                 $file =$request->file('image');
                 $duoi = $file->getClientOriginalExtension();
@@ -233,25 +240,25 @@ class UserController extends Controller
                 }
                 $name = $file->getClientOriginalName();
                 $Hinh= Str::random(4)."_".$name;
-                while (file_exists("image/user".$Hinh)) 
+                while (file_exists("image/user".$Hinh))
                 {
                     $Hinh= Str::random(4)."_".$name;
                 }
                 $file->move("image/user",$Hinh);
                 if(file_exists("image/user".$user->image)==false){
-       
+
                   unlink("image/user/".$user->image);
                 }
                 $user->image = $Hinh;
-            }  
-            
+            }
+
             $user->save();
         return back()->with('thongbao','Cập nhật thành công');
     }
 
     public function postThem(Request $request)
     {
-    
+
             $this->validate($request,
                 [
                     'name' =>'required',
@@ -270,15 +277,15 @@ class UserController extends Controller
                 ]);
 
 
-            
+
                 $fullName = $request->name;
                 $name = changeTitle($fullName);
                 $words = explode("-", $name);
-                $lastName = array_pop($words); 
+                $lastName = array_pop($words);
                 $lastName = ucfirst( $lastName );
                 $acronym = "";
                 foreach ($words as $w) {
-                
+
                   switch ($w[0]) {
                     case "a":
                         $w[0] = "A";
@@ -363,10 +370,10 @@ class UserController extends Controller
                 $lastName = $lastName .= $acronym;
                 $lastName1 = $lastName;
                 $dem = 0;
-    
+
                 do {
                   $dem++;
-                  
+
                   $lastName = $lastName1.''.$dem;
                   $user = User::where('account', $lastName)->get()->first();
                 } while ($user != null);
@@ -376,7 +383,7 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->phone = $request->phone;
             $user->address = $request->address;
-          
+
             $user->password = bcrypt("123456789");
             $user->status = 1;
             $user->position = 1;
@@ -384,8 +391,8 @@ class UserController extends Controller
             $user->account = $lastName;
 
 
-            if ($request->hasFile('image')) 
-            {   
+            if ($request->hasFile('image'))
+            {
 
                 $file =$request->file('image');
                 $duoi = $file->getClientOriginalExtension();
@@ -394,31 +401,31 @@ class UserController extends Controller
                 }
                 $name = $file->getClientOriginalName();
                 $Hinh= Str::random(4)."_".$name;
-                while (file_exists("image/user".$Hinh)) 
+                while (file_exists("image/user".$Hinh))
                 {
                     $Hinh= Str::random(4)."_".$name;
                 }
                 $file->move("image/user",$Hinh);
                 $user->image = $Hinh;
-            }  
+            }
             else
-            {   
+            {
                 $name = 'avatar';
                 $Hinh= Str::random(4)."_".$name;
-                while (file_exists("image/user".$Hinh)) 
+                while (file_exists("image/user".$Hinh))
                 {
                     $Hinh= Str::random(4)."_".$name;
                 }
                 $file = \File::copy(base_path('public\image\user\avatar.jpg'),base_path('public/image/user/'.$Hinh));
-              
-            
+
+
                 $user->image = $Hinh;
             }
             $user->save();
-    
-      
+
+
             return back()->with('thongbao','Thêm thành công');
-    }   
+    }
 
 
     public function changepassword( Request $request, $id){
@@ -453,7 +460,7 @@ class UserController extends Controller
                 return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Mật khẩu cũ không đúng');
             }
         }
-           
+
     }
     public function editUser(User $user, $id)
     {
@@ -461,7 +468,7 @@ class UserController extends Controller
         return view('admin.pages.manageStudents.update', ['user'=>$user]);
     }
     public function resetpassword( $id)
-    { 
+    {
       $user = User::find($id);
       $user->password = bcrypt("123456789");
       $user->save();

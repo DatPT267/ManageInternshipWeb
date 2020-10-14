@@ -1,7 +1,11 @@
 @extends('user.layout.index')
 @section('content')
-    <div style="margin: 20px 30%;">
+    <div class="container">
         <h1 style="text-align: center; margin-bottom: 20px">Check-in</h1>
+        <div class="card">
+            <div class="card-body">
+
+
         @if (count($errors) > 0)
             <div class="alert alert-danger">
             @foreach ($errors->all() as $error)
@@ -15,32 +19,32 @@
             </div>
         @elseif ($isCheck == 1)
             <div class="alert alert-warning">
-                Hôm nay bạn đã checkin rồi !!! <a href='user/{{Auth::id()}}/check-out' class="btn btn-danger">Check-out</a>
+                Hôm nay bạn đã checkin rồi !!! <a href='{{route('checkout', Auth::id())}}' class="btn btn-danger">Check-out</a>
             </div>
         @endif
         @if ($schedule !== null)
             <form action="{{route('checkin.post', Auth::id())}}" class="form-group" method="POST" >
                 @csrf
                 @if ($isCheck == 0)
-                    <div class="form-group" style="display: flex">
-                        <label style="flex: 1"><strong>Thời gian checkin</strong></label>
-                        <input type="hidden" name="ngaythuctap" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('Y-m-d')}}" style="flex: 5">
-                        <input type="text" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('d-m-Y H:i:s')}}" style="flex: 5" disabled>
+                    <div class="form-group row" >
+                        <label class="col-sm-2 col-form-label"><strong>Thời gian checkin</strong></label>
+                        <input type="hidden" name="ngaythuctap" class="form-control"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('Y-m-d')}}" >
+                        <input type="text" class="form-control col-sm-10"  value="{{\Carbon\Carbon::now('asia/Ho_Chi_Minh')->format('d-m-Y H:i:s')}}"  disabled>
                     </div>
                 @else
-                    <div class="form-group" style="display: flex">
-                        <label style="flex: 1"><strong>Thời gian check-in</strong></label>
-                        <input type="text" class="form-control"  value="{{$date_start->date_start ?? ''}}" style="flex: 5" disabled>
+                    <div class="form-group row" >
+                        <label class="col-sm-2 col-form-label"><strong>Thời gian check-in</strong></label>
+                        <input type="text" class="form-control col-sm-10"  value="{{$date_start->date_start ?? ''}}" disabled>
                     </div>
                 @endif
-                <div class="form-group" style="display: flex">
-                    <label style="margin-right: 75px"><strong>Ca làm</strong></label>
+                <div class="form-group row" >
+                    <label class="col-sm-2 col-form-label"><strong>Ca làm</strong></label>
                     @if ($schedule->session == 0)
-                        <span class="badge" style="background-color: #00FA9A; font-size: 15px">Cả ngày</span>
+                        <span class="badge badge-success" style="font-size: 15px">Cả ngày</span>
                     @elseif($schedule->session == 1)
-                        <span class="badge" style="background-color: #87CEFA; font-size: 15px">Ca sáng</span>
+                        <span class="badge badge-primary" style=" font-size: 15px">Ca sáng</span>
                     @else
-                        <span class="badge" style="background-color: #F4A460; font-size: 15px">Ca chiều</span>
+                        <span class="badge badge-warning" style="font-size: 15px">Ca chiều</span>
                     @endif
                 </div>
                 @if ($isCheck == 0)
@@ -117,7 +121,7 @@
                                                 @elseif($task->task->status == 3)
                                                     <span class="badge" style="background-color: #00FF7F; font-size: 15px">Done</span>
                                                 @elseif($task->task->status == 4)
-                                                    <span class="badge" style="background-color: #FF0000; font-size: 15px">Pending</span>
+                                                    <span class="badge" style="background-color: #5f5e5e; font-size: 15px">Pending</span>
                                                 @endif
                                             </td>
                                             <td>
@@ -143,18 +147,27 @@
                 Hôm nay bạn không làm việc !!!
             </div>
         @endif
+        </div>
+        </div>
     </div>
+
 @endsection
 @section('script')
     <script>
         $(document).ready(function(){
             $('#listTask').DataTable({
-                scrollY:        '200',
-                scrollCollapse: true,
-                deferRender:    true,
-                scroller:       true,
+                'scrollY':        '200',
+                'scrollCollapse': true,
+                'deferRender':    true,
+                'scroller':       true,
                 'info': false,
-                'paging': false
+                'paging': false,
+                "columns": [
+                    null,
+                    { "orderable": false },
+                    { "orderable": false },
+                    { "orderable": false },
+                ]
             });
         })
     </script>

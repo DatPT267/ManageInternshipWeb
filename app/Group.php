@@ -15,4 +15,9 @@ class Group extends Model
     {
         return $this->belongsTo('App\Internshipclass', 'class_id', 'id');
     }
+
+    public function project()
+    {
+        return $this->belongsTo('App\Project', 'project_id', 'id');
+    }
 }

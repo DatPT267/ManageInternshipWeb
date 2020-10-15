@@ -29,14 +29,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span class="form-label" style="color: #000;">Ngày Bắt Đầu</span>
-                                <input class="form-control" name="start_day"type="date" readonly  value="{{$class->start_day}}"/>
+                                <input class="form-control" name="start_day"type="date" readonly  value="{{\Carbon\Carbon::parse($class->start_day)->format('Y-m-d')}}"/>
                             </div>
                         </div>
                         <div class="col-md-6">
 
                             <div class="form-group">
                                 <span class="form-label" style="color: #000;">Ngày Kết Thúc Dự Kiến</span>
-                                <input class="form-control" name="end_day" type="date" value="{{$class->end_day}}"/>
+                                <input class="form-control" name="end_day" type="date" value="{{\Carbon\Carbon::parse($class->end_day)->format('Y-m-d')}}"/>
                             </div>
                         </div>
                     </div>

@@ -10,14 +10,14 @@
                         {{$err}} <br>
                     @endforeach
                 </div>
-            @endif
+                @endif
 
-            @if(session('thongbao'))
-                <div class="alert alert-success">
-                    {{session('thongbao')}}
-                </div>
-            @endif
-            <form action="{{ route('addclass') }}" method="POST" enctype="">
+                @if(session('thongbao'))
+                    <div class="alert alert-success">
+                        {{session('thongbao')}}
+                    </div>
+                @endif
+                <form action="{{ route('addClass')}}" method="POST" enctype="">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="form-group">
                         <label style="color: #000;">Tên Đợt Thực Tập</label>

@@ -21,4 +21,7 @@ class Review extends Model
     public function task(){
         return $this->belongsTo('App\Task', 'task_id', 'id');
     }
+    public function member(){
+        return $this->belongsTo('App\Member', 'reviewer_id', 'id');
+    }
 }

@@ -92,19 +92,20 @@ class InternshipclassController extends Controller
      */
     public function destroy($id)
     {
-        $a = Internshipclass::find($id);
-        $user = User::where('class_id', $a->id)->get();
+        $intership = Internshipclass::find($id);
+        $user = User::where('class_id', $intership->id)->get();
         $count = count($user);
-        if($count != 0){
-            return redirect('admin/internshipClass')->with('fail', 'Xóa không thành công. Đợt có nhóm hoặc sinh viên đang hoạt động');
+        if($count > 0){
+            return redirect()->route('internshipClass.index')->with('fail', 'Xóa không thành công. Đợt có nhóm hoặc sinh viên đang hoạt động');
         }
-        $a->delete();
-        return redirect('admin/internshipClass')->with('success', 'Xóa thành công');
+        $intership->delete();
+        return redirect()->route('internshipClass.index')->with('success', 'Xóa thành công');
     }
 
 
     public function postThem(Request $request)
     {
+
         $this->validate($request,
             [
 

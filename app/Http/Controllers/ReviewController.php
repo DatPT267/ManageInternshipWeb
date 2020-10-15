@@ -86,6 +86,11 @@ class ReviewController extends Controller
         $review->save();
 
         return redirect('admin/manageTask/list-reviews-of-task/'.$id_task)->with('success', 'Thêm thành công');
+    }
 
+    public function getListReviewOfUser($id){
+        $this->authorize('isAuthor', $id);
+        $reviews = Review::where('user_id', $id)->where('group_id', null)->where('task_id', null)->orderByDESC('id')->get();
+        return view('user.pages.review.list-review', ['reviews' => $reviews]);
     }
 }

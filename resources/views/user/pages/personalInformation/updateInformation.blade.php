@@ -24,7 +24,11 @@
             @csrf
             @method('PUT')
             <center>
-                <img src="image/user/{{$user->image}}" name="aboutme" width="200" height="200" class="avatar img-circle">
+                @if ($user->image == "")
+                <img src="{{ asset('image/user/image-default.png') }}" name="aboutme" width="200" height="200" class="avatar img-circle">
+                @else
+                    <img src="{{ asset('image/user/{{$user->image}}') }}" name="aboutme" width="200" height="200" class="avatar img-circle">
+                @endif
                 <div class="d-flex justify-content-center">
                     <div class="btn btn-mdb-color btn-rounded float-left">
                       <input type="file" class="form-control file-upload" name="image" id="image">
@@ -117,8 +121,8 @@
     </div>
  <!-- end đôi mật khẩu-->
 
-    
-    
+
+
 
 @endsection
 @section('script')

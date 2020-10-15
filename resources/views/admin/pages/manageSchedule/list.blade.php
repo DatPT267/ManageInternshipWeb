@@ -27,7 +27,7 @@
         <tbody>
             @foreach ($schedules as $index => $schedule)
                 <tr>
-                    <td>{{$index}}</td>
+                    <td>{{$index + 1}}</td>
                     <td>{{$schedule->user->name}}</td>
                     <td>
                         <a href="{{route('view-schedule', [$schedule->user_id, $month])}}" class="btn btn-info btn-circle" >
@@ -69,7 +69,7 @@
                                 output += "<tr>"+
                                     "<td>"+response.data[i].id+"</td>"+
                                     "<td>"+response.data[i].name+"</td>"+
-                                    "<td><a href='student/"+response.data[i].user_id+"/view-schedule/month="+date+"' class='btn btn-info btn-circle'><i class='fas fa-info-circle'></i> </a></td>"
+                                    "<td><a href='admin/student/"+response.data[i].user_id+"/view-schedule/month="+date+"' class='btn btn-info btn-circle'><i class='fas fa-info-circle'></i> </a></td>"
                                 +"</tr>"
                             }
 

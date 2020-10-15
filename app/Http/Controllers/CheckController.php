@@ -18,6 +18,7 @@ class CheckController extends Controller
     public function index()
     {
         $now = Carbon::now();
+        // $now = Carbon::createFromDate(null, 9, 1, 'asia/Ho_Chi_Minh');
         $day_start_month =$now->startOfMonth()->isoFormat('YYYY-MM-DD');
         $day_end_month = $now->endOfMonth()->isoFormat('YYYY-MM-DD');
         $checks = Check::select('user_id')
@@ -41,10 +42,13 @@ class CheckController extends Controller
                         ->whereRaw("date(date_start) BETWEEN '".$day_start_month."' AND '".$day_end_month."'")
                         ->distinct()
                         ->get();
+        // return response()->json(['data'=>$checks]);
+
         $data = [];
+        $i=0;
         foreach ($checks as $key => $value) {
             $data[$key] = [
-                'id' => $key,
+                'index' => ++$i,
                 'name' => $value->user->name,
                 'user_id' => $value->user_id
             ];
@@ -67,26 +71,30 @@ class CheckController extends Controller
                         ->whereRaw("date(date_start) BETWEEN '".$day_start."'AND'".Carbon::now()->subDay()->isoFormat('YYYY-MM-DD')."'")
                         ->orderByDesc('id')
                         ->get();
+            $schedules = Schedule::where('user_id', $id)
+                        ->whereBetween('date', [$day_start, Carbon::now()->subDay()->isoFormat('YYYY-MM-DD')])
+                        ->orderByDesc('id')
+                        ->get();
             // dd($checks);
         } else{
             $checks = Check::where('user_id', $id)
                         ->whereRaw("date(date_start) BETWEEN '".$day_start."'AND'".$day_end."'")
                         ->orderByDesc('id')
                         ->get();
+            $schedules = Schedule::where('user_id', $id)
+                        ->whereBetween('date', [$day_start, $day_end])
+                        ->orderByDesc('id')
+                        ->get();
             // dd($checks);
         }
+
         $sum_check = 0;
         foreach ($checks as $check) {
             if($check->date_end != null){
                 $sum_check++;
             }
         }
-        // dd($sum_check);
-        $schedules = Schedule::where('user_id', $id)
-                    ->whereBetween('date', [$day_start, Carbon::now()->subDay()->isoFormat('YYYY-MM-DD')])
-                    ->orderByDesc('id')
-                    ->get();
-        // dd($schedules);
+
         $dataSch = [];
         foreach ($checks as $key => $value) {
             array_push($dataSch, $value->schedule_id);
@@ -154,7 +162,7 @@ class CheckController extends Controller
 
     public function postCheckin(Request $request, $id)
     {
-        $schedule = Schedule::whereRaw("date(date) = '" . $request->input('ngaythuctap'). "'")->first();
+        $schedule = Schedule::where('user_id', $id)->whereRaw("date(date) = '" . $request->input('ngaythuctap'). "'")->first();
         $input = $request->input('chon-task');
         $now = Carbon::now('asia/Ho_Chi_Minh')->toDateTimeString();
 

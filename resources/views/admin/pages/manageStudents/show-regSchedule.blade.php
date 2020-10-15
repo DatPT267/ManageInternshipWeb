@@ -42,9 +42,10 @@
             </tr>
         </thead>
         <tbody>
+            <?php $i = 0; ?>
             @foreach ($schedules as $index => $schedule)
                 <tr>
-                    <td>{{$index}}</td>
+                    <td>{{++$i}}</td>
                     @switch(\Carbon\Carbon::parse($schedule->date)->englishDayOfWeek)
                         @case('Monday')
                             <td>

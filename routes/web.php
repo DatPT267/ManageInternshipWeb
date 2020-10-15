@@ -78,9 +78,6 @@ Route::group(['prefix' => 'admin'], function () {
 
 });
 
-// Route::get('/test/month={number}', function ($number){
-//     return $number;
-// });
     //Quản lý task
     Route::resource('manageTask', 'TaskController');
 

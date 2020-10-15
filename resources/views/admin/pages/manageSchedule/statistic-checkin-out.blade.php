@@ -23,7 +23,7 @@
         <tbody>
             @foreach ($checks as $index => $check)
                 <tr>
-                    <td>{{$index}}</td>
+                    <td>{{++$index}}</td>
                     <td>{{$check->user->name}}</td>
                     <td>
                         <a href="{{route('view-history-check', [$check->user_id, \Carbon\Carbon::now()->isoFormat('M')])}}" class="btn btn-info btn-circle">
@@ -54,9 +54,9 @@
                         if(response.data.length !== 0){
                             for (let i = 0; i < response.data.length; i++) {
                                 output += "<tr>"+
-                                    "<td>"+i+"</td>"+
+                                    "<td>"+ response.data[i].index +"</td>"+
                                     "<td>"+response.data[i].name+"</td>"+
-                                    "<td><a href='student/"+response.data[i].user_id+"/view-history-schedule/month="+date+"' class='btn btn-info btn-circle'><i class='fas fa-info-circle'></i></a></td>"
+                                    "<td><a href='admin/student/"+response.data[i].user_id+"/view-history-schedule/month="+date+"' class='btn btn-info btn-circle'><i class='fas fa-info-circle'></i></a></td>"
                                 +"</tr>";
                             }
                         } else{

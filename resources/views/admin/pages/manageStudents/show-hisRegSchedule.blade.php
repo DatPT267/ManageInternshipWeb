@@ -25,9 +25,10 @@
             </tr>
         </thead>
         <tbody id="body">
+            <?php $i=0; ?>
             @foreach ($schedules as $schedule)
                 <tr class="odd gradeX" align="center">
-                    <td id="index">{{$index++}}</td>
+                    <td id="index">{{++$i}}</td>
                     <td id="lichthuctap">
                         @switch(\Carbon\Carbon::parse($schedule->date)->isoFormat('dddd'))
                             @case('Monday')

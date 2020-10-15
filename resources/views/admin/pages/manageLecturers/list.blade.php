@@ -1,6 +1,8 @@
+
 @extends('admin.layout.index')
 @section('content')
-    <!-- Page Heading -->
+<div class="container-fluid">
+
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Danh sách giảng viên của đợt thực tập</h1>
     </div>
@@ -15,7 +17,7 @@
             <strong>{{session('fail')}}</strong>
         </div>
     @endif
-    <table class="table table-striped table-bordered table-hover" id="example">
+    <table class="table table-striped table-bordered table-hover" id="list-lecturer">
         <thead>
             <tr align="center">
                 <th>STT</th>
@@ -27,9 +29,8 @@
                 <th>Hành động</th>
             </tr>
         </thead>
-         <tbody>
-            <input type="hidden" value=" {{ $i = 1}}">
-            
+        <tbody>
+            <?php $i = 1; ?>
             @foreach ($listLecturers as $ls)
             <tr class="odd gradeX" align="center">
                 <td>{{$i++}}</td>
@@ -48,7 +49,26 @@
                 </td>
             </tr>
             @endforeach
-        </tbody> 
+        </tbody>
     </table>
-   
+</div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function (){
+            $('#list-lecturer').dataTable({
+                'info': false,
+                'bLengthChange': false,
+                'columns': [
+                    {'orderable': true},
+                    {'orderable': false},
+                    {'orderable': false},
+                    {'orderable': false},
+                    {'orderable': false},
+                    {'orderable': false},
+                    {'orderable': false},
+                ]
+            });
+        })
+    </script>
 @endsection

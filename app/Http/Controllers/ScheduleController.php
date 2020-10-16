@@ -7,7 +7,7 @@ use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Brian2694\Toastr\Facades\Toastr;
 class ScheduleController extends Controller
 {
     /**
@@ -70,6 +70,7 @@ class ScheduleController extends Controller
             {
                 $startDayOfWeek = $now->startOfWeek()->format('Y-m-d');
                 $endDayOfWeek = $now->endOfWeek()->format('Y-m-d');
+                Toastr::success('Bạn đăng ký lịch thực tập thành công!', 'success');
                 return view('user.pages.manage.register-schedule',
                         ['user'=>$id,
                         'check'=> 0,
@@ -81,6 +82,7 @@ class ScheduleController extends Controller
         }
         else
         {
+            Toastr::success('Bạn đăng ký lịch thực tập thành công!', 'success');
             return view('user.pages.manage.register-schedule',
                         ['user'=>$id,
                         'check'=> 0,

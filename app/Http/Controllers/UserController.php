@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use App\Internshipclass;
+use Brian2694\Toastr\Facades\Toastr;
 
 class UserController extends Controller
 {
@@ -138,12 +139,11 @@ class UserController extends Controller
     public function edit( $id)
     {
 
-        if($id == Auth::id()){
-            $user = User::find($id);
-            return view('user.pages.profiles.edit', ['user'=>$user]);
-        } else{
-            return abort('403');
-        }
+        $this->authorize('isAuthor', $id);
+
+        $user = User::find($id);
+        return view('profiles.edit', ['user'=>$user]);
+
 
         // if($id == Auth::id()){
         //     return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
@@ -444,21 +444,20 @@ class UserController extends Controller
             'password2.same'=>  'Mật khẩu mới không khớp',
         ]);
 
-        if(Auth::check()){
-            $matkhau = $request->password;
-            $password = Auth::User()->password;
-            $id = Auth::user()->id;
-            if(Hash::check($matkhau, $password)){
+        $matkhau = $request->password;
+        $password = Auth::User()->password;
+        $id = Auth::user()->id;
+        if(Hash::check($matkhau, $password)){
 
-                $user = User::find(Auth::user()->id);
-                $user->password =  bcrypt($request->password2);
-                $user->save();
-                return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Đổi mật khẩu thành công ');
-            }
-
-            else{
-                return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Mật khẩu cũ không đúng');
-            }
+            $user = User::find(Auth::user()->id);
+            $user->password =  bcrypt($request->password2);
+            $user->save();
+            Toastr::success('Thay đổi mật khẩu thành công!', 'Success');
+            return redirect()->route('user.edit', Auth::id());
+        }
+        else{
+            Toastr::error('Thay đổi mật khẩu thất bại', 'error');
+            return redirect()->route('user.edit', Auth::id());
         }
 
     }

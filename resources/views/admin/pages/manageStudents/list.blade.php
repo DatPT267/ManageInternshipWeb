@@ -42,7 +42,7 @@
                 <td>{{$ls->address}}</td>
                 <td class="center">
                  
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                        <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{route('manageStudents.destroy', $ls->id)}}" data-target="#exampleModal">
                             Xóa
                         </button>
                         <a href="{{route('editUser', $ls->id)}}" class="btn btn-info">Cập nhật</a>
@@ -52,7 +52,7 @@
             @endforeach
         </tbody> 
     </table>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -66,7 +66,7 @@
             </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-                    <form action="{{route('manageStudents.destroy', $ls->id)}}" method="post">
+                    <form id="form-delete" method="post">
                         @csrf
                         @method('DELETE')
                         <input type="submit" value="Xóa" class="btn btn-danger">
@@ -93,6 +93,10 @@
                     {'orderable': false},
                 ]
             });
+            $('.btn-delete').click(function (){
+                var url = $(this).attr('data-url');
+                $('#form-delete').attr('action', url);
+            })
         })
     </script>
 @endsection

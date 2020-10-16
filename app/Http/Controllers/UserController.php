@@ -192,7 +192,7 @@ class UserController extends Controller
      */
     public function destroy(User $user , $id)
     { 
-      return $id;
+
       $user = User::find($id);
       if(file_exists("image/user".$user->image)==false){
 

@@ -5,6 +5,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Brian2694\Toastr\Facades\Toastr;
 
 class LecturerController extends Controller
 {

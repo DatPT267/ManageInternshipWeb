@@ -25,6 +25,7 @@ class ScheduleController extends Controller
         return view('admin.pages.manageSchedule.statistic-checkin-out');
     }
 
+
     public function getRegSchedule($id){
 
         $this->authorize('isAuthor', $id);

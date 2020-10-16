@@ -105,7 +105,7 @@ class GroupController extends Controller
 
         return redirect('admin/manageGroup');
     }
-    public function getListTask($id, $group_id){
+    public function getListTaskUser($id, $group_id){
         $tasks = Task::where('group_id', $group_id)->get();
         $data = [];
         foreach ($tasks as $key => $task) {
@@ -126,7 +126,12 @@ class GroupController extends Controller
         }
         return response()->json(['data'=>$data]);
     }
-
+    public function getListTask($id){
+        $listTask = Task::where('group_id', $id)->get();
+        $group = Group::find($id);
+        // return $listTask->group->name->first();
+        return view('admin.pages.manageGroup.list-task', ['listTask'=>$listTask, 'group'=>$group->name ]);
+    }
     public function getListEvaluate($id){
         return view('admin.pages.manageGroup.list-Evaluate');
     }

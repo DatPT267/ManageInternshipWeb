@@ -11,7 +11,7 @@
     <hr class="sidebar-divider my-0">
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="/admin">
         <i class="fas fa-fw fa-tachometer-alt"></i>
         <span>Dashboard</span></a>
     </li>
@@ -114,26 +114,6 @@
                 --}}
                 <a class="collapse-item" href="{{route('manageLecturer.index')}}">Danh sách giảng viên</a>
                 <a class="collapse-item" href="{{route('manageLecturer.create')}}">Thêm giảng viên</a>
-            </div>
-        </div>
-    </li>
-    <hr class="sidebar-divider">
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#QLDG" aria-expanded="true" aria-controls="collapseTwo">
-        <i class="fas fa-fw fa-cog"></i>
-        <span>Quản lý đánh giá</span>
-        </a>
-        <div id="QLDG" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-
-                <h6 class="collapse-header" style="text-align: center">Group</h6>
-
-                <a class="collapse-item" href="#">Danh sách đánh giá</a>
-                <a class="collapse-item" href="#">Thêm đánh giá</a>
-                <h6 class="collapse-header" style="text-align: center">Task</h6>
-
-                <a class="collapse-item" href="#">Danh sách đánh giá</a>
-                <a class="collapse-item" href="#">Thêm đánh giá</a>
             </div>
         </div>
     </li>

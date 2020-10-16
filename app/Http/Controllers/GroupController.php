@@ -10,7 +10,7 @@ use App\Task;
 use App\User;
 use App\Internshipclass;
 use Illuminate\Http\Request;
-
+use Brian2694\Toastr\Facades\Toastr;
 class GroupController extends Controller
 {
     /**
@@ -94,10 +94,14 @@ class GroupController extends Controller
         $user = Member::where('group_id', $a->id)->get();
         $count = count($user);
         if($count != 0){
-            return redirect('admin/manageGroup')->with('fail', 'Xóa không thành công.Nhóm có sinh viên đang hoạt động');
+            Toastr::warning('Xóa không thành công.Nhóm có sinh viên đang hoạt động!', 'Warning');
+
+            return redirect('admin/manageGroup');
         }
         $a->delete();
-        return redirect('admin/manageGroup')->with('success', 'Xóa thành công');
+        Toastr::success('Xóa thành công', 'success');
+
+        return redirect('admin/manageGroup');
     }
     public function getListTask($id, $group_id){
         $tasks = Task::where('group_id', $group_id)->get();
@@ -150,7 +154,8 @@ class GroupController extends Controller
         $group->note = $request->note;
         $group->status = $request->status;
         $group->save();
-        return back()->with('thongbao','Cập nhật thành công');
+        Toastr::success('Cập nhật thành công', 'Success');
+        return back();
     }
 
     public function postThem(Request $request)
@@ -171,7 +176,8 @@ class GroupController extends Controller
         $grounpcheck = Group::where('class_id', $request->namedotthuctap)->get();
         foreach ($grounpcheck as $gr) {
             if ($gr->name == $request->name) {
-                return back()->with('thongbao', 'Tên nhóm đã tồn tại');
+                Toastr::warning('Tên nhóm đã tồn tại', 'warning');
+                return back();
             }
         }
 
@@ -185,7 +191,7 @@ class GroupController extends Controller
         $group->status = $request->status;
         $group->save();
 
-
-        return back()->with('thongbao','Thêm thành công');
+        Toastr::success('Thêm thành công', 'success');
+        return back();
     }
 }

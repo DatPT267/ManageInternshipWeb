@@ -4,20 +4,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-7" style="padding-bottom:120px">
-                @if(count($errors)>0)
-                <div class="alert alert-danger">
-                    @foreach($errors->all() as $err)
-                        {{$err}} <br>
-                    @endforeach
-                </div>
-            @endif
-
-            @if(session('thongbao'))
-                <div class="alert alert-success">
-                    {{session('thongbao')}}
-                </div>
-            @endif
-            <form action="../sua/{{$class->id}}" method="POST"  enctype="multipart/form-data">
+            <form action="{{ route('updateclass', $class->id) }}" method="POST"  enctype="multipart/form-data">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <h2 style="text-align:center; font-weight: bold; color: #000;" >Cập nhật đợt thực tập</h2>
                     <div class="form-group">
@@ -60,4 +47,11 @@
     </div>
     <!-- /.container-fluid -->
 </div>
+@endsection
+@section('script')
+<script>
+    @foreach ($errors->all() as $error)
+        toastr.warning("{{$error}}")
+    @endforeach
+</script>
 @endsection

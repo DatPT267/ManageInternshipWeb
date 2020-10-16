@@ -4,31 +4,6 @@
         <div class="card">
             <div class="card-body">
                 <h1>Danh sách review <strong>{{Auth::user()->name}}</strong></h1>
-
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                        @foreach ($errors->all() as $error)
-                            <li>
-                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                    {{$error}}
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            </li>
-                        @endforeach
-                    </div>
-                @endif
-
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        {{session('success')}}
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                @endif
-
                 <table class="table table-bordered table-hover" id="list-review">
                     <thead>
                         <tr>
@@ -55,7 +30,6 @@
                                             data-target=".bd-example-modal-xl">Detail</button>
                                 </td>
                             </tr>
-
                         @endforeach
                     </tbody>
                 </table>
@@ -127,7 +101,13 @@
 @endsection
 @section('script')
     <script>
+        @foreach ($errors->all() as $error)
+            toastr.warning("{{$error}}")
+        @endforeach
+    </script>
+    <script>
         $(document).ready(function (){
+
             $('#list-review').dataTable({
                 'bLengthChange': false,
                 'info': false,

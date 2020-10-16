@@ -5,11 +5,7 @@
             <div class="card-body">
 
                 <h1 style="text-align: center; margin-bottom: 20px">Đăng ký lịch thực tập của {{Auth::user()->name}}</h1>
-                @if (session('success'))
-                    <div class="alert alert-success">
-                        {{session('success')}}
-                    </div>
-                @elseif($message !== '')
+                @if($message !== '')
                     <div class="alert alert-warning">
                         {{$message}}
                     </div>

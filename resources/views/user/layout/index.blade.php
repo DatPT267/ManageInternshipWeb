@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="{{ asset('admin_asset/vendor/datatables/dataTables.bootstrap4.min.css') }}">
         <!-- Custom styles for this template-->
         <link href="{{ asset('admin_asset/css/sb-admin-2.min.css') }}" rel="stylesheet">
+        @toastr_css
     </head>
     <body id="page-top">
         <div id="wrapper">
@@ -32,6 +33,9 @@
         </a>
         @include('user.layout.logout')
         <!-- Bootstrap core JavaScript-->
+        @jquery
+        @toastr_js
+        @toastr_render
         <script src="{{ asset('admin_asset/vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('admin_asset/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('admin_asset/vendor/datatables/jquery.dataTables.min.js') }}"></script>
@@ -42,6 +46,7 @@
         <script src="{{ asset('admin_asset/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <!-- Custom scripts for all pages-->
         <script src="{{ asset('admin_asset/js/sb-admin-2.min.js') }}"></script>
+
         @yield('script')
     </body>
 </html>

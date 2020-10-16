@@ -1,4 +1,4 @@
-@extends('user.layout.index')
+@extends(Auth::user()->position == 1 ? 'user.layout.index' : 'admin.layout.index')
 @section('content')
     {{-- <h1 style="text-align: center">infomation User</h1> --}}
 <div class="container">
@@ -6,24 +6,6 @@
         <h1 style="text-align: center; margin: auto;">Cập nhật thông tin sinh viên</h1>
     </div>
     <div class="row">
-        {{-- @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                @foreach ($errors->all() as $error)
-                    {{$error}}
-                    <br>
-                @endforeach
-            </div>
-        @endif
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{session('success')}}
-            </div>
-        @endif
-        @if (session('fail'))
-            <div class="alert alert-danger">
-                {{session('fail')}}
-            </div>
-        @endif --}}
     </div>
     <div class="row">
         <div class="col">
@@ -103,18 +85,12 @@
                                         <input type="text" class="form-control" disabled value="{{$user->internshipClass->name}}">
                                     </div>
                                     <button type="submit" class="btn btn-primary">Lưu</button>
-                                    {{-- <input type="reset" class="btn btn-secondary" value="Reset" > --}}
                                     <a href="{{url()->current()}}" class="btn btn-secondary">Làm mới</a>
                                 </div>
                             </form>
                         </div>
                     </div>
                     <div id="menu1" class="container tab-pane fade"><br>
-                        @if(session('thongbao'))
-                            <div class="alert alert-success">
-                                {{session('thongbao')}}
-                            </div>
-                        @endif
                         <form id="form-forgot-pass" action="{{ route('changepassword', $user->id)}}" method="post"  enctype="multipart/form-data">
                             <input type="hidden" name="_token" value="{{csrf_token()}}" />
                             <h3>Đổi mật khẩu</h3>
@@ -154,6 +130,11 @@
 
 @endsection
 @section('script')
+    <script>
+        @foreach ($errors->all() as $error)
+            toastr.warning("{{$error}}")
+        @endforeach
+    </script>
     <script>
         $(document).ready(function() {
             var readURL = function(input) {

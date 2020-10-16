@@ -20,9 +20,9 @@
                 <th>STT</th>
                 <th>Tên Nhóm</th>
                 <th>Đề Tài</th>
-                <th>Ghi nhớ</th>
                 <th>Tên đợt thực tập</th>
                 <th>Trạng thái</th>
+                <th>Danh sách thành viên</th>
                 <th>Đánh giá</th>
                 <th>Hoạt động</th>
             </tr>
@@ -34,7 +34,6 @@
                 <td>{{++$i}}</td>
                 <td>{{$gr->name}}</td>
                 <td>{{$gr->topic}}</td>
-                <td>{{$gr->note}}</td>
                 <td>{{$gr->internshipClass->name}}</td>
                 <td>
                     @if($gr->status==1)
@@ -43,6 +42,10 @@
                     @if($gr->status==0)
                     {{"Không hoạt động"}}
                     @endif
+                </td>
+                <td>{{$gr->note}}</td>
+                <td>
+                    <a href="{{ route('group.listMember', $gr->id) }}" class="btn btn-success">Danh sách sinh viên</a>
                 </td>
                 <td>
                     <a href="{{route('group.list-review', $gr->id)}}" class="btn btn-secondary">Đánh giá</a>
@@ -57,6 +60,7 @@
                     </form>
 
                 </td>
+
             </tr>
             @endforeach
         </tbody>

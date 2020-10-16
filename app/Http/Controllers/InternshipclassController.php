@@ -115,7 +115,7 @@ class InternshipclassController extends Controller
                 'name' =>'required|unique:Internshipclass,name',
                 'start_day'=>'required|date',
                 'end_day'=>'required|date',
-                'student_amount'=>'required'
+               
 
             ],
             [
@@ -123,11 +123,11 @@ class InternshipclassController extends Controller
                 'name.required' =>'Bạn chưa nhập tên câu lạc bộ',
                 'start_day.required' => 'Bạn chưa nhập ngày bắt đầu',
                 'end_day.required' => 'Bạn chưa nhập ngày kết thúc',
-                'student_amount.required'=> 'Bạn chưa nhập số lượng sinh viên'
+              
 
             ]);
 
-            for( $i=0 ; $i < $request->student_amount ; $i++){
+            for( $i=0 ; $i < 25 ; $i++){
                 $member[$i] = $i;
             }
 

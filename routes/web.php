@@ -39,7 +39,7 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdmin'] ], f
     Route::resource('internshipClass', 'internshipclassController');
     Route::post('them1', 'internshipclassController@postThem')->name('addClass');
     Route::post('internshipClass/sua/{id}', 'internshipclassController@postSua')->name('updateclass');
-    Route::post('internshipClass/member/{nameclass}/{amount}', 'internshipclassController@postMember')->name('member');
+    Route::post('internshipClass/member/{nameclass} ', 'internshipclassController@postMember')->name('member');
     Route::get('internshipClass/list-member/{class_id}', 'internshipclassController@getList')->name('list');
 
     //Quản lý nhóm
@@ -62,12 +62,25 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdmin'] ], f
     Route::post('them', 'GroupController@postThem')->name('addgroup');
 
     //Quản lý sinh viên
+    // Route::group(['prefix' => 'manageStudent'], function () {
+    //     Route::get('/show-history-register-schedule', 'ScheduleController@index');
+    // });
     Route::resource('manageStudents', 'UserController');
     Route::post('manageStudents/sua/{id}', 'UserController@postSua')->name('updatestudent');
     Route::post('addStudent', 'UserController@postThem')->name('addstudent');
     Route::get('manageStudents/edit/{id}', 'UserController@editUser')->name('editUser');
     Route::get('manageStudents/resetpassword/{id}','UserController@resetpassword')->name('resetpass');
 
+    //Quản lý group: đã xong: add-member, list-review, list-member, del-member | ĐỢI REVIEW
+    Route::group(['prefix' => 'group'], function () {
+        Route::get('/{id}/list-member', 'MemberController@listMemberGroup')->name('group.listMember');
+        Route::get('/{id}/add-member', 'MemberController@addMember')->name('group.addMember');
+        Route::post('/{id}/add-member/{id_member}', 'MemberController@storeMember')->name('post.add-member');
+        // Route::get('/{id}/add-member/{id_member}', 'MemberController@storeMember');
+        Route::get('/{id}/list-review', 'ReviewController@listReviewGroup');
+        // Route::get('/{id}/delMember/{id_member}', 'MemberController@deleteMemberGroup')->name('member.delete');
+        Route::get('/{id}/delMember/{id_member}', 'MemberController@deleteMemberGroup')->name('member.delete');
+    });
     //================action feedback================
     Route::get('manageGroup/review/{id_review}/list-feedback', 'FeedbackController@showlist')->name('list.feedback');
     Route::post('manageGroup/review/{id_review}/list-feedback/review/create', 'FeedbackController@createFeedback')->name('create-feedback-review');
@@ -106,7 +119,7 @@ Route::group( ['prefix' => 'user', 'middleware' => ['auth', 'can:isUser'] ], fun
     Route::get('{id}/list-group', 'GroupController@listGroup')->name('user.listGroup');
     Route::get('{id}/group/{id_group}', 'StudentController@infoGroupOfStudent')->name('user.group');
     Route::get('{id}/show', 'MemberController@show')->name('info.member');
-    Route::get('{id}/group/{id_group}/list-task', 'GroupController@getListTask')->name('view-list-task');
+    Route::get('{id}/group/{id_group}/list-task', 'GroupController@getListTaskUser')->name('view-list-task');
     //đổi mật khẩu
 
     //checkin - checkout

@@ -2,15 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Feedback;
+use App\Group;
 use App\Review;
 use App\Task;
+use App\Feedback;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
+    public function listReviewGroup($id){
+        $review = Review::where('group_id', $id)->where('user_id', null)->where('task_id', null)->get();
+        $nameGroup = Group::find($id)->first();
+
+        return view('admin.pages.manageEvaluate.group.list', ['review'=>$review, 'nameGroup'=>$nameGroup->name]);
+    }
     public function getListReviewOfGroup($id_group){
         $reviews = Review::where('group_id', $id_group)
                         ->where('task_id', null)

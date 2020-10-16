@@ -15,7 +15,6 @@ class InternshipclassController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(checkIsAdmin::class);
     }
     /**
      * Display a listing of the resource.

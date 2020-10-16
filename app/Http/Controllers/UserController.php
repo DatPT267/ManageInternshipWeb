@@ -202,6 +202,10 @@ class UserController extends Controller
       return back()->with('success', 'Xóa thành công');
     }
 
+    public function viewSchedule($id){
+        return view('admin.pages.manageStudents.show-regSchedule');
+    }
+
 
     public function postSua(Request $request, $id)
     {

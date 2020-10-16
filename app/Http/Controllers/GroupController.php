@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Assign;
 use App\DetailGroup;
 use App\Group;
+use App\User;
 use App\Member;
 use App\Task;
-use App\User;
 use App\Internshipclass;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 use Brian2694\Toastr\Facades\Toastr;
 class GroupController extends Controller
 {

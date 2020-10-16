@@ -6,4 +6,5 @@ use Illuminate\Http\Request;
 
 class DetailGroupController extends Controller
 {
+    //
 }

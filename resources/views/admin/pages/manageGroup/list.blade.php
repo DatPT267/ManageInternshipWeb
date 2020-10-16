@@ -23,6 +23,7 @@
                 <th>Ghi nhớ</th>
                 <th>Tên đợt thực tập</th>
                 <th>Trạng thái</th>
+                <th>Danh sách thành viên</th>
                 <th>Đánh giá</th>
                 <th>Hoạt động</th>
             </tr>
@@ -45,6 +46,7 @@
                     @endif
                 </td>
                 <td>
+                    <a href="{{ route('group.listMember', $gr->id) }}" class="btn btn-success">Danh sách sinh viên</a>
                     <a href="{{route('group.list-review', $gr->id)}}" class="btn btn-secondary">Đánh giá</a>
                 </td>
                 <td class="center">
@@ -57,6 +59,7 @@
                     </form>
 
                 </td>
+
             </tr>
             @endforeach
         </tbody>

@@ -28,6 +28,8 @@ Route::post('user/losspassword', 'AuthenticationController@postLosspassword');
 
 Route::post('user/sendemail/{email}', 'SendEmailController@send');
 
+
+//=======================================ADMIN==================================================================================================
 Route::get('/admin',function ()
 {
 	return view('admin.dashboard');
@@ -65,14 +67,19 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdmin'] ], f
     Route::get('manageSchedule', 'ScheduleController@index')->name('manageSchedule.index');
     Route::get('manageSchedule/checkin-out', 'ScheduleController@getCheckinOut')->name('manageSchedule.checkin-out');
 });
+//=======================================ADMIN==================================================================================================
 
-//=======================================USER=================================================
+//=======================================PROFILE==================================================================================================
+Route::resource('user', 'UserController')->middleware('auth');
+Route::post('user/{id}/edit/changepassword', 'UserController@changepassword')->middleware('auth')->name('changepassword');
+//=======================================PROFILE==================================================================================================
+
+//=======================================USER==================================================================================================
 Route::get('/',function ()
 {
 	return view('user.dashboard');
 })->name('user.home')->middleware('auth', 'can:isUser');
-Route::resource('user', 'UserController')->middleware('auth');
-Route::post('user/{id}/edit/changepassword', 'UserController@changepassword')->middleware('auth')->name('changepassword');
+
 Route::group( ['prefix' => 'user', 'middleware' => ['auth', 'can:isUser'] ], function () {
 
     Route::get('{id}/list-group', 'GroupController@listGroup')->name('user.listGroup');
@@ -101,4 +108,4 @@ Route::group( ['prefix' => 'user', 'middleware' => ['auth', 'can:isUser'] ], fun
     Route::get('ajax/detail-review', 'FeedbackController@ajaxDetailReview')->name('ajax-detail-review');
 });
 
-//=======================================USER=================================================
+//=======================================USER==================================================================================================

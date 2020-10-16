@@ -54,6 +54,9 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdmin'] ], f
     Route::get('manageStudents/edit/{id}', 'UserController@editUser')->name('editUser');
     Route::get('manageStudents/resetpassword/{id}','UserController@resetpassword')->name('resetpass');
 
+    Route::resource('manageLecturer', 'LecturerController');
+    Route::post('addLecturer', 'LecturerController@postThem')->name('addlecturer');
+    Route::get('manageLecturer/edit/{id}', 'LecturerController@editLecturer')->name('editLecturer');
 
     //Quản lý task
     Route::resource('manageTask', 'TaskController');

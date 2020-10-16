@@ -88,11 +88,8 @@ class UserController extends Controller
     public function index()
     {
         $listStudent = User::orderBy('id', 'desc')->get();
-        $stt[] =0;
-        for($i=1 ; $i< sizeof($listStudent); $i++){
-          $stt[$i] = $i;
-        }
-        return view('admin.pages.manageStudents.list', ['listStudent'=>$listStudent, 'stt' => $stt]);
+    
+        return view('admin.pages.manageStudents.list', ['listStudent'=>$listStudent]);
     }
 
     /**

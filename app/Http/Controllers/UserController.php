@@ -181,7 +181,7 @@ class UserController extends Controller
         $user->address = $request->input('address');
         $user->save();
         Toastr::success('Bạn đã cập nhật thông tin thành công', 'success');
-        return redirect()->route('editUser', $id);
+        return redirect()->route('user.edit', $id);
     }
 
     /**

@@ -14,6 +14,7 @@
         <link rel="stylesheet" href="{{ asset('admin_asset/vendor/datatables/dataTables.bootstrap4.min.css') }}">
         <!-- Custom styles for this template-->
         <link href="{{ asset('admin_asset/css/sb-admin-2.min.css') }}" rel="stylesheet">
+        @yield('style')
         @toastr_css
     </head>
     <body id="page-top">

@@ -44,6 +44,18 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdmin'] ], f
 
     //Quản lý nhóm
     Route::resource('manageGroup', 'GroupController');
+    Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');;
+    Route::post('manageGroup/sua/{id}', 'GroupController@postSua')->name('updategroup');
+    Route::post('them', 'GroupController@postThem')->name('addgroup');
+
+    //đánh giá group
+    Route::get('manageGroup/list-reviews-of-group/{id}', 'ReviewController@getListReviewOfGroup')->name('group.list-review');
+    Route::post('manageGroup/list-reviews-of-group/{id}/create', 'ReviewController@postReviewOfGroup')->name('post.group.list-review');
+
+    //đánh giá task
+    Route::resource('manageTask', 'TaskController');
+    Route::get('manageTask/list-reviews-of-task/{id}', 'ReviewController@getListReviewOfTask')->name('list-review');
+    Route::post('manageTask/list-reviews-of-task/{id}/create', 'ReviewController@postReviewOfTask')->name('post-review');
     Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');
     Route::get('manageGroup/list-evaluate/{id}', 'GroupController@getListEvaluate');
     Route::post('manageGroup/sua/{id}', 'GroupController@postSua')->name('updategroup');
@@ -56,12 +68,21 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdmin'] ], f
     Route::get('manageStudents/edit/{id}', 'UserController@editUser')->name('editUser');
     Route::get('manageStudents/resetpassword/{id}','UserController@resetpassword')->name('resetpass');
 
+    //================action feedback================
+    Route::get('manageGroup/review/{id_review}/list-feedback', 'FeedbackController@showlist')->name('list.feedback');
+    Route::post('manageGroup/review/{id_review}/list-feedback/review/create', 'FeedbackController@createFeedback')->name('create-feedback-review');
+
+    Route::get('manageTask/review/{id_review}/list-feedback', 'FeedbackController@getListFeedBackOfTask')->name('list-feedbackOfTask');
+    Route::post('manageTask/review/{id_review}/list-feedback/feedback/create', 'FeedbackController@createFeedbackOfFeedback')->name('create-feedback');
+
+    Route::group(['prefix' => 'ajax'], function () {
+        Route::get('detail-feedback/{id}', 'FeedbackController@getAjaxFeedback')->name('ajax-feedback');
+    });
     Route::resource('manageLecturer', 'LecturerController');
     Route::post('addLecturer', 'LecturerController@postThem')->name('addlecturer');
     Route::get('manageLecturer/edit/{id}', 'LecturerController@editLecturer')->name('editLecturer');
 
     //Quản lý task
-    Route::resource('manageTask', 'TaskController');
 
     //Quản lý lịch thực tập
     Route::get('manageSchedule', 'ScheduleController@index')->name('manageSchedule.index');

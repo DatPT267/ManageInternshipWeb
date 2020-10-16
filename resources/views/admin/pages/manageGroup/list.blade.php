@@ -23,6 +23,7 @@
                 <th>Ghi nhớ</th>
                 <th>Tên đợt thực tập</th>
                 <th>Trạng thái</th>
+                <th>Đánh giá</th>
                 <th>Hoạt động</th>
             </tr>
         </thead>
@@ -42,6 +43,9 @@
                     @if($gr->status==0)
                     {{"Không hoạt động"}}
                     @endif
+                </td>
+                <td>
+                    <a href="{{route('group.list-review', $gr->id)}}" class="btn btn-secondary">Đánh giá</a>
                 </td>
                 <td class="center">
                     <form action="{{route('manageGroup.destroy', $gr->id)}}" method="post">

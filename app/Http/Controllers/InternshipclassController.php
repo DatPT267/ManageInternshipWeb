@@ -8,10 +8,15 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Controllers\changeTitle;
+use App\Http\Middleware\checkIsAdmin;
 use Brian2694\Toastr\Facades\Toastr;
 
 class InternshipclassController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(checkIsAdmin::class);
+    }
     /**
      * Display a listing of the resource.
      *

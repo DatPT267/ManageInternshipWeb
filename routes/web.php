@@ -18,15 +18,15 @@ use Illuminate\Support\Facades\Route;
 */
 //ADMIN and GVHD
 
-Route::get('admin/login', 'AuthenticationController@getLogin')->name('login');
-Route::post('admin/login', 'AuthenticationController@postLogin');
+Route::get('user/login', 'AuthenticationController@getLogin')->name('login');
+Route::post('user/login', 'AuthenticationController@postLogin')->name('login');
 
-Route::get('admin/logout', 'AuthenticationController@getLogout');
+Route::get('user/logout', 'AuthenticationController@getLogout')->name('logout');
 
-Route::get('admin/losspassword', 'AuthenticationController@getLosspassword')->name('losspassword');
-Route::post('admin/losspassword', 'AuthenticationController@postLosspassword');
+Route::get('user/losspassword', 'AuthenticationController@getLosspassword')->name('losspassword');
+Route::post('user/losspassword', 'AuthenticationController@postLosspassword');
 
-Route::post('admin/sendemail/{email}', 'SendEmailController@send');
+Route::post('user/sendemail/{email}', 'SendEmailController@send');
 
 
 
@@ -34,7 +34,7 @@ Route::get('/admin',function ()
 {
 	return view('admin.layout.index');
 });
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin','middleware' => ['auth', 'can:isAdmin'],  'middleware'=>'Authentication'], function () {
     //quản lý đợt thực tập
     Route::resource('internshipClass', 'internshipclassController');
     Route::post('them1', 'internshipclassController@postThem')->name('addClass');
@@ -85,9 +85,9 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 //=======================================USER=================================================
-Route::post('login', 'UserController@postLogin');
-Route::get('logout', 'UserController@getLogout')->name('logout');
-Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
+// Route::post('login', 'UserController@postLogin');
+// Route::get('logout', 'UserController@getLogout')->name('logout');
+// Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
 
 
 
@@ -97,7 +97,7 @@ Route::get('/',function ()
 	return view('user.pages.index');
 })->name('home')->middleware('auth', 'can:isUser');
 Route::resource('user', 'UserController')->middleware('auth');
-Route::group(['prefix' => 'user', 'middleware' => ['auth', 'can:isUser']], function () {
+Route::group(['prefix' => 'user', 'middleware' => ['auth', 'can:isUser'], 'middleware'=>'Authentication'], function () {
 
     Route::get('{id}/list-group', 'GroupController@listGroup')->name('user.listGroup');
     Route::get('{id}/group/{id_group}', 'StudentController@infoGroupOfStudent')->name('user.group');

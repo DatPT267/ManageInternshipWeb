@@ -18,13 +18,17 @@
                 {{session('thongbao')}}
             @endif
         </div>
-        <form role="form" action="../admin/losspassword" method="POST" >
+        <form role="form" action="../user/losspassword" method="POST" >
             <input type="hidden" name="_token" value="{{csrf_token()}}">
             <p>Vui lòng nhập email để lấy Lại mật khẩu của bạn</p>
             <input type="text" name="email">
             <br>
 
             <input  type="submit" name="" value="Gửi">
+            
+            <a href="{{ route('login') }}">
+                <input  type="button" value="Đăng Nhập" >
+            </a>
         </form>
            
     </div>

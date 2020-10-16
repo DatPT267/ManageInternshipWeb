@@ -11,4 +11,8 @@ class DetailGroup extends Model
 
     protected $table = "detailgroup";
 
+    public function group()
+    {
+        return $this->belongsTo('App\Group', 'group_id', 'id');
+    }
 }

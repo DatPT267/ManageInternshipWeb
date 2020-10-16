@@ -4,13 +4,6 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-7" style="padding-bottom:120px">
-                @if(count($errors)>0)
-                <div class="alert alert-danger">
-                    @foreach($errors->all() as $err)
-                        {{$err}} <br>
-                    @endforeach
-                </div>
-            @endif
 
             @if(session('thongbao'))
                 <div class="alert alert-success">
@@ -29,7 +22,7 @@
                         <label style="color: #000;">Email</label>
                         <input class="form-control" name="email"  placeholder="Email"  value="{{$user->email}}"/>
                     </div>
-                    
+
                     <div class="form-group">
                         <label style="color: #000;">SĐT</label>
                         <input class="form-control" name="phone"  placeholder="SĐT"  value="{{$user->phone}}"/>
@@ -47,19 +40,19 @@
                     <div class="form-group">
                         <label style="color: #000;">Trạng Thái</label>
                         <select class="form-control" id="district_choice" name="status">
-                            <option value="1"  
+                            <option value="1"
                             @if($user->status==1)
                             {{"selected"}}
                             @endif
                             >Tài Khoản Đang Hoạt Động</option>
-                            <option value="0" 
+                            <option value="0"
                             @if($user->status==0)
                             {{"selected"}}
                             @endif
                             >Tài Khoản Không hoạt động</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group">
                      <table>
                         <tr>
@@ -70,14 +63,14 @@
                            font-size: 16px;
                            border: none;
                            width: 45%;">Cập nhật</button>
-                        
+
                         <a href="{{ route('resetpass', $user->id)}}" class="btn btn-warning" style=" font-weight: 700;
                             font-size: 16px;
                             padding: 10px 30px;
                             margin-left: 5px;
                             width: 45%;">Reset mật khẩu</a>
                         </tr>
-                          
+
                      </table>
                     </div>
                 <form>
@@ -86,4 +79,11 @@
         <!-- /.row -->
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+    @foreach ($errors->all() as $error)
+        toastr.warning("{{$error}}")
+    @endforeach
+</script>
 @endsection

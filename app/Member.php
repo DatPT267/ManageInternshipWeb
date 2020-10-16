@@ -20,4 +20,10 @@ class Member extends Model
     public function group(){
         return $this->belongsTo('App\Group', 'group_id', 'id');
     }
+
+    public function assign()
+    {
+        return $this->hasMany('App\Assign', 'member_id', 'id');
+    }
+
 }

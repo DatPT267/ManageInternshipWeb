@@ -17,18 +17,22 @@
     <table class="table table-striped table-bordered table-hover" id="example">
         <thead>
             <tr align="center">
+                <th>STT</th>
                 <th>Tên Nhóm</th>
                 <th>Đề Tài</th>
                 <th>Ghi nhớ</th>
                 <th>Tên đợt thực tập</th>
                 <th>Trạng thái</th>
                 <th>Danh sách thành viên</th>
+                <th>Đánh giá</th>
                 <th>Hoạt động</th>
             </tr>
         </thead>
         <tbody>
+            <?php $i=0; ?>
             @foreach ($listGroup as $gr)
             <tr class="odd gradeX" align="center">
+                <td>{{++$i}}</td>
                 <td>{{$gr->name}}</td>
                 <td>{{$gr->topic}}</td>
                 <td>{{$gr->note}}</td>
@@ -43,6 +47,7 @@
                 </td>
                 <td>
                     <a href="{{ route('group.listMember', $gr->id) }}" class="btn btn-success">Danh sách sinh viên</a>
+                    <a href="{{route('group.list-review', $gr->id)}}" class="btn btn-secondary">Đánh giá</a>
                 </td>
                 <td class="center">
                     <form action="{{route('manageGroup.destroy', $gr->id)}}" method="post">
@@ -52,6 +57,7 @@
                         <a href="{{route('manageGroup.edit', $gr->id)}}" class="btn btn-info">Cập nhật</a>
                         <a href="{{ route('listtask', $gr->id) }}" class="btn btn-warning">Bài tập</a>
                     </form>
+
                 </td>
 
             </tr>

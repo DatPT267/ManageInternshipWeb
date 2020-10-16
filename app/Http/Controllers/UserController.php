@@ -190,7 +190,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user , $id)
-    {
+    { 
+      return $id;
       $user = User::find($id);
       if(file_exists("image/user".$user->image)==false){
 

@@ -35,7 +35,7 @@
                 <td>{{\Carbon\Carbon::parse($lc->end_day)->format('d-m-Y')}}</td>
                 <td>{{$lc->note}}</td>
                 <td class="center">
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">
+                    <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{route('internshipClass.destroy', $lc->id)}}" data-target="#exampleModal">
                         Xóa
                     </button>
                     <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
@@ -58,7 +58,7 @@
             </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-                    <form action="{{route('internshipClass.destroy', $lc->id)}}" method="post">
+                    <form id="form-delete" action="" method="post">
                         @csrf
                         @method('DELETE')
                         <input type="submit" value="Xóa" class="btn btn-danger">
@@ -84,6 +84,11 @@
                     {'orderable': false},
                 ]
             });
+
+            $('.btn-delete').click(function (){
+                var url = $(this).attr('data-url');
+                $('#form-delete').attr('action', url);
+            })
         })
     </script>
 @endsection

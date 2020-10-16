@@ -17,7 +17,7 @@
         {{session('thongbao')}}
     </div>
 @endif
-<form action="internshipClass/member/{{ $nameclass }}/{{ last($member) }}" method="POST" enctype="">
+<form action="{{ route('member', [$nameclass, last($member)]) }}" method="POST" enctype="">
         <input type="hidden" name="_token" value="{{csrf_token()}}">
         <table class="table table-striped table-bordered table-hover" id="example">
             <thead>
@@ -27,7 +27,6 @@
                     <th>Mật khẩu</th>
                 </tr>
             </thead>
-          
             <tbody>
                 @foreach ($member as $m)
                 <tr class="odd gradeX" align="center">
@@ -40,4 +39,11 @@
         </table>
         <div align="center"><button type="submit" id=""  class="btn btn-info">Thêm thành viên</button></div>
     </form>
+@endsection
+@section('script')
+    <script>
+        @foreach ($errors->all() as $error)
+            toastr.warning("{{$error}}")
+        @endforeach
+    </script>
 @endsection

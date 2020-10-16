@@ -14,7 +14,7 @@ class LecturerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $listLecturers = User::Where('position', 2)->orderBy('id', 'desc')->get();
         return view('admin.pages.manageLecturers.list', ['listLecturers'=> $listLecturers]);
     }
@@ -84,10 +84,10 @@ class LecturerController extends Controller
     {
         $user = User::find($id);
         if(file_exists("image/user".$user->image)==false){
-         
+
           unlink("image/user/".$user->image);
         }
-      
+
         $user->delete();
         return back()->with('success', 'Xóa thành công');
     }
@@ -111,15 +111,15 @@ class LecturerController extends Controller
         ]);
 
 
-    
+
         $fullName = $request->name;
         $name = changeTitle($fullName);
         $words = explode("-", $name);
-        $lastName = array_pop($words); 
+        $lastName = array_pop($words);
         $lastName = ucfirst( $lastName );
         $acronym = "";
         foreach ($words as $w) {
-        
+
           switch ($w[0]) {
             case "a":
                 $w[0] = "A";
@@ -207,7 +207,7 @@ class LecturerController extends Controller
 
         do {
           $dem++;
-          
+
           $lastName = $lastName1.''.$dem;
           $user = User::where('account', $lastName)->get()->first();
         } while ($user != null);
@@ -224,40 +224,41 @@ class LecturerController extends Controller
     $user->account = $lastName;
 
 
-    if ($request->hasFile('image')) 
-    {   
+    if ($request->hasFile('image'))
+    {
 
         $file =$request->file('image');
         $duoi = $file->getClientOriginalExtension();
         if ($duoi != 'jpg' && $duoi !='png' && $duoi != 'jpeg') {
-            return redirect('admin/manageStudents/create')->with('thongbao' ,'Bạn chỉ chọn được file có đuôi  jpg, png, jpeg ');
+            Toastr::warning('Bạn chỉ chọn được file có đuôi  jpg, png, jpeg!', 'warning');
+            return redirect()->route('manageStudents.create');
         }
         $name = $file->getClientOriginalName();
         $Hinh= Str::random(4)."_".$name;
-        while (file_exists("image/user".$Hinh)) 
+        while (file_exists("image/user".$Hinh))
         {
             $Hinh= Str::random(4)."_".$name;
         }
         $file->move("image/user",$Hinh);
         $user->image = $Hinh;
-    }  
+    }
     else
-    {   
+    {
         $name = 'avatar';
         $Hinh= Str::random(4)."_".$name;
-        while (file_exists("image/user".$Hinh)) 
+        while (file_exists("image/user".$Hinh))
         {
             $Hinh= Str::random(4)."_".$name;
         }
         $file = \File::copy(base_path('public\image\user\avatar.jpg'),base_path('public/image/user/'.$Hinh));
-      
-    
+
+
         $user->image = $Hinh;
     }
     $user->save();
 
-
-    return back()->with('thongbao','Thêm thành công');
+    Toastr::success('Thêm thành công', 'success');
+    return back();
     }
     public function editLecturer(User $user, $id)
     {

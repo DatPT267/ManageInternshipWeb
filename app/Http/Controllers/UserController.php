@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use App\Internshipclass;
+use Brian2694\Toastr\Facades\Toastr;
 
 class UserController extends Controller
 {
@@ -86,8 +87,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $listStudent = User::orderBy('id', 'desc')->get();
-    
+        $listStudent = User::where('position', 1)->orderBy('id', 'desc')->get();
+
         return view('admin.pages.manageStudents.list', ['listStudent'=>$listStudent]);
     }
 
@@ -135,12 +136,11 @@ class UserController extends Controller
     public function edit( $id)
     {
 
-        if($id == Auth::id()){
-            $user = User::find($id);
-            return view('user.pages.profiles.edit', ['user'=>$user]);
-        } else{
-            return abort('403');
-        }
+        $this->authorize('isAuthor', $id);
+
+        $user = User::find($id);
+        return view('profiles.edit', ['user'=>$user]);
+
 
         // if($id == Auth::id()){
         //     return view('user.pages.personalInformation.updateInformation', ['user'=>$user]);
@@ -164,7 +164,8 @@ class UserController extends Controller
             $file = $request->file('image');
             $duoi = $file->getClientOriginalExtension();
             if($duoi != 'jpg' && $duoi != 'png' && $duoi != 'jpeg'){
-                return redirect('user/'.Auth::id())->with('fail', 'Bạn chỉ được chọn file có đuổi png, jpg, jpeg');
+                Toastr::warning('Bạn chỉ được chọn file có đuổi png, jpg, jpeg', 'Warning');
+                return redirect()->route('user.edit', $id);
             }
             $imgName = $file->getClientOriginalName();
             $hinh = Str::random(3).'_'.Carbon::now()->timestamp."_".$imgName;
@@ -179,8 +180,8 @@ class UserController extends Controller
         $user->phone = $request->input('phone');
         $user->address = $request->input('address');
         $user->save();
-
-        return redirect('user/'.$id.'/edit')->with('success', 'Bạn đã cập nhật thành công');
+        Toastr::success('Bạn đã cập nhật thông tin thành công', 'success');
+        return redirect()->route('editUser', $id);
     }
 
     /**
@@ -233,7 +234,8 @@ class UserController extends Controller
                 $file =$request->file('image');
                 $duoi = $file->getClientOriginalExtension();
                 if ($duoi != 'jpg' && $duoi !='png' && $duoi != 'jpeg') {
-                    return redirect('admin/manageStudents/'.$id.'/edit')->with('thongbao' ,'Bạn chỉ chọn được file có đuôi  jpg, png, jpeg ');
+                    Toastr::warning('Bạn chỉ chọn được file có đuôi  jpg, png, jpeg!', 'warning');
+                    return redirect()->route('editUser', $id);
                 }
                 $name = $file->getClientOriginalName();
                 $Hinh= Str::random(4)."_".$name;
@@ -249,8 +251,9 @@ class UserController extends Controller
                 $user->image = $Hinh;
             }
 
-            $user->save();
-        return back()->with('thongbao','Cập nhật thành công');
+        $user->save();
+        Toastr::success('Cập nhật thành công', 'success');
+        return back();
     }
 
     public function postThem(Request $request)
@@ -394,7 +397,8 @@ class UserController extends Controller
                 $file =$request->file('image');
                 $duoi = $file->getClientOriginalExtension();
                 if ($duoi != 'jpg' && $duoi !='png' && $duoi != 'jpeg') {
-                    return redirect('admin/manageStudents/create')->with('thongbao' ,'Bạn chỉ chọn được file có đuôi  jpg, png, jpeg ');
+                    Toastr::warning('Bạn chỉ chọn được file có đuôi  jpg, png, jpeg!', 'warning');
+                    return redirect()->route('manageStudents.create');
                 }
                 $name = $file->getClientOriginalName();
                 $Hinh= Str::random(4)."_".$name;
@@ -420,8 +424,8 @@ class UserController extends Controller
             }
             $user->save();
 
-
-            return back()->with('thongbao','Thêm thành công');
+            Toastr::success('Thêm thành công', 'success');
+            return back();
     }
 
 
@@ -441,21 +445,20 @@ class UserController extends Controller
             'password2.same'=>  'Mật khẩu mới không khớp',
         ]);
 
-        if(Auth::check()){
-            $matkhau = $request->password;
-            $password = Auth::User()->password;
-            $id = Auth::user()->id;
-            if(Hash::check($matkhau, $password)){
+        $matkhau = $request->password;
+        $password = Auth::User()->password;
+        $id = Auth::user()->id;
+        if(Hash::check($matkhau, $password)){
 
-                $user = User::find(Auth::user()->id);
-                $user->password =  bcrypt($request->password2);
-                $user->save();
-                return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Đổi mật khẩu thành công ');
-            }
-
-            else{
-                return redirect('user/'.$id.'/edit#changepassword')->with('thongbao', 'Mật khẩu cũ không đúng');
-            }
+            $user = User::find(Auth::user()->id);
+            $user->password =  bcrypt($request->password2);
+            $user->save();
+            Toastr::success('Thay đổi mật khẩu thành công!', 'Success');
+            return redirect()->route('user.edit', Auth::id());
+        }
+        else{
+            Toastr::error('Thay đổi mật khẩu thất bại', 'error');
+            return redirect()->route('user.edit', Auth::id());
         }
 
     }

@@ -4,29 +4,21 @@
         <h1 style="text-align: center; margin-bottom: 20px">Check-out</h1>
         <div class="card">
             <div class="card-body">
-                @if (count($errors) > 0)
-                    <div class="alert alert-danger">
-                    @foreach ($errors->all() as $error)
-                        {{$error}}
-                    @endforeach
-                    </div>
-                @endif
-
                 @if ($schedule === null)
-                    <div class="alert alert-warning">
-                        Hôm nay bạn không làm việc !!!
-                    </div>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Hôm nay bạn không làm việc !!!</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 @else
                     @if ($isCheckout == 1)
-                        @if (session('success'))
-                            <div class="alert alert-success">
-                                {{session('success')}}
-                            </div>
-                        @elseif($isCheckout == 1)
-                            <div class="alert alert-warning">
-                                Hôm nay bạn đã check-out rồi !!!
-                            </div>
-                        @endif
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <strong>Hôm nay bạn đã check-out rồi !!!</strong>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                         <div class="form-group row">
                             <label class="col-sm-2 col-form-label"><strong> Thời gian checkout</strong></label>
                             <input type="text" class="form-control col-sm-10"  value="{{\Carbon\Carbon::parse($checkout->date_end)->format('d-m-Y H:i:s')}}"  disabled>
@@ -58,7 +50,7 @@
                                 <tbody>
                                     @foreach ($arrTask as $key => $task)
                                     <tr>
-                                        <td>{{$key}}</td>
+                                        <td>{{++$key}}</td>
                                         <input type="text" value="{{$task->task->id}}" name="idTask[]" hidden >
                                         <td>{{$task->task->name}}</td>
                                         <td>
@@ -182,6 +174,11 @@
     </div>
 @endsection
 @section('script')
+    <script>
+        @foreach ($errors->all() as $error)
+            toastr.warning("{{$error}}")
+        @endforeach
+    </script>
     <script>
         $(document).ready(function(){
             $('#listTask').DataTable({

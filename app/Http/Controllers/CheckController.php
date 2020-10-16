@@ -11,6 +11,7 @@ use App\Task;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Brian2694\Toastr\Facades\Toastr;
 
 class CheckController extends Controller
 {
@@ -64,8 +65,8 @@ class CheckController extends Controller
                 $detailCheck->save();
             }
         }
-
-        return redirect("user/".$id."/check-in")->with(['success'=>'Check-in thành công']);
+        Toastr::success('Bạn checkin thành công!', 'success');
+        return redirect()->route('checkin', $id);
     }
 
     //========================================END Check-in=======================================
@@ -145,8 +146,8 @@ class CheckController extends Controller
                 $task->save();
             }
         }
-
-        return redirect()->route('checkout', $id)->with(['success'=>'Check-out thành công']);
+        Toastr::success('Bạn checkout thành công!', 'Success');
+        return redirect()->route('checkout', $id);
     }
     //========================================END Check-out=======================================
     //========================================START HISTORY SCHEDULE=======================================

@@ -6,6 +6,7 @@ use App\Feedback;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Brian2694\Toastr\Facades\Toastr;
 
 class FeedbackController extends Controller
 {
@@ -38,6 +39,7 @@ class FeedbackController extends Controller
         $feedback->review_id = $request->input('id_review');
         $feedback->user_id = Auth::id();
         $feedback->save();
-        return back()->with('success', 'Thêm thành công');
+        Toastr::success('Bạn đăng feedback thành công!', 'success');
+        return back();
     }
 }

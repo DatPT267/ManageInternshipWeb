@@ -18,7 +18,7 @@ class AuthenticationController extends Controller
         return redirect()->route('login');
     }
     public function postLogin(Request $request)
-    {   
+    {
         $this->validate($request,
     		[
     			'account'=>'required',
@@ -37,37 +37,37 @@ class AuthenticationController extends Controller
         else {
             if (Auth::attempt(['account' => $account, 'password' => $password])) {
                 $user = Auth::user();
-                if($user->position == 1){      
-                    return redirect()->route('home');
-                }else return redirect()->route('internshipClass.index');
+                if($user->position == 1){
+                    return redirect()->route('user.home');
+                }else return redirect()->route('admin.home');
 
             }
             else
             {
                 return back()->with('thongbao', 'Đăng Nhập Không Thành Công');
-            }  
-        }  
+            }
+        }
     }
     public function getLosspassword()
-    {   
+    {
         return view('admin/authentication/losspassword');
     }
     public function postLosspassword(Request $request)
-    {   
+    {
         $this->validate($request,
             [
                 'email'=>'required|email',
-               
+
             ],
             [
                 'email.required'=>'Bạn Chưa Nhập Email',
                 'email.email'=>'Email không đúng',
             ]);
-        
+
         $user = User::where('email', $request->email)->get()->first();
         if($user == null){
             return redirect()->back()->with('thongbao', 'Email chưa đăng ký tài khoản');
-        }  
+        }
         else
             return view('admin/authentication/confirmemail', ['user'=> $user]);
     }

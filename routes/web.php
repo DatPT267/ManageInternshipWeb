@@ -39,7 +39,7 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdmin'] ], f
     Route::resource('internshipClass', 'internshipclassController');
     Route::post('them1', 'internshipclassController@postThem')->name('addClass');
     Route::post('internshipClass/sua/{id}', 'internshipclassController@postSua')->name('updateclass');
-    Route::post('internshipClass/member/{nameclass}/{amount}', 'internshipclassController@postMember')->name('member');
+    Route::post('internshipClass/member/{nameclass} ', 'internshipclassController@postMember')->name('member');
     Route::get('internshipClass/list-member/{class_id}', 'internshipclassController@getList')->name('list');
 
     //Quản lý nhóm

@@ -12,7 +12,7 @@
                 {{session('thongbao')}}
             @endif
         </div>
-    <form role="form" action="../admin/sendemail/{{$user->email}}" method="POST">
+    <form role="form" action="../user/sendemail/{{$user->email}}" method="POST">
             <input type="hidden" name="_token" value="{{csrf_token()}}">
         <p>Email:           &ensp; &ensp;&ensp;{{ $user->email }}</p>
             <br>

@@ -15,7 +15,7 @@ class AuthenticationController extends Controller
     public function getLogout()
     {
         Auth::logout();
-    	return "Đăng xuất thành công";
+        return redirect()->route('login');
     }
     public function postLogin(Request $request)
     {   
@@ -36,7 +36,11 @@ class AuthenticationController extends Controller
         }
         else {
             if (Auth::attempt(['account' => $account, 'password' => $password])) {
-                return "ok";
+                $user = Auth::user();
+                if($user->position == 1){      
+                    return redirect()->route('home');
+                }else return redirect()->route('internshipClass.index');
+
             }
             else
             {

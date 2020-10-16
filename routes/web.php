@@ -18,30 +18,29 @@ use Illuminate\Support\Facades\Route;
 */
 //ADMIN and GVHD
 
-Route::get('admin/login', 'AuthenticationController@getLogin')->name('login.admin');
-Route::post('admin/login', 'AuthenticationController@postLogin');
+Route::get('user/login', 'AuthenticationController@getLogin')->name('login');
+Route::post('user/login', 'AuthenticationController@postLogin')->name('login');
 
-Route::get('admin/logout', 'AuthenticationController@getLogout');
+Route::get('user/logout', 'AuthenticationController@getLogout')->name('logout');
 
-Route::get('admin/losspassword', 'AuthenticationController@getLosspassword')->name('losspassword');
-Route::post('admin/losspassword', 'AuthenticationController@postLosspassword');
+Route::get('user/losspassword', 'AuthenticationController@getLosspassword')->name('losspassword');
+Route::post('user/losspassword', 'AuthenticationController@postLosspassword');
 
-Route::post('admin/sendemail/{email}', 'SendEmailController@send');
+Route::post('user/sendemail/{email}', 'SendEmailController@send');
 
 
-
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-    Route::get('/',function ()
-    {
-        return view('admin.layout.index');
-    })->name('home.admin');
+//=======================================ADMIN==================================================================================================
+Route::get('/admin',function ()
+{
+	return view('admin.dashboard');
+})->name('admin.home')->middleware('auth', 'can:isAdmin');
+Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdmin'] ], function () {
     //quản lý đợt thực tập
     Route::resource('internshipClass', 'internshipclassController');
     Route::post('them1', 'internshipclassController@postThem')->name('addClass');
     Route::post('internshipClass/sua/{id}', 'internshipclassController@postSua')->name('updateclass');
     Route::post('internshipClass/member/{nameclass}/{amount}', 'internshipclassController@postMember')->name('member');
     Route::get('internshipClass/list-member/{class_id}', 'internshipclassController@getList')->name('list');
-
 
     //Quản lý nhóm
     Route::resource('manageGroup', 'GroupController');
@@ -79,64 +78,55 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::group(['prefix' => 'ajax'], function () {
         Route::get('detail-feedback/{id}', 'FeedbackController@getAjaxFeedback')->name('ajax-feedback');
     });
-});
+    Route::resource('manageLecturer', 'LecturerController');
+    Route::post('addLecturer', 'LecturerController@postThem')->name('addlecturer');
+    Route::get('manageLecturer/edit/{id}', 'LecturerController@editLecturer')->name('editLecturer');
 
     //Quản lý task
 
     //Quản lý lịch thực tập
     Route::get('manageSchedule', 'ScheduleController@index')->name('manageSchedule.index');
     Route::get('manageSchedule/checkin-out', 'ScheduleController@getCheckinOut')->name('manageSchedule.checkin-out');
+});
+//=======================================ADMIN==================================================================================================
 
-    //Quản lý đánh giá
+//=======================================PROFILE==================================================================================================
+Route::resource('user', 'UserController')->middleware('auth');
+Route::post('user/{id}/edit/changepassword', 'UserController@changepassword')->middleware('auth')->name('changepassword');
+//=======================================PROFILE==================================================================================================
 
-
-
-//User
-
-
-
-
-
-
-
-
-
-//=======================================USER=================================================
-Route::post('login', 'UserController@postLogin');
-Route::get('logout', 'UserController@getLogout')->name('logout');
-Route::post('losspassword', 'UserController@postLosspassword')->name('losspassword');
-
-
-
-
+//=======================================USER==================================================================================================
 Route::get('/',function ()
 {
-	return view('user.pages.index');
-})->name('home')->middleware('auth', 'can:isUser');
-Route::resource('user', 'UserController')->middleware('auth');
-Route::group(['prefix' => 'user', 'middleware' => ['auth', 'can:isUser']], function () {
+	return view('user.dashboard');
+})->name('user.home')->middleware('auth', 'can:isUser');
+
+Route::group( ['prefix' => 'user', 'middleware' => ['auth', 'can:isUser'] ], function () {
 
     Route::get('{id}/list-group', 'GroupController@listGroup')->name('user.listGroup');
     Route::get('{id}/group/{id_group}', 'StudentController@infoGroupOfStudent')->name('user.group');
     Route::get('{id}/show', 'MemberController@show')->name('info.member');
     Route::get('{id}/group/{id_group}/list-task', 'GroupController@getListTask')->name('view-list-task');
     //đổi mật khẩu
-    Route::post('{id}/edit/changepassword', 'UserController@changepassword')->name('changepassword');
+
     //checkin - checkout
     Route::get('{id}/check-in', 'CheckController@checkin')->name('checkin');
     Route::post('{id}/check-in', 'CheckController@postCheckin')->name('checkin.post');
     Route::get('{id}/check-out', 'CheckController@checkout')->name('checkout');
     Route::post('{id}/check-out', 'CheckController@postCheckout')->name('checkout.post');
+
     // register Checkin-out
     Route::get('{id}/reg-schedule', 'ScheduleController@getRegSchedule')->name('user.regSchedule');
     Route::post('{id}/reg-schedule', 'ScheduleController@postRegSchedule')->name('reg.schedule');
+
     //history checkin-out
     Route::get('{id}/history-schedule', 'CheckController@hisSchedule')->name('user.hisSchedule');
     Route::get('ajax/{id}/history-schedule', 'CheckController@ajaxHisSchedule')->name('ajax.His-schedule');
+
     //đánh giá
     Route::get('{id}/list-review', 'ReviewController@getListReviewOfUser')->name('list-review-of-user');
     Route::post('{id}/list-review/feedback/create', 'FeedbackController@postCreateFeedback')->name('post-create-feedback');
     Route::get('ajax/detail-review', 'FeedbackController@ajaxDetailReview')->name('ajax-detail-review');
 });
 
-//=======================================USER=================================================
+//=======================================USER==================================================================================================

@@ -38,3 +38,10 @@
     </div>
 </div>
 @endsection
+@section('script')
+<script>
+    @foreach ($errors->all() as $error)
+        toastr.warning("{{$error}}")
+    @endforeach
+</script>
+@endsection

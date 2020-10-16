@@ -4,20 +4,7 @@
         <h1 style="text-align: center; margin-bottom: 20px">Check-in</h1>
         <div class="card">
             <div class="card-body">
-
-
-        @if (count($errors) > 0)
-            <div class="alert alert-danger">
-            @foreach ($errors->all() as $error)
-                {{$error}}
-            @endforeach
-            </div>
-        @endif
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{session('success')}}
-            </div>
-        @elseif ($isCheck == 1)
+        @if ($isCheck == 1)
             <div class="alert alert-warning">
                 Hôm nay bạn đã checkin rồi !!! <a href='{{route('checkout', Auth::id())}}' class="btn btn-danger">Check-out</a>
             </div>
@@ -153,6 +140,11 @@
 
 @endsection
 @section('script')
+    <script>
+        @foreach ($errors->all() as $error)
+            toastr.warning("{{$error}}")
+        @endforeach
+    </script>
     <script>
         $(document).ready(function(){
             $('#listTask').DataTable({

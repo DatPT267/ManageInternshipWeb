@@ -34,7 +34,7 @@ Route::get('/admin',function ()
 {
 	return view('admin.layout.index');
 });
-Route::group(['prefix' => 'admin',  'middleware'=>'Authentication'], function () {
+Route::group(['prefix' => 'admin','middleware' => ['auth', 'can:isAdmin'],  'middleware'=>'Authentication'], function () {
     //quản lý đợt thực tập
     Route::resource('internshipClass', 'internshipclassController');
     Route::post('them1', 'internshipclassController@postThem')->name('addClass');

@@ -17,6 +17,7 @@
 <table class="table table-striped table-bordered table-hover" id="example">
     <thead>
         <tr align="center">
+            <th>STT</th>
             <th>Tên bài tập</th>
             <th>Ghi nhớ</th>
             <th>Trạng thái</th>
@@ -24,8 +25,10 @@
         </tr>
     </thead>
     <tbody>
+        <?php $i=0; ?>
         @foreach ($listTask as $ta)
         <tr class="odd gradeX" align="center">
+            <td>{{ ++$i }}</td>
             <td>{{$ta->name}}</td>
             <td>{{$ta->note}}</td>
             <td>
@@ -49,7 +52,7 @@
                 <form action="" method="post">
                     <a href="" class="btn btn-info">Cập nhật</a>
                 </form>
-               
+
             </td>
         </tr>
         @endforeach

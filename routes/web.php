@@ -119,7 +119,7 @@ Route::group( ['prefix' => 'user', 'middleware' => ['auth', 'can:isUser'] ], fun
     Route::get('{id}/list-group', 'GroupController@listGroup')->name('user.listGroup');
     Route::get('{id}/group/{id_group}', 'StudentController@infoGroupOfStudent')->name('user.group');
     Route::get('{id}/show', 'MemberController@show')->name('info.member');
-    Route::get('{id}/group/{id_group}/list-task', 'GroupController@getListTask')->name('view-list-task');
+    Route::get('{id}/group/{id_group}/list-task', 'GroupController@getListTaskUser')->name('view-list-task');
     //đổi mật khẩu
 
     //checkin - checkout

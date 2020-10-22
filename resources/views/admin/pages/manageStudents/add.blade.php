@@ -33,7 +33,7 @@
                     </div>
                     <div class="form-group">
                         <label style="color: #000;">Ảnh cá nhân</label>
-                         <img src="" alt="" width="300px" height="300px">
+                         {{-- <img src="" alt="" width="300px" height="300px"> --}}
                         <input type="file" name="image" class="form-control">
                     </div>
                     <div class="form-group">

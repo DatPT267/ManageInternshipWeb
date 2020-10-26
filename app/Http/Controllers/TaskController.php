@@ -7,6 +7,63 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+    public function getAdd($id)
+    {   
+        return view('admin.pages.manageTasks.add', ['id'=>$id]);
+    }
+    public function postAdd($id , Request $request)
+    {   
+        $this->validate($request, [
+            'nameTask' => 'required',
+           
+        ],[
+            'nameTask.required' => 'Bạn chưa nhập tên task',
+            
+        ]);
+        $task = new Task;
+        $task->name = $request->nameTask;
+        $task->group_id = $id;
+        $task->note = $request->noteTask;
+        $task->status = 1;
+        $task->save();
+        return back()->with('thongbao', 'Thêm task thành công');
+    }
+    public function getUpdate($id)
+    {   
+        $arr[1]="Todo";
+        $arr[2]="Doing";
+        $arr[3]="Review";
+        $arr[4]="Done";
+        $arr[5]="Pending";
+        $task = Task::find($id);
+        return view('admin.pages.manageTasks.update', ['task'=>$task, 'arr'=>$arr]);
+    }
+    public function postUpdate($id, Request $request)
+    {   
+        $this->validate($request, [
+            'nameTask' => 'required',
+           
+        ],[
+            'nameTask.required' => 'Bạn chưa nhập tên task',
+            
+        ]);
+        $task = Task::find($id);
+        $task->name = $request->nameTask;
+        $task->status = $request->statusTask;
+        $task->note = $request->noteTask;
+        $task->save();
+        return back()->with('thongbao', 'Cập nhật task thành công');
+    }
+    public function delete($id)
+    {
+        $task = Task::find($id);
+        $task->delete();
+        return back()->with('thongbao', 'Xóa task thành công');
+    }
+    public function getDetail()
+    {
+        return view('admin.pages.manageTasks.detail'); 
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +72,7 @@ class TaskController extends Controller
     public function index()
     {
         return view('admin.pages.manageTasks.list');
-    }
+    } 
 
     /**
      * Show the form for creating a new resource.

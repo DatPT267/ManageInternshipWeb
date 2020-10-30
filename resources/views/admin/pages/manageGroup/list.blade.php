@@ -22,6 +22,7 @@
                 <th>Đề Tài</th>
                 <th>Tên đợt thực tập</th>
                 <th>Trạng thái</th>
+                <th>Ghi chú</th>
                 <th>Danh sách thành viên</th>
                 <th>Đánh giá</th>
                 <th>Hoạt động</th>

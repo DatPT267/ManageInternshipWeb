@@ -11,6 +11,7 @@
                         <th>Tên nhóm</th>
                         <th>Trạng thái</th>
                         <th>Đề tài</th>
+                        <th>Xem review</th>
                         <th>Chi tiết</th>
                     </tr>
                 </thead>
@@ -27,6 +28,7 @@
                                 @endif
                             </td>
                             <td>{{$item->group->topic}}</td>
+                            <td><a href="{{ route('list-review-of-project', $item->group_id) }}" class="btn btn-primary">Xem review</a></td>
                             <td>
                                 <a href="{{route('user.group', [Auth::id(), $item->group_id])}}" class="btn btn-info">Chi tiet</a>
                             </td>

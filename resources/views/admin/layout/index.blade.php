@@ -16,7 +16,7 @@
         <!-- Custom styles for this template-->
         <link href="{{ asset('admin_asset/css/sb-admin-2.min.css') }}" rel="stylesheet">
         @yield('style')
-        @toastr_css
+        <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     </head>
     <body id="page-top">
         <!-- Page Wrapper -->
@@ -36,8 +36,8 @@
                     <!-- Begin Page Content -->
                     <div class="container-fluid">
                         <!-- Page Heading -->
-                        {{-- @include('admin.inc.bang') --}}
                         @yield('content')
+                        <!-- Page Heading -->
                     </div>
                     <!-- /.container-fluid -->
                 </div>
@@ -58,9 +58,9 @@
 
         @include('admin.layout.logout')
         <!-- Bootstrap core JavaScript-->
-        @jquery
-        @toastr_js
-        @toastr_render
+        <script src="http://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+        <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+        {!! Toastr::message() !!}
         <script src="{{ asset('admin_asset/vendor/jquery/jquery.min.js') }}"></script>
         <script src="{{ asset('admin_asset/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('admin_asset/vendor/datatables/jquery.dataTables.min.js') }}"></script>

@@ -70,7 +70,7 @@
     <li class="nav-item">
         <a class="nav-link" href="{{route('list-review-of-user', Auth::id())}}">
             <i class="fas fa-list"></i>
-        <span>Danh sách review</span></a>
+        <span>Danh sách đánh giá</span></a>
     </li>
 
     <hr class="sidebar-divider d-none d-md-block">

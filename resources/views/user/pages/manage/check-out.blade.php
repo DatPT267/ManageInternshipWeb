@@ -165,7 +165,7 @@
                         </form>
                     @else
                     <div class="alert alert-warning">
-                        Hôm nay bạn chưa checkin !!! <a href='user/{{Auth::id()}}/check-in' class="btn btn-info">Check-in</a>
+                        Hôm nay bạn chưa checkin !!! <a href='{{ route('checkin', Auth::id()) }}' class="btn btn-info">Check-in</a>
                     </div>
                     @endif
                 @endif

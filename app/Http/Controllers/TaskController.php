@@ -79,7 +79,7 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
         return view('admin.pages.manageTasks.add');
     }

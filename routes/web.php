@@ -60,8 +60,10 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdmin'] ], f
     Route::post('manageGroup/sua/{id}', 'GroupController@postSua')->name('updategroup');
     Route::post('addgroup', 'GroupController@postThem')->name('addgroup');
 
-    Route::get('manageTask/add/{id}', 'TaskController@create')->name('addTask');
-    
+    Route::get('manageTask/add/{id}', 'TaskController@create')->name('addTask'); 
+    Route::post('manageTask/add/{id}', 'TaskController@addTask')->name('addTask');
+    Route::post('manageTask/delete/{id}', 'TaskController@delete')->name('deleteTask');
+    Route::get('manageTask/update/{id}', 'TaskController@create')->name('addTask'); 
 
     //Quản lý sinh viên
     // Route::group(['prefix' => 'manageStudent'], function () {

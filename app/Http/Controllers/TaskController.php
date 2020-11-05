@@ -3,31 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Task;
+use App\Member;
+use App\Assign;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
-    public function getAdd($id)
-    {   
-        return view('admin.pages.manageTasks.add', ['id'=>$id]);
-    }
-    public function postAdd($id , Request $request)
-    {   
-        $this->validate($request, [
-            'nameTask' => 'required',
-           
-        ],[
-            'nameTask.required' => 'Bạn chưa nhập tên task',
-            
-        ]);
-        $task = new Task;
-        $task->name = $request->nameTask;
-        $task->group_id = $id;
-        $task->note = $request->noteTask;
-        $task->status = 1;
-        $task->save();
-        return back()->with('thongbao', 'Thêm task thành công');
-    }
+ 
     public function getUpdate($id)
     {   
         $arr[1]="Todo";
@@ -81,9 +63,26 @@ class TaskController extends Controller
      */
     public function create($id)
     {
-        return view('admin.pages.manageTasks.add');
+        return view('admin.pages.manageTasks.add', [ 'id' => $id]);
     }
-
+    public function addTask(Request $request, $id)
+    {   
+        $this->validate($request, [
+            'name' => 'required|unique:Task,name',
+            
+        ],[
+            'name.required' => 'Bạn chưa nhập tên Task',
+            'name.unique' => 'Tên Task đã bị trùng',
+            
+        ]);
+        $task = new Task;
+        $task->name = $request->name;
+        $task->group_id = $id;
+        $task->note = $request->note;
+        $task->status = $request->optradio;
+        $task->save();
+        return back()->with('thongbao', 'Thêm task thành công');
+    }
     /**
      * Store a newly created resource in storage.
      *
@@ -112,9 +111,13 @@ class TaskController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit(Task $task)
-    {
-        return view('admin.pages.manageTasks.update');
+    public function edit($id)
+    {   
+        $task = Task::find($id);
+        $member = Member::where('group_id', $task->group_id)->get();
+        $assign = Assign::where('task_id', $id)->get();
+     
+        return view('admin.pages.manageTasks.update', [ 'task' => $task, 'member' => $member, 'assign' => $assign]);
     }
 
     /**

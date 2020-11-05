@@ -17,38 +17,38 @@
                         {{session('thongbao')}}
                     </div>
                 @endif
-                <form action="{{ route('addClass')}}" method="POST" enctype="">
+                <form action="{{ route('addTask', $id)}}" method="POST" enctype="">
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="form-group">
                         <label style="color: #000;">Tên task :</label>
                         <input class="form-control" name="name" placeholder="Nhập Tên Task" />
-                    </div>
+                    </div> 
                     <div class="form-group">
                         <label style="color: #000;">Trạng thái task</label>
                         <br>
                         <div class="form-check-inline">
                             <label class="form-check-label" for="radio1">
-                              <input type="radio" class="form-check-input" id="radio1" name="optradio" value="ToDo" checked>ToDo
+                              <input type="radio" class="form-check-input" id="radio1" name="optradio" value="1" checked>ToDo
                             </label>
                           </div>
                           <div class="form-check-inline">
                             <label class="form-check-label" for="radio2">
-                              <input type="radio" class="form-check-input" id="radio2" name="optradio" value="Doing">Doing
+                              <input type="radio" class="form-check-input" id="radio2" name="optradio" value="2">Doing
                             </label>
                           </div>
                           <div class="form-check-inline">
                             <label class="form-check-label"  for="radio3">
-                                <input type="radio" class="form-check-input" id="radio3" name="optradio" value="Review">Review
+                                <input type="radio" class="form-check-input" id="radio3" name="optradio" value="3">Review
                             </label>
                           </div>
                           <div class="form-check-inline">
                             <label class="form-check-label" for="radio4">
-                              <input type="radio" class="form-check-input" id="radio4" name="optradio" value="Done">Done
+                              <input type="radio" class="form-check-input" id="radio4" name="optradio" value="4">Done
                             </label>
                           </div>
                           <div class="form-check-inline">
                             <label class="form-check-label"  for="radio5">
-                                <input type="radio" class="form-check-input" id="radio5" name="optradio" value="Pending">Pending
+                                <input type="radio" class="form-check-input" id="radio5" name="optradio" value="5">Pending
                             </label>
                           </div> 
                     </div>

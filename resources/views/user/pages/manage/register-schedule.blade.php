@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-body">
 
-                <h1 style="text-align: center; margin-bottom: 20px">Đăng ký lịch thực tập của {{Auth::user()->name}}</h1>
+                <h1 style="text-align: center; margin-bottom: 20px">Đăng ký lịch thực tập</h1>
                 @if($message !== '')
                     <div class="alert alert-warning">
                         {{$message}}
@@ -178,9 +178,7 @@
                             </tbody>
                         </table>
                     </form>
-
                 @endif
-
             </div>
         </div>
     </div>

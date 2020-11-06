@@ -9,7 +9,7 @@ class DetailCheck extends Model
     const CREATED_AT = null;
     const UPDATED_AT = null;
 
-    protected $table = "detailcheck";
+    protected $table = 'detailcheck';
 
     public function task()
     {

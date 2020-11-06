@@ -11,6 +11,10 @@ class Task extends Model
 
     protected $table = "task";
 
+    public function check()
+    {
+        return $this->hasMany('App\Check', 'task_id', 'id');
+    }
     public function review(){
         return $this->hasMany('App\Review', 'task_id', 'id');
     }

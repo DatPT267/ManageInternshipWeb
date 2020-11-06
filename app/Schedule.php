@@ -11,6 +11,10 @@ class Schedule extends Model
 
     protected $table = "schedule";
 
+    public function user()
+    {
+        return $this->belongsTo('App\user', 'user_id', 'id');
+    }
     public function check()
     {
         return $this->hasMany('App\Check', 'schedule_id', 'id');

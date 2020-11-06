@@ -42,6 +42,14 @@ class User extends Authenticatable
         return $this->belongsTo('App\Internshipclass', 'class_id', 'id');
     }
 
+    public function check()
+    {
+        return $this->hasMany('App\Check', 'user_id', 'id');
+    }
+    public function task()
+    {
+        return $this->hasMany('App\Task', 'user_id', 'id');
+    }
     public function member(){
         return $this->hasOne('App\Member', 'user_id', 'id');
     }

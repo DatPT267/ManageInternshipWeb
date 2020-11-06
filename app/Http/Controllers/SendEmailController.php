@@ -20,7 +20,6 @@ class SendEmailController extends Controller
             'name'      =>  $user->name,
             'message'   =>   $str
         );
-
         $us = User::find($user->id);
         $us->password = bcrypt($str);
         $us->save();

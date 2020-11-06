@@ -40,10 +40,6 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label style="color: #000;">Số lượng sinh viên</label>
-                        <input class="form-control" name="student_amount" placeholder="Nhập Số Lượng Sinh Viên" />
-                    </div>
-                    <div class="form-group">
                         <label style="color: #000;">Ghi Chú</label>
                         <input class="form-control" name="note" placeholder="Nhập Ghi Chú" />
                     </div>

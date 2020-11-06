@@ -8,10 +8,15 @@ use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Controllers\changeTitle;
-
+use App\Http\Middleware\checkIsAdmin;
+use Brian2694\Toastr\Facades\Toastr;
 
 class InternshipclassController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware(checkIsAdmin::class);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -92,10 +97,12 @@ class InternshipclassController extends Controller
         $user = User::where('class_id', $intership->id)->get();
         $count = count($user);
         if($count > 0){
-            return redirect()->route('internshipClass.index')->with('fail', 'Xóa không thành công. Đợt có nhóm hoặc sinh viên đang hoạt động');
+            Toastr::warning('Xóa không thành công. Đợt có nhóm hoặc sinh viên đang hoạt động!', 'Warning');
+            return redirect()->route('internshipClass.index');
         }
         $intership->delete();
-        return redirect()->route('internshipClass.index')->with('success', 'Xóa thành công');
+        Toastr::success('Xóa thành công', 'Success');
+        return redirect()->route('internshipClass.index');
     }
 
 
@@ -108,7 +115,7 @@ class InternshipclassController extends Controller
                 'name' =>'required|unique:Internshipclass,name',
                 'start_day'=>'required|date',
                 'end_day'=>'required|date',
-                'student_amount'=>'required'
+               
 
             ],
             [
@@ -116,11 +123,11 @@ class InternshipclassController extends Controller
                 'name.required' =>'Bạn chưa nhập tên câu lạc bộ',
                 'start_day.required' => 'Bạn chưa nhập ngày bắt đầu',
                 'end_day.required' => 'Bạn chưa nhập ngày kết thúc',
-                'student_amount.required'=> 'Bạn chưa nhập số lượng sinh viên'
+              
 
             ]);
 
-            for( $i=0 ; $i < $request->student_amount ; $i++){
+            for( $i=0 ; $i < 25 ; $i++){
                 $member[$i] = $i;
             }
 
@@ -133,8 +140,8 @@ class InternshipclassController extends Controller
         $internshipclass->name_unsigned = $name_unsigned;
         $internshipclass->save();
 
-
-        return view('admin/pages/internshipClass/memberinternshipclass', ['member' => $member, 'nameclass' => $name_unsigned ])->with('thongbao','Thêm thành công');
+        Toastr::success('Thêm thành công', 'Success');
+        return view('admin/pages/internshipClass/memberinternshipclass', ['member' => $member, 'nameclass' => $name_unsigned ]);
     }
 
     public function postSua(Request $request, $id)
@@ -163,7 +170,8 @@ class InternshipclassController extends Controller
 
 
         $internshipclass->save();
-        return back()->with('thongbao','Cập nhật thành công');
+        Toastr::success('Cập nhật thành công', 'Success');
+        return back();
     }
 
     public function postMember(Request $request, $nameclass, $amount){
@@ -180,9 +188,6 @@ class InternshipclassController extends Controller
             $lastName = array_pop($words);
             $lastName = ucfirst( $lastName );
             $acronym = "";
-
-
-
 
 
             foreach ($words as $w) {
@@ -282,7 +287,7 @@ class InternshipclassController extends Controller
             $user->account = $lastName;
             $user->password = bcrypt("123456789");
             $user->name = $fullName;
-            $user->position = 0;
+            $user->position = 1;
             $user->class_id = $interclass->id;
             $user->status = 1;
             $user->save();

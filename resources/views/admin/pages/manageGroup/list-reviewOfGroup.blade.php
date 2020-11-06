@@ -32,23 +32,22 @@
         </thead>
         <tbody>
             @foreach ($reviews as $index => $review)
-                @if ($review->reviewer_id == Auth::id())
+                @if ($review->member->user->id == Auth::id())
                     <tr style="font-weight: 700; background-color: #ffb366">
-                        <td>{{$index}}</td>
+                        <td>{{++$index}}</td>
                         <td>{{$review->content}}</td>
-                        <td>{{$review->user->name}}</td>
+                        <td>{{$review->member->user->name}}</td>
                         <td>
-                            <a href="{{route('list.feedback', $review->id)}}" class="btn btn-primary">Detail</a>
+                            <a href="{{route('list.feedback', $review->id)}}" class="btn btn-primary">Chi tiết</a>
                         </td>
                     </tr>
-
                 @else
                     <tr>
-                        <td>{{$index}}</td>
+                        <td>{{++$index}}</td>
                         <td>{{$review->content}}</td>
-                        <td>{{$review->user->name}}</td>
+                        <td>{{$review->member->user->name}}</td>
                         <td>
-                            <a href="{{route('list.feedback', $review->id)}}" class="btn btn-primary">Detail</a>
+                            <a href="{{route('list.feedback', $review->id)}}" class="btn btn-primary">Chi tiết</a>
                         </td>
                     </tr>
 

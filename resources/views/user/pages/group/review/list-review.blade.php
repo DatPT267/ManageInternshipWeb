@@ -3,7 +3,7 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
-                <h1>Danh sách đánh giá <strong>{{Auth::user()->name}}</strong></h1>
+                <h1>Danh sách review <strong>{{$groupName}}</strong></h1>
                 <table class="table table-bordered table-hover" id="list-review">
                     <thead>
                         <tr>
@@ -33,7 +33,6 @@
                         @endforeach
                     </tbody>
                 </table>
-
                 <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-xl">
                         <div class="modal-content">
@@ -72,7 +71,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">

@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Tên </label>
-                                        <input type="text" id="name" class="form-control {{$errors->first('name') ? 'is-invalid' : ''}}"" name="name" value="{{old('name', $user->name)}}">
+                                        <input type="text" id="name" class="form-control {{$errors->first('name') ? 'is-invalid' : ''}}" name="name" value="{{old('name', $user->name)}}">
                                         <div class="invalid-feedback">
                                             {{$errors->first('name')}}
                                         </div>
@@ -62,9 +62,9 @@
                                     <div class="form-group">
                                         <label for="email">Email </label>
                                         <input type="text" id="email" class="form-control {{$errors->first('email') ? 'is-invalid' : ''}}" name="email" value="{{old('email', $user->email)}}">
-                                            <div class="invalid-feedback">
-                                                {{$errors->first('email')}}
-                                            </div>
+                                        <div class="invalid-feedback">
+                                            {{$errors->first('email')}}
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone">Số điện thoại</label>

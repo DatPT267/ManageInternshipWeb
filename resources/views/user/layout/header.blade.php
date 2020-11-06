@@ -16,10 +16,10 @@
                                 <a href="" title="Quản lý">Quản Lý</a>
                                     <ul class="subMenu">
                                         <li><a href="" title="Bài tập">Bài tập</a></li>
-                                        <li><a href="user/{{Auth::id()}}/check-in">Check-in</a></li>
-                                        <li><a href="user/{{Auth::id()}}/check-out">Check-out</a></li>
-                                        <li><a href="user/{{Auth::id()}}/reg-schedule" title="Đăng ký lịch thực tập">Đăng ký lịch thực tập</a></li>
-                                        <li><a href="user/{{Auth::id()}}/history-schedule" title="Đăng ký lịch thực tập">Lịch sử thực tập</a></li>
+                                        <li><a href="{{ route('checkin', Auth::id()) }}">Check-in</a></li>
+                                        <li><a href="{{ route('checkout', Auth::id()) }}">Check-out</a></li>
+                                        <li><a href="{{ route('user.regSchedule', Auth::id()) }}" title="Đăng ký lịch thực tập">Đăng ký lịch thực tập</a></li>
+                                        <li><a href="{{ route('user.hisSchedule', Auth::id()) }}" title="Đăng ký lịch thực tập">Lịch sử thực tập</a></li>
                                     </ul>
                             </li>
                         @endif

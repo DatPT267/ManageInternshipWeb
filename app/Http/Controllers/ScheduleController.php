@@ -164,7 +164,6 @@ class ScheduleController extends Controller
             {
                 $startDayOfWeek = $now->startOfWeek()->format('Y-m-d');
                 $endDayOfWeek = $now->endOfWeek()->format('Y-m-d');
-                Toastr::success('Bạn đăng ký lịch thực tập thành công!', 'success');
                 return view('user.pages.manage.register-schedule',
                         ['user'=>$id,
                         'check'=> 0,
@@ -176,7 +175,6 @@ class ScheduleController extends Controller
         }
         else
         {
-            Toastr::success('Bạn đăng ký lịch thực tập thành công!', 'success');
             return view('user.pages.manage.register-schedule',
                         ['user'=>$id,
                         'check'=> 0,
@@ -223,6 +221,7 @@ class ScheduleController extends Controller
                 }
             }
         }
-        return redirect('user/'.$user->id.'/reg-schedule')->with(['user'=>$user, 'success'=>'Bạn đã tạo lịch đăng ký thực tập thành công']);
+        Toastr::success('Bạn đã tạo lịch đăng ký thực tập thành công!', 'success');
+        return redirect()->route('user.regSchedule', $user->id);
     }
 }

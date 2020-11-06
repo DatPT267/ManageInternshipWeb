@@ -3,7 +3,7 @@
     <h1>Danh sách feedback</h1>
     <hr>
     <span>Nội dung: <strong>{{$review->content}}</strong></span><br>
-    <span>Người viết: <strong>{{$review->user->name}}</strong></span>
+    <span>Người viết: <strong>{{$review->member->user->name}}</strong></span>
     <hr>
     @if (count($errors) > 0)
         <div class="alert alert-danger">
@@ -34,7 +34,7 @@
             @foreach ($feedbacks as $key => $feedback)
                 @if ($feedback->user_id === Auth::id())
                     <tr style="font-weight: 700; background-color: #ffb366">
-                        <td>{{$key}}</td>
+                        <td>{{++$key}}</td>
                         <td>{{$feedback->user->name}}</td>
                         <td>{{$feedback->content}}</td>
                         <td>{{\Carbon\Carbon::parse($feedback->time)->isoFormat('HH:mm:ss D/M/Y')}}</td>
@@ -50,7 +50,7 @@
                     </tr>
                 @else
                     <tr>
-                        <td>{{$key}}</td>
+                        <td>{{++$key}}</td>
                         <td>{{$feedback->user->name}}</td>
                         <td>{{$feedback->content}}</td>
                         <td>{{\Carbon\Carbon::parse($feedback->time)->isoFormat('HH:mm:ss D/M/Y')}}</td>

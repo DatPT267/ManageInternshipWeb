@@ -26,7 +26,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('isAdmin', function ($user){
+        Gate::define('isAdminANDGVHD', function ($user){
             if($user->position != 1){
                 return true;
             }

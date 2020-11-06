@@ -6,6 +6,7 @@ use App\Group;
 use App\Review;
 use App\Task;
 use App\Feedback;
+use App\Member;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,12 +25,10 @@ class ReviewController extends Controller
                         ->where('user_id', null)
                         ->orderByDESC('id')
                         ->get();
-        $name_group = '';
-        foreach($reviews as $review){
-            $name_group = $review->group->name;
-            break;
-        }
-        return view('admin.pages.manageGroup.list-reviewOfGroup', ['reviews' => $reviews, 'id_group' => $id_group, 'name_group' => $name_group]);
+        $name_group = Group::find($id_group)->first();
+
+        // dd($reviews);
+        return view('admin.pages.manageGroup.list-reviewOfGroup', ['reviews' => $reviews, 'id_group' => $id_group, 'name_group' => $name_group->name]);
     }
 
     public function postReviewOfGroup($id, Request $request){
@@ -38,14 +37,14 @@ class ReviewController extends Controller
         ], [
             'content.required' => 'Nội dung review không để trống!',
         ]);
-
+        $memberID = Member::where('user_id', Auth::id())->first();
         $review = new Review();
         $review->content = $request->input('content');
-        $review->reviewer_id = Auth::id();
+        $review->reviewer_id = $memberID->id;
         $review->group_id = $id;
 
         $review->save();
-        return back()->with('success', 'Thêm reivew thành công');
+        return back()->with('success', 'Thêm review thành công');
     }
 
     public function getAjaxReview($id){
@@ -99,5 +98,15 @@ class ReviewController extends Controller
         $this->authorize('isAuthor', $id);
         $reviews = Review::where('user_id', $id)->where('group_id', null)->where('task_id', null)->orderByDESC('id')->get();
         return view('user.pages.review.list-review', ['reviews' => $reviews]);
+    }
+
+    //==============================REVIEW PROJECT======================================
+    public function getListReviewOfProject($id)
+    {
+        $this->authorize('isAuthor', Auth::id());
+        $groupName = Group::find($id);
+        $reviews = Review::where('user_id', null)->where('group_id', $id)->where('task_id', null)->orderByDESC('id')->get();
+        // dd($reviews);
+        return view('user.pages.group.review.list-review', ['reviews' => $reviews, 'groupName' => $groupName->name]);
     }
 }

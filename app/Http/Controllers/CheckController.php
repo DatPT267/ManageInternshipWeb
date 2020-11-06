@@ -88,14 +88,14 @@ class CheckController extends Controller
                         ->get();
             // dd($checks);
         }
-
+        // dd($checks);
         $sum_check = 0;
         foreach ($checks as $check) {
             if($check->date_end != null){
                 $sum_check++;
             }
         }
-
+        // dd($sum_check);
         $dataSch = [];
         foreach ($checks as $key => $value) {
             array_push($dataSch, $value->schedule_id);

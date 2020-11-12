@@ -56,10 +56,17 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     Route::resource('manageTask', 'TaskController');
     Route::get('manageTask/list-reviews-of-task/{id}', 'ReviewController@getListReviewOfTask')->name('list-review');
     Route::post('manageTask/list-reviews-of-task/{id}/create', 'ReviewController@postReviewOfTask')->name('post-review');
-    Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');
     Route::get('manageGroup/list-evaluate/{id}', 'GroupController@getListEvaluate');
     Route::post('manageGroup/sua/{id}', 'GroupController@postSua')->name('updategroup');
-    Route::post('them', 'GroupController@postThem')->name('addgroup');
+    Route::post('addgroup', 'GroupController@postThem')->name('addgroup');
+
+    Route::get('manageTask/add/{id}', 'TaskController@create')->name('addTask'); 
+    Route::post('manageTask/add/{id}', 'TaskController@addTask')->name('addTask');
+    Route::post('manageTask/delete/{id}', 'TaskController@delete')->name('deleteTask');
+    Route::post('manageTask/update/{id}', 'TaskController@update')->name('updateTask');
+
+    Route::get('assign/{id_task}/{id_member}', 'TaskController@assign')->name('assign');
+   
 
     //Quản lý sinh viên
     // Route::group(['prefix' => 'manageStudent'], function () {

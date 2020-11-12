@@ -112,7 +112,7 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
+    {      
         $task = Task::find($id);
         $member = Member::where('group_id', $task->group_id)->get();
         $assign = Assign::where('task_id', $id)->get();
@@ -127,9 +127,23 @@ class TaskController extends Controller
      * @param  \App\Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Task $task)
-    {
-        //
+    public function update(Request $request, $id)
+    {   
+       
+        $this->validate($request, [
+            'name' => 'required',
+            
+        ],[
+            'name.required' => 'Bạn chưa nhập tên Task',
+          
+            
+        ]);
+        $task = Task::find($id);
+        $task->name = $request->name;
+        $task->note = $request->note;
+        $task->status = $request->optradio;
+        $task->save();
+        return back()->with('thongbao', 'Cập nhật task thành công');
     }
 
     /**
@@ -141,5 +155,21 @@ class TaskController extends Controller
     public function destroy(Task $task)
     {
         //
+    }
+    public function assign($id_task, $id_member)
+    {   
+        $assign = Assign::where('task_id', $id_task)->get();
+        foreach($assign as $as){
+            if($as->member_id == $id_member){
+                $delete = Assign::where('member_id', $id_member )->where('task_id', $id_task)->take(1) ;
+                $delete->delete();
+                return 0;
+            }
+        }   
+        $add = new Assign();
+        $add->task_id = $id_task;
+        $add->member_id = $id_member;
+        $add->save();
+        return 1;
     }
 }

@@ -63,7 +63,10 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdmin'] ], f
     Route::get('manageTask/add/{id}', 'TaskController@create')->name('addTask'); 
     Route::post('manageTask/add/{id}', 'TaskController@addTask')->name('addTask');
     Route::post('manageTask/delete/{id}', 'TaskController@delete')->name('deleteTask');
-    Route::get('manageTask/update/{id}', 'TaskController@create')->name('addTask'); 
+    Route::post('manageTask/update/{id}', 'TaskController@update')->name('updateTask');
+
+    Route::get('assign/{id_task}/{id_member}', 'TaskController@assign')->name('assign');
+   
 
     //Quản lý sinh viên
     // Route::group(['prefix' => 'manageStudent'], function () {

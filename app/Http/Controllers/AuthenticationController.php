@@ -26,7 +26,9 @@ class AuthenticationController extends Controller
     		],
     		[
     			'account.required'=>'Bạn Chưa Nhập Tài Khoản',
-    			'password.required'=>'Bạn Chưa Nhập Password',
+                'password.required'=>'Bạn Chưa Nhập Password',
+                'password.min'=>'Mật khẩu quá ngắn',
+                'password.max'=>'Mật khẩu quá dài',
             ]);
         $account = $request->input('account');
         $password = $request->input('password');

@@ -24,7 +24,7 @@ class SendEmailController extends Controller
         $us->password = bcrypt($str);
         $us->save();
         Mail::to($user->email)->send(new SendMail($data));
-        return back()->with('thongbao', 'Tài khoản đã reset mật khẩu và gửi về mail của bạn');
+        return back()->with('thongbao', 'Tài khoản đã reset mật khẩu và gửi về mail');
     }
 }
 

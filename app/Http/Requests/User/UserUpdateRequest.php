@@ -28,8 +28,8 @@ class UserUpdateRequest extends FormRequest
             'name' => 'required|regex:/^([aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆ
                                 fFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTu
                                 UùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ\s]*)$/',
-            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:11',
-            'address' => 'required'
+            'phone' => 'max:11',
+            'image' => 'mimes:png,jpg,gif,jpeg',
         ];
     }
 
@@ -38,12 +38,9 @@ class UserUpdateRequest extends FormRequest
         return [
             'email.email' => 'Email chưa đúng',
             'name.required' => 'Bạn chưa nhập tên',
-            'phone.required' => "Bạn chưa nhập số điện thoại",
-            'phone.regex' => "Số điện thoại không đúng",
             'name.regex' => "Tên không đúng",
-            'phone.min' => 'Số điện thoại từ 10-11 kí tự số.',
             'phone.max' => 'Số điện thoại từ 10-11 kí tự số.',
-            'address.required' => 'Bạn chưa nhập địa chỉ.'
+            'image.mimes' => "Bạn chỉ được chọn file có đuổi png, jpg, jpeg, gif",
         ];
     }
 }

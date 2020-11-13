@@ -91,8 +91,9 @@
                         </div>
                     </div>
                     <div id="menu1" class="container tab-pane fade"><br>
+                        <h3>Đổi mật khẩu</h3>
                         <form id="form-forgot-pass" action="{{ route('changepassword', $user->id)}}" method="post"  enctype="multipart/form-data">
-                            <input type="hidden" name="_token" value="{{csrf_token()}}" />
+                            {{-- <input type="hidden" name="_token" value="{{csrf_token()}}" />
                             <h3>Đổi mật khẩu</h3>
                             <div class="form-group">
                                 <div class="clearfix">
@@ -120,6 +121,23 @@
                             </div>
                             <div class="form-group text-center">
                                 <button type="submit" id="btn-send-forgot-pass" class="btn btn-success">Đổi mật khẩu</button>
+                            </div> --}}
+                            @csrf
+                            @method('PUT')
+                            <div class="form-group">
+                                <label for="oldPassword">Mật khẩu cũ</label>
+                                <input type="password" name="oldPassword" id="oldPassword" class="form-control" placeholder="Nhập mật khẩu cũ">
+                            </div>
+                            <div class="form-group">
+                                <label for="newPassword">Mật khẩu mới</label>
+                                <input type="text" name="newPassword" id="newPassword" class="form-control" placeholder="Nhập mật khẩu mới">
+                            </div>
+                            <div class="form-group">
+                                <label for="confirm_newPassword">Xác nhận mật khẩu</label>
+                                <input type="text" name="confirm_newPassword" id="confirm_newPassword" class="form-control" placeholder="Xác nhận mật khẩu">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success form-control">Lưu</button>
                             </div>
                         </form>
                     </div>

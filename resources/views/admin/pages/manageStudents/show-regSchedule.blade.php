@@ -15,14 +15,14 @@
         </span>
     </a>
     <h1 style="text-align: center">Lịch thực tập của sinh viên <strong style="color: red">{{$name}}</strong></h1>
-    <button class="btn btn-light btn-icon-split" id="btn-before" disabled>
+    <button class="btn btn-light btn-icon-split" id="btn-before">
         <span class="icon text-gray-600">
             <i class="fas fa-arrow-left"></i>
         </span>
     </button>
     Tuần <input type="text" id="week"
                             style="text-align: center; width: 3rem"
-                            value="1"
+                            value="{{ $week }}"
                             data-month="{{$month}}"
                             data-url="{{route('ajax.schedule')}}"
                             data-week="{{$numberWeekOfMonth}}"
@@ -153,10 +153,12 @@
                     success: function (response) {
                         console.log(response);
                         var output = "";
+                        var index = 0;
                         if(response.data.length != 0){
                             for (let i = 0; i < response.data.length; i++) {
+                                index++;
                                 output += "<tr>"+
-                                    "<td>"+response.data[i].index+"</td>"+
+                                    "<td>"+ index +"</td>"+
                                     "<td>"+checkDay(response.data[i].englishDayOfWeek)+" <span class='badge badge-info'>"+response.data[i].date+"</span>"+"</td>"+
                                     "<td>"+checkSession(response.data[i].session)+"</td>"
                                 +"</tr>";

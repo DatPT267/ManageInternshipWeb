@@ -113,7 +113,7 @@ class InternshipclassController extends Controller
           [
 
               'name' =>'required|unique:Internshipclass,name',
-              'start_day'=>'required|date|before:end_date',
+              'start_day'=>'required|date|before:end_day',
               'end_day'=>'required|date',
               
 
@@ -123,7 +123,8 @@ class InternshipclassController extends Controller
               'name.required' =>'Bạn chưa nhập tên đợt thực tập',
               'start_day.required' => 'Bạn chưa nhập ngày bắt đầu',
               'end_day.required' => 'Bạn chưa nhập ngày kết thúc',
-              'start_day.before' => 'Ngày kết thúc không phù hợp',
+              'start_day.before' => 'Ngày kết thúc phải lớn hơn ngày bắt đầu'
+            
             
 
           ]);
@@ -131,6 +132,7 @@ class InternshipclassController extends Controller
       for( $i=0 ; $i < 25 ; $i++){
           $member[$i] = $i;
       }
+
 
         $internshipclass = new Internshipclass;
         $internshipclass->name = $request->name;
@@ -152,7 +154,7 @@ class InternshipclassController extends Controller
             [ 
 
                 'name' =>'required',
-                'start_day'=>'required|date|before:end_date',
+                'start_day'=>'required|date|before:end_day',
                 'end_day'=>'required|date',
 
             ],
@@ -160,15 +162,11 @@ class InternshipclassController extends Controller
                 'name.required' =>'Bạn chưa nhập tên đợt thực tập',
                 'start_day.required' => 'Bạn chưa nhập ngày bắt đầu',
                 'end_day.required' => 'Bạn chưa nhập ngày kết thúc',
-                'start_day.before' => 'Ngày kết thúc không phù hợp',
+                'start_day.before' => 'Ngày kết thúc phải lớn hơn ngày bắt đầu'
 
             ]);
 
-        // $start_day = $request->start_day;
-        // $end_day = $request->end_day;
-        // if (strtotime($start_day) > strtotime($end_day)){
-        //   return back()->with('thongbao', 'Ngày kết thúc dự kiến không phù hợp');
-        // }
+
         $internshipclass = Internshipclass::find($id);
         $internshipclass->name = $request->name;
         $internshipclass->end_day = $request->end_day;

@@ -14,27 +14,28 @@
                     @endif
                     <div class="form-group">
                         <label style="color: #000;">Tên Đợt Thực Tập</label>
-                    <input class="form-control" name="name" placeholder="Nhập Tên Đợt Thực Tập" value="{{$class->name}}"/>
+                    <input class="form-control" name="name" placeholder="Nhập Tên Đợt Thực Tập" value="{{ old('name', $class->name) }}"/>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span class="form-label" style="color: #000;">Ngày Bắt Đầu</span>
-                                <input class="form-control" name="start_day"type="date" readonly  value="{{\Carbon\Carbon::parse($class->start_day)->format('Y-m-d')}}"/>
+                                <input class="form-control" name="start_day"type="date" readonly  value="{{ old('start_day',\Carbon\Carbon::parse($class->start_day)->format('Y-m-d')) }}" />
                             </div>
                         </div>
                         <div class="col-md-6">
 
                             <div class="form-group">
                                 <span class="form-label" style="color: #000;">Ngày Kết Thúc Dự Kiến</span>
-                                <input class="form-control" name="end_day" type="date" value="{{\Carbon\Carbon::parse($class->end_day)->format('Y-m-d')}}"/>
+                                <input class="form-control" name="end_day" type="date" value="{{ old('end_day',\Carbon\Carbon::parse($class->end_day)->format('Y-m-d')) }}"/>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label style="color: #000;">Ghi Chú</label>
-                        <input class="form-control" name="note" placeholder="Nhập Ghi Chú"  value="{{$class->note}}"/>
+                        <textarea class="form-control" name="note" id="" cols="30" rows="3" placeholder="Nhập Ghi Chú">{{ old('note', $class->note) }}</textarea>
+
                     </div>
                     <div class="">
                         <button  style=" color: #fff;

@@ -47,8 +47,6 @@
                 --}}
                 <a class="collapse-item" href="{{route('manageStudents.index')}}">Danh sách sinh viên</a>
                 <a class="collapse-item" href="{{route('manageStudents.create')}}">Thêm sinh viên</a>
-                <a class="collapse-item" href="{{ route('list-schedule.index') }}">Lịch đăng ký thực tập</a>
-                <a class="collapse-item" href="{{ route('statistical.checkin-out') }}">Lịch sử thực tập</a>
             </div>
         </div>
     </li>

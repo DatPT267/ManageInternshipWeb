@@ -50,22 +50,20 @@
             </div>
         </div>
     </li>
-    <hr class="sidebar-divider">
-    <li class="nav-item">
+    {{-- <hr class="sidebar-divider"> --}}
+    {{-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#QLTask" aria-expanded="true" aria-controls="collapseTwo">
         <i class="fas fa-fw fa-cog"></i>
         <span>Quản lý task</span>
         </a>
         <div id="QLTask" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                {{--
-                <h6 class="collapse-header">Custom Components:</h6>
-                --}}
+               
                 <a class="collapse-item" href="{{route('manageTask.index')}}">Danh sách task</a>
                 <a class="collapse-item" href="{{route('manageTask.create')}}">Thêm task</a>
             </div>
         </div>
-    </li>
+    </li> --}}
     <hr class="sidebar-divider">
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">

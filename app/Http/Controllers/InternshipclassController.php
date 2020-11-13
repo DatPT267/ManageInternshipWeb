@@ -24,7 +24,7 @@ class InternshipclassController extends Controller
      */
     public function index()
     {
-        $listClass = Internshipclass::paginate(10);
+        $listClass = Internshipclass::orderBy('id', 'desc')->paginate(10);
         return view('admin.pages.internshipClass.list', ['listClass'=>$listClass]);
     }
 

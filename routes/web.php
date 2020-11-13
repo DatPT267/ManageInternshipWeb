@@ -41,6 +41,7 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     Route::post('internshipClass/sua/{id}', 'internshipclassController@postSua')->name('updateclass');
     Route::post('internshipClass/member/{nameclass}', 'internshipclassController@postMember')->name('member');
     Route::get('internshipClass/list-member/{class_id}', 'internshipclassController@getList')->name('list');
+    Route::get('internshipClass/listsv/{id}','InternshipclassController@getshow')-> name('showsinhvien');
 
     //Quản lý nhóm
     Route::resource('manageGroup', 'GroupController');

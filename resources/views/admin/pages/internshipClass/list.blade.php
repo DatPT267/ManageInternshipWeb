@@ -16,7 +16,7 @@
     @endif
     <table class="table table-striped table-bordered table-hover" id="list-internship">
         <thead>
-            <tr align="center">
+            <tr>
                 <th>STT</th>
                 <th>Tên đợt</th>
                 <th>Ngày bắt đầu</th>
@@ -35,7 +35,8 @@
                 <td>{{\Carbon\Carbon::parse($lc->end_day)->format('d-m-Y')}}</td>
                 <td>{{$lc->note}}</td>
                 <td class="center">
-                    <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
+                <a href="{{route('showsinhvien', $lc->id)}}" class="btn btn-warning">Danh Sách Sinh Viên</a>
+                <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
                     <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{route('internshipClass.destroy', $lc->id)}}" data-target="#exampleModal">
                         Xóa
                     </button>

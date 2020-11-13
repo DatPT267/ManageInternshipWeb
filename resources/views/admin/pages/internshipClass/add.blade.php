@@ -21,27 +21,28 @@
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="form-group">
                         <label style="color: #000;">Tên Đợt Thực Tập</label>
-                        <input class="form-control save_local" name="name" placeholder="Nhập Tên Đợt Thực Tập" />
+                    <input class="form-control save_local" name="name" placeholder="Nhập Tên Đợt Thực Tập" value="{{ old('name') }}"/>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span class="form-label" style="color: #000;">Ngày Bắt Đầu</span>
-                                <input class="form-control save_local"name="start_day" type="date" required>
+                                <input class="form-control save_local"name="start_day" type="date" value="{{ old('start_day') }}" required>
                             </div>
                         </div>
                         <div class="col-md-6">
 
                             <div class="form-group">
                                 <span class="form-label" style="color: #000;">Ngày Kết Thúc Dự Kiến</span>
-                                <input class="form-control save_local" name="end_day"type="date" required>
+                                <input class="form-control save_local" name="end_day"type="date" value="{{ old('end_day') }}" required>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label style="color: #000;">Ghi Chú</label>
-                        <input class="form-control save_local" name="note" placeholder="Nhập Ghi Chú" />
+                        {{-- <input class="form-control save_local" name="note" placeholder="Nhập Ghi Chú" value="{{ old('note') }}" /> --}}
+                        <textarea class="form-control" name="note" id="" cols="30" rows="3" placeholder="Nhập Ghi Chú">{{ old('note') }}</textarea>
                     </div>
                     <div class="">
                         <button  style=" color: #fff;
@@ -61,30 +62,9 @@
 </div>
 @endsection
 @section('script')
-    <script>
-        const KEY = 'inter-create';
-        const valueItem = JSON.parse(localStorage.getItem(KEY)) || {};
-        Object.keys(valueItem).forEach(key => {
-            const valueInput = valueItem[key];
-            document.querySelector('.save_local[name="'+key+'"]').value = valueInput;
-        })
-        const inputs = document.querySelectorAll('.save_local');
-        const handleInput = function(input) {
-            input.addEventListener('input', function(e) {
-                const value = JSON.parse(localStorage.getItem(KEY)) || {};
-                const name = input.name;
-                if (name && input.value) {
-                    value[name] = input.value;
-                    localStorage.setItem(KEY, JSON.stringify(value));
-                }
-            })
-        }
-        inputs.forEach(handleInput);
-        document.getElementById('intern-create_form').addEventListener('onunload', function(e) {
-            localStorage.removeItem(KEY);
-        })
-        document.getElementById('intern-create_form').addEventListener('reset', function(e) {
-            localStorage.removeItem(KEY);
-        })
-    </script>
+<script>
+    @foreach ($errors->all() as $error)
+        toastr.warning("{{$error}}")
+    @endforeach
+</script>
 @endsection

@@ -301,6 +301,13 @@ class InternshipclassController extends Controller
       return view('admin/pages/internshipClass/memberclass',['usermember'=> $usermember] );
     }
 
+  public function getshow($id){
+    
+    $show = User::where('class_id', $id)->get();
+    $sinhvien =  Internshipclass::where('id', $id)->firstOrFail();
+   
+    return view('admin.pages.internshipClass.show',['show'=>$show, 'sinhvien'=>$sinhvien]);
+  }
 
 
 

@@ -22,28 +22,33 @@
                 <th>Ngày bắt đầu</th>
                 <th>Ngày kết thúc</th>
                 <th>Ghi chú</th>
-                <th></th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
             <?php $i = 0; ?>
             @foreach ($listClass as $lc)
-            <tr class="odd gradeX" align="center">
+            <tr class="odd gradeX">
                 <td>{{++$i}}</td>
                 <td>{{$lc->name}}</td>
                 <td>{{\Carbon\Carbon::parse($lc->start_day)->format('d-m-Y')}}</td>
                 <td>{{\Carbon\Carbon::parse($lc->end_day)->format('d-m-Y')}}</td>
                 <td>{{$lc->note}}</td>
                 <td class="center">
+                    <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
                     <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{route('internshipClass.destroy', $lc->id)}}" data-target="#exampleModal">
                         Xóa
                     </button>
-                    <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
+                    
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+    <div class="pagination justify-content-center">
+        {{ $listClass->links()}}
+    </div>
+    
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -75,6 +80,7 @@
             $('#list-internship').dataTable({
                 'info': false,
                 'bLengthChange': false,
+                'paging': false,
                 'columns': [
                     {'orderable': true},
                     {'orderable': false},
@@ -82,6 +88,7 @@
                     {'orderable': false},
                     {'orderable': false},
                     {'orderable': false},
+
                 ]
             });
 

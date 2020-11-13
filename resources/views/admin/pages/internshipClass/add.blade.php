@@ -17,31 +17,31 @@
                         {{session('thongbao')}}
                     </div>
                 @endif
-                <form action="{{ route('addClass')}}" method="POST" enctype="">
+                <form action="{{ route('addClass')}}" method="POST" enctype="" id="intern-create_form" >
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <div class="form-group">
                         <label style="color: #000;">Tên Đợt Thực Tập</label>
-                        <input class="form-control" name="name" placeholder="Nhập Tên Đợt Thực Tập" />
+                        <input class="form-control save_local" name="name" placeholder="Nhập Tên Đợt Thực Tập" />
                     </div>
 
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <span class="form-label" style="color: #000;">Ngày Bắt Đầu</span>
-                                <input class="form-control"name="start_day" type="date" required>
+                                <input class="form-control save_local"name="start_day" type="date" required>
                             </div>
                         </div>
                         <div class="col-md-6">
 
                             <div class="form-group">
                                 <span class="form-label" style="color: #000;">Ngày Kết Thúc Dự Kiến</span>
-                                <input class="form-control" name="end_day"type="date" required>
+                                <input class="form-control save_local" name="end_day"type="date" required>
                             </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label style="color: #000;">Ghi Chú</label>
-                        <input class="form-control" name="note" placeholder="Nhập Ghi Chú" />
+                        <input class="form-control save_local" name="note" placeholder="Nhập Ghi Chú" />
                     </div>
                     <div class="">
                         <button  style=" color: #fff;
@@ -59,4 +59,32 @@
     </div>
     <!-- /.container-fluid -->
 </div>
+@endsection
+@section('script')
+    <script>
+        const KEY = 'inter-create';
+        const valueItem = JSON.parse(localStorage.getItem(KEY)) || {};
+        Object.keys(valueItem).forEach(key => {
+            const valueInput = valueItem[key];
+            document.querySelector('.save_local[name="'+key+'"]').value = valueInput;
+        })
+        const inputs = document.querySelectorAll('.save_local');
+        const handleInput = function(input) {
+            input.addEventListener('input', function(e) {
+                const value = JSON.parse(localStorage.getItem(KEY)) || {};
+                const name = input.name;
+                if (name && input.value) {
+                    value[name] = input.value;
+                    localStorage.setItem(KEY, JSON.stringify(value));
+                }
+            })
+        }
+        inputs.forEach(handleInput);
+        document.getElementById('intern-create_form').addEventListener('onunload', function(e) {
+            localStorage.removeItem(KEY);
+        })
+        document.getElementById('intern-create_form').addEventListener('reset', function(e) {
+            localStorage.removeItem(KEY);
+        })
+    </script>
 @endsection

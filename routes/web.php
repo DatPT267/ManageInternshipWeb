@@ -37,10 +37,11 @@ Route::get('/admin',function ()
 Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD'] ], function () {
     //quản lý đợt thực tập
     Route::resource('internshipClass', 'internshipclassController');
-    Route::post('them1', 'internshipclassController@postThem')->name('addClass');
+    Route::post('internshipClass/add', 'internshipclassController@postThem')->name('addClass');
     Route::post('internshipClass/sua/{id}', 'internshipclassController@postSua')->name('updateclass');
-    Route::post('internshipClass/member/{nameclass}/{amount} ', 'internshipclassController@postMember')->name('member');
+    Route::post('internshipClass/member/{nameclass}', 'internshipclassController@postMember')->name('member');
     Route::get('internshipClass/list-member/{class_id}', 'internshipclassController@getList')->name('list');
+    Route::get('internshipClass/listsv/{id}','InternshipclassController@getshow')-> name('showsinhvien');
 
     //Quản lý nhóm
     Route::resource('manageGroup', 'GroupController');
@@ -56,10 +57,17 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     Route::resource('manageTask', 'TaskController');
     Route::get('manageTask/list-reviews-of-task/{id}', 'ReviewController@getListReviewOfTask')->name('list-review');
     Route::post('manageTask/list-reviews-of-task/{id}/create', 'ReviewController@postReviewOfTask')->name('post-review');
-    Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');
     Route::get('manageGroup/list-evaluate/{id}', 'GroupController@getListEvaluate');
     Route::post('manageGroup/sua/{id}', 'GroupController@postSua')->name('updategroup');
-    Route::post('them', 'GroupController@postThem')->name('addgroup');
+    Route::post('addgroup', 'GroupController@postThem')->name('addgroup');
+
+    Route::get('manageTask/add/{id}', 'TaskController@create')->name('addTask'); 
+    Route::post('manageTask/add/{id}', 'TaskController@addTask')->name('addTask');
+    Route::post('manageTask/delete/{id}', 'TaskController@delete')->name('deleteTask');
+    Route::post('manageTask/update/{id}', 'TaskController@update')->name('updateTask');
+
+    Route::get('assign/{id_task}/{id_member}', 'TaskController@assign')->name('assign');
+   
 
     //Quản lý sinh viên
     // Route::group(['prefix' => 'manageStudent'], function () {

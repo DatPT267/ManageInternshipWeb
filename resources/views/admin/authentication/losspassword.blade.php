@@ -6,6 +6,7 @@
     <div class="loginbox col-sm-6" >
         
         <h1>Đặt Lại mật khẩu</h1>
+        <p style="text-align: center">Vui lòng nhập email để lấy lại mật khẩu</p>
         @if(count($errors)>0)
             <div class="alert alert-danger" style="text-align: center">
                 @foreach($errors->all() as $err)
@@ -20,7 +21,7 @@
         </div>
         <form role="form" action="../user/losspassword" method="POST" >
             <input type="hidden" name="_token" value="{{csrf_token()}}">
-            <p>Vui lòng nhập email để lấy Lại mật khẩu của bạn</p>
+            
             <input type="text" name="email">
             <br>
 

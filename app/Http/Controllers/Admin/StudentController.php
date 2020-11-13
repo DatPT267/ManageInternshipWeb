@@ -181,10 +181,11 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        if(file_exists("image/user/".$user->image)){
-            unlink("image/user/".$user->image);
+        $user = $this->user->findOrFail($id);
+        if($user->image != ""){
+            unlink('image/user/'.$user->image);
         }
         $user->delete();
         Toastr::success('Xóa thành công', 'success');

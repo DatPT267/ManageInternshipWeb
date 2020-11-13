@@ -67,7 +67,7 @@
                     </td>
                     <td class="center">
                         <a href="{{route('manageStudents.edit', $student->id)}}" class="btn btn-info">Cập nhật</a>
-                        <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{route('manageStudents.destroy', $student->id)}}" data-target="#exampleModal">
+                        <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{ route('manageStudents.destroy', $student->id) }}" data-target="#exampleModal">
                             Xóa
                         </button>
                     </td>
@@ -92,7 +92,7 @@
             </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-                    <form id="form-delete" method="post">
+                    <form id="form-delete" method="post" action="{{ route('manageStudents.destroy', $student->id) }}">
                         @csrf
                         @method('DELETE')
                         <input type="submit" value="Xóa" class="btn btn-danger">
@@ -120,10 +120,12 @@
                     {'orderable': false},
                     {'orderable': true},
                     {'orderable': false},
+                    {'orderable': false},
                 ]
             });
             $('.btn-delete').click(function (){
                 var url = $(this).attr('data-url');
+                console.log(url);
                 $('#form-delete').attr('action', url);
             })
         })

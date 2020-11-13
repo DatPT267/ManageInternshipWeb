@@ -41,7 +41,7 @@ class MemberController extends Controller
                 ->whereRaw('member.user_id = users.id');
         })->get();
 
-        // dd($students);
+        
         return view('admin.pages.manageGroup.add-member', ['students'=>$students, 'group'=>$group]);
     }
 

@@ -129,8 +129,7 @@ class GroupController extends Controller
     public function getListTask($id){
         $listTask = Task::where('group_id', $id)->get();
         $group = Group::find($id);
-        // return $listTask->group->name->first();
-        return view('admin.pages.manageGroup.list-task', ['listTask'=>$listTask, 'group'=>$group->name ]);
+        return view('admin.pages.manageGroup.list-task', ['listTask'=>$listTask, 'group'=>$group ]);
     }
     public function getListEvaluate($id){
         return view('admin.pages.manageGroup.list-Evaluate');

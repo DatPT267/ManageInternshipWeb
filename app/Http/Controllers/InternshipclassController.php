@@ -24,7 +24,7 @@ class InternshipclassController extends Controller
      */
     public function index()
     {
-        $listClass = Internshipclass::all();
+        $listClass = Internshipclass::paginate(10);
         return view('admin.pages.internshipClass.list', ['listClass'=>$listClass]);
     }
 
@@ -109,27 +109,31 @@ class InternshipclassController extends Controller
     public function postThem(Request $request)
     {
 
-        $this->validate($request,
-            [
+      $this->validate($request,
+          [
 
-                'name' =>'required|unique:Internshipclass,name',
-                'start_day'=>'required|date',
-                'end_day'=>'required|date',
-               
-
-            ],
-            [
-                'name.unique' => 'Tên đợt thực tập đã tồn tại',
-                'name.required' =>'Bạn chưa nhập tên câu lạc bộ',
-                'start_day.required' => 'Bạn chưa nhập ngày bắt đầu',
-                'end_day.required' => 'Bạn chưa nhập ngày kết thúc',
+              'name' =>'required|unique:Internshipclass,name',
+              'start_day'=>'required|date',
+              'end_day'=>'required|date',
               
 
-            ]);
+          ],
+          [
+              'name.unique' => 'Tên đợt thực tập đã tồn tại',
+              'name.required' =>'Bạn chưa nhập tên câu lạc bộ',
+              'start_day.required' => 'Bạn chưa nhập ngày bắt đầu',
+              'end_day.required' => 'Bạn chưa nhập ngày kết thúc',
+            
 
-            for( $i=0 ; $i < 25 ; $i++){
-                $member[$i] = $i;
-            }
+          ]);
+      $start_day = $request->start_day;
+      $end_day = $request->end_day;
+      if (strtotime($start_day) > strtotime($end_day)){
+        return back()->with('thongbao', 'Ngày kết thúc không phù hợp');
+      }
+      for( $i=0 ; $i < 25 ; $i++){
+          $member[$i] = $i;
+      }
 
         $internshipclass = new Internshipclass;
         $internshipclass->name = $request->name;
@@ -148,7 +152,7 @@ class InternshipclassController extends Controller
     {
 
         $this->validate($request,
-            [
+            [ 
 
                 'name' =>'required',
                 'start_day'=>'required|date',
@@ -162,7 +166,11 @@ class InternshipclassController extends Controller
 
             ]);
 
-
+        $start_day = $request->start_day;
+        $end_day = $request->end_day;
+        if (strtotime($start_day) > strtotime($end_day)){
+          return back()->with('thongbao', 'Ngày kết thúc dự kiến không phù hợp');
+        }
         $internshipclass = Internshipclass::find($id);
         $internshipclass->name = $request->name;
         $internshipclass->end_day = $request->end_day;
@@ -174,16 +182,20 @@ class InternshipclassController extends Controller
         return back();
     }
 
-    public function postMember(Request $request, $nameclass, $amount){
-
+    public function postMember(Request $request, $nameclass){
+        $amount = count($request->input('name_student'));
+        $array_student = $request->input('name_student');
+   
+       
         $interclass = Internshipclass::where('name_unsigned', $nameclass)->get()->first();
-        for($i =0 ; $i<= $amount; $i++){
-            $a = "name".$i;
-            $fullName = $request->$a;
-            if($fullName == null){
+      
+       
+        for($i =0 ; $i< $amount; $i++){
+      
+            if($array_student[$i] == null){
               continue;
             }
-            $name = changeTitle($fullName);
+            $name = changeTitle($array_student[$i]);
             $words = explode("-", $name);
             $lastName = array_pop($words);
             $lastName = ucfirst( $lastName );
@@ -286,12 +298,13 @@ class InternshipclassController extends Controller
             $user = new User;
             $user->account = $lastName;
             $user->password = bcrypt("123456789");
-            $user->name = $fullName;
+            $user->name = $array_student[$i];
             $user->position = 1;
             $user->class_id = $interclass->id;
             $user->status = 1;
             $user->save();
         }
+  
         $class_id = $interclass->id;
         return redirect()->route('list', ['class_id' => $class_id]);
     }

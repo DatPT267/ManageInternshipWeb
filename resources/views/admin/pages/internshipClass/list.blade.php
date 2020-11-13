@@ -22,7 +22,7 @@
                 <th>Ngày bắt đầu</th>
                 <th>Ngày kết thúc</th>
                 <th>Ghi chú</th>
-                <th></th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
@@ -46,6 +46,10 @@
             @endforeach
         </tbody>
     </table>
+    <div class="pagination justify-content-center">
+        {{ $listClass->links()}}
+    </div>
+    
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -77,6 +81,7 @@
             $('#list-internship').dataTable({
                 'info': false,
                 'bLengthChange': false,
+                'paging': false,
                 'columns': [
                     {'orderable': true},
                     {'orderable': false},
@@ -84,6 +89,7 @@
                     {'orderable': false},
                     {'orderable': false},
                     {'orderable': false},
+
                 ]
             });
 

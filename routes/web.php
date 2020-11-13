@@ -82,19 +82,19 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     Route::get('ajax/statistical-checkin-checkout', 'CheckController@ajaxStatistical')->name('ajax.statistical');
     //lịch sử thực tập, lịch đăng ký thực tập của sinh viên (14-15)
     Route::group(['prefix' => 'student'], function () {
-        Route::get('/{id}/view-schedule/month={number}', 'ScheduleController@viewSchedule')->name('view-schedule');
-        Route::get('/ajax/view-schedule/', 'ScheduleController@ajaxViewSchedule')->name('ajax.schedule');
+        Route::get('/{id}/view-schedule/month={number}', 'Admin\ScheduleController@show')->name('view-schedule');
+        Route::get('/ajax/view-schedule/', 'Admin\ScheduleController@ajaxViewSchedule')->name('ajax.schedule');
 
-        Route::get('/{id}/view-history-schedule/month={number}', 'CheckController@viewHisCheck')->name('view-history-check');
-        Route::get('/ajax/{idcheck}/view-history-schedule', 'CheckController@ajaxTask')->name('ajax.view-task');
+        Route::get('/{id}/view-history-schedule/month={number}', 'Admin\CheckController@show')->name('view-history-check');
+        Route::get('/ajax/{idcheck}/view-history-schedule', 'Admin\CheckController@ajaxTask')->name('ajax.view-task');
     });
     //     Route::get('/show-history-register-schedule', 'ScheduleController`@index');
     // });
-    Route::resource('manageStudents', 'UserController');
-    Route::post('manageStudents/sua/{id}', 'UserController@postSua')->name('updatestudent');
+    Route::resource('manageStudents', 'Admin\StudentController');
+    Route::put('manageStudents/sua/{user}', 'UserController@updatestudent')->name('updatestudent');
     Route::post('addStudent', 'UserController@postThem')->name('addstudent');
     Route::get('manageStudents/edit/{id}', 'UserController@editUser')->name('editUser');
-    Route::get('manageStudents/resetpassword/{id}','UserController@resetpassword')->name('resetpass');
+    Route::get('manageStudents/resetpassword/{user}','Admin\StudentController@resetpassword')->name('resetPasswordStudent');
 
     Route::group(['prefix' => 'group'], function () {
         Route::get('/{id}/list-member', 'MemberController@listMemberGroup')->name('group.listMember');
@@ -135,8 +135,8 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
 
 
 //=======================================PROFILE==================================================================================================
-Route::resource('user', 'UserController')->middleware('auth');
-Route::post('user/{id}/edit/changepassword', 'UserController@changepassword')->middleware('auth')->name('changepassword');
+Route::resource('user', 'User\UserController')->middleware('auth');
+Route::put('user/{user}/changepassword', 'User\UserController@changePasswordUser')->middleware('auth')->name('changepassword');
 //=======================================PROFILE==================================================================================================
 
 

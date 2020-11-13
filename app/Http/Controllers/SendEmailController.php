@@ -10,10 +10,10 @@ use Illuminate\Support\Str;
 
 class SendEmailController extends Controller
 {
-   
-    function send($email)
-    {   
-        
+
+    public function send($email)
+    {
+
         $user = User::where('email', $email)->get()->first();
         $str = Str::random(10);
         $data = array(
@@ -26,6 +26,8 @@ class SendEmailController extends Controller
         Mail::to($user->email)->send(new SendMail($data));
         return back()->with('thongbao', 'Tài khoản đã reset mật khẩu và gửi về mail');
     }
+
+
 }
 
 ?>

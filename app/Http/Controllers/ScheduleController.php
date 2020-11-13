@@ -51,9 +51,7 @@ class ScheduleController extends Controller
     }
 
     public function viewSchedule($id, $month){
-        $todayMonth = Carbon::now()->month;
-        // dd($week);
-        $now = Carbon::createFromDate(null, $month, 1, 'asia/Ho_Chi_Minh');
+        $now = Carbon::createFromDate(null, $month, null, 'asia/Ho_Chi_Minh');
         // dd($now);
         $day_start_week = $now->startOfWeek()->isoFormat('Y-M-D');
         $day_end_week = $now->endOfWeek()->isoFormat('Y-M-D');
@@ -61,13 +59,14 @@ class ScheduleController extends Controller
         $schedules = Schedule::where('user_id', $id)
                             ->whereRaw("date(date) BETWEEN '".$day_start_week."' AND '".$day_end_week."'")
                             ->get();
-        // dd($day_start_week);
+        // dd($schedules);
         return view('admin.pages.manageStudents.show-regSchedule',
                         [
                             'schedules' => $schedules,
                             'name' => $name->name,
                             'month' => $month,
                             'id' => $id,
+                            'week' => $now->weekNumberInMonth,
                             'numberWeekOfMonth' => Carbon::createFromDate(null, $month, 1, 'asia/Ho_Chi_Minh')->endOfMonth()->weekOfMonth
                         ]);
     }

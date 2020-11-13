@@ -8,7 +8,7 @@
                     <input type="hidden" name="_token" value="{{csrf_token()}}">
                     <h2 style="text-align:center; font-weight: bold; color: #000;" >Cập nhật đợt thực tập</h2>
                     @if(session('thongbao'))
-                        <div class="alert alert-success">
+                        <div class="alert alert-danger">
                             {{session('thongbao')}}
                         </div>
                     @endif

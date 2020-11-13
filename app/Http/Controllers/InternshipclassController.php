@@ -120,7 +120,7 @@ class InternshipclassController extends Controller
           ],
           [
               'name.unique' => 'Tên đợt thực tập đã tồn tại',
-              'name.required' =>'Bạn chưa nhập tên câu lạc bộ',
+              'name.required' =>'Bạn chưa nhập tên đợt thực tập',
               'start_day.required' => 'Bạn chưa nhập ngày bắt đầu',
               'end_day.required' => 'Bạn chưa nhập ngày kết thúc',
             

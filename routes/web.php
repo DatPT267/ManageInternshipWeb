@@ -39,10 +39,17 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     //Quản lý nhóm
     Route::resource('manageGroup', 'Admin\GroupController');
     Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');;
-
-    //đánh giá group
     Route::get('manageGroup/list-reviews-of-group/{id}', 'ReviewController@getListReviewOfGroup')->name('group.list-review');
     Route::post('manageGroup/list-reviews-of-group/{id}/create', 'ReviewController@postReviewOfGroup')->name('post.group.list-review');
+    Route::group(['prefix' => 'group'], function () {
+        Route::get('/{group}/list-member', 'Admin\MemberController@show')->name('group.listMember');
+        Route::get('/{group}/add-member', 'Admin\MemberController@create')->name('group.addMember');
+        Route::post('/{id}/add-member/{id_member}', 'Admin\MemberController@store')->name('post.add-member');
+        Route::get('/{id}/delMember/{id_member}', 'Admin\MemberController@destroy')->name('member.delete');
+        Route::get('/{id}/list-review', 'ReviewController@listReviewGroup');
+    });
+
+
 
     //đánh giá task
     Route::resource('manageTask', 'TaskController');
@@ -80,13 +87,7 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     Route::get('manageStudents/edit/{id}', 'UserController@editUser')->name('editUser');
     Route::get('manageStudents/resetpassword/{user}','Admin\StudentController@resetpassword')->name('resetPasswordStudent');
 
-    Route::group(['prefix' => 'group'], function () {
-        Route::get('/{id}/list-member', 'MemberController@listMemberGroup')->name('group.listMember');
-        Route::get('/{id}/add-member', 'MemberController@addMember')->name('group.addMember');
-        Route::post('/{id}/add-member/{id_member}', 'MemberController@storeMember')->name('post.add-member');
-        Route::get('/{id}/list-review', 'ReviewController@listReviewGroup');
-        Route::get('/{id}/delMember/{id_member}', 'MemberController@deleteMemberGroup')->name('member.delete');
-    });
+
     //================action feedback================
     Route::get('manageGroup/review/{id_review}/list-feedback', 'FeedbackController@showlist')->name('list.feedback');
     Route::post('manageGroup/review/{id_review}/list-feedback/review/create', 'FeedbackController@createFeedback')->name('create-feedback-review');

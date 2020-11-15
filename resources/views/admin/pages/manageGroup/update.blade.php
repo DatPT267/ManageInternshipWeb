@@ -2,6 +2,7 @@
 @section('content')
 <div id="page-wrapper">
     <div class="container-fluid">
+    <a href="{{ route('manageGroup.index') }}" class="btn btn-secondary">Trở về</a>
         <div class="container">
             <div class="card">
                 <div class="card-body">

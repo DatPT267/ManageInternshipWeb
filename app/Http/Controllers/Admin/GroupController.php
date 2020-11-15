@@ -93,6 +93,7 @@ class GroupController extends Controller
     {
         $group = $this->group->findOrFail($id);
         $internshipClasses = $this->intenshipClass->orderBy('id', 'DESC')->get();
+
         return view('admin.pages.manageGroup.update', compact('group', 'internshipClasses'));
     }
 

@@ -27,7 +27,11 @@
             <tr class="odd gradeX" align="center">
                 <td>{{$index++}}</td>
                 <td>
-                    <img src="{{asset('image/user')}}/{{$member->user->image}}" width="100px" height="100px">
+                    @if ($member->user->image != null)
+                        <img src="{{asset('image/user')}}/{{$member->user->image}}" width="100px" height="100px">
+                    @else
+                        <img src="{{asset('image/user/avatar.jpg')}}" width="100px" height="100px">
+                    @endif
                 </td>
                 <td>{{$member->user->name}}</td>
                 <td>{{$member->user->email}}</td>

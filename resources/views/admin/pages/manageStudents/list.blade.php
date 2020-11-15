@@ -113,13 +113,12 @@
                 'columns': [
                     {'orderable': true},
                     {'orderable': false},
-                    {'orderable': false},
+                    {'orderable': false,},
                     {'orderable': false},
                     {'orderable': false},
                     {'orderable': false},
                     {'orderable': false},
                     {'orderable': true},
-                    {'orderable': false},
                     {'orderable': false},
                 ]
             });

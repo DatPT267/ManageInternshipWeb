@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Controllers\changeTitle;
 use App\Http\Middleware\checkIsAdmin;
+use App\Http\Requests\InternshipClass\AddInternshipClassRequest;
 use Brian2694\Toastr\Facades\Toastr;
 
 class InternshipclassController extends Controller
@@ -106,33 +107,8 @@ class InternshipclassController extends Controller
     }
 
 
-    public function postThem(Request $request)
+    public function postThem(AddInternshipClassRequest $request)
     {
-
-      $this->validate($request,
-          [
-
-              'name' =>'required|unique:Internshipclass,name',
-              'start_day'=>'required|date|before:end_day',
-              'end_day'=>'required|date',
-              
-
-          ],
-          [
-              'name.unique' => 'Tên đợt thực tập đã tồn tại',
-              'name.required' =>'Bạn chưa nhập tên đợt thực tập',
-              'start_day.required' => 'Bạn chưa nhập ngày bắt đầu',
-              'end_day.required' => 'Bạn chưa nhập ngày kết thúc',
-              'start_day.before' => 'Ngày kết thúc phải lớn hơn ngày bắt đầu'
-            
-            
-
-          ]);
-   
-      for( $i=0 ; $i < 25 ; $i++){
-          $member[$i] = $i;
-      }
-
 
         $internshipclass = new Internshipclass;
         $internshipclass->name = $request->name;
@@ -144,14 +120,14 @@ class InternshipclassController extends Controller
         $internshipclass->save();
 
         Toastr::success('Thêm thành công', 'Success');
-        return view('admin/pages/internshipClass/memberinternshipclass', ['member' => $member, 'nameclass' => $name_unsigned ]);
+        return view('admin/pages/internshipClass/memberinternshipclass', compact('name_unsigned'));
     }
 
     public function postSua(Request $request, $id)
     {
 
         $this->validate($request,
-            [ 
+            [
 
                 'name' =>'required',
                 'start_day'=>'required|date|before:end_day',
@@ -181,13 +157,13 @@ class InternshipclassController extends Controller
     public function postMember(Request $request, $nameclass){
         $amount = count($request->input('name_student'));
         $array_student = $request->input('name_student');
-   
-       
+
+
         $interclass = Internshipclass::where('name_unsigned', $nameclass)->get()->first();
-      
-       
+
+
         for($i =0 ; $i< $amount; $i++){
-      
+
             if($array_student[$i] == null){
               continue;
             }
@@ -300,7 +276,7 @@ class InternshipclassController extends Controller
             $user->status = 1;
             $user->save();
         }
-  
+
         $class_id = $interclass->id;
         return redirect()->route('list', ['class_id' => $class_id]);
     }
@@ -311,10 +287,10 @@ class InternshipclassController extends Controller
     }
 
   public function getshow($id){
-    
+
     $show = User::where('class_id', $id)->get();
     $sinhvien =  Internshipclass::where('id', $id)->firstOrFail();
-   
+
     return view('admin.pages.internshipClass.show',['show'=>$show, 'sinhvien'=>$sinhvien]);
   }
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Assign;
 use App\DetailGroup;
 use App\Group;
+use App\Http\Requests\Group\GroupCreateOrUpdateRequest;
+use App\Http\Requests\Group\GroupCreateRequest;
 use App\User;
 use App\Member;
 use App\Task;
@@ -33,9 +35,9 @@ class GroupController extends Controller
      */
     public function create()
     {
-        $name = Internshipclass::all();
+        $internshipClasses = Internshipclass::all();
 
-        return view('admin.pages.manageGroup.add',['name'=>$name]);
+        return view('admin.pages.manageGroup.add',['internshipClasses'=>$internshipClasses]);
     }
 
     /**
@@ -164,21 +166,8 @@ class GroupController extends Controller
         return back();
     }
 
-    public function postThem(Request $request)
+    public function postThem(GroupCreateRequest $request)
     {
-        $this->validate($request,
-        [
-
-            'name' =>'required',
-            'topic'=>'required',
-            'note'=>'required',
-
-        ],
-        [
-            'name.required' =>'Bạn chưa nhập tên nhóm',
-            'topic.required' => 'Bạn chưa nhập đề tài nhóm',
-
-        ]);
         $grounpcheck = Group::where('class_id', $request->namedotthuctap)->get();
         foreach ($grounpcheck as $gr) {
             if ($gr->name == $request->name) {
@@ -186,8 +175,6 @@ class GroupController extends Controller
                 return back();
             }
         }
-
-
 
         $group = new Group;
         $group->name = $request->name;

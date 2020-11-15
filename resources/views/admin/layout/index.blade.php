@@ -16,6 +16,13 @@
         <!-- Custom styles for this template-->
         <link href="{{ asset('admin_asset/css/sb-admin-2.min.css') }}" rel="stylesheet">
         @yield('style')
+        <style>
+            .error{
+                font-size: 1rem !important;
+                color: red !important;
+                width: 100% !important;
+            }
+        </style>
         <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     </head>
     <body id="page-top">
@@ -69,6 +76,11 @@
         <script src="{{ asset('admin_asset/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
         @yield('script')
+        <script>
+            @foreach ($errors->all() as $error)
+                toastr.warning("{{$error}}")
+            @endforeach
+        </script>
         <!-- Core plugin JavaScript-->
         <script src="{{ asset('admin_asset/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
         <!-- Custom scripts for all pages-->

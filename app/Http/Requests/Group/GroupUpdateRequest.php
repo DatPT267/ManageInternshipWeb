@@ -4,7 +4,7 @@ namespace App\Http\Requests\Group;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class GroupCreateRequest extends FormRequest
+class GroupUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class GroupCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:group,name',
+            'name' => 'required',
             'topic' => 'required',
             'internshipclass' => 'required',
         ];
@@ -33,7 +33,6 @@ class GroupCreateRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.unique' => 'Tên nhóm đã tồn tại',
             'name.required' =>'Bạn chưa nhập tên nhóm',
             'topic.required' => 'Bạn chưa nhập đề tài của nhóm',
             'internshipclass.required' => 'Bạn chưa chọn đợt thực tập cho nhóm',

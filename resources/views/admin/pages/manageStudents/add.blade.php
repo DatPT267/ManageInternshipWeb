@@ -1,13 +1,5 @@
 @extends('admin.layout.index')
-@section('style')
-    <style>
-        .error{
-            font-size: 1rem !important;
-            color: red !important;
-            width: 100% !important;
-        }
-    </style>
-@endsection
+
 @section('content')
 <div class="container">
     <div class="row m-5">
@@ -74,11 +66,6 @@
 @section('script')
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
-    <script>
-        @foreach ($errors->all() as $error)
-            toastr.warning("{{$error}}")
-        @endforeach
-    </script>
     <script>
         $(document).ready(function() {
             //validate field form

@@ -93,35 +93,6 @@
                     <div id="menu1" class="container tab-pane fade"><br>
                         <h3>Đổi mật khẩu</h3>
                         <form id="form-forgot-pass" action="{{ route('changepassword', $user->id)}}" method="post"  enctype="multipart/form-data">
-                            {{-- <input type="hidden" name="_token" value="{{csrf_token()}}" />
-                            <h3>Đổi mật khẩu</h3>
-                            <div class="form-group">
-                                <div class="clearfix">
-                                    <label class="control-label pull-left">Mật khẩu cũ</label>
-                                    <div class="pull-right"></div>
-                                </div>
-                                <input type="password" name="password" class="form-control" />
-                                <i class="" aria-hidden="true"></i>
-                            </div>
-                            <div class="form-group">
-                                <div class="clearfix">
-                                    <label class="control-label pull-left">Mật khẩu mới</label>
-                                    <div class="pull-right"></div>
-                                </div>
-                                <input type="password" name="password1" class="form-control" />
-                                <i class="" aria-hidden="true"></i>
-                            </div>
-                            <div class="form-group">
-                                <div class="clearfix">
-                                    <label class="control-label pull-left">Nhập lại mật khẩu</label>
-                                    <div class="pull-right"></div>
-                                </div>
-                                <input type="password" name="password2" class="form-control" />
-                                <i class="" aria-hidden="true"></i>
-                            </div>
-                            <div class="form-group text-center">
-                                <button type="submit" id="btn-send-forgot-pass" class="btn btn-success">Đổi mật khẩu</button>
-                            </div> --}}
                             @csrf
                             @method('PUT')
                             <div class="form-group">

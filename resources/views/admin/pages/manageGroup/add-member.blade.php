@@ -1,11 +1,7 @@
 @extends('admin.layout.index')
 @section('content')
-    <h1>Thêm thành viên vào nhóm <strong>{{session('nameGroup')}}</strong></h1>
-    @if (session('success'))
-    <div class="alert alert-success">
-    {!! session('success') !!}
-    </div>
-    @endif
+    <h1>Thêm thành viên vào nhóm <strong>{{$group->name}}</strong></h1>
+    <a href="{{ route('group.listMember', $group->id) }}" class="btn btn-secondary">Trở về</a>
     <table class="table table-striped table-bordered table-hover" id="list-member">
         <thead>
             <tr align="center">
@@ -23,7 +19,11 @@
                 <tr class="odd gradeX" align="center">
                     <td>{{$key+1}}</td>
                     <td>
-                        <img src="/image/user/{{$student->image}}" width="100px" height="100px">
+                        @if ($student->image != null)
+                            <img src="/image/user/{{$student->image}}" width="100px" height="100px">
+                        @else
+                            <img src="/image/user/avatar.jpg" width="100px" height="100px">
+                        @endif
                     </td>
                     <td>{{$student->name}}</td>
                     <td>{{$student->email}}</td>
@@ -54,7 +54,6 @@
                             <select name="position" id="position" style="flex: 5" class="form-control">
                                 <option value="0" selected>Thành viên</option>
                                 <option value="1">Nhóm trưởng</option>
-                                <option value="2">GVHD</option>
                             </select>
                         </div>
                         <h3 style="text-align: center" id="message">Bạn muốn thêm thành viên vào nhóm</h3>

@@ -35,21 +35,20 @@
                 <td>{{\Carbon\Carbon::parse($lc->end_day)->format('d-m-Y')}}</td>
                 <td>{{$lc->note}}</td>
                 <td class="center">
-                <a href="{{route('showsinhvien', $lc->id)}}" class="btn btn-warning">Danh Sách Sinh Viên</a>
-                <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
+                    <a href="{{route('internshipClass.show', $lc->id)}}" class="btn btn-warning">Danh Sách Sinh Viên</a>
+                    <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
                     <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{route('internshipClass.destroy', $lc->id)}}" data-target="#exampleModal">
                         Xóa
                     </button>
-                    
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
-    <div class="pagination justify-content-center">
-        {{ $listClass->links()}}
+    <div class="pagination float-right">
+        {!! $listClass->links()!!}
     </div>
-    
+
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -82,21 +81,45 @@
                 'info': false,
                 'bLengthChange': false,
                 'paging': false,
-                'columns': [
-                    {'orderable': true},
-                    {'orderable': false},
-                    {'orderable': false},
-                    {'orderable': false},
-                    {'orderable': false},
-                    {'orderable': false},
-
-                ]
             });
 
             $('.btn-delete').click(function (){
                 var url = $(this).attr('data-url');
                 $('#form-delete').attr('action', url);
             })
+
+            // $('.pagination a').click(function (e) {
+            //     e.preventDefault();
+            //     var page = $(this).attr('href').split('page=')[1];
+            //     fetch_data(page);
+            // });
+
+            // function fetch_data(page){
+            //     var url = '{{ route("fetchDataPagination", ':page') }}';
+            //     url = url.replace(':page', page);
+
+            //     $('#list-internship').dataTable({
+            //         'destroy': true,
+            //         'info': false,
+            //         'bLengthChange': false,
+            //         'paging': false,
+            //         "processing": true,
+            //         "serverSide": true,
+            //         'serverMethod': 'get',
+            //         "ajax": {
+            //             url: url
+            //         },
+            //         'columns': [
+            //             {'orderable': false},
+            //             { data: 'name', 'orderable': true},
+            //             { data: 'start_day', 'orderable': false},
+            //             { data: 'end_day', 'orderable': false},
+            //             { data: 'note', 'orderable': false},
+            //             {'orderable': false},
+            //         ],
+
+            //     });
+            // }
         })
     </script>
 @endsection

@@ -1,9 +1,4 @@
 <?php
-
-use App\Assign;
-use App\Task;
-use App\User;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,22 +31,25 @@ Route::get('/admin',function ()
 })->name('admin.home')->middleware('auth', 'can:isAdminANDGVHD');
 Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD'] ], function () {
     //quản lý đợt thực tập
-    Route::resource('internshipClass', 'internshipclassController');
-    Route::post('internshipClass/add', 'internshipclassController@postThem')->name('addClass');
-    Route::post('internshipClass/sua/{id}', 'internshipclassController@postSua')->name('updateclass');
-    Route::post('internshipClass/member/{nameclass}', 'internshipclassController@postMember')->name('member');
-    Route::get('internshipClass/list-member/{class_id}', 'internshipclassController@getList')->name('list');
-    Route::get('internshipClass/listsv/{id}','InternshipclassController@getshow')-> name('showsinhvien');
+    Route::resource('internshipClass', 'Admin\InternshipClassController');
+    Route::get('ajaxFetchDataPagination/page={page}' , 'Admin\InternshipClassController@fetch_data')->name('fetchDataPagination');
+    Route::post('internshipClass/students/{nameclass}', 'Admin\InternshipclassController@storeStudentsOfInternshipclass')->name('storeStudentsOfInternshipclass');
+    Route::get('internshipClass/list-students/{class_id}', 'Admin\InternshipclassController@listStudentsOfInternshipclass')->name('listStudentsOfInternshipclass');
 
     //Quản lý nhóm
-    Route::resource('manageGroup', 'GroupController');
+    Route::resource('manageGroup', 'Admin\GroupController');
     Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');;
-    Route::post('manageGroup/sua/{id}', 'GroupController@postSua')->name('updategroup');
-    Route::post('them', 'GroupController@postThem')->name('addgroup');
-
-    //đánh giá group
     Route::get('manageGroup/list-reviews-of-group/{id}', 'ReviewController@getListReviewOfGroup')->name('group.list-review');
     Route::post('manageGroup/list-reviews-of-group/{id}/create', 'ReviewController@postReviewOfGroup')->name('post.group.list-review');
+    Route::group(['prefix' => 'group'], function () {
+        Route::get('/{group}/list-member', 'Admin\MemberController@show')->name('group.listMember');
+        Route::get('/{group}/add-member', 'Admin\MemberController@create')->name('group.addMember');
+        Route::post('/{id}/add-member/{id_member}', 'Admin\MemberController@store')->name('post.add-member');
+        Route::get('/{id}/delMember/{id_member}', 'Admin\MemberController@destroy')->name('member.delete');
+        Route::get('/{id}/list-review', 'ReviewController@listReviewGroup');
+    });
+
+
 
     //đánh giá task
     Route::resource('manageTask', 'TaskController');
@@ -61,20 +59,13 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     Route::post('manageGroup/sua/{id}', 'GroupController@postSua')->name('updategroup');
     Route::post('addgroup', 'GroupController@postThem')->name('addgroup');
 
-    Route::get('manageTask/add/{id}', 'TaskController@create')->name('addTask'); 
+    Route::get('manageTask/add/{id}', 'TaskController@create')->name('addTask');
     Route::post('manageTask/add/{id}', 'TaskController@addTask')->name('addTask');
     Route::post('manageTask/delete/{id}', 'TaskController@delete')->name('deleteTask');
     Route::post('manageTask/update/{id}', 'TaskController@update')->name('updateTask');
 
     Route::get('assign/{id_task}/{id_member}', 'TaskController@assign')->name('assign');
-   
 
-    //Quản lý sinh viên
-    // Route::group(['prefix' => 'manageStudent'], function () {
-    //     Route::get('/', function ($id) {
-
-    //     });
-    // });
     Route::get('list-schedule', 'ScheduleController@index')->name('list-schedule.index');
     Route::get('/ajax-view-schedule', 'ScheduleController@ajaxViewListSchedule')->name('ajax.view.schedule');
 
@@ -96,13 +87,7 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     Route::get('manageStudents/edit/{id}', 'UserController@editUser')->name('editUser');
     Route::get('manageStudents/resetpassword/{user}','Admin\StudentController@resetpassword')->name('resetPasswordStudent');
 
-    Route::group(['prefix' => 'group'], function () {
-        Route::get('/{id}/list-member', 'MemberController@listMemberGroup')->name('group.listMember');
-        Route::get('/{id}/add-member', 'MemberController@addMember')->name('group.addMember');
-        Route::post('/{id}/add-member/{id_member}', 'MemberController@storeMember')->name('post.add-member');
-        Route::get('/{id}/list-review', 'ReviewController@listReviewGroup');
-        Route::get('/{id}/delMember/{id_member}', 'MemberController@deleteMemberGroup')->name('member.delete');
-    });
+
     //================action feedback================
     Route::get('manageGroup/review/{id_review}/list-feedback', 'FeedbackController@showlist')->name('list.feedback');
     Route::post('manageGroup/review/{id_review}/list-feedback/review/create', 'FeedbackController@createFeedback')->name('create-feedback-review');

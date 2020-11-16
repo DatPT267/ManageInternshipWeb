@@ -17,8 +17,8 @@
                         {{session('thongbao')}}
                     </div>
                 @endif
-                <form action="{{ route('addClass')}}" method="POST" enctype="" id="intern-create_form" >
-                    <input type="hidden" name="_token" value="{{csrf_token()}}">
+                <form action="{{ route('internshipClass.store')}}" method="POST" id="intern-create_form" >
+                    @csrf
                     <div class="form-group">
                         <label style="color: #000;">Tên Đợt Thực Tập</label>
                     <input class="form-control save_local" name="name" placeholder="Nhập Tên Đợt Thực Tập" value="{{ old('name') }}"/>
@@ -41,7 +41,6 @@
                     </div>
                     <div class="form-group">
                         <label style="color: #000;">Ghi Chú</label>
-                        {{-- <input class="form-control save_local" name="note" placeholder="Nhập Ghi Chú" value="{{ old('note') }}" /> --}}
                         <textarea class="form-control" name="note" id="" cols="30" rows="3" placeholder="Nhập Ghi Chú">{{ old('note') }}</textarea>
                     </div>
                     <div class="">

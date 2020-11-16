@@ -1,13 +1,13 @@
 @extends('admin.layout.index')
 @section('content')
 <div class="container-fluid">
-    <h1>Danh sách thành viên của <strong>{{$sinhvien->name}}</strong></h1>
+    <h1>Danh sách thành viên của <strong>{{$internshipClass->name}}</strong></h1>
     @if (session('success'))
         <div class="alert alert-danger">
             {!! session('success') !!}
         </div>
     @endif
-    
+
     <table class="table table-striped table-bordered table-hover" id="list-member">
         <thead>
             <tr >
@@ -17,30 +17,30 @@
                 <th>Email</th>
                 <th>Địa chỉ</th>
                 <th>Số điện thoại</th>
-                
+
             </tr>
         </thead>
         <tbody>
             <?php $index = 1; ?>
-            @foreach ($show as $sv)
+            @foreach ($students as $student)
             <tr class="odd gradeX" >
                 <td>{{$index++}}</td>
-                <td>{{$sv->name}}</td>
+                <td>{{$student->name}}</td>
                 <td>
-                @if($sv->image == null)
+                @if($student->image == null)
                     <img src="{{asset('image/user/avatar.jpg')}}" width="100px" height="100px">
                 @else
-                    <img src="{{asset('image/user')}}/{{$sv->image}}" width="100px" height="100px">
+                    <img src="{{asset('image/user')}}/{{$student->image}}" width="100px" height="100px">
                 @endif
                 </td>
-                <td>{{$sv->email}}</td>
-                <td>{{$sv->address}}</td>
-                <td>{{$sv->phone}}</td>
+                <td>{{$student->email}}</td>
+                <td>{{$student->address}}</td>
+                <td>{{$student->phone}}</td>
             </tr>
 
             @endforeach
         </tbody>
     </table>
-    
+
 </div>
 @endsection

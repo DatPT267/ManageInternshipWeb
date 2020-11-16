@@ -11,6 +11,10 @@ class Group extends Model
 
     protected $table = "group";
 
+    protected $fillable = [
+        'name', 'topic', 'note', 'status', 'class_id'
+    ];
+
     public function internshipClass()
     {
         return $this->belongsTo('App\Internshipclass', 'class_id', 'id');

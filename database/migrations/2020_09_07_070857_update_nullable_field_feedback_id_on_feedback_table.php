@@ -26,7 +26,7 @@ class UpdateNullableFieldFeedbackIdOnFeedbackTable extends Migration
     public function down()
     {
         Schema::table('feedback', function (Blueprint $table) {
-            //
+            $table->bigInteger('feedback_id')->unsigned()->change();
         });
     }
 }

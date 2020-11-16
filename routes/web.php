@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('test/{review}', 'Admin\ReviewController@getListReply');
 //ADMIN and GVHD
 
 Route::get('user/login', 'AuthenticationController@getLogin')->name('login');
@@ -39,8 +40,10 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     //Quản lý nhóm
     Route::resource('manageGroup', 'Admin\GroupController');
     Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');;
-    Route::get('manageGroup/list-reviews-of-group/{id}', 'ReviewController@getListReviewOfGroup')->name('group.list-review');
-    Route::post('manageGroup/list-reviews-of-group/{id}/create', 'ReviewController@postReviewOfGroup')->name('post.group.list-review');
+    Route::get('manageGroup/list-reviews-of-group/{group}', 'Admin\ReviewController@indexOfGroup')->name('group.list-review');
+    Route::post('manageGroup/review/store-review', 'Admin\ReviewController@storeReviewOfGroup')->name('post.group.store-group');
+    Route::post('manageGroup/review/store-reply', 'Admin\ReviewController@storeReplyOfGroup')->name('post.group.store-reply');
+    Route::get('manageGroup/getListReply/{review}', 'Admin\ReviewController@getListReply')->name('group.getListReply');
     Route::group(['prefix' => 'group'], function () {
         Route::get('/{group}/list-member', 'Admin\MemberController@show')->name('group.listMember');
         Route::get('/{group}/add-member', 'Admin\MemberController@create')->name('group.addMember');

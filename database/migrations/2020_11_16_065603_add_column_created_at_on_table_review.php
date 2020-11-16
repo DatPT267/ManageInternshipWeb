@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateNullableFieldTaskIdOfReviewTable extends Migration
+class AddColumnCreatedAtOnTableReview extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class UpdateNullableFieldTaskIdOfReviewTable extends Migration
     public function up()
     {
         Schema::table('review', function (Blueprint $table) {
-            $table->bigInteger('task_id')->unsigned()->nullable()->change();
+            $table->dateTime('created_at', 0);
         });
     }
 
@@ -26,7 +26,7 @@ class UpdateNullableFieldTaskIdOfReviewTable extends Migration
     public function down()
     {
         Schema::table('review', function (Blueprint $table) {
-            $table->bigInteger('task_id')->unsigned()->change();
+            $table->dropColumn('created_at');
         });
     }
 }

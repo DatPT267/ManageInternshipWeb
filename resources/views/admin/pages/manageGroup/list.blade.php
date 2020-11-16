@@ -1,6 +1,6 @@
 @extends('admin.layout.index')
 @section('content')
-    <h1 class="text-center">Danh sách nhóm đợt thực tập</h1>
+    <h1>Danh sách nhóm</h1>
     <a href="{{ route('manageGroup.create') }}" class="btn btn-primary">Thêm nhóm</a>
     <table class="table table-striped table-bordered table-hover" id="table-group">
         <thead>

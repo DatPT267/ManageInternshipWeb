@@ -57,11 +57,11 @@ class CheckController extends Controller
         $day_end = $date->endOfMonth()->isoFormat('YYYY-MM-DD');
         if($number == $monthNow){
             $checks = Check::where('user_id', $id)
-                        ->whereRaw("date(date_start) BETWEEN '".$day_start."'AND'".Carbon::now()->subDay()->isoFormat('YYYY-MM-DD')."'")
+                        ->whereRaw("date(date_start) BETWEEN '".$day_start."'AND'".Carbon::now()->isoFormat('YYYY-MM-DD')."'")
                         ->orderByDesc('id')
                         ->get();
             $schedules = Schedule::where('user_id', $id)
-                        ->whereBetween('date', [$day_start, Carbon::now()->subDay()->isoFormat('YYYY-MM-DD')])
+                        ->whereBetween('date', [$day_start, Carbon::now()->isoFormat('YYYY-MM-DD')])
                         ->orderByDesc('id')
                         ->get();
             // dd($checks);
@@ -101,6 +101,7 @@ class CheckController extends Controller
                     'sum_check' => $sum_check
                 ]);
     }
+
     public function ajaxTask($id)
     {
         $arrTask = DetailCheck::where('check_id', $id)->get();

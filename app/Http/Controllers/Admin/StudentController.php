@@ -213,4 +213,41 @@ class StudentController extends Controller
 
         return $nameImage;
     }
+
+    public function checkEmailAreadyExist(Request $request){
+        $user = $this->user->find($request->id);
+        // dd(1);
+        if($user->email != $request->email){
+            $emailExist = $this->user->where('email', $request->email)->get();
+            if(!$emailExist->isEmpty()){
+                return "false";
+            } else{
+                return "true";
+            }
+        }else{
+            return "true";
+        }
+    }
+    public function checkEmailAreadyExistAddStudent(Request $request){
+        $emailExist = $this->user->where('email', $request->email)->get();
+        if(!$emailExist->isEmpty()){
+            return "false";
+        } else{
+            return "true";
+        }
+    }
+
+    public function changeStatus(Request $request){
+        $user = $this->user->findOrFail($request->id);
+        if($request->status == "1"){
+            $user->update([
+                'status' => 0
+            ]);
+        } else{
+            $user->update([
+                'status' => 1
+            ]);
+        }
+
+    }
 }

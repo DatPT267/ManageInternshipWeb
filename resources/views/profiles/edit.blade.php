@@ -101,11 +101,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="newPassword">Mật khẩu mới</label>
-                                <input type="text" name="newPassword" id="newPassword" class="form-control" placeholder="Nhập mật khẩu mới">
+                                <input type="password" name="newPassword" id="newPassword" class="form-control" placeholder="Nhập mật khẩu mới">
                             </div>
                             <div class="form-group">
                                 <label for="confirm_newPassword">Xác nhận mật khẩu</label>
-                                <input type="text" name="confirm_newPassword" id="confirm_newPassword" class="form-control" placeholder="Xác nhận mật khẩu">
+                                <input type="password" name="confirm_newPassword" id="confirm_newPassword" class="form-control" placeholder="Xác nhận mật khẩu">
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-success form-control">Lưu</button>

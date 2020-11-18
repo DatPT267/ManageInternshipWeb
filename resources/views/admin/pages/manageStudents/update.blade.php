@@ -85,29 +85,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
     <script>
-        @foreach ($errors->all() as $error)
-            toastr.warning("{{$error}}")
-        @endforeach
-    </script>
-    <script>
 
         $(document).ready(function() {
-            //check email aready exist
-            function checkEmailAreadyExist(){
-                var email = $('#email').val();
-                console.log(email);
-                var url = "{{ route('checkEmailAreadyExist', [':id', ':email']) }}";
-                url = url.replace(':email', email);
-                url = url.replace(':id', "{{ $user->id }}");
-                $.ajax({
-                    type: "GET",
-                    url: url,
-                    dataType: "json",
-                    success: function (res) {
-                        alert (res.exists);
-                    }
-                });
-            }
             //validate field form
             jQuery.validator.addMethod("numberphone", function (value, element) {
                 if(value == ""){
@@ -129,9 +108,6 @@
                 };
             }, "Vui lòng nhập đúng định dạng tên");
 
-            var url = "{{ route('checkEmailAreadyExist', [':id', ':email']) }}";
-            url = url.replace(':email', email);
-            url = url.replace(':id', "{{ $user->id }}");
 
             $('#form-update-infomation-student').validate({
                 errorClass: "is-invalid",
@@ -149,7 +125,7 @@
                         required: true,
                         email: true,
                         remote: {
-                            url: url,
+                            url: "{{ route('checkEmailAreadyExist') }}",
                             type: "GET",
                             contentTyoe: "application/json; charset=utf-8",
                             dataType: "json",

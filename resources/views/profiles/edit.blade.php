@@ -1,11 +1,18 @@
 @extends(Auth::user()->position == 1 ? 'user.layout.index' : 'admin.layout.index')
+@section('style')
+    <style>
+        .is-invalid{
+            font-size: 1rem !important;
+            color: red !important;
+            width: 100% !important;
+        }
+    </style>
+@endsection
 @section('content')
     {{-- <h1 style="text-align: center">infomation User</h1> --}}
 <div class="container">
     <div class="row m-5">
         <h1 style="text-align: center; margin: auto;">Cập nhật thông tin sinh viên</h1>
-    </div>
-    <div class="row">
     </div>
     <div class="row">
         <div class="col">
@@ -50,40 +57,28 @@
                                     <div class="form-group">
                                         <label for="account">Tên đăng nhập</label>
                                         <input type="email" id="account" disabled class="form-control" name="account" value="{{$user->account}}">
-
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Tên </label>
-                                        <input type="text" id="name" class="form-control {{$errors->first('name') ? 'is-invalid' : ''}}" name="name" value="{{old('name', $user->name)}}">
-                                        <div class="invalid-feedback">
-                                            {{$errors->first('name')}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email">Email </label>
-                                        <input type="text" id="email" class="form-control {{$errors->first('email') ? 'is-invalid' : ''}}" name="email" value="{{old('email', $user->email)}}">
-                                        <div class="invalid-feedback">
-                                            {{$errors->first('email')}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="phone">Số điện thoại</label>
-                                        <input type="text" id="phone" class="form-control {{$errors->first('phone') ? 'is-invalid' : ''}}" name="phone" value="{{old('phone', $user->phone)}}">
-                                        <div class="invalid-feedback">
-                                            {{$errors->first('phone')}}
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="address">Địa chỉ</label>
-                                        <input type="text" id="address" class="form-control {{$errors->first('address') ? 'is-invalid' : ''}}" name="address" value="{{old('address', $user->address)}}">
-                                        <div class="invalid-feedback">
-                                            {{$errors->first('address')}}
-                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Đợt thực tập </label>
                                         <input type="text" class="form-control" disabled value="{{$user->internshipClass->name}}">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="email">Tên </label>
+                                        <input type="text" id="name" class="form-control" name="name" value="{{old('name', $user->name)}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email </label>
+                                        <input type="text" id="email" class="form-control" name="email" value="{{old('email', $user->email)}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="phone">Số điện thoại</label>
+                                        <input type="text" id="phone" class="form-control " name="phone" value="{{old('phone', $user->phone)}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="address">Địa chỉ</label>
+                                        <input type="text" id="address" class="form-control" name="address" value="{{old('address', $user->address)}}">
+                                    </div>
+
                                     <button type="submit" class="btn btn-primary">Lưu</button>
                                     <a href="{{url()->current()}}" class="btn btn-secondary">Làm mới</a>
                                 </div>
@@ -120,12 +115,82 @@
 @endsection
 @section('script')
     <script>
-        @foreach ($errors->all() as $error)
-            toastr.warning("{{$error}}")
-        @endforeach
-    </script>
-    <script>
         $(document).ready(function() {
+            //validate field form
+            jQuery.validator.addMethod("numberphone", function (value, element) {
+                if(value == ""){
+                    return true;
+                }
+                if ( /((09|03|07|08|05)+([0-9]{8})\b)/g.test(value)) {
+                    return true;
+                } else {
+                    return false;
+                };
+
+            }, "Vui lòng nhập đúng định dạng điện thoại");
+
+            jQuery.validator.addMethod("fullname", function (value, element) {
+                if ( /^[a-zA-Za-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ \\s]+$/g.test(value)) {
+                    return true;
+                }else {
+                    return false;
+                };
+            }, "Vui lòng nhập đúng định dạng tên");
+
+
+            $('#form-submit-profile').validate({
+                errorClass: "is-invalid",
+                errorElement: "em",
+                rules: {
+                    'image': {
+                        extension: "jpg|jpeg|png|gif",
+                    },
+                    'name': {
+                        required: true,
+                        fullname: true
+                    },
+                    'email': {
+                        required: true,
+                        email: true,
+                        remote: {
+                            url: "{{ route('checkEmailAreadyExist') }}",
+                            type: "GET",
+                            contentTyoe: "application/json; charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            data: {
+                                email: function(){
+                                    return $('#email').val();
+                                },
+                                id: function(){
+                                    return "{{ $user->id }}"
+                                }
+                            }
+                        }
+                    },
+                    'phone': {
+                        maxlength: 11,
+                        numberphone: true,
+                    }
+                },
+                messages: {
+                    'image': {
+                        extension: "Bạn chỉ upload được file có đuôi jpg, png, jpeg!",
+                    },
+                    'name': {
+                        required: "Bạn chưa nhập tên sinh viên"
+                    },
+                    'email': {
+                        required: "Bạn chưa nhập email",
+                        email: 'Bạn nhập sai định dạng email',
+                        remote: "Email đã tồn tại"
+                    },
+                    'phone': {
+                        maxlength: 'Số điện thoại không quá 11 số',
+                    }
+                },
+            });
+            //show image
             var readURL = function(input) {
                 if (input.files && input.files[0]) {
                     var reader = new FileReader();
@@ -139,6 +204,9 @@
             $(".file-upload").on('change', function(){
                 readURL(this);
             });
+
+
+
         });
     </script>
 @endsection

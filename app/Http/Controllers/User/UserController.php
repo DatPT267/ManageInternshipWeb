@@ -83,10 +83,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UserUpdateRequest $request, User $user)
+    public function update(UserUpdateRequest $request, $id)
     {
-        $this->authorize('isAuthor', $user->id);
+        $this->authorize('isAuthor', $id);
 
+        $user = $this->user->findOrFail($id);
         $nameImage = NULL;
         if($request->hasFile('image')){
 

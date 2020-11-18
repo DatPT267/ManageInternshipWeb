@@ -53,7 +53,8 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     });
 
     //quản lý sinh viên
-    Route::resource('manageStudents', 'Admin\StudentController');
+    Route::resource('manageStudents', 'Admin\StudentController')->except('update');
+    Route::put('admin/manageStudents/{user}', 'Admin\StudentController@update')->name('manageStudents.update');
     Route::get('checkEmailAreadyExist', 'Admin\StudentController@checkEmailAreadyExist')->name('checkEmailAreadyExist');
     Route::get('checkEmailAreadyExistAddStudent', 'Admin\StudentController@checkEmailAreadyExistAddStudent')->name('checkEmailAreadyExistAddStudent');
     Route::put('manageStudents/sua/{user}', 'UserController@updatestudent')->name('updatestudent');

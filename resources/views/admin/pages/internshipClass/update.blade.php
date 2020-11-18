@@ -1,18 +1,22 @@
 @extends('admin.layout.index')
+@section('style')
+    <style>
+        .is-invalid{
+            font-size: 1rem !important;
+            color: red !important;
+            width: 100% !important;
+        }
+    </style>
+@endsection
 @section('content')
 <div id="page-wrapper">
     <div class="container">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('internshipClass.update', $internshipClass->id) }}" method="POST" >
+                    <h2 style="text-align:center;" >Cập nhật đợt thực tập</h2>
+                    <form action="{{ route('internshipClass.update', $internshipClass->id) }}" method="POST" id="form-update-internshipclass">
                         @csrf
                         @method('PUT')
-                        <h2 style="text-align:center;" >Cập nhật đợt thực tập</h2>
-                        @if(session('thongbao'))
-                            <div class="alert alert-danger">
-                                {{session('thongbao')}}
-                            </div>
-                        @endif
                         <div class="form-group">
                             <label >Tên Đợt Thực Tập</label>
                         <input class="form-control" name="name" placeholder="Nhập Tên Đợt Thực Tập" value="{{ old('name', $internshipClass->name) }}"/>
@@ -22,14 +26,14 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <span class="form-label" >Ngày Bắt Đầu</span>
-                                    <input class="form-control" name="start_day"type="date" readonly  value="{{ old('start_day',\Carbon\Carbon::parse($internshipClass->start_day)->format('Y-m-d')) }}" />
+                                    <input  class="form-control" id="start_day" name="start_day" type="date" readonly  value="{{ old('start_day',\Carbon\Carbon::parse($internshipClass->start_day)->format('Y-m-d')) }}" />
                                 </div>
                             </div>
                             <div class="col-md-6">
 
                                 <div class="form-group">
                                     <span class="form-label" >Ngày Kết Thúc Dự Kiến</span>
-                                    <input class="form-control" name="end_day" type="date" value="{{ old('end_day',\Carbon\Carbon::parse($internshipClass->end_day)->format('Y-m-d')) }}"/>
+                                    <input class="form-control" id="end_day" name="end_day" type="date" value="{{ old('end_day',\Carbon\Carbon::parse($internshipClass->end_day)->format('Y-m-d')) }}"/>
                                 </div>
                             </div>
                         </div>
@@ -49,8 +53,28 @@
 @endsection
 @section('script')
 <script>
-    @foreach ($errors->all() as $error)
-        toastr.warning("{{$error}}")
-    @endforeach
+    $(document).ready(function (){
+
+        jQuery.validator.addMethod("greaterThan",
+            function(value, element, params) {
+
+                if (!/Invalid|NaN/.test(new Date(value))) {
+                    return new Date(value) > new Date($(params).val());
+                }
+
+                return isNaN(value) && isNaN($(params).val())
+                    || (Number(value) > Number($(params).val()));
+            },'Ngày kết thúc phải lớn hơn ngày bắt đầu.');
+
+        $('#form-update-internshipclass').validate({
+                errorClass: "is-invalid",
+                errorElement: "em",
+                rules: {
+                    'end_day': {
+                        greaterThan: '#start_day'
+                    }
+                }
+            });
+    })
 </script>
 @endsection

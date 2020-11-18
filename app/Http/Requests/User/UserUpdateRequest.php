@@ -23,7 +23,8 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $id = $this->route()->parameter('id');
+        // $id = $this->route()->parameter('user');
+        $id = $this->route()->parameter('user');
         return [
             'email' => 'email|unique:users,email,'.$id,
             'name' => 'required|regex:/^([aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆ

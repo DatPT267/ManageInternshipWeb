@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e7b988bb-e764-43b0-a8f4-193159f598f5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/pages/internshipClass/list.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/pages/internshipClass/list.blade.php" afterDir="false" />
-    </list>
+    <list default="true" id="e7b988bb-e764-43b0-a8f4-193159f598f5" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
@@ -122,6 +120,12 @@
       <path value="$PROJECT_DIR$/vendor/webmozart/assert" />
       <path value="$PROJECT_DIR$/vendor/facade/ignition" />
       <path value="$PROJECT_DIR$/vendor/facade/ignition-contracts" />
+      <path value="$PROJECT_DIR$/vendor/symfony/http-client-contracts" />
+      <path value="$PROJECT_DIR$/vendor/laravel/socialite" />
+      <path value="$PROJECT_DIR$/vendor/yajra/laravel-datatables-oracle" />
+      <path value="$PROJECT_DIR$/vendor/brian2694/laravel-toastr" />
+      <path value="$PROJECT_DIR$/vendor/league/oauth1-client" />
+      <path value="$PROJECT_DIR$/vendor/league/mime-type-detection" />
     </include_path>
   </component>
   <component name="ProjectId" id="1ioXrbRcuuaeahZsBBti1vHbMwW" />
@@ -151,6 +155,7 @@
       <option name="presentableId" value="Default" />
       <updated>1602575117702</updated>
       <workItem from="1602575118782" duration="240000" />
+      <workItem from="1605681241226" duration="117000" />
     </task>
     <servers />
   </component>

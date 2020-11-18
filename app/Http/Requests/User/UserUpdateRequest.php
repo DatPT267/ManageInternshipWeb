@@ -23,8 +23,9 @@ class UserUpdateRequest extends FormRequest
      */
     public function rules()
     {
+        $id = $this->route()->parameter('id');
         return [
-            'email' => 'email',
+            'email' => 'email|unique:users,email,'.$id,
             'name' => 'required|regex:/^([aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆ
                                 fFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTu
                                 UùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ\s]*)$/',
@@ -41,6 +42,7 @@ class UserUpdateRequest extends FormRequest
             'name.regex' => "Tên không đúng",
             'phone.max' => 'Số điện thoại từ 10-11 kí tự số.',
             'image.mimes' => "Bạn chỉ được chọn file có đuổi png, jpg, jpeg, gif",
+            'email.unique' => 'Email đã tồn tại'
         ];
     }
 }

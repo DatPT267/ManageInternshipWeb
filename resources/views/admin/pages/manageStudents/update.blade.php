@@ -1,7 +1,7 @@
 @extends('admin.layout.index')
 @section('style')
     <style>
-        .error{
+        .is-invalid{
             font-size: 1rem !important;
             color: red !important;
             width: 100% !important;
@@ -90,7 +90,24 @@
         @endforeach
     </script>
     <script>
+
         $(document).ready(function() {
+            //check email aready exist
+            function checkEmailAreadyExist(){
+                var email = $('#email').val();
+                console.log(email);
+                var url = "{{ route('checkEmailAreadyExist', [':id', ':email']) }}";
+                url = url.replace(':email', email);
+                url = url.replace(':id', "{{ $user->id }}");
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    dataType: "json",
+                    success: function (res) {
+                        alert (res.exists);
+                    }
+                });
+            }
             //validate field form
             jQuery.validator.addMethod("numberphone", function (value, element) {
                 if(value == ""){
@@ -105,18 +122,20 @@
             }, "Vui lòng nhập đúng định dạng điện thoại");
 
             jQuery.validator.addMethod("fullname", function (value, element) {
-                if ( /^[a-zA-Za-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ \\s]+$/g.test(value)) {
+                if ( /^[a-zA-Za-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ \\s]+$/g.test(value)) {
                     return true;
                 }else {
                     return false;
                 };
             }, "Vui lòng nhập đúng định dạng tên");
 
-            // jQuery.validator.setDefaults({
-            //     debug: true,
-            // });
+            var url = "{{ route('checkEmailAreadyExist', [':id', ':email']) }}";
+            url = url.replace(':email', email);
+            url = url.replace(':id', "{{ $user->id }}");
 
             $('#form-update-infomation-student').validate({
+                errorClass: "is-invalid",
+                errorElement: "em",
                 rules: {
                     'image': {
                         extension: "jpg|jpeg|png|gif",
@@ -128,7 +147,22 @@
                     },
                     'email': {
                         required: true,
-                        email: true
+                        email: true,
+                        remote: {
+                            url: url,
+                            type: "GET",
+                            contentTyoe: "application/json; charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            data: {
+                                email: function(){
+                                    return $('#email').val();
+                                },
+                                id: function(){
+                                    return "{{ $user->id }}"
+                                }
+                            }
+                        }
                     },
                     'phone': {
                         // required: true,
@@ -150,7 +184,8 @@
                     },
                     'email': {
                         required: "Bạn chưa nhập email",
-                        email: 'Bạn nhập sai định dạng email'
+                        email: 'Bạn nhập sai định dạng email',
+                        remote: "Email đã tồn tại"
                     },
                     'phone': {
                         // required: "Bạn chưa nhập số điện thoại",
@@ -176,6 +211,9 @@
             $(".file-upload").on('change', function(){
                 readURL(this);
             });
+
+
+
         });
     </script>
 @endsection

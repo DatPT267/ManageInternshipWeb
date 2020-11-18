@@ -11,18 +11,18 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('test/{review}', 'Admin\ReviewController@getListReply');
 //ADMIN and GVHD
+// Route::get('{id}/checkEmailAreadyExist/{email}', 'Admin\StudentController@checkEmailAreadyExist')->name('checkEmailAreadyExist');
 
-Route::get('user/login', 'AuthenticationController@getLogin')->name('login');
-Route::post('user/login', 'AuthenticationController@postLogin')->name('login');
+Route::get('login', 'auth\AuthenticationController@getLogin')->name('login');
+Route::post('login', 'auth\AuthenticationController@postLogin')->name('login');
 
-Route::get('user/logout', 'AuthenticationController@getLogout')->name('logout');
+Route::get('logout', 'auth\AuthenticationController@getLogout')->name('logout');
 
-Route::get('user/losspassword', 'AuthenticationController@getLosspassword')->name('losspassword');
-Route::post('user/losspassword', 'AuthenticationController@postLosspassword');
+Route::get('losspassword', 'auth\AuthenticationController@getLosspassword')->name('losspassword');
+Route::post('losspassword', 'auth\AuthenticationController@postLosspassword')->name('post.losspassword');
 
-Route::post('user/sendemail/{email}', 'SendEmailController@send');
+Route::post('sendemail/{email}', 'auth\AuthenticationController@send')->name('sendMail');
 
 
 //=======================================ADMIN==================================================================================================
@@ -52,7 +52,28 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
         Route::get('/{id}/list-review', 'ReviewController@listReviewGroup');
     });
 
+    //quản lý sinh viên
+    Route::resource('manageStudents', 'Admin\StudentController');
+    Route::get('checkEmailAreadyExist', 'Admin\StudentController@checkEmailAreadyExist')->name('checkEmailAreadyExist');
+    Route::get('checkEmailAreadyExistAddStudent', 'Admin\StudentController@checkEmailAreadyExistAddStudent')->name('checkEmailAreadyExistAddStudent');
+    Route::put('manageStudents/sua/{user}', 'UserController@updatestudent')->name('updatestudent');
+    Route::post('addStudent', 'UserController@postThem')->name('addstudent');
+    Route::get('manageStudents/edit/{id}', 'UserController@editUser')->name('editUser');
+    Route::get('manageStudents/resetpassword/{user}','Admin\StudentController@resetpassword')->name('resetPasswordStudent');
+    Route::put('changeStatus', 'Admin\StudentController@changeStatus')->name('changeStatus');
+    Route::get('list-schedule', 'ScheduleController@index')->name('list-schedule.index');
+    Route::get('/ajax-view-schedule', 'ScheduleController@ajaxViewListSchedule')->name('ajax.view.schedule');
 
+    Route::get('statistical-checkin-checkout', 'CheckController@index')->name('statistical.checkin-out');
+    Route::get('ajax/statistical-checkin-checkout', 'CheckController@ajaxStatistical')->name('ajax.statistical');
+    //lịch sử thực tập, lịch đăng ký thực tập của sinh viên (14-15)
+    Route::group(['prefix' => 'student'], function () {
+        Route::get('/{id}/view-schedule/month={number}', 'Admin\ScheduleController@show')->name('view-schedule');
+        Route::get('/ajax/view-schedule/', 'Admin\ScheduleController@ajaxViewSchedule')->name('ajax.schedule');
+
+        Route::get('/{id}/view-history-schedule/month={number}', 'Admin\CheckController@show')->name('view-history-check');
+        Route::get('/ajax/{idcheck}/view-history-schedule', 'Admin\CheckController@ajaxTask')->name('ajax.view-task');
+    });
 
     //đánh giá task
     Route::resource('manageTask', 'TaskController');
@@ -69,26 +90,10 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
 
     Route::get('assign/{id_task}/{id_member}', 'TaskController@assign')->name('assign');
 
-    Route::get('list-schedule', 'ScheduleController@index')->name('list-schedule.index');
-    Route::get('/ajax-view-schedule', 'ScheduleController@ajaxViewListSchedule')->name('ajax.view.schedule');
 
-    Route::get('statistical-checkin-checkout', 'CheckController@index')->name('statistical.checkin-out');
-    Route::get('ajax/statistical-checkin-checkout', 'CheckController@ajaxStatistical')->name('ajax.statistical');
-    //lịch sử thực tập, lịch đăng ký thực tập của sinh viên (14-15)
-    Route::group(['prefix' => 'student'], function () {
-        Route::get('/{id}/view-schedule/month={number}', 'Admin\ScheduleController@show')->name('view-schedule');
-        Route::get('/ajax/view-schedule/', 'Admin\ScheduleController@ajaxViewSchedule')->name('ajax.schedule');
-
-        Route::get('/{id}/view-history-schedule/month={number}', 'Admin\CheckController@show')->name('view-history-check');
-        Route::get('/ajax/{idcheck}/view-history-schedule', 'Admin\CheckController@ajaxTask')->name('ajax.view-task');
-    });
     //     Route::get('/show-history-register-schedule', 'ScheduleController`@index');
     // });
-    Route::resource('manageStudents', 'Admin\StudentController');
-    Route::put('manageStudents/sua/{user}', 'UserController@updatestudent')->name('updatestudent');
-    Route::post('addStudent', 'UserController@postThem')->name('addstudent');
-    Route::get('manageStudents/edit/{id}', 'UserController@editUser')->name('editUser');
-    Route::get('manageStudents/resetpassword/{user}','Admin\StudentController@resetpassword')->name('resetPasswordStudent');
+
 
 
     //================action feedback================

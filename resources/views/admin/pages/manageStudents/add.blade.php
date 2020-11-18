@@ -1,5 +1,13 @@
 @extends('admin.layout.index')
-
+@section('style')
+    <style>
+        .is-invalid{
+            font-size: 1rem !important;
+            color: red !important;
+            width: 100% !important;
+        }
+    </style>
+@endsection
 @section('content')
 <div class="container">
     <div class="row m-5">
@@ -80,7 +88,7 @@
             }, "Vui lòng nhập đúng định dạng điện thoại");
 
             jQuery.validator.addMethod("fullname", function (value, element) {
-                if ( /^[a-zA-Za-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ \\s]+$/g.test(value)) {
+                if ( /^[a-zA-Za-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ \\s]+$/g.test(value)) {
                     return true;
                 }else {
                     return false;
@@ -90,8 +98,11 @@
             // jQuery.validator.setDefaults({
             //     debug: true,
             // });
-
+            var url = "{{ route('checkEmailAreadyExistAddStudent', ':email') }}";
+            url = url.replace(':email', email);
             $('#form-update-infomation-student').validate({
+                errorClass: "is-invalid",
+                errorElement: "em",
                 rules: {
                     'image': {
                         extension: "jpg|jpeg|png|gif",
@@ -104,6 +115,18 @@
                     'email': {
                         required: true,
                         email: true,
+                        remote: {
+                            url: url,
+                            type: "GET",
+                            contentTyoe: "application/json; charset=utf-8",
+                            dataType: "json",
+                            async: false,
+                            data: {
+                                email: function(){
+                                    return $('#email').val();
+                                }
+                            }
+                        }
                     },
                     'phone_number': {
                         numberphone: true,
@@ -124,7 +147,9 @@
                     },
                     'email': {
                         required: "Bạn chưa nhập email",
-                        email: 'Bạn nhập sai định dạng email'
+                        email: 'Bạn nhập sai định dạng email',
+                        remote: "Email đã tồn tại"
+
                     },
                     'phone_number': {
                         maxlength: 'Số điện thoại phải có độ dài là 10 hoặc 11 số',

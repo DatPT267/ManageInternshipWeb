@@ -48,11 +48,13 @@
                         {{$student->address}}
                     </td>
                     <td>
-                        @if ($student->status == 0)
-                            Không hoạt động
-                        @else
-                            Hoạt động
-                        @endif
+                        <a class="btn btn-default btn-flat activateCourse-22 ">
+                            @if ($student->status == 0)
+                                <i class="fas fa-toggle-off active-status-student" style="font-size: 30px" data-status="{{ $student->status }}" data-id="{{ $student->id }}"></i>
+                            @else
+                                <i class="fas fa-toggle-on active-status-student" style="color: green; font-size: 30px" data-status="{{ $student->status }}" data-id="{{ $student->id }}"></i>
+                            @endif
+                        </a>
                     </td>
                     <td>
                         <div class="dropdown">
@@ -92,7 +94,7 @@
             </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
-                    <form id="form-delete" method="post" action="{{ route('manageStudents.destroy', $student->id) }}">
+                    <form id="form-delete" method="post" action="">
                         @csrf
                         @method('DELETE')
                         <input type="submit" value="Xóa" class="btn btn-danger">
@@ -105,6 +107,43 @@
 @section('script')
     <script>
         $(document).ready(function (){
+            $.ajaxSetup({
+                headers:
+                { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+            });
+            function changeStatus(id, status){
+                $.ajax({
+                    type: "PUT",
+                    url: "{{ route('changeStatus') }}",
+                    data: {status: status, id: id},
+                    dataType: "json",
+                    success: function (res) {
+
+                    }
+                });
+            }
+            $('.active-status-student').click(function () {
+                var status = $(this).attr('data-status');
+                var id = $(this).attr('data-id');
+                if(status == 1){
+                    changeStatus(id, status);
+                    $(this).attr('class', 'fas fa-toggle-off');
+                    $(this).attr('data-status', 0);
+                    $(this).css('color', "");
+                } else{
+                    changeStatus(id, status);
+                    $(this).attr('class', 'fas fa-toggle-on');
+                    $(this).attr('data-status', 1);
+                    $(this).css('color', "green");
+                }
+            });
+
+            $('.btn-delete').click(function (){
+                var url = $(this).attr('data-url');
+                console.log(url);
+                $('#form-delete').attr('action', url);
+            })
+
             $('#list-internship').dataTable({
                 "paging":   false,
                 'info': false,
@@ -120,13 +159,12 @@
                     {'orderable': false},
                     {'orderable': true},
                     {'orderable': false},
+                    {'orderable': false},
                 ]
             });
-            $('.btn-delete').click(function (){
-                var url = $(this).attr('data-url');
-                console.log(url);
-                $('#form-delete').attr('action', url);
-            })
+
+
+
         })
     </script>
 @endsection

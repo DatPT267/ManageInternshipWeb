@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>Quên mật khẩu</title>
-    <link rel="stylesheet" type="text/css" href="../authentication/css/losspass.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('authentication/css/losspass.css') }}">
 <body>
     <div class="loginbox col-sm-6" >
 

@@ -10,6 +10,12 @@
 @endsection
 @section('content')
 <div id="page-wrapper">
+    <a href="{{ route('internshipClass.index') }}" class="btn btn-light btn-icon-split">
+        <span class="icon text-gray-600">
+        <i class="fas fa-arrow-left"></i>
+        Trở về
+        </span>
+    </a>
     <div class="container">
             <div class="card">
                 <div class="card-body">
@@ -72,6 +78,17 @@
                 rules: {
                     'end_day': {
                         greaterThan: '#start_day'
+                    },
+                    'name': {
+                        required: true,
+                        minlength: 4,
+
+                    }
+                },
+                messages: {
+                    'name': {
+                        required: "Bạn chưa nhập tên đợt thực tập",
+                        minlength: "Tên đợt thực tập tối thiểu trên 3 kí tự"
                     }
                 }
             });

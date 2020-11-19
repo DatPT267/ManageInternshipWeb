@@ -2,6 +2,12 @@
 @section('content')
     <!-- Page Heading -->
     <div class="container-fluid">
+        <a href="{{ route('internshipClass.index') }}" class="btn btn-light btn-icon-split">
+            <span class="icon text-gray-600">
+            <i class="fas fa-arrow-left"></i>
+            Trở về
+            </span>
+        </a>
         <div class="container">
             <div class="card">
                 <div class="card-body">

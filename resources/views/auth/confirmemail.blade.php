@@ -2,7 +2,7 @@
 <head>
 
     <title>Quên mật khẩu</title>
-    <link rel="stylesheet" type="text/css" href="../authentication/css/losspass.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('authentication/css/losspass.css') }}">
 <body>
     <div class="loginbox col-sm-6" >
 
@@ -18,7 +18,7 @@
             <br>
             <hr>
             <br>
-        <p>Tên Người Dùng:&ensp; &ensp;{{$user->name}}</p> <img src="../image/user/{{$user->image}}" class="avatar">
+        <p>Tên Người Dùng:&ensp; &ensp;{{$user->name}}</p> <img src="{{ asset('image/user/') }}{{ $user->image }}" class="avatar">
 
             <br>
             <input type="submit" name="" value="Đặt Lại mật khẩu">

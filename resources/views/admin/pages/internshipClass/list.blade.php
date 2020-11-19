@@ -4,16 +4,6 @@
 
     <h1 class="h3 mb-3 text-gray-800">Danh sách các đợt thực tập</h1>
     <a href="{{ route('internshipClass.create') }}" class="btn btn-primary mb-3">Thêm đợt thực tập</a>
-    @if (session('success'))
-        <div class="alert alert-success">
-            <strong>{{session('success')}}</strong>
-        </div>
-    @endif
-    @if (session('fail'))
-        <div class="alert alert-danger">
-            <strong>{{session('fail')}}</strong>
-        </div>
-    @endif
     <table class="table table-striped table-bordered table-hover" id="list-internship">
         <thead>
             <tr>

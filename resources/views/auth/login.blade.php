@@ -1,10 +1,10 @@
 <html>
 <head>
 <title>Đăng Nhập</title>
-    <link rel="stylesheet" type="text/css" href="../authentication/css/style.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('authentication/css/style.css') }}">
 <body>
     <div class="loginbox">
-    <img src="../authentication/images/avatar.png" class="avatar">
+    <img src="{{ asset('authentication/images/avatar.png') }}" class="avatar">
         <h1>Vui Lòng Đăng Nhập</h1>
         @if(count($errors)>0)
         <div class="alert alert-danger" style="text-align: center">

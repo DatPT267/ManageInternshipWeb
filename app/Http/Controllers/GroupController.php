@@ -129,7 +129,7 @@ class GroupController extends Controller
         return response()->json(['data'=>$data]);
     }
     public function getListTask($id){
-        $listTask = Task::where('group_id', $id)->get();
+        $listTask = Task::where('group_id', $id)->orderBy('id', 'desc')->paginate(10);
         $group = Group::find($id);
         return view('admin.pages.manageGroup.list-task', ['listTask'=>$listTask, 'group'=>$group ]);
     }

@@ -6,6 +6,7 @@ use App\Task;
 use App\Member;
 use App\Assign;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 
 class TaskController extends Controller
 {
@@ -40,7 +41,8 @@ class TaskController extends Controller
     {
         $task = Task::find($id);
         $task->delete();
-        return back()->with('thongbao', 'Xóa task thành công');
+        Toastr::success('success', 'Xóa task thành công');
+        return back();
     }
     public function getDetail()
     {
@@ -68,13 +70,19 @@ class TaskController extends Controller
     public function addTask(Request $request, $id)
     {   
         $this->validate($request, [
-            'name' => 'required|unique:Task,name',
+            'name' => 'required',
             
         ],[
             'name.required' => 'Bạn chưa nhập tên Task',
-            'name.unique' => 'Tên Task đã bị trùng',
             
         ]);
+        // $tasks = Task::where('group_id', $id)->get();
+        // foreach( $tasks as $t){
+        //     if ( $t->name ==  $request->name) {
+                
+        //     }
+        // }
+        
         $task = new Task;
         $task->name = $request->name;
         $task->group_id = $id;

@@ -27,7 +27,7 @@
                             <tr class="odd gradeX" align="center">
                                 <td><input class="form-control" name="name" value="{{ $user->name }}" type="text" readonly></td>
                                 <td>{{$user->account}}</td>
-                                <td>123456789</td>
+                                <td>123456</td>
                             </tr>
                             @endforeach
                         </tbody>

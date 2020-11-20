@@ -11,7 +11,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="name">Tên Nhóm <strong style="color: red">*</strong> </label>
-                            <input class="form-control" id="name" name="name" placeholder="Nhập Tên Đợt Thực Tập" value="{{ old('name') }}"/>
+                            <input class="form-control" id="name" name="name" placeholder="Nhập Tên Nhóm" value="{{ old('name') }}"/>
                         </div>
 
                         <div class="form-group">

@@ -70,11 +70,10 @@ class TaskController extends Controller
     public function addTask(Request $request, $id)
     {   
         $this->validate($request, [
-            'name' => 'required|unique:Task,name',
+            'name' => 'required',
             
         ],[
             'name.required' => 'Bạn chưa nhập tên Task',
-            'name.unique' => 'Tên Task đã bị trùng',
             
         ]);
         $task = new Task;

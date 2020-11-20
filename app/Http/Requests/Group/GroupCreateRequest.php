@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\Group;
 
+use App\Group;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Request;
 
 class GroupCreateRequest extends FormRequest
 {
@@ -23,8 +25,9 @@ class GroupCreateRequest extends FormRequest
      */
     public function rules()
     {
+        $groups = Group::where('class_id', Request::input('internshipclass'))->get();
         return [
-            'name' => 'required|unique:group,name',
+            'name' => 'required|unique:group,name,',
             'topic' => 'required',
             'internshipclass' => 'required',
         ];

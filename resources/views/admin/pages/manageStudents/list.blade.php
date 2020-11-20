@@ -103,6 +103,25 @@
             </div>
         </div>
     </div>
+    <div class="modal fade show-modal-change-status-student" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    Xác nhận thay đổi?
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h3><strong>Bạn có muốn thay đổi trạng thái?</strong></h3>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Không</button>
+                    <button type="button" class="btn btn-danger btn-submit-status">Có</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <script>
@@ -125,16 +144,25 @@
             $('.active-status-student').click(function () {
                 var status = $(this).attr('data-status');
                 var id = $(this).attr('data-id');
+                var parentButton = this;
+                $('.show-modal-change-status-student').modal('show');
+
                 if(status == 1){
-                    changeStatus(id, status);
-                    $(this).attr('class', 'fas fa-toggle-off');
-                    $(this).attr('data-status', 0);
-                    $(this).css('color', "");
+                    $('.btn-submit-status').click(function (){
+                        changeStatus(id, status);
+                        $(parentButton).attr('class', 'fas fa-toggle-off');
+                        $(parentButton).attr('data-status', 0);
+                        $(parentButton).css('color', "");
+                        $('.show-modal-change-status-student').modal('hide');
+                    })
                 } else{
-                    changeStatus(id, status);
-                    $(this).attr('class', 'fas fa-toggle-on');
-                    $(this).attr('data-status', 1);
-                    $(this).css('color', "green");
+                    $('.btn-submit-status').click(function (){
+                        changeStatus(id, status);
+                        $(parentButton).attr('class', 'fas fa-toggle-on');
+                        $(parentButton).attr('data-status', 1);
+                        $(parentButton).css('color', "green");
+                        $('.show-modal-change-status-student').modal('hide');
+                    })
                 }
             });
 

@@ -13,7 +13,7 @@ use App\Http\Requests\InternshipClass\AddInternshipClassRequest;
 use Brian2694\Toastr\Facades\Toastr;
 
 class InternshipclassController extends Controller
-{
+{ 
     public function __construct()
     {
         // $this->middleware(checkIsAdmin::class);

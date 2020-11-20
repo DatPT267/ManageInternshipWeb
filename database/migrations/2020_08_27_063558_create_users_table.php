@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->string('image')->nullable();
             $table->string('address')->nullable();
             $table->integer('position');
-            $table->bigInteger('class_id')->unsigned();
+            $table->bigInteger('class_id')->nullable()->unsigned();
             $table->integer('status');
             $table->foreign('class_id')->references('id')->on('internshipclass')->onDelete('cascade')->onUpdate('cascade');
         });

@@ -81,6 +81,7 @@
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
                 <form id="form-delete" action="" method="post">
                     @csrf
+                   
                     <input type="submit" value="Xóa" class="btn btn-danger">
                 </form>
             </div>
@@ -96,7 +97,7 @@
                 'bLengthChange': false,
                 'paging': false,
             });
-        })
+       
         // $(document).ready(function (){
         //     $('#list-internship').dataTable({
         //         'info': false,
@@ -110,10 +111,10 @@
         //         ]
         //     });
 
-        //     $('.btn-delete').click(function (){
-        //         var url = $(this).attr('data-url');
-        //         $('#form-delete').attr('action', url);
-        //     })
-        // })
+            $('.btn-delete').click(function (){
+                var url = $(this).attr('data-url');
+                $('#form-delete').attr('action', url);
+            })
+        })
     </script>
 @endsection

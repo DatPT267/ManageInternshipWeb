@@ -52,9 +52,10 @@ class GroupController extends Controller
      */
     public function store(GroupCreateRequest $request)
     {
-        $group = Group::where('class_id', $request->input('internshipclass'))->get();
-        foreach ($group as $gr) {
-            if ($gr->name == $request->name) {
+        $groups = Group::where('class_id', $request->input('internshipclass'))->get();
+        dd($groups);
+        foreach ($groups as $group) {
+            if ($group->name == $request->name) {
                 Toastr::warning('Tên nhóm đã tồn tại', 'warning');
                 return back();
             }

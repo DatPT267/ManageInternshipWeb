@@ -76,6 +76,13 @@ class TaskController extends Controller
             'name.required' => 'Bạn chưa nhập tên Task',
             
         ]);
+        // $tasks = Task::where('group_id', $id)->get();
+        // foreach( $tasks as $t){
+        //     if ( $t->name ==  $request->name) {
+                
+        //     }
+        // }
+        
         $task = new Task;
         $task->name = $request->name;
         $task->group_id = $id;

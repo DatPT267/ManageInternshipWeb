@@ -54,7 +54,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label style="color: #000;">Chú thích</label>
+                        <label style="color: #000;">Ghi chú</label>
                         <input class="form-control" name="note" placeholder="Nhập Ghi Chú" />
                     </div>
                     <div class="">

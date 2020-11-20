@@ -6,6 +6,7 @@ use App\Task;
 use App\Member;
 use App\Assign;
 use Illuminate\Http\Request;
+use Brian2694\Toastr\Facades\Toastr;
 
 class TaskController extends Controller
 {
@@ -40,7 +41,8 @@ class TaskController extends Controller
     {
         $task = Task::find($id);
         $task->delete();
-        return back()->with('thongbao', 'Xóa task thành công');
+        Toastr::success('success', 'Xóa task thành công');
+        return back();
     }
     public function getDetail()
     {

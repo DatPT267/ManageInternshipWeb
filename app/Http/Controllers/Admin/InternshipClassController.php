@@ -58,7 +58,7 @@ class InternshipClassController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(AddInternshipClassRequest $request)
-    {
+    {   
         $internshipclass = new Internshipclass;
         $internshipclass->name = $request->name;
         $internshipclass->start_day = $request->start_day;

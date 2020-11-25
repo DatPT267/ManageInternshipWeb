@@ -19,21 +19,20 @@
                     <form action="{{ route('internshipClass.store')}}" method="POST" id="intern-create_form" >
                         @csrf
                         <div class="form-group">
-                            <label style="color: #000;">Tên Đợt Thực Tập</label>
+                            <label style="color: #000;">Tên Đợt Thực Tập <strong style="font-style: italic; color: red">*</strong></label>
                         <input class="form-control" name="name" placeholder="Nhập Tên Đợt Thực Tập" value="{{ old('name') }}"/>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <span class="form-label" style="color: #000;">Ngày Bắt Đầu</span>
+                                    <span class="form-label" style="color: #000;">Ngày Bắt Đầu <strong style="font-style: italic; color: red">*</strong></span>
                                     <input class="form-control" name="start_day" id="start_day" type="date" value="{{ old('start_day') }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
-
                                 <div class="form-group">
-                                    <span class="form-label" style="color: #000;">Ngày Kết Thúc Dự Kiến</span>
+                                    <span class="form-label" style="color: #000;">Ngày Kết Thúc Dự Kiến <strong style="font-style: italic; color: red">*</strong></span>
                                     <input  class="form-control" id="end_day" name="end_day"type="date" value="{{ old('end_day') }}">
                                 </div>
                             </div>

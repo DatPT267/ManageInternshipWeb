@@ -4,6 +4,37 @@
 
     <h1 class="h3 mb-3 text-gray-800">Danh sách các đợt thực tập</h1>
     <a href="{{ route('internshipClass.create') }}" class="btn btn-primary mb-3">Thêm đợt thực tập</a>
+        <form action="{{ route('internshipClass.index') }}" method="get" class="form-inline">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Tên đợt</span>
+            </div>
+            <input type="text" class="form-control" name="nameSearch" value="{{ Request::get('nameSearch') }}">
+        </div>
+        {{-- <div class="input-group input-daterange mb-3 ml-5">
+            <input type="date" class="form-control " name="dateStartSearch" placeholder="Ngày bắt đầu" value="{{ Request::get('dateStartSearch')}}">
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">to</span>
+              </div>
+            <input type="date" class="form-control " name="dateEndSearch" placeholder="Ngày kết thúc" value="{{ Request::get('dateEndSearch') }}">
+        </div> --}}
+        <div class="input-group ml-5 mb-3 float-right">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Từ ngày</span>
+            </div>
+            <input type="text" id="start_day" class="form-control date" name="dateStartSearch" value="{{ Request::get('dateStartSearch') }}">
+        </div>
+        <div class="input-group mb-3 float-right">
+            <div class="input-group-prepend">
+                <span class="input-group-text">đến ngày</span>
+            </div>
+            <input type="text" data-date="" data-date-format="DD MM YYYY" id="end_date" class="form-control date" name="dateEndSearch" value="{{ Request::get('dateEndSearch') }}">
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success"><i class="fas fa-search"></i></button>
+            <a href="{{ route('internshipClass.index')  }}" class="btn btn-secondary"><i class="fas fa-sync-alt"></i></a>
+        </div>
+    </form>
     <table class="table table-striped table-bordered table-hover" id="list-internship">
         <thead>
             <tr>
@@ -65,12 +96,14 @@
 </div>
 @endsection
 @section('script')
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
     <script>
         $(document).ready(function (){
-            $('#list-internship').dataTable({
-                'info': false,
-                'bLengthChange': false,
-                'paging': false,
+            $('.date').datepicker({
+                format: 'dd-mm-yyyy'
             });
 
             $('.btn-delete').click(function (){

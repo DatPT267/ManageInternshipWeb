@@ -56,7 +56,7 @@
                 <div class="form-group">
                     <label for="district_choice">Đợt Thực Tập <strong style="font-style: italic; color: red">(*)</strong></label>
                     <select class="form-control custom-select {{$errors->first('namedotthuctap') ? 'is-invalid' : ''}}" id="district_choice" name="namedotthuctap">
-                        <option value="" selected>Chọn đợt thực tập</option>
+                        <option value="" selected disabled>Chọn đợt thực tập</option>
                         @foreach($classes as $class)
                             <option value="{{$class->id}}">{{$class->name}}</option>
                         @endforeach
@@ -88,7 +88,7 @@
             }, "Vui lòng nhập đúng định dạng điện thoại");
 
             jQuery.validator.addMethod("fullname", function (value, element) {
-                if ( /^[a-zA-Za-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ \\s]+$/g.test(value)) {
+                if ( /^['a-zA-Za-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ \\s]+$/g.test(value)) {
                     return true;
                 }else {
                     return false;

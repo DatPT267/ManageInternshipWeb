@@ -2,15 +2,16 @@
 @section('content')
     <!-- Page Heading -->
     <div class="container-fluid">
-        <a href="{{ route('internshipClass.index') }}" class="btn btn-light btn-icon-split">
-            <span class="icon text-gray-600">
-            <i class="fas fa-arrow-left"></i>
-            Trở về
-            </span>
-        </a>
+
         <div class="container">
             <div class="card">
                 <div class="card-body">
+                    <a href="{{ route('internshipClass.index') }}" class="btn btn-light btn-icon-split">
+                        <span class="icon text-gray-600">
+                        <i class="fas fa-arrow-left"></i>
+                        Trở về
+                        </span>
+                    </a>
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Danh sách sinh viên đợt thực tập</h1>
                     </div>

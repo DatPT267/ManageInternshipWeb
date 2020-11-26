@@ -76,7 +76,7 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Lưu</button>
-                    <a href="{{ route('resetPasswordStudent', $student->id) }}" class="btn btn-primary float-right">Làm mới mật khẩu</a>
+                    <!-- <a href="{{ route('resetPasswordStudent', $student->id) }}" class="btn btn-primary float-right">Làm mới mật khẩu</a> -->
                 </div>
             </div>
         </div>

@@ -51,11 +51,10 @@
                                 <input type="radio" class="form-check-input" id="radio5" name="optradio" value="5">Pending
                             </label>
                           </div> 
-                    </div>
-                    
+                    </div>        
                     <div class="form-group">
                         <label style="color: #000;">Ghi chú</label>
-                        <input class="form-control" name="note" placeholder="Nhập Ghi Chú" />
+                        <textarea class="form-control" name="note" id="" cols="30" rows="3" placeholder="Nhập Ghi Chú"></textarea>
                     </div>
                     <div class="">
                         <button  style=" color: #fff;
@@ -64,7 +63,7 @@
                         padding: 10px 30px;
                         font-size: 16px;
                         border: none;
-                        width: 100%;">Thêm đợt thực tập</button>
+                        width: 100%;">Thêm task</button>
                     </div>
                 <form>
             </div>

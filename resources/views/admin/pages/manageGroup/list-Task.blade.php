@@ -17,7 +17,7 @@
 @endif
 <table class="table table-striped table-bordered table-hover"  id="list-internship">
     <thead>
-        <tr align="center">
+        <tr>
             <th>STT</th>
             <th>Tên task</th>
             <th>Ghi chú</th>

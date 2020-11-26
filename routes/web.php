@@ -110,9 +110,9 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     Route::group(['prefix' => 'ajax'], function () {
         Route::get('detail-feedback/{id}', 'FeedbackController@getAjaxFeedback')->name('ajax-feedback');
     });
-    Route::resource('manageLecturer', 'LecturerController');
-    Route::post('addLecturer', 'LecturerController@postThem')->name('addlecturer');
-    Route::get('manageLecturer/edit/{id}', 'LecturerController@editLecturer')->name('editLecturer');
+    Route::resource('manageLecturer', 'Admin\LecturerController');
+    // Route::post('addLecturer', 'Admin\LecturerController@store')->name('addlecturer');
+    // Route::get('manageLecturer/edit/{id}', 'LecturerController@editLecturer')->name('editLecturer');
 
     //Quản lý task
 

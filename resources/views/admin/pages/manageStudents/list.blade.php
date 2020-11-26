@@ -40,7 +40,6 @@
                 <th>Đợt Thực Tập</th>
                 <th>Địa Chỉ</th>
                 <th>Trạng thái</th>
-                <th>Làm mới mật khẩu</th>
                 <th>Hành động</th>
             </tr>
         </thead>
@@ -80,23 +79,20 @@
                             @endif
                         </a>
                     </td>
-                    <td>
-                        <button type="button" class="btn btn-primary btn-show-modal-change-password" data-toggle="modal" data-target=".modal-changePassword" data-url="{{ route('resetPasswordStudent', $student->id) }}">Làm mới mật khẩu</button>
-                    </td>
+                   
                     <td class="center">
                         <div class="dropdown">
                             <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
-                                Xem
-                            </button>
+                                Xem </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ route('view-history-check', [$student->id, \Carbon\Carbon::now()->month]) }}">Xem lịch sử thực tập</a>
                                 <a class="dropdown-item" href="{{ route('view-schedule', [$student->id, \Carbon\Carbon::now()->month]) }}">Xem lịch đăng ký</a>
                             </div>
                         </div>
+                        <button type="button" class="btn btn-primary btn-show-modal-change-password" data-toggle="modal" data-target=".modal-changePassword" data-url="{{ route('resetPasswordStudent', $student->id) }}">Làm mới mật khẩu</button>
                         <a href="{{route('manageStudents.edit', $student->id)}}" class="btn btn-info">Cập nhật</a>
                         <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{ route('manageStudents.destroy', $student->id) }}" data-target="#exampleModal">
-                            Xóa
-                        </button>
+                            Xóa</button>
                     </td>
                 </tr>
             @endforeach

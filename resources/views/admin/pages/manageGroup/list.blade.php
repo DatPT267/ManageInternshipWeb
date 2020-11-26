@@ -35,8 +35,6 @@
                 <th>Tên đợt thực tập</th>
                 <th>Ghi chú</th>
                 <th>Trạng thái</th>
-                <th>Danh sách thành viên</th>
-                <th>Đánh giá</th>
                 <th>Hoạt động</th>
             </tr>
         </thead>
@@ -66,15 +64,11 @@
                         @endif
                     </a>
                 </td>
-                <td>
-                    <a href="{{ route('group.listMember', $group->id) }}" class="btn btn-success">Xem</a>
-                </td>
-                <td>
-                    <a href="{{route('group.list-review', $group->id)}}" class="btn btn-secondary">Xem</a>
-                </td>
-                <td class="center">
-                    <a href="{{route('manageGroup.edit', $group->id)}}" class="btn btn-info">Cập nhật</a>
+                <td class="center" >
                     <a href="{{ route('listtask', $group->id) }}" class="btn btn-warning">Task</a>
+                    <a href="{{route('manageGroup.edit', $group->id)}}" class="btn btn-info">Cập nhật</a>
+                    <a href="{{ route('group.listMember', $group->id) }}" class="btn btn-success">Xem danh sách thành viên</a>
+                    <a href="{{route('group.list-review', $group->id)}}" class="btn btn-secondary">Xem đánh giá</a>
                     <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-target=".modal-delete-group" data-url="{{route('manageGroup.destroy', $group->id)}}">Xóa</button>
                 </td>
             </tr>

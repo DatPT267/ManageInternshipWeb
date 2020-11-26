@@ -40,7 +40,7 @@ class AuthenticationController extends Controller
                 }else return redirect()->route('admin.home');
             }
         } else{
-            return redirect()->route('login')->with('thongbao', 'Sai thông tin tài khoản');
+            return redirect()->back()->withInput()->with('thongbao', 'Sai thông tin tài khoản');
         }
     }
     public function getLosspassword()

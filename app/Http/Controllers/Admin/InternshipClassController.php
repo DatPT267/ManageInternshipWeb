@@ -9,6 +9,7 @@ use App\Internshipclass;
 use App\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Brian2694\Toastr\Toastr as ToastrToastr;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -27,9 +28,21 @@ class InternshipClassController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $listClass = $this->internshipClass->orderBy('id', 'desc')->paginate(5);
+        $listClass = $this->internshipClass;
+        $start_date = Carbon::parse($request->dateStartSearch);
+        $end_date = Carbon::parse($request->dateEndSearch);
+        if($request->nameSearch){
+            $listClass = $listClass->where('name','LIKE',"%" . trim($request->nameSearch) . "%");
+        }
+        if($request->dateStartSearch){
+            $listClass = $listClass->where('start_day', '>=', $start_date);
+        }
+        if($request->dateEndSearch){
+            $listClass = $listClass->where('end_day', '<=', $end_date);
+        }
+        $listClass = $listClass->orderBy('id', 'desc')->paginate(10);
 
         return view('admin.pages.internshipClass.list', compact('listClass'));
     }
@@ -58,7 +71,7 @@ class InternshipClassController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(AddInternshipClassRequest $request)
-    {   
+    {
         $internshipclass = new Internshipclass;
         $internshipclass->name = $request->name;
         $internshipclass->start_day = $request->start_day;

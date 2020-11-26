@@ -27,7 +27,7 @@
                 <th>STT</th>
                 <th>Nội dung reivew</th>
                 <th>Người viết reivew</th>
-                <th>Action</th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>

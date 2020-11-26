@@ -101,7 +101,7 @@
                         <tr align="center">
                             <th>STT</th>
                             <th>Tên thành viên</th>
-                            <th>Trạng thái</th>
+                            <th>Hành động</th>
 
                         </tr>
                     </thead>

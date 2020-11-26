@@ -8,6 +8,7 @@
         </div>
     @endif
     <a href="{{ route('group.addMember', $group->id) }}" class="btn btn-primary">Thêm sinh viên vào nhóm</a>
+    <a href="{{ route('manageGroup.index') }}" class="btn btn-secondary">Trở về</a>
     <table class="table table-striped table-bordered table-hover" id="list-member">
         <thead>
             <tr align="center">

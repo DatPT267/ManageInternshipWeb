@@ -155,7 +155,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h2>Bạn muốn thay đổi mật khẩu?</h2>
+                    <h2>Bạn muốn làm mới mật khẩu?</h2>
                 </div>
                 <div class="modal-footer">
                     <a href="" class="btn btn-primary">Làm mới mật khẩu</a>

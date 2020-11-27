@@ -121,7 +121,7 @@
                                 @endif
                                 @endforeach
 
-                                @if ($tam == 1)
+                                @if ($tam == 0)
                                 <button type="button" data-id="{{$mb->id}}" class="btn btn-primary btn_click_assign btn_assgin" data-url="{{ route('assign',[$task->id, $mb->id]) }}">Assign</button>
                                 @else
                                 <button type="button"  data-id="{{$mb->id}}" class="btn btn-success btn_click_assign btn_unassign" data-url="{{ route('assign',[$task->id, $mb->id]) }}">Unassign</button>

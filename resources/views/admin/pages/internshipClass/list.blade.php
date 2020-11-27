@@ -5,26 +5,19 @@
     <h1 class="h3 mb-3 text-gray-800">Danh sách các đợt thực tập</h1>
     <a href="{{ route('internshipClass.create') }}" class="btn btn-primary mb-3">Thêm đợt thực tập</a>
         <form action="{{ route('internshipClass.index') }}" method="get" class="form-inline">
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 mr-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Tên đợt</span>
             </div>
             <input type="text" class="form-control" name="nameSearch" value="{{ Request::get('nameSearch') }}">
         </div>
-        {{-- <div class="input-group input-daterange mb-3 ml-5">
-            <input type="date" class="form-control " name="dateStartSearch" placeholder="Ngày bắt đầu" value="{{ Request::get('dateStartSearch')}}">
-            <div class="input-group-append">
-                <span class="input-group-text" id="basic-addon2">to</span>
-              </div>
-            <input type="date" class="form-control " name="dateEndSearch" placeholder="Ngày kết thúc" value="{{ Request::get('dateEndSearch') }}">
-        </div> --}}
-        <div class="input-group ml-5 mb-3 float-right">
+        <div class="input-group ml-5 mb-3 mr-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Từ ngày</span>
             </div>
             <input type="text" id="start_day" class="form-control date" name="dateStartSearch" value="{{ Request::get('dateStartSearch') }}">
         </div>
-        <div class="input-group mb-3 float-right">
+        <div class="input-group mb-3 mr-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">đến ngày</span>
             </div>
@@ -48,22 +41,28 @@
         </thead>
         <tbody>
             <?php $i = 0; ?>
-            @foreach ($listClass as $lc)
-            <tr class="odd gradeX">
-                <td>{{++$i}}</td>
-                <td>{{$lc->name}}</td>
-                <td>{{\Carbon\Carbon::parse($lc->start_day)->format('d-m-Y')}}</td>
-                <td>{{\Carbon\Carbon::parse($lc->end_day)->format('d-m-Y')}}</td>
-                <td>{{$lc->note}}</td>
-                <td class="center">
-                    <a href="{{route('internshipClass.show', $lc->id)}}" class="btn btn-warning">Danh Sách Sinh Viên</a>
-                    <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
-                    <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{route('internshipClass.destroy', $lc->id)}}" data-target="#exampleModal">
-                        Xóa
-                    </button>
-                </td>
-            </tr>
-            @endforeach
+            @if (count($listClass) > 0 )
+                @foreach ($listClass as $lc)
+                <tr class="odd gradeX">
+                    <td>{{++$i}}</td>
+                    <td>{{$lc->name}}</td>
+                    <td>{{\Carbon\Carbon::parse($lc->start_day)->format('d-m-Y')}}</td>
+                    <td>{{\Carbon\Carbon::parse($lc->end_day)->format('d-m-Y')}}</td>
+                    <td>{{$lc->note}}</td>
+                    <td class="center">
+                        <a href="{{route('internshipClass.show', $lc->id)}}" class="btn btn-warning">Danh Sách Sinh Viên</a>
+                        <a href="{{route('internshipClass.edit', $lc->id)}}" class="btn btn-info">Cập Nhật</a>
+                        <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{route('internshipClass.destroy', $lc->id)}}" data-target="#exampleModal">
+                            Xóa
+                        </button>
+                    </td>
+                </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="6" align="center"><strong>Không có dữ liệu</strong></td>
+                </tr>
+            @endif
         </tbody>
     </table>
     <div class="pagination float-right">

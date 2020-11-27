@@ -22,10 +22,6 @@
                         </span>
                     </a>
                     <h1 class="text-center">Danh sách sinh viên đợt thực tập</h1>
-                    <div class="mb-3 d-flex">
-                        <input type="file" id="uploadFile" name="uploadFile" class="form-control-file" style="width: 30%">
-                        <button class="btn btn-secondary" id="btn-uploadFile">Upload tệp</button>
-                    </div>
                     <form action="{{ route('storeStudentsOfInternshipclass', $name_unsigned) }}" method="POST" id="form-post-list-students">
                         @csrf
                         <table class="table table-bordered" id="list-students-create">
@@ -61,18 +57,14 @@
                               </div>
                             </div>
                           </div>
-                 
-                
-                      
-                        <form action="{{ route('classImport', $name_unsigned) }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('classImport', $name_unsigned) }}" method="post" enctype="multipart/form-data" id="import-data">
                             @csrf
                             <div class="form-group">
-                                <input type="file" name="file" value="aâsas"/>
+                                <input type="file" name="file" class="form-control"/>
                                 <button type="submit" class="btn btn-primary">Import Excel</button>
                             </div>
                        </form>
                     </div>
-                   
                 </div>
             </div>
         </div>
@@ -102,85 +94,18 @@
             $('#list-students-create').on('click', '.delete-row', function (){
                 $(this).closest("tr").remove();
             });
-
-            // $('#btn-uploadFile').click(function (){
-            //     var rdr = new FileReader();
-            //     rdr.onload = function (e){
-            //         var therows = e.target.result.split('\n');
-            //         // console.log(therows);
-            //         for (var row = 0; row < therows.length; row++) {
-            //             var columns = therows[row].split(',');
-            //             var newRow = "";
-
-            //             var colCount = columns.length;
-            //             if(colCount != 3){
-            //                 newRow = `<tr>
-            //                             <td colspan='3'>
-            //                                 <strong>Không có thông tin sinh viên</strong>
-            //                             </td>
-            //                             <td style='width:65px'>
-            //                                 <button class='btn btn-danger delete-row'>
-            //                                     <i class='fas fa-trash-alt'>
-            //                                     </i>
-            //                                 </button>
-            //                             </td>
-            //                         </tr>`;
-            //             } else{
-
-            //                 newRow = `<tr>
-            //                             <td>`+$.trim(columns[0])+`</td>
-            //                             <td>
-            //                                 <input id='name_student' class='form-control' name='name_student[]' type='text' value='`+$.trim(columns[1])+`' >
-            //                             </td>
-            //                             <td>
-            //                                 <input id='email' class='form-control' name='email[]' type='email' value='`+$.trim(columns[2])+`' >
-            //                             </td>
-            //                             <td style='width:65px'>
-            //                                 <button class='btn btn-danger delete-row'>
-            //                                     <i class='fas fa-trash-alt'></i>
-            //                                 </button>
-            //                             </td>
-            //                         </tr>`;
-            //                 if($.trim(columns[1]) == "" && $.trim(columns[2]) == ""){
-            //                     if($.isNumeric($.trim(columns[0]))){
-            //                         newRow = "<tr><td>"+$.trim(columns[0])+"</td><td></td><td></td><td style='width:65px'><button class='btn btn-danger delete-row'><i class='fas fa-trash-alt'></i></button></td></tr>";
-            //                     } else{
-            //                         if($.trim(columns[0]).indexOf('@') < 0){
-            //                             newRow = "<tr><td></td><td><input id='name_student' class='form-control' name='name_student[]' type='text' value='"+$.trim(columns[0])+"' ></td><td></td><td style='width:65px'><button class='btn btn-danger delete-row'><i class='fas fa-trash-alt'></i></button></td></tr>";
-            //                         } else{
-            //                             newRow = "<tr><td></td><td></td><td><input id='email' class='form-control' name='email[]' type='text' value='"+$.trim(columns[0])+"' ></td><td style='width:65px'><button class='btn btn-danger delete-row'><i class='fas fa-trash-alt'></i></button></td></tr>";
-            //                         }
-            //                     }
-            //                 }
-            //             }
-
-            //             $('#list-students-create tbody').append(newRow);
-            //         }
-
-            //     }
-            //     rdr.readAsText($('#uploadFile')[0].files[0]);
-            // });
-
-            // $('#form-post-list-students').validate({
-            //     errorClass: "is-invalid",
-            //     errorElement: "em",
-            //     rules: {
-            //         'name_student[]': {
-            //             required: true
-            //         },
-            //         'email[]' : {
-            //             required: true
-            //         }
-            //     },
-            //     messages: {
-            //         'name_student[]': {
-            //             required: "Tên sinh viên bắt buộc"
-            //         },
-            //         'email[]' : {
-            //             required: "Email sinh viên bắt buộc"
-            //         }
-            //     }
-            // });
+            $('#import-data').validate({
+                rules: {
+                    'file': {
+                        extension: "xlsx|xls|xlsm"
+                    }
+                },
+                messages: {
+                    'file': {
+                        extension: "Vui lòng chỉ tải lên các định dạng tệp hợp lệ .xlsx, .xlsm, .xls."
+                    }
+                }
+            });
         });
     </script>
 @endsection

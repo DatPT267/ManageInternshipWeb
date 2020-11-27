@@ -9,27 +9,45 @@ use App\Internshipclass;
 use App\User;
 use Brian2694\Toastr\Facades\Toastr;
 use Brian2694\Toastr\Toastr as ToastrToastr;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Excel;
+use App\Exports\UsersExport;
 
 class InternshipClassController extends Controller
 {
     private $internshipClass;
     private $user;
+    private $excel;
 
-    public function __construct(Internshipclass $internshipClass, User $user)
+    public function __construct(Internshipclass $internshipClass, User $user, Excel $excel)
     {
         $this->internshipClass = $internshipClass;
         $this->user = $user;
+        $this->excel = $excel;
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $listClass = $this->internshipClass->orderBy('id', 'desc')->paginate(5);
+        $listClass = $this->internshipClass;
+        $start_date = Carbon::parse($request->dateStartSearch);
+        $end_date = Carbon::parse($request->dateEndSearch);
+        if($request->nameSearch){
+            $listClass = $listClass->where('name','LIKE',"%" . trim($request->nameSearch) . "%");
+        }
+        if($request->dateStartSearch){
+            $listClass = $listClass->where('start_day', '>=', $start_date);
+        }
+        if($request->dateEndSearch){
+            $listClass = $listClass->where('end_day', '<=', $end_date);
+        }
+        $listClass = $listClass->orderBy('id', 'desc')->paginate(10);
 
         return view('admin.pages.internshipClass.list', compact('listClass'));
     }
@@ -58,7 +76,7 @@ class InternshipClassController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(AddInternshipClassRequest $request)
-    {   
+    {
         $internshipclass = new Internshipclass;
         $internshipclass->name = $request->name;
         $internshipclass->start_day = $request->start_day;
@@ -112,7 +130,7 @@ class InternshipClassController extends Controller
 
         Toastr::success('Cập nhật thành công', 'Success');
 
-        return back();
+        return redirect()->route('internshipClass.edit', $internshipClass->id);
     }
 
     /**
@@ -192,6 +210,39 @@ class InternshipClassController extends Controller
     public function listStudentsOfInternshipclass($class_id)
     {
       $usermember = User::Where('class_id', $class_id)->get();
-      return view('admin/pages/internshipClass/memberclass',['usermember'=> $usermember] );
+      return view('admin/pages/internshipClass/memberclass',['usermember'=> $usermember, 'class_id'=>$class_id] );
+    }
+    public function classImport(Request $request, $internshipClass_slug)
+    {
+        $interclass = Internshipclass::where('name_unsigned', $internshipClass_slug)->get()->first();
+
+        $file = $request->file('file')->store('import');
+        $class_id = $interclass->id;
+        $import = new UsersImport($class_id);
+        $import->import($file);
+
+        // if ($import->failures()->isNotEmpty()) {
+        //     return back()->withFailures($import->failures());
+        // }
+
+        Toastr::success('success', 'Thêm sinh viên thành công');
+        return redirect()->route('listStudentsOfInternshipclass', ['class_id' => $class_id]);
+    }
+    public function classExport($id)
+    {
+
+       $class = Internshipclass::find($id);
+
+       if($class == null ){
+            Toastr::warning('warning', 'Đợt thực tập không tồn tại');
+            return back();
+
+       }
+
+       Toastr::success('success', 'Export Excel thành công');
+       $name = $class->name_unsigned;
+
+       $namefile = $name.'.xlsx';
+        return $this->excel->download(new UsersExport($id), $namefile);
     }
 }

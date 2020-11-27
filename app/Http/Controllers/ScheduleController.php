@@ -154,8 +154,8 @@ class ScheduleController extends Controller
                 return view('user.pages.manage.register-schedule',
                             ['user'=>$id,
                             'check'=>$check,
-                            'day_start'=>$startDayOfWeek,
-                            'day_end'=>$endDayOfWeek,
+                            'day_start'=> Carbon::parse($startDayOfWeek)->isoFormat('D-M-Y'),
+                            'day_end'=>Carbon::parse($endDayOfWeek)->subDay(2)->isoFormat('D-M-Y'),
                             'schedules' => $scheduleUser,
                             'message'=> 'Bạn đã đăng ký lịch thực tập tuần này và tuần sau rồi!']);
             }
@@ -168,8 +168,8 @@ class ScheduleController extends Controller
                         'check'=> 0,
                         'message'=> 'Bạn nên đăng ký lịch thực tập cho tuần sau',
                         'week' => 1,
-                        'day_start'=>$startDayOfWeek,
-                        'day_end'=>$endDayOfWeek ]);
+                        'day_start'=>Carbon::parse($startDayOfWeek)->isoFormat('D-M-Y'),
+                        'day_end'=>Carbon::parse($endDayOfWeek)->subDay(2)->isoFormat('D-M-Y') ]);
             }
         }
         else
@@ -179,8 +179,8 @@ class ScheduleController extends Controller
                         'check'=> 0,
                         'week' => 0,
                         'message'=> '',
-                        'day_start'=>$startDayOfWeek,
-                        'day_end'=>$endDayOfWeek ]);
+                        'day_start'=>Carbon::parse($startDayOfWeek)->isoFormat('D-M-Y'),
+                        'day_end'=>Carbon::parse($endDayOfWeek)->subDay(2)->isoFormat('D-M-Y') ]);
         }
     }
 

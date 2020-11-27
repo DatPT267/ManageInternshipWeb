@@ -5,6 +5,30 @@
         <h1>Danh sách sinh viên</h1>
     </div>
     <a href="{{ route('manageStudents.create') }}" class="btn btn-primary">Thêm sinh viên</a>
+    <form action="{{ route('manageStudents.index')  }}" method="get" class="form-inline mt-3">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Tên sinh viên</span>
+            </div>
+            <input type="text" class="form-control" name="nameStudentSearch" value="{{ Request::get('nameStudentSearch') }}">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Email</span>
+            </div>
+            <input type="text" class="form-control" name="emailSearch" value="{{ Request::get('emailSearch') }}">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Tên đợt</span>
+            </div>
+            <input type="text" class="form-control" name="nameInternshipclassSearch" value="{{ Request::get('nameInternshipclassSearch') }}">
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success"><i class="fas fa-search"></i></button>
+            <a href="{{ route('manageStudents.index')  }}" class="btn btn-secondary"><i class="fas fa-sync-alt"></i></a>
+        </div>
+    </form>
     <table class="table table-striped table-bordered table-hover" id="list-internship">
         <thead>
             <tr>
@@ -16,7 +40,6 @@
                 <th>Đợt Thực Tập</th>
                 <th>Địa Chỉ</th>
                 <th>Trạng thái</th>
-                <th>Xem</th>
                 <th>Hành động</th>
             </tr>
         </thead>
@@ -56,22 +79,20 @@
                             @endif
                         </a>
                     </td>
-                    <td>
+                   
+                    <td class="center">
                         <div class="dropdown">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                                Xem
-                            </button>
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                                Xem </button>
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{{ route('view-history-check', [$student->id, \Carbon\Carbon::now()->month]) }}">Xem lịch sử thực tập</a>
                                 <a class="dropdown-item" href="{{ route('view-schedule', [$student->id, \Carbon\Carbon::now()->month]) }}">Xem lịch đăng ký</a>
                             </div>
                         </div>
-                    </td>
-                    <td class="center">
+                        <button type="button" class="btn btn-primary btn-show-modal-change-password" data-toggle="modal" data-target=".modal-changePassword" data-url="{{ route('resetPasswordStudent', $student->id) }}">Làm mới mật khẩu</button>
                         <a href="{{route('manageStudents.edit', $student->id)}}" class="btn btn-info">Cập nhật</a>
                         <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{ route('manageStudents.destroy', $student->id) }}" data-target="#exampleModal">
-                            Xóa
-                        </button>
+                            Xóa</button>
                     </td>
                 </tr>
             @endforeach
@@ -122,6 +143,27 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade modal-changePassword" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thay đổi mật khẩu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h2>Bạn muốn thay đổi mật khẩu?</h2>
+                </div>
+                <div class="modal-footer">
+                    <a href="" class="btn btn-primary">Làm mới mật khẩu</a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
     <script>
@@ -133,7 +175,7 @@
             function changeStatus(id, status){
                 $.ajax({
                     type: "PUT",
-                    url: "{{ route('changeStatus') }}",
+                    url: "{{ route('changeStatusStudent') }}",
                     data: {status: status, id: id},
                     dataType: "json",
                     success: function (res) {
@@ -172,25 +214,11 @@
                 $('#form-delete').attr('action', url);
             })
 
-            $('#list-internship').dataTable({
-                "paging":   false,
-                'info': false,
-                'bLengthChange': false,
-                'pageLength' : 5,
-                'columns': [
-                    {'orderable': true},
-                    {'orderable': false},
-                    {'orderable': false,},
-                    {'orderable': false},
-                    {'orderable': false},
-                    {'orderable': false},
-                    {'orderable': false},
-                    {'orderable': true},
-                    {'orderable': false},
-                    {'orderable': false},
-                ]
-            });
 
+            $('.btn-show-modal-change-password').click(function (){
+                var url = $(this).attr('data-url');
+                $('.modal-changePassword .modal-footer a').attr('href', url);
+            })
 
 
         })

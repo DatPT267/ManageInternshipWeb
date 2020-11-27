@@ -13,14 +13,14 @@
     <div class="row m-5">
         <h1 style="text-align: center; margin: auto;">Chỉnh sửa thông tin sinh viên</h1>
     </div>
-    <form action="{{ route('manageStudents.update', $user->id) }}" method="POST" enctype="multipart/form-data" id="form-update-infomation-student">
+    <form action="{{ route('manageStudents.update', $student->id) }}" method="POST" enctype="multipart/form-data" id="form-update-infomation-student">
     @method('PUT')
     @csrf
     <div class="row">
             <div class="col-sm-4">
                 <div class="text-center">
-                    @if ($user->image != null)
-                        <img src="{{ asset('image/user/'.$user->image) }}" name="aboutme" width="300" height="200" class="avatar img-circle img-thumbnail" alt="avatar">
+                    @if ($student->image != null)
+                        <img src="{{ asset('image/user/'.$student->image) }}" name="aboutme" width="300" height="200" class="avatar img-circle img-thumbnail" alt="avatar">
                     @else
                         <img src="{{ asset('image/user/image-default.png') }}" name="aboutme" width="300" height="200" class="avatar img-circle img-thumbnail" alt="avatar">
                     @endif
@@ -40,41 +40,43 @@
                     </div>
                 @endif
                 <div class="form-group">
-                    <label >Tên đăng nhập: <strong>{{ $user->account }}</strong></label>
-                </div>
-                <div class="form-group">
-                    <label>Đợt Thực Tập: <strong>{{ $user->internshipClass->name }}</strong> </label>
+                    <label >Tên đăng nhập: <strong>{{ $student->account }}</strong></label>
                 </div>
                 <div class="form-group">
                     <label for="name">Tên sinh viên: <strong style="font-style: italic; color: red">(*)</strong></label>
-                    <input type="text" name="name" id="name" placeholder="Nhập tên sinh viên" class="form-control {{$errors->first('name') ? 'is-invalid' : ''}}" value="{{ old('name', $user->name) }}">
+                    <input type="text" name="name" id="name" placeholder="Nhập tên sinh viên" class="form-control {{$errors->first('name') ? 'is-invalid' : ''}}" value="{{ old('name', $student->name) }}">
                 </div>
                 <div class="form-group">
                     <label for="email">Email: <strong style="font-style: italic; color: red">(*)</strong></label>
-                    <input type="text" name="email" id="email" placeholder="Nhập email" class="form-control {{$errors->first('email') ? 'is-invalid' : ''}}" value="{{ old('email', $user->email) }}">
+                    <input type="text" name="email" id="email" placeholder="Nhập email" class="form-control {{$errors->first('email') ? 'is-invalid' : ''}}" value="{{ old('email', $student->email) }}">
                 </div>
                 <div class="form-group">
                     <label for="address">Địa chỉ:</label>
-                    <input type="text" name="address" id="address" placeholder="Nhập địa chỉ" class="form-control {{$errors->first('address') ? 'is-invalid' : ''}}" value="{{ old('address', $user->address) }}">
+                    <input type="text" name="address" id="address" placeholder="Nhập địa chỉ" class="form-control {{$errors->first('address') ? 'is-invalid' : ''}}" value="{{ old('address', $student->address) }}">
                 </div>
                 <div class="form-group">
                     <label for="phone">Số điện thoại:</label>
-                    <input type="text" name="phone" id="phone" placeholder="Nhập số điện thoại" maxLength="11" class="form-control {{$errors->first('phone') ? 'is-invalid' : ''}}" value="{{ old('phone', $user->phone) }}">
+                    <input type="text" name="phone" id="phone" placeholder="Nhập số điện thoại" maxLength="11" class="form-control {{$errors->first('phone') ? 'is-invalid' : ''}}" value="{{ old('phone', $student->phone) }}">
                 </div>
                 <div class="form-group">
-                    <label >Trạng thái:</label>
-                    <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="customRadioInline1" name="status" class="custom-control-input" value="1" {{ $user->status == 1 ? 'checked' : '' }}>
-                        <label class="custom-control-label" for="customRadioInline1" >Hoạt động</label>
+                    <label for="namedotthuctap">Đợt Thực Tập <strong style="font-style: italic; color: red">(*)</strong></label>
+                    <select class="form-control custom-select {{$errors->first('namedotthuctap') ? 'is-invalid' : ''}}" id="namedotthuctap" name="namedotthuctap">
+                        <option value="" selected disabled>Chọn đợt thực tập</option>
+                        @foreach($classes as $class)
+                            <option value="{{$class->id}}" {{ $class->id == $student->class_id ? "selected" : "" }}>{{$class->name}}</option>
+                        @endforeach
+                    </select>
+                    <div class="invalid-feedback">{{$errors->first('namedotthuctap')}}</div>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label>Trạng thái: </label>
+                        <label><input type="checkbox" id="checkStatus" name="status"  {{ $student->status == 1 ? 'checked' : '' }}> <span id="textStatus">{{ $student->status == 1 ? 'Hoạt động' : 'Không hoạt động' }}</span></label>
                       </div>
-                      <div class="custom-control custom-radio custom-control-inline">
-                        <input type="radio" id="customRadioInline2" name="status" class="custom-control-input" value="0" {{ $user->status == 0 ? 'checked' : '' }}>
-                        <label class="custom-control-label" for="customRadioInline2">Không hoạt động</label>
-                    </div>
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success">Lưu</button>
-                    <a href="{{ route('resetPasswordStudent', $user->id) }}" class="btn btn-primary float-right">Làm mới mật khẩu</a>
+                    <!-- <a href="{{ route('resetPasswordStudent', $student->id) }}" class="btn btn-primary float-right">Làm mới mật khẩu</a> -->
                 </div>
             </div>
         </div>
@@ -101,7 +103,7 @@
             }, "Vui lòng nhập đúng định dạng điện thoại");
 
             jQuery.validator.addMethod("fullname", function (value, element) {
-                if ( /^[a-zA-Za-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ \\s]+$/g.test(value)) {
+                if ( /^['a-zA-Za-zA-Z_ÀÁÂÃÈÉÊẾÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêếìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ \\s]+$/g.test(value)) {
                     return true;
                 }else {
                     return false;
@@ -135,10 +137,10 @@
                                     return $('#email').val();
                                 },
                                 id: function(){
-                                    return "{{ $user->id }}"
+                                    return "{{ $student->id }}"
                                 }
                             }
-                        }
+                        },
                     },
                     'phone': {
                         // required: true,
@@ -148,12 +150,14 @@
                     },
                     'address': {
                         // required: true
+                    },
+                    'namedotthuctap': {
+                        required: true
                     }
                 },
                 messages: {
                     'image': {
                         extension: "Bạn chỉ upload được file có đuôi jpg, png, jpeg!",
-                        // filesize: "Ảnh có kích thước tối đa là 10MB"
                     },
                     'name': {
                         required: "Bạn chưa nhập tên sinh viên"
@@ -164,12 +168,13 @@
                         remote: "Email đã tồn tại"
                     },
                     'phone': {
-                        // required: "Bạn chưa nhập số điện thoại",
                         maxlength: 'Số điện thoại phải có độ dài là 10 hoặc 11 số',
                         minlength: 'Số điện thoại phải có độ dài là 10 hoặc 11 số',
                     },
                     'address': {
-                        // required: "Bạn chưa nhập địa chỉ"
+                    },
+                    'namedotthuctap': {
+                        required: "Bạn chưa chọn đợt thực tập"
                     }
                 },
             });
@@ -188,6 +193,16 @@
                 readURL(this);
             });
 
+
+            $('#checkStatus').click(function (){
+                var text = $('#textStatus').text();
+
+                if(text == "Không hoạt động"){
+                    $('#textStatus').text("Hoạt động");
+                } else{
+                    $('#textStatus').text("Không hoạt động");
+                }
+            })
 
 
         });

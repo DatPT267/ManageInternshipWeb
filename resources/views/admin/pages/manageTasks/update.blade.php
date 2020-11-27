@@ -76,12 +76,9 @@
                             </label>
                         </div>
                     </div>
-
-
-
                     <div class="form-group">
                         <label style="color: #000;">Ghi chú</label>
-                        <input class="form-control" name="note" placeholder="Nhập Ghi Chú" value="{{ $task->note }}" />
+                        <textarea class="form-control" name="note" id="" cols="30" rows="3" placeholder="Nhập Ghi Chú" >{{ $task->note }}</textarea>
                     </div>
                     <div class="">
                         <button style=" color: #fff;

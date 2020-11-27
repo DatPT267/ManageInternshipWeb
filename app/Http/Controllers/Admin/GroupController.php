@@ -9,6 +9,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\Http\Requests\Group\GroupCreateRequest;
 use App\Http\Requests\Group\GroupUpdateRequest;
 use App\Member;
+use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
@@ -25,10 +26,21 @@ class GroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $groups = $this->group->orderBy('id', 'DESC')->get();
+        $groups = $this->group->select('group.*');
 
+        if($request->nameGroupSearch){
+            $groups = $groups->where("group.name", "LIKE", "%" . trim($request->nameGroupSearch) . "%");
+        }
+        if($request->nameTopicSearch){
+            $groups = $groups->where("group.topic", "LIKE", "%" . trim($request->nameTopicSearch) . "%");
+        }
+        if($request->nameInternshipClassSearch){
+            $groups = $groups->join('internshipclass', 'group.class_id', '=', 'internshipclass.id')->where("internshipclass.name", "LIKE", "%" . trim($request->nameInternshipClassSearch) . "%");
+        }
+        $groups = $groups->orderBy('group.id', 'desc')->paginate(10);
+        // dd($groups);
         return view('admin.pages.manageGroup.list', compact('groups'));
     }
 
@@ -140,5 +152,18 @@ class GroupController extends Controller
         Toastr::success('Xóa thành công', 'success');
 
         return redirect()->route('manageGroup.index');
+    }
+
+    public function changeStatusGroup(Request $request){
+        $group = $this->group->findOrFail($request->id);
+        if($request->status == "1"){
+            $group->update([
+                'status' => 0
+            ]);
+        } else{
+            $group->update([
+                'status' => 1
+            ]);
+        }
     }
 }

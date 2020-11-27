@@ -24,7 +24,7 @@
                 <th>STT</th>
                 <th>Người review</th>
                 <th>Nội dung</th>
-                <th>Action</th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>

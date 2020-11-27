@@ -1,28 +1,28 @@
 @extends('admin.layout.index')
 @section('content')
-    <h1>Thêm thành viên vào nhóm <strong>{{$group->name}}</strong></h1>
     <a href="{{ route('group.listMember', $group->id) }}" class="btn btn-secondary">Trở về</a>
+    <h1>Thêm thành viên vào nhóm <strong>{{$group->name}}</strong></h1>
     <table class="table table-striped table-bordered table-hover" id="list-member">
         <thead>
-            <tr align="center">
+            <tr>
                 <th>ID</th>
                 <th>Ảnh đại diện</th>
                 <th>Tên</th>
                 <th>Email</th>
                 <th>Địa chỉ</th>
                 <th>Số điện thoại</th>
-                <th>Action</th>
+                <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($students as $key => $student)
-                <tr class="odd gradeX" align="center">
+                <tr class="odd gradeX">
                     <td>{{$key+1}}</td>
                     <td>
                         @if ($student->image != null)
-                            <img src="/image/user/{{$student->image}}" width="100px" height="100px">
+                            <img src="{{ asset('/image/user/'.$student->image) }}" width="100px" height="100px">
                         @else
-                            <img src="/image/user/avatar.jpg" width="100px" height="100px">
+                            <img src="{{ asset('/image/user/avatar.jpg') }}" width="100px" height="100px">
                         @endif
                     </td>
                     <td>{{$student->name}}</td>
@@ -60,8 +60,8 @@
                     </div>
                     <div class="modal-body-2"></div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Không, Thoát</button>
-                        <button type="submit" class="btn btn-primary btn-add">Đúng, Thêm vào</button>
+                        <button type="submit" class="btn btn-primary btn-add">Có</button>
+                        <button type="button" class="btn btn-secondary btn-close" data-dismiss="modal">Không</button>
                     </div>
                 </form>
             </div>
@@ -71,10 +71,6 @@
 @section('script')
     <script>
         $(document).ready(function (){
-            $('#list-member').dataTable({
-                'info': false,
-                'bLengthChange': false
-            });
             function check(postion){
                 if(postion == '0'){
                     return  'Thành viên';
@@ -85,10 +81,9 @@
                 }
             }
             var url;
-            $('.them').click(function(){
-                alert('them');
-            })
+            var rowDelete;
             $('.btn-addmember').click(function(){
+                rowDelete = this;
                 url = $(this).attr('data-url');
                 $('#confirmModal').modal('show');
                 $('.message2').hide();
@@ -111,38 +106,17 @@
                     type: "POST",
                     url: url,
                     data: $(this).serialize(),
-                    beforeSend:function(){
-                        $('.message2').hide();
-                        $('.btn-add').text('Adding ....');
-                        $('.btn-add').prop('disabled', true);
-                        $('.btn-close').hide();
-                        $('.modal-body').hide();
-                        $('.modal-body-2').show();
-                        $('.modal-body-2').html('<div class="alert alert-info"> Đang thêm ......</div>');
-                    },
                     success: function (response) {
                         console.log(response.data);
                         if(response.data == 0 && response.position == 0){
-                            setTimeout(() => {
-                                $('#confirmModal').modal('show');
-                                $('.modal-body').show();
-                                $('.modal-body-2').hide();
-                                $('.modal-body').html(
-                                    '<div class="alert alert-success"> Bạn đã thêm thành công '+position+' <strong>'+response.name+'</strong></div>'
-                                );
-                                $('.btn-add').hide();
-                                $('.btn-close').show();
-                                $('.btn-close').text('Thoát');
-                                $('.btn-close').click(function(){
-                                    location.reload(true);
-                                });
-                            }, 500);
+                            $(rowDelete).closest("tr").remove();
+                            $('#confirmModal').modal('hide');
+                            toastr.success('Bạn đã thêm thành công '+position+' <strong>'+response.name+'</strong>', 'Success')
                         }else if(response.data == 1 && response.position == 1){
                             $('.btn-add').prop('disabled', false);
                             $('.message2').show();
                             $('.modal-body').show();
                             $('.message2').text("Nhóm đã có "+position+"!!!");
-                            $('.btn-add').text('Đúng, thêm vào');
                             $('.modal-body-2').hide();
                             $('.btn-close').show();
                         }

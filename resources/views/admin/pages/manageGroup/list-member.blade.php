@@ -2,13 +2,7 @@
 @section('content')
 <div class="container-fluid">
     <h1>Danh sách thành viên nhóm <strong>{{$group->name}}</strong></h1>
-    @if (session('success'))
-        <div class="alert alert-danger">
-            {!! session('success') !!}
-        </div>
-    @endif
-    <a href="{{ route('group.addMember', $group->id) }}" class="btn btn-primary">Thêm sinh viên vào nhóm</a>
-    <a href="{{ route('manageGroup.index') }}" class="btn btn-secondary">Trở về</a>
+    <a href="{{ route('group.addMember', $group->id) }}" class="btn btn-primary mb-3">Thêm sinh viên vào nhóm</a>
     <table class="table table-striped table-bordered table-hover" id="list-member">
         <thead>
             <tr align="center">
@@ -67,8 +61,8 @@
                         <h3 id="message" style="text-align: center"></h3>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cancel"><i class="far fa-window-close"></i> No, cancel</button>
-                        <button type="button" class="btn btn-danger" id="btn-delete" data-idGroup="{{$group->id}}"> <i class="fas fa-trash-alt" ></i>Yes, Delete</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="btn-cancel"> Không</button>
+                        <button type="button" class="btn btn-danger" id="btn-delete" data-idGroup="{{$group->id}}"> Có</button>
                     </div>
             </div>
         </div>
@@ -78,20 +72,17 @@
 @section('script')
     <script>
         $(document).ready(function() {
-            $('#list-member').dataTable({
-                info: false,
-                bLengthChange: false
-            });
             // =====================================AJAX DELETE====================================
             var member_id;
-
-            $(document).on('click', '.delete', function(){
+            var rowDelete;
+            $('#list-member').on('click', '.delete', function(){
+                rowDelete = this;
                 member_id = $(this).attr('data-id');
                 var name = $(this).attr('data-name');
                 $('h3#message').html("Bạn có thật sự muốn xóa thành viên <strong>"+name+"</strong>?");
                 $('#confirmModal').modal('show');
             });
-            $('#btn-delete').click(function(){
+            $('#btn-delete').click(function (){
                 var idGroup = $('#btn-delete').attr('data-idGroup');
                 var url = "/admin/group/"+idGroup+"/delMember/"+member_id;
                 // console.log(url);
@@ -99,27 +90,12 @@
                 $.ajax({
                     type: "GET",
                     url: url,
-                    beforeSend:function(){
-                        $('#btn-delete').prop('disabled', true);
-                        $('#btn-delete').text('Deleting ......');
-                        $('#btn-cancel').hide();
-                        $('.modal-body').html('<div class="alert alert-danger">Đang xóa ........</div>');
-                    },
                     success: function (response) {
                         console.log(response);
                         if(response.data == 0){
-                            setTimeout(() => {
-                                $('#confirmModal').modal('show');
-                                $('.modal-body').html(
-                                    '<div class="alert alert-success"> Bạn đã xóa thành công thành viên <strong>'+response.name+'</strong></div>'
-                                );
-                                $('#btn-delete').hide();
-                                $('#btn-cancel').show();
-                                $('#btn-cancel').text('Cancel');
-                                $('#btn-cancel').click(function (){
-                                    window.location.reload(true);
-                                });
-                            }, 500);
+                            $(rowDelete).closest("tr").remove();
+                            $('#confirmModal').modal('hide');
+                            toastr.success('Bạn đã xóa thành công thành viên <strong>'+response.name+'</strong>', 'Success')
                         } else{
                             $('.modal-body').text('Xóa thất bại!');
                             $('#btn-cancel').text('Cancel');

@@ -125,7 +125,7 @@ class InternshipClassController extends Controller
 
         Toastr::success('Cập nhật thành công', 'Success');
 
-        return back();
+        return redirect()->route('internshipClass.edit', $internshipClass->id);
     }
 
     /**

@@ -213,9 +213,9 @@ class InternshipClassController extends Controller
       return view('admin/pages/internshipClass/memberclass',['usermember'=> $usermember, 'class_id'=>$class_id] );
     }
     public function classImport(Request $request, $internshipClass_slug)
-    {   
+    {
         $interclass = Internshipclass::where('name_unsigned', $internshipClass_slug)->get()->first();
-      
+
         $file = $request->file('file')->store('import');
         $class_id = $interclass->id;
         $import = new UsersImport($class_id);
@@ -224,24 +224,24 @@ class InternshipClassController extends Controller
         // if ($import->failures()->isNotEmpty()) {
         //     return back()->withFailures($import->failures());
         // }
-      
+
         Toastr::success('success', 'Thêm sinh viên thành công');
         return redirect()->route('listStudentsOfInternshipclass', ['class_id' => $class_id]);
     }
     public function classExport($id)
-    {   
-   
+    {
+
        $class = Internshipclass::find($id);
-     
+
        if($class == null ){
             Toastr::warning('warning', 'Đợt thực tập không tồn tại');
             return back();
-            
+
        }
-      
+
        Toastr::success('success', 'Export Excel thành công');
        $name = $class->name_unsigned;
-      
+
        $namefile = $name.'.xlsx';
         return $this->excel->download(new UsersExport($id), $namefile);
     }

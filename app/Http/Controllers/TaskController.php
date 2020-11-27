@@ -10,9 +10,9 @@ use Brian2694\Toastr\Facades\Toastr;
 
 class TaskController extends Controller
 {
- 
+
     public function getUpdate($id)
-    {   
+    {
         $arr[1]="Todo";
         $arr[2]="Doing";
         $arr[3]="Review";
@@ -22,13 +22,13 @@ class TaskController extends Controller
         return view('admin.pages.manageTasks.update', ['task'=>$task, 'arr'=>$arr]);
     }
     public function postUpdate($id, Request $request)
-    {   
+    {
         $this->validate($request, [
             'nameTask' => 'required',
-           
+
         ],[
             'nameTask.required' => 'Bạn chưa nhập tên task',
-            
+
         ]);
         $task = Task::find($id);
         $task->name = $request->nameTask;
@@ -46,7 +46,7 @@ class TaskController extends Controller
     }
     public function getDetail()
     {
-        return view('admin.pages.manageTasks.detail'); 
+        return view('admin.pages.manageTasks.detail');
     }
     /**
      * Display a listing of the resource.
@@ -56,7 +56,7 @@ class TaskController extends Controller
     public function index()
     {
         return view('admin.pages.manageTasks.list');
-    } 
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -68,21 +68,21 @@ class TaskController extends Controller
         return view('admin.pages.manageTasks.add', [ 'id' => $id]);
     }
     public function addTask(Request $request, $id)
-    {   
+    {
         $this->validate($request, [
             'name' => 'required',
-            
+
         ],[
             'name.required' => 'Bạn chưa nhập tên Task',
-            
+
         ]);
         // $tasks = Task::where('group_id', $id)->get();
         // foreach( $tasks as $t){
         //     if ( $t->name ==  $request->name) {
-                
+
         //     }
         // }
-        
+
         $task = new Task;
         $task->name = $request->name;
         $task->group_id = $id;
@@ -120,11 +120,11 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {      
+    {
         $task = Task::find($id);
-        $member = Member::where('group_id', $task->group_id)->get();
+        $member = Member::join('users', 'member.user_id', 'users.id')->where('users.status', 1)->where('group_id', $task->group_id)->get();
         $assign = Assign::where('task_id', $id)->get();
-     
+
         return view('admin.pages.manageTasks.update', [ 'task' => $task, 'member' => $member, 'assign' => $assign]);
     }
 
@@ -136,15 +136,15 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
-       
+    {
+
         $this->validate($request, [
             'name' => 'required',
-            
+
         ],[
             'name.required' => 'Bạn chưa nhập tên Task',
-          
-            
+
+
         ]);
         $task = Task::find($id);
         $task->name = $request->name;
@@ -165,7 +165,7 @@ class TaskController extends Controller
         //
     }
     public function assign($id_task, $id_member)
-    {   
+    {
         $assign = Assign::where('task_id', $id_task)->get();
         foreach($assign as $as){
             if($as->member_id == $id_member){
@@ -173,7 +173,7 @@ class TaskController extends Controller
                 $delete->delete();
                 return 0;
             }
-        }   
+        }
         $add = new Assign();
         $add->task_id = $id_task;
         $add->member_id = $id_member;

@@ -12,16 +12,21 @@ use Brian2694\Toastr\Toastr as ToastrToastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Imports\UsersImport;
+use Maatwebsite\Excel\Excel;
+use App\Exports\UsersExport;
 
 class InternshipClassController extends Controller
 {
     private $internshipClass;
     private $user;
+    private $excel;
 
-    public function __construct(Internshipclass $internshipClass, User $user)
+    public function __construct(Internshipclass $internshipClass, User $user, Excel $excel)
     {
         $this->internshipClass = $internshipClass;
         $this->user = $user;
+        $this->excel = $excel;
     }
     /**
      * Display a listing of the resource.
@@ -205,6 +210,39 @@ class InternshipClassController extends Controller
     public function listStudentsOfInternshipclass($class_id)
     {
       $usermember = User::Where('class_id', $class_id)->get();
-      return view('admin/pages/internshipClass/memberclass',['usermember'=> $usermember] );
+      return view('admin/pages/internshipClass/memberclass',['usermember'=> $usermember, 'class_id'=>$class_id] );
+    }
+    public function classImport(Request $request, $internshipClass_slug)
+    {   
+        $interclass = Internshipclass::where('name_unsigned', $internshipClass_slug)->get()->first();
+      
+        $file = $request->file('file')->store('import');
+        $class_id = $interclass->id;
+        $import = new UsersImport($class_id);
+        $import->import($file);
+
+        // if ($import->failures()->isNotEmpty()) {
+        //     return back()->withFailures($import->failures());
+        // }
+      
+        Toastr::success('success', 'Thêm sinh viên thành công');
+        return redirect()->route('listStudentsOfInternshipclass', ['class_id' => $class_id]);
+    }
+    public function classExport($id)
+    {   
+   
+       $class = Internshipclass::find($id);
+     
+       if($class == null ){
+            Toastr::warning('warning', 'Đợt thực tập không tồn tại');
+            return back();
+            
+       }
+      
+       Toastr::success('success', 'Export Excel thành công');
+       $name = $class->name_unsigned;
+      
+       $namefile = $name.'.xlsx';
+        return $this->excel->download(new UsersExport($id), $namefile);
     }
 }

@@ -31,7 +31,11 @@
                             </tr>
                             @endforeach
                         </tbody>
+                       
                     </table>
+                    <div style="text-align: center">
+                        <a href="{{ route('classExport', $class_id) }}"  type="buton"  class="btn btn-info" style="color: white">Export Excel</a>
+                    </div>
                 </div>
             </div>
         </div>

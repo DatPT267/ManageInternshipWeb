@@ -2,20 +2,20 @@
 @section('content')
     <h1>Danh sách nhóm</h1>
     <a href="{{ route('manageGroup.create') }}" class="btn btn-primary">Thêm nhóm</a>
-    <form action="{{ route('manageGroup.index')  }}" method="get" class="form-inline m-3">
-        <div class="input-group mb-3">
+    <form action="{{ route('manageGroup.index')  }}" method="get" class="form-inline mt-3">
+        <div class="input-group mb-3  mr-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Tên nhóm</span>
             </div>
             <input type="text" class="form-control" name="nameGroupSearch" value="{{ Request::get('nameGroupSearch') }}">
         </div>
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 mr-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Tên đề tài</span>
             </div>
             <input type="text" class="form-control" name="nameTopicSearch" value="{{ Request::get('nameTopicSearch') }}">
         </div>
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 mr-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Tên đợt</span>
             </div>
@@ -40,39 +40,45 @@
         </thead>
         <tbody>
             <?php $i=0; ?>
-            @foreach ($groups as $group)
-            <tr class="odd gradeX" >
-                <td>
-                    {{++$i}}
-                </td>
-                <td>
-                    {{$group->name}}
-                </td>
-                <td>
-                    {{$group->topic}}
-                </td>
-                <td>
-                    {{$group->internshipClass->name}}
-                </td>
-                <td>{{$group->note}}</td>
-                <td>
-                    <a class="btn btn-default btn-flat activateCourse-22 ">
-                        @if ($group->status == 0)
-                            <i class="fas fa-toggle-off active-status-student" style="font-size: 30px" data-status="{{ $group->status }}" data-id="{{ $group->id }}"></i>
-                        @else
-                            <i class="fas fa-toggle-on active-status-student" style="color: green; font-size: 30px" data-status="{{ $group->status }}" data-id="{{ $group->id }}"></i>
-                        @endif
-                    </a>
-                </td>
-                <td class="center" >
-                    <a href="{{ route('listtask', $group->id) }}" class="btn btn-warning">Task</a>
-                    <a href="{{route('manageGroup.edit', $group->id)}}" class="btn btn-info">Cập nhật</a>
-                    <a href="{{ route('group.listMember', $group->id) }}" class="btn btn-success">Xem danh sách thành viên</a>
-                    <a href="{{route('group.list-review', $group->id)}}" class="btn btn-secondary">Xem đánh giá</a>
-                    <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-target=".modal-delete-group" data-url="{{route('manageGroup.destroy', $group->id)}}">Xóa</button>
-                </td>
-            </tr>
-            @endforeach
+            @if (count($groups) > 0)
+                @foreach ($groups as $group)
+                <tr class="odd gradeX" >
+                    <td>
+                        {{++$i}}
+                    </td>
+                    <td>
+                        {{$group->name}}
+                    </td>
+                    <td>
+                        {{$group->topic}}
+                    </td>
+                    <td>
+                        {{$group->internshipClass->name}}
+                    </td>
+                    <td>{{$group->note}}</td>
+                    <td>
+                        <a class="btn btn-default btn-flat activateCourse-22 ">
+                            @if ($group->status == 0)
+                                <i class="fas fa-toggle-off active-status-student" style="font-size: 30px" data-status="{{ $group->status }}" data-id="{{ $group->id }}"></i>
+                            @else
+                                <i class="fas fa-toggle-on active-status-student" style="color: green; font-size: 30px" data-status="{{ $group->status }}" data-id="{{ $group->id }}"></i>
+                            @endif
+                        </a>
+                    </td>
+                    <td class="center" >
+                        <a href="{{ route('listtask', $group->id) }}" class="btn btn-warning">Task</a>
+                        <a href="{{route('manageGroup.edit', $group->id)}}" class="btn btn-info">Cập nhật</a>
+                        <a href="{{ route('group.listMember', $group->id) }}" class="btn btn-success">Xem danh sách thành viên</a>
+                        <a href="{{route('group.list-review', $group->id)}}" class="btn btn-secondary">Xem đánh giá</a>
+                        <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-target=".modal-delete-group" data-url="{{route('manageGroup.destroy', $group->id)}}">Xóa</button>
+                    </td>
+                </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="7" align="center"><strong>Không có dữ liệu</strong></td>
+                </tr>
+            @endif
         </tbody>
     </table>
     <!-- Large modal -->
@@ -90,11 +96,11 @@
                 <h1>Bạn có muốn xóa?</h1>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Không</button>
                 <form id="form-delete-group" action="" method="post">
                     @csrf
                     @method('DELETE')
-                    <input type="submit" value="Xóa" class="btn btn-danger">
+                    <input type="submit" value="Có" class="btn btn-danger">
                 </form>
             </div>
         </div>

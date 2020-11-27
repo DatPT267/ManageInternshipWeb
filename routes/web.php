@@ -38,7 +38,8 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     Route::get('ajaxFetchDataPagination/page={page}' , 'Admin\InternshipClassController@fetch_data')->name('fetchDataPagination');
     Route::post('internshipClass/students/{nameclass}', 'Admin\InternshipclassController@storeStudentsOfInternshipclass')->name('storeStudentsOfInternshipclass');
     Route::get('internshipClass/list-students/{class_id}', 'Admin\InternshipclassController@listStudentsOfInternshipclass')->name('listStudentsOfInternshipclass');
-
+    Route::post('internshipClass/import/{nameclass}', 'Admin\InternshipClassController@classImport')->name('classImport'); 
+    Route::get('internshipClass/export/{id}', 'Admin\InternshipClassController@classExport')->name('classExport'); 
     //Quản lý nhóm
     Route::resource('manageGroup', 'Admin\GroupController');
     Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');

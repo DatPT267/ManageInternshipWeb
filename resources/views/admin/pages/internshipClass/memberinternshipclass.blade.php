@@ -47,6 +47,32 @@
                         <label class="btn btn-success" id="addRow">Thêm hàng</label>
                         <div align="center"><button type="submit" id=""  class="btn btn-info">Thêm</button></div>
                     </form>
+                    <div class="container" style="text-align: center">
+                        <div class="container-fluid" style="margin: 10pt">
+                            <div class="row">
+                              <div class="col-sm-5">
+                                <hr width="30%" style="margin-right: 0%">
+                              </div>
+                              <div class="col-sm-2">
+                                <p style="color: black; size: 110%;" >Hoặc</p>
+                              </div>
+                              <div class="col-sm-5" >
+                                <hr width="30%" style="margin-left: 0%">
+                              </div>
+                            </div>
+                          </div>
+                 
+                
+                      
+                        <form action="{{ route('classImport', $name_unsigned) }}" method="post" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <input type="file" name="file" value="aâsas"/>
+                                <button type="submit" class="btn btn-primary">Import Excel</button>
+                            </div>
+                       </form>
+                    </div>
+                   
                 </div>
             </div>
         </div>

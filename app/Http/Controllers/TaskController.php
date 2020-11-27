@@ -122,7 +122,7 @@ class TaskController extends Controller
     public function edit($id)
     {
         $task = Task::find($id);
-        $member = Member::join('users', 'member.user_id', 'users.id')->where('users.status', 1)->where('group_id', $task->group_id)->get();
+        $member = Member::select('member.*', 'users.status')->join('users', 'member.user_id', 'users.id')->where('users.status', 1)->where('group_id', $task->group_id)->get();
         $assign = Assign::where('task_id', $id)->get();
 
         return view('admin.pages.manageTasks.update', [ 'task' => $task, 'member' => $member, 'assign' => $assign]);

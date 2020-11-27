@@ -65,9 +65,11 @@
                         console.log(response);
                         var output = '';
                         if(response.data.length != 0){
+                            let index = 0;
                             for (let i = 0; i < response.data.length; i++) {
+                                index++;
                                 output += "<tr>"+
-                                    "<td>"+response.data[i].id+"</td>"+
+                                    "<td>"+index+"</td>"+
                                     "<td>"+response.data[i].name+"</td>"+
                                     "<td><a href='admin/student/"+response.data[i].user_id+"/view-schedule/month="+date+"' class='btn btn-info btn-circle'><i class='fas fa-info-circle'></i> </a></td>"
                                 +"</tr>"

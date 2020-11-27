@@ -87,7 +87,7 @@
                     </div>
                     <div id="menu1" class="container tab-pane fade"><br>
                         <h3>Đổi mật khẩu</h3>
-                        <form id="form-forgot-pass" action="{{ route('changepassword', $user->id)}}" method="post"  enctype="multipart/form-data">
+                        <form id="form-forgot-pass" action="{{ route('changepassword', $user->id)}}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="form-group">
@@ -103,7 +103,7 @@
                                 <input type="password" name="confirm_newPassword" id="confirm_newPassword" class="form-control" placeholder="Xác nhận mật khẩu">
                             </div>
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success form-control">Lưu</button>
+                                <button type="submit" class="btn btn-success">Lưu</button>
                             </div>
                         </form>
                     </div>
@@ -190,6 +190,34 @@
                     }
                 },
             });
+
+            $('#form-forgot-pass').validate({
+                errorClass: "is-invalid",
+                errorElement: "em",
+                rules: {
+                    'newPassword': {
+                        required: true,
+                    },
+                    'oldPassword': {
+                        required: true
+                    },
+                    'confirm_newPassword': {
+                        required: true
+                    }
+                },
+                messages: {
+                    'oldPassword': {
+                        required: "Bạn chưa nhập mật khẩu cũ",
+                    },
+                    'newPassword': {
+                        required: "Bạn chưa nhập mật khẩu mới"
+                    },
+                    'confirm_newPassword': {
+                        required: "Bạn chưa xác nhận mật khẩu mới"
+                    },
+
+                },
+            });
             //show image
             var readURL = function(input) {
                 if (input.files && input.files[0]) {
@@ -204,9 +232,6 @@
             $(".file-upload").on('change', function(){
                 readURL(this);
             });
-
-
-
         });
     </script>
 @endsection

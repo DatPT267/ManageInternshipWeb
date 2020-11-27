@@ -24,21 +24,21 @@
                         @csrf
                         @method('PUT')
                         <div class="form-group">
-                            <label >Tên Đợt Thực Tập</label>
-                        <input class="form-control" name="name" placeholder="Nhập Tên Đợt Thực Tập" value="{{ old('name', $internshipClass->name) }}"/>
+                            <label for="name" >Tên Đợt Thực Tập <strong style="font-style: italic; color: red">*</strong></label>
+                        <input class="form-control" id="name" name="name" placeholder="Nhập Tên Đợt Thực Tập" value="{{ old('name', $internshipClass->name) }}"/>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <span class="form-label" >Ngày Bắt Đầu</span>
+                                    <label for="start_day" >Ngày Bắt Đầu <strong style="font-style: italic; color: red">*</strong></label>
                                     <input  class="form-control" id="start_day" name="start_day" type="date" readonly  value="{{ old('start_day',\Carbon\Carbon::parse($internshipClass->start_day)->format('Y-m-d')) }}" />
                                 </div>
                             </div>
                             <div class="col-md-6">
 
                                 <div class="form-group">
-                                    <span class="form-label" >Ngày Kết Thúc Dự Kiến</span>
+                                    <label for="end_day" >Ngày Kết Thúc Dự Kiến <strong style="font-style: italic; color: red">*</strong></label>
                                     <input class="form-control" id="end_day" name="end_day" type="date" value="{{ old('end_day',\Carbon\Carbon::parse($internshipClass->end_day)->format('Y-m-d')) }}"/>
                                 </div>
                             </div>

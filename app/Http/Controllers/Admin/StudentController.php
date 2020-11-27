@@ -19,21 +19,33 @@ use Illuminate\Support\Str;
 class StudentController extends Controller
 {
     private $user;
-    private $interclass;
+    private $internshipClass;
 
-    public function __construct(User $user, Internshipclass $interclass)
+    public function __construct(User $user, Internshipclass $internshipClass)
     {
         $this->user = $user;
-        $this->interclass = $interclass;
+        $this->internshipClass = $internshipClass;
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = $this->user->wherePosition(1)->orderByDESC('id')->paginate(5);
+        // $students = $this->user->wherePosition(1)->orderByDESC('id')->paginate(10);
+        $students = $this->user->select('users.*');
+
+        if($request->nameStudentSearch){
+            $students = $students->where('users.name', 'LIKE', "%".trim($request->nameStudentSearch)."%");
+        }
+        if($request->emailSearch){
+            $students = $students->where('email', 'LIKE', "%".trim($request->emailSearch)."%");
+        }
+        if($request->nameInternshipclassSearch){
+            $students = $students->join('internshipclass', 'users.class_id', '=', 'internshipclass.id')->where("internshipclass.name", "LIKE", "%" . trim($request->nameInternshipclassSearch) . "%");
+        }
+        $students = $students->wherePosition(1)->orderByDESC('users.id')->paginate(10);
 
         return view('admin.pages.manageStudents.list', compact('students'));
     }
@@ -45,7 +57,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        $classes = $this->interclass->all();
+        $classes = $this->internshipClass->all();
 
         return view('admin.pages.manageStudents.add', compact('classes'));
     }
@@ -139,8 +151,9 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        $user = $this->user->findOrFail($id);
-        return view('admin.pages.manageStudents.update', compact('user'));
+        $student = $this->user->findOrFail($id);
+        $classes = $this->internshipClass->all();
+        return view('admin.pages.manageStudents.update', compact('student', 'classes'));
     }
 
     /**
@@ -161,14 +174,18 @@ class StudentController extends Controller
             }
             $nameImage = $this->uploadImage($request);
         }
-
+        $status = 1;
+        if(!$request->has('status')){
+            $status = 0;
+        }
         $user->update([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'phone' => $request->input('phone'),
             'address' => $request->input('address'),
-            'status' => $request->input('status'),
-            'image' => $nameImage
+            'status' => $status,
+            'image' => $nameImage,
+            'class_id' => $request->input('namedotthuctap')
         ]);
 
         Toastr::success('Cập nhật thành công', 'success');
@@ -189,22 +206,27 @@ class StudentController extends Controller
         }
         $user->delete();
         Toastr::success('Xóa thành công', 'success');
-        return redirect()->route('manageStudents.index');
+        return redirect()->back();
     }
 
     public function resetpassword(User $user)
     {
-        $password = Str::random(6);
-        $user->password = Hash::make($password);
-        $user->save();
-        $data = [
-            'name' => $user->name,
-            'account' => $user->account,
-            'password' => $password
-        ];
-        Mail::to($user->email)->send(new SendDataUser($data));
-        Toastr::success('Làm mới mật khẩu thành công!', 'Success');
-        return redirect()->route('editUser', $user->id)->with('thongbao', 'Mật khẩu mới đã được gửi tới mail của '. $user->name);
+        if($user->email != null){
+            $password = Str::random(6);
+            $user->password = Hash::make($password);
+            $user->save();
+            $data = [
+                'name' => $user->name,
+                'account' => $user->account,
+                'password' => $password
+            ];
+            Mail::to($user->email)->send(new SendDataUser($data));
+            Toastr::success('Làm mới mật khẩu thành công!', 'Success');
+            return redirect()->back()->with('thongbao', 'Mật khẩu mới đã được gửi tới mail của '. $user->name);
+        } else{
+            Toastr::warning($user->name.' chưa nhập thông tin email', 'Success');
+            return redirect()->back();
+        }
     }
 
     public function uploadImage($request){
@@ -237,7 +259,7 @@ class StudentController extends Controller
         }
     }
 
-    public function changeStatus(Request $request){
+    public function changeStatusStudent(Request $request){
         $user = $this->user->findOrFail($request->id);
         if($request->status == "1"){
             $user->update([

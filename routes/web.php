@@ -42,11 +42,12 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     Route::get('internshipClass/export/{id}', 'Admin\InternshipClassController@classExport')->name('classExport'); 
     //Quản lý nhóm
     Route::resource('manageGroup', 'Admin\GroupController');
-    Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');;
+    Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');
     Route::get('manageGroup/list-reviews-of-group/{group}', 'Admin\ReviewController@indexOfGroup')->name('group.list-review');
     Route::post('manageGroup/review/store-review', 'Admin\ReviewController@storeReviewOfGroup')->name('post.group.store-group');
     Route::post('manageGroup/review/store-reply', 'Admin\ReviewController@storeReplyOfGroup')->name('post.group.store-reply');
     Route::get('manageGroup/getListReply/{review}', 'Admin\ReviewController@getListReply')->name('group.getListReply');
+    Route::put('changeStatusGroup', 'Admin\GroupController@changeStatusGroup')->name('changeStatusGroup');
     Route::group(['prefix' => 'group'], function () {
         Route::get('/{group}/list-member', 'Admin\MemberController@show')->name('group.listMember');
         Route::get('/{group}/add-member', 'Admin\MemberController@create')->name('group.addMember');
@@ -64,7 +65,7 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     Route::post('addStudent', 'UserController@postThem')->name('addstudent');
     Route::get('manageStudents/edit/{id}', 'UserController@editUser')->name('editUser');
     Route::get('manageStudents/resetpassword/{user}','Admin\StudentController@resetpassword')->name('resetPasswordStudent');
-    Route::put('changeStatus', 'Admin\StudentController@changeStatus')->name('changeStatus');
+    Route::put('changeStatusStudent', 'Admin\StudentController@changeStatusStudent')->name('changeStatusStudent');
     Route::get('list-schedule', 'ScheduleController@index')->name('list-schedule.index');
     Route::get('/ajax-view-schedule', 'ScheduleController@ajaxViewListSchedule')->name('ajax.view.schedule');
 
@@ -110,9 +111,9 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     Route::group(['prefix' => 'ajax'], function () {
         Route::get('detail-feedback/{id}', 'FeedbackController@getAjaxFeedback')->name('ajax-feedback');
     });
-    Route::resource('manageLecturer', 'LecturerController');
-    Route::post('addLecturer', 'LecturerController@postThem')->name('addlecturer');
-    Route::get('manageLecturer/edit/{id}', 'LecturerController@editLecturer')->name('editLecturer');
+    Route::resource('manageLecturer', 'Admin\LecturerController');
+    // Route::post('addLecturer', 'Admin\LecturerController@store')->name('addlecturer');
+    // Route::get('manageLecturer/edit/{id}', 'LecturerController@editLecturer')->name('editLecturer');
 
     //Quản lý task
 

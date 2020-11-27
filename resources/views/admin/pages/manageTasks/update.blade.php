@@ -151,7 +151,7 @@
             var url = $(this).attr('data-url');
             var id = $(this).attr('data-id');
             const btn = $(this);
-            console.log(id);
+            // console.log(id);
             $.ajax({
                 type: 'GET',
                 url: url,

@@ -39,7 +39,7 @@ class StudentController extends Controller
         if($request->nameStudentSearch){
             $students = $students->where('users.name', 'LIKE', "%".trim($request->nameStudentSearch)."%");
         }
-        if($request->nameStudentSearch){
+        if($request->emailSearch){
             $students = $students->where('email', 'LIKE', "%".trim($request->emailSearch)."%");
         }
         if($request->nameInternshipclassSearch){

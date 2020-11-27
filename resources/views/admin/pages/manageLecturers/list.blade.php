@@ -6,44 +6,60 @@
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Danh sách giảng viên của đợt thực tập</h1>
     </div>
-
-    @if (session('success'))
-        <div class="alert alert-success">
-            <strong>{{session('success')}}</strong>
+    <a href="{{ route('manageLecturer.create') }}" class="btn btn-primary">Thêm giảng viên</a>
+    <form action="{{ route('manageLecturer.index')  }}" method="get" class="form-inline mt-3">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Tên giảng viên</span>
+            </div>
+            <input type="text" class="form-control" name="nameStudentSearch" value="{{ Request::get('nameStudentSearch') }}">
         </div>
-    @endif
-    @if (session('fail'))
-        <div class="alert alert-danger">
-            <strong>{{session('fail')}}</strong>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Email</span>
+            </div>
+            <input type="text" class="form-control" name="emailSearch" value="{{ Request::get('emailSearch') }}">
         </div>
-    @endif
+        <div class="mb-3">
+            <button type="submit" class="btn btn-success"><i class="fas fa-search"></i></button>
+            <a href="{{ route('manageLecturer.index')  }}" class="btn btn-secondary"><i class="fas fa-sync-alt"></i></a>
+        </div>
+    </form>
     <table class="table table-striped table-bordered table-hover" id="list-lecturer">
         <thead>
             <tr align="center">
                 <th>STT</th>
+                <th>Ảnh cá nhân</th>
                 <th>Tên Giảng Viên</th>
                 <th>Email</th>
                 <th>SĐT</th>
-                <th>Ảnh cá nhân</th>
                 <th>Địa Chỉ</th>
                 <th>Hành động</th>
             </tr>
         </thead>
         <tbody>
             <?php $i = 1; ?>
-            @foreach ($listLecturers as $ls)
+            @foreach ($listLecturers as $lecturer)
             <tr class="odd gradeX" align="center">
                 <td>{{$i++}}</td>
-                <td>{{$ls->name}} </td>
-                <td>{{$ls->email}}</td>
-                <td>{{$ls->phone}}</td>
-                <td>  <img width="100px" src="image/user/{{$ls->image}}" ></td>
-                <td>{{$ls->address}}</td>
+                <td>
+                    @if ($lecturer->image != "")
+                        <img width="100px" src="{{ asset('image/user/'.$lecturer->image) }}" width="100px" height="100px">
+
+                    @else
+                        <img width="100px" src="{{ asset('image/user/avatar.jpg') }}" width="100px" height="100px">
+                    @endif
+                </td>
+                <td>{{$lecturer->name}} </td>
+                <td>{{$lecturer->email}}</td>
+                <td>{{$lecturer->phone}}</td>
+
+                <td>{{$lecturer->address}}</td>
                 <td class="center">
-                    <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{route('manageLecturer.destroy', $ls->id)}}" data-target="#exampleModal">
+                    <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{route('manageLecturer.destroy', $lecturer->id)}}" data-target="#exampleModal">
                         Xóa
                     </button>
-                    <a href="{{route('editLecturer', $ls->id)}}" class="btn btn-info">Cập Nhật</a>
+                    <a href="{{route('manageLecturer.edit', $lecturer->id)}}" class="btn btn-info">Cập Nhật</a>
                 </td>
             </tr>
             @endforeach
@@ -78,19 +94,21 @@
 @section('script')
     <script>
         $(document).ready(function (){
-            $('#list-lecturer').dataTable({
-                'info': false,
-                'bLengthChange': false,
-                'columns': [
-                    {'orderable': true},
-                    {'orderable': false},
-                    {'orderable': false},
-                    {'orderable': false},
-                    {'orderable': false},
-                    {'orderable': false},
-                    {'orderable': false},
-                ]
-            });
+            // $('#list-lecturer').dataTable({
+            //     'info': false,
+            //     'bLengthChange': false,
+            //     'searching': false,
+            //     'paginate': false,
+            //     'columns': [
+            //         {'orderable': true},
+            //         {'orderable': false},
+            //         {'orderable': true},
+            //         {'orderable': false},
+            //         {'orderable': false},
+            //         {'orderable': false},
+            //         {'orderable': false},
+            //     ]
+            // });
             $('.btn-delete').click(function (){
                 var url = $(this).attr('data-url');
                 $('#form-delete').attr('action', url);

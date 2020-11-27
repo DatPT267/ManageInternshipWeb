@@ -157,12 +157,12 @@
                 url: url,
                 success: function(response){
                     console.log(response);
-                    if(response == 0){
+                    if(response == 1){
                         btn.html("Unassign");
                         btn.css('background-color', "#1cc88a" );
                         btn.css('border-color', "#1cc88a");
-                    } 
-                    if(response == 1){
+                    }
+                    if(response == 0){
                         btn.html("Assign");
                         btn.css('background-color', "#4e73df");
                         btn.css('border-color', "#4e73df");

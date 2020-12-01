@@ -6,19 +6,19 @@
     </div>
     <a href="{{ route('manageStudents.create') }}" class="btn btn-primary">Thêm sinh viên</a>
     <form action="{{ route('manageStudents.index')  }}" method="get" class="form-inline mt-3">
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 mr-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Tên sinh viên</span>
             </div>
             <input type="text" class="form-control" name="nameStudentSearch" value="{{ Request::get('nameStudentSearch') }}">
         </div>
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 mr-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Email</span>
             </div>
             <input type="text" class="form-control" name="emailSearch" value="{{ Request::get('emailSearch') }}">
         </div>
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 mr-3">
             <div class="input-group-prepend">
                 <span class="input-group-text">Tên đợt</span>
             </div>
@@ -45,63 +45,69 @@
         </thead>
          <tbody>
             <input type="hidden" value=" {{ $i = 1}}">
-            @foreach ($students as $student)
-                <tr class="odd gradeX">
-                    <td>{{$i++}}</td>
-                    <td  align="center" >
-                        @if ($student->image == null)
-                            <img width="100px" src="{{ asset('image/user/avatar.jpg') }}"  height="100px" >
-                        @else
-                            <img width="100px" src="{{ asset('image/user') }}/{{$student->image}}" height="100px" >
-                        @endif
-                    </td>
-                    <td>
-                        {{$student->name}}
-                    </td>
-                    <td>
-                        {{$student->email}}
-                    </td>
-                    <td>
-                        {{$student->phone}}
-                    </td>
-                    <td>
-                        {{$student->internshipClass->name}}
-                    </td>
-                    <td>
-                        {{$student->address}}
-                    </td>
-                    <td>
-                        <a class="btn btn-default btn-flat activateCourse-22 ">
-                            @if ($student->status == 0)
-                                <i class="fas fa-toggle-off active-status-student" style="font-size: 30px" data-status="{{ $student->status }}" data-id="{{ $student->id }}"></i>
+            @if (count($students) > 0)
+                @foreach ($students as $student)
+                    <tr class="odd gradeX">
+                        <td>{{$i++}}</td>
+                        <td  align="center" >
+                            @if ($student->image == null)
+                                <img width="100px" src="{{ asset('image/user/avatar.jpg') }}"  height="100px" >
                             @else
-                                <i class="fas fa-toggle-on active-status-student" style="color: green; font-size: 30px" data-status="{{ $student->status }}" data-id="{{ $student->id }}"></i>
+                                <img width="100px" src="{{ asset('image/user') }}/{{$student->image}}" height="100px" >
                             @endif
-                        </a>
-                    </td>
-                   
-                    <td class="center">
-                        <div class="dropdown">
-                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
-                                Xem </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{{ route('view-history-check', [$student->id, \Carbon\Carbon::now()->month]) }}">Xem lịch sử thực tập</a>
-                                <a class="dropdown-item" href="{{ route('view-schedule', [$student->id, \Carbon\Carbon::now()->month]) }}">Xem lịch đăng ký</a>
+                        </td>
+                        <td>
+                            {{$student->name}}
+                        </td>
+                        <td>
+                            {{$student->email}}
+                        </td>
+                        <td>
+                            {{$student->phone}}
+                        </td>
+                        <td>
+                            {{$student->internshipClass->name}}
+                        </td>
+                        <td>
+                            {{$student->address}}
+                        </td>
+                        <td>
+                            <a class="btn btn-default btn-flat activateCourse-22 ">
+                                @if ($student->status == 0)
+                                    <i class="fas fa-toggle-off active-status-student" style="font-size: 30px" data-name="{{ $student->name }}" data-status="{{ $student->status }}" data-id="{{ $student->id }}"></i>
+                                @else
+                                    <i class="fas fa-toggle-on active-status-student" style="color: green; font-size: 30px" data-name="{{ $student->name }}" data-status="{{ $student->status }}" data-id="{{ $student->id }}"></i>
+                                @endif
+                            </a>
+                        </td>
+
+                        <td class="center">
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown">
+                                    Xem </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="{{ route('view-history-check', [$student->id, \Carbon\Carbon::now()->month]) }}">Xem lịch sử thực tập</a>
+                                    <a class="dropdown-item" href="{{ route('view-schedule', [$student->id, \Carbon\Carbon::now()->month]) }}">Xem lịch đăng ký</a>
+                                </div>
                             </div>
-                        </div>
-                        <button type="button" class="btn btn-primary btn-show-modal-change-password" data-toggle="modal" data-target=".modal-changePassword" data-url="{{ route('resetPasswordStudent', $student->id) }}">Làm mới mật khẩu</button>
-                        <a href="{{route('manageStudents.edit', $student->id)}}" class="btn btn-info">Cập nhật</a>
-                        <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-url="{{ route('manageStudents.destroy', $student->id) }}" data-target="#exampleModal">
-                            Xóa</button>
-                    </td>
+                            <button type="button" class="btn btn-primary btn-show-modal-change-password" data-toggle="modal" data-target=".modal-changePassword" data-name="{{ $student->name }}" data-url="{{ route('resetPasswordStudent', $student->id) }}">Làm mới mật khẩu</button>
+                            <a href="{{route('manageStudents.edit', $student->id)}}" class="btn btn-info">Cập nhật</a>
+                            <button type="button" class="btn btn-danger btn-delete" data-toggle="modal" data-name="{{ $student->name }}" data-url="{{ route('manageStudents.destroy', $student->id) }}" data-target="#exampleModal">
+                                Xóa</button>
+                        </td>
+                    </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="9" align="center"><strong>Không có dữ liệu</strong></td>
                 </tr>
-            @endforeach
+            @endif
         </tbody>
     </table>
     <div class="row float-right mr-5 mt-3">
         {{ $students->render() }}
     </div>
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
+    <div class="modal fade modal-delete-student" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"  aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -134,7 +140,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <h3><strong>Bạn có muốn thay đổi trạng thái?</strong></h3>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Không</button>
@@ -159,7 +165,7 @@
                 </div>
                 <div class="modal-footer">
                     <a href="" class="btn btn-primary">Làm mới mật khẩu</a>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
                 </div>
             </div>
         </div>
@@ -187,8 +193,9 @@
                 var status = $(this).attr('data-status');
                 var id = $(this).attr('data-id');
                 var parentButton = this;
+                var name = $(this).attr('data-name');
                 $('.show-modal-change-status-student').modal('show');
-
+                $('.show-modal-change-status-student .modal-body').html('<h3>Bạn có muốn thay đổi trạng thái của <strong>'+name+'?</strong></h3>');
                 if(status == 1){
                     $('.btn-submit-status').click(function (){
                         changeStatus(id, status);
@@ -209,15 +216,20 @@
             });
 
             $('.btn-delete').click(function (){
+                var name = $(this).attr('data-name');
                 var url = $(this).attr('data-url');
                 console.log(url);
                 $('#form-delete').attr('action', url);
+                $('.modal-delete-student .modal-body').html('<h3>Bạn có muốn xóa sinh viên <strong>'+name+'</strong> không?</h3>');
             })
 
 
             $('.btn-show-modal-change-password').click(function (){
+                var name = $(this).attr('data-name');
                 var url = $(this).attr('data-url');
                 $('.modal-changePassword .modal-footer a').attr('href', url);
+                $('.modal-changePassword .modal-body').html('<h3>Bạn có muốn làm mới mật khẩu của <strong>'+name+'?</strong></h3>');
+
             })
 
 

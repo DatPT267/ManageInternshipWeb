@@ -1,4 +1,4 @@
-{{-- @extends('admin.layout.index')
+<!-- {{-- @extends('admin.layout.index')
 @section('content')
 <div class="container-fluid">
     <h1>Danh sách thành viên của <strong>{{$internshipClass->name}}</strong></h1>
@@ -161,7 +161,7 @@
 
         })
     </script>
-@endsection --}}
+@endsection --}} -->
 @extends('admin.layout.index')
 @section('content')
     <!-- Page Heading -->

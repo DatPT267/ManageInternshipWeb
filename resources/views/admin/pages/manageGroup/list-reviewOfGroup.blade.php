@@ -33,7 +33,7 @@
         <tbody>
             @foreach ($reviews as $index => $review)
                 @if ($review->member->user->id == Auth::id())
-                    <tr style="font-weight: 700; background-color: #ffb366">
+                    <tr style="font-weight: 700;">
                         <td>{{++$index}}</td>
                         <td>{{$review->content}}</td>
                         <td>{{$review->member->user->name}}</td>

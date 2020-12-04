@@ -176,11 +176,11 @@ Route::group( ['prefix' => 'user', 'middleware' => ['auth', 'can:isUser'] ], fun
 
     //đánh giá
     Route::get('{id}/list-review-user', 'ReviewController@getListReviewOfUser')->name('list-review-of-user');
-    Route::post('{id}/list-review-user/feedback/create', 'FeedbackController@postCreateFeedback')->name('post-create-feedback');
-    Route::get('ajax/detail-review-user', 'FeedbackController@ajaxDetailReview')->name('ajax-detail-review');
+    Route::post('{id}/list-review-user/feedback/create', 'User\ReviewController@store')->name('post-create-feedback');
+    Route::get('ajax/detail-review-user', 'User\ReviewController@getListReply')->name('ajax-detail-review');
 
     //review
-    Route::get('{id}/list-review-project', 'ReviewController@getListReviewOfProject')->name('list-review-of-project');
+    Route::get('{id}/list-review-project', 'User\ReviewController@index')->name('list-review-of-project');
 });
 
 //=======================================USER==================================================================================================

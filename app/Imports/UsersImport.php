@@ -74,6 +74,9 @@ class UsersImport implements
                 'position' => 1,
                 'class_id' => $this->class,
                 'status'   => 1,
+                'email' => $row['email'],
+               'phone' => $row['phone'],
+               'address' => $row['address'],
             ]);
            
         }

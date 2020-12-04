@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Group;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Reviews\StoreReplyAndReviewRequest;
-use App\Http\Requests\Reviews\StoreReplyReviewRequest;
-use App\Http\Requests\Reviews\StoreReviewRequest;
 use App\Review;
 use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
@@ -15,28 +13,31 @@ use Illuminate\Support\Facades\Auth;
 
 class ReviewController extends Controller
 {
-    private $review;
     private $group;
-    public function __construct(Review $review, Group $group)
+    private $review;
+
+    public function __construct(Group $group, Review $review)
     {
-        $this->review = $review;
         $this->group = $group;
+        $this->review = $review;
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexOfGroup(Group $group)
+    public function index($id)
     {
+        $this->authorize('isAuthor', Auth::id());
+        $group = $this->group->find($id);
         $reviews = $this->review->where('reviewOf',1)->whereGroupId($group->id)->whereParentId(null)->orderBy('id', 'DESC')->get();
-
-        return view('admin.pages.manageEvaluate.group.list', compact('reviews', 'group'));
+        // dd($reviews);
+        return view('user.pages.group.review.list-review', ['reviews' => $reviews, 'group' => $group]);
     }
 
-    public function getListReply(Review $review)
+    public function getListReply(Request $request)
     {
-        $replies = $this->review->where('parent_id', $review->id)->orderBy('id', 'DESC')->get();
+        $replies = $this->review->where('parent_id', $request->id)->orderBy('id', 'DESC')->get();
 
         $data = [];
         $i = 0;
@@ -52,6 +53,7 @@ class ReviewController extends Controller
         }
         return response()->json(['data' =>  $data]);
     }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -65,30 +67,10 @@ class ReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  App\Http\Requests\Reviews\StoreReviewRequest  $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeReviewOfGroup(StoreReplyAndReviewRequest $request)
-    {
-        $content = $request->input('content');
-        $group_id = $request->input('group_id');
-        $reviewer_id = Auth::id();
-        $reviewOf = 1;
-
-        $this->review->create([
-            'content' => $content,
-            'group_id' => $group_id,
-            'reviewer_id' => $reviewer_id,
-            'reviewOf' => $reviewOf
-        ]);
-
-        $group = $this->group->find($group_id);
-
-        Toastr::success('Success', 'Thêm thành công');
-        return redirect()->route('group.list-review', $group);
-    }
-
-    public function storeReplyOfGroup(StoreReplyAndReviewRequest $request)
+    public function store(StoreReplyAndReviewRequest $request)
     {
         $content = $request->input('content');
         $group_id = $request->input('group_id');
@@ -107,7 +89,7 @@ class ReviewController extends Controller
         $group = $this->group->find($group_id);
 
         Toastr::success('Success', 'Thêm thành công');
-        return redirect()->route('group.list-review', $group);
+        return redirect()->route('list-review-of-project', $group->id);
     }
 
     /**

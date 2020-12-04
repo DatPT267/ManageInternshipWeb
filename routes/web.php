@@ -38,8 +38,8 @@ Route::group( ['prefix' => 'admin', 'middleware' => ['auth', 'can:isAdminANDGVHD
     Route::get('ajaxFetchDataPagination/page={page}' , 'Admin\InternshipClassController@fetch_data')->name('fetchDataPagination');
     Route::post('internshipClass/students/{nameclass}', 'Admin\InternshipclassController@storeStudentsOfInternshipclass')->name('storeStudentsOfInternshipclass');
     Route::get('internshipClass/list-students/{class_id}', 'Admin\InternshipclassController@listStudentsOfInternshipclass')->name('listStudentsOfInternshipclass');
-    Route::post('internshipClass/import/{nameclass}', 'Admin\InternshipClassController@classImport')->name('classImport'); 
-    Route::get('internshipClass/export/{id}', 'Admin\InternshipClassController@classExport')->name('classExport'); 
+    Route::post('internshipClass/import/{nameclass}', 'Admin\InternshipClassController@classImport')->name('classImport');
+    Route::get('internshipClass/export/{id}', 'Admin\InternshipClassController@classExport')->name('classExport');
     //Quản lý nhóm
     Route::resource('manageGroup', 'Admin\GroupController');
     Route::get('manageGroup/list-task/{id}', 'GroupController@getListTask')->name('listtask');
@@ -154,10 +154,10 @@ Route::get('/',function ()
 
 Route::group( ['prefix' => 'user', 'middleware' => ['auth', 'can:isUser'] ], function () {
 
-    Route::get('{id}/list-group', 'GroupController@listGroup')->name('user.listGroup');
+    Route::get('{id}/list-group', 'User\GroupController@index')->name('user.listGroup');
     Route::get('{id}/group/{id_group}', 'StudentController@infoGroupOfStudent')->name('user.group');
     Route::get('{id}/show', 'MemberController@show')->name('info.member');
-    Route::get('{id}/group/{id_group}/list-task', 'GroupController@getListTaskUser')->name('view-list-task');
+    Route::get('{id}/group/{id_group}/list-task', 'User\GroupController@getListTaskUser')->name('view-list-task');
     //đổi mật khẩu
 
     //checkin - checkout

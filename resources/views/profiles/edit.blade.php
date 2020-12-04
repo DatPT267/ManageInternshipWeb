@@ -64,19 +64,19 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Tên </label>
-                                        <input type="text" id="name" class="form-control" name="name" value="{{old('name', $user->name)}}">
+                                        <input type="text" id="name" class="form-control" name="name" placeholder="Nhập tên của bạn" value="{{old('name', $user->name)}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="email">Email </label>
-                                        <input type="text" id="email" class="form-control" name="email" value="{{old('email', $user->email)}}">
+                                        <input type="text" id="email" class="form-control" name="email" placeholder="Nhập email của bạn" value="{{old('email', $user->email)}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="phone">Số điện thoại</label>
-                                        <input type="text" id="phone" class="form-control " name="phone" value="{{old('phone', $user->phone)}}">
+                                        <input type="text" id="phone" class="form-control " name="phone" placeholder="Nhập số điện thoại của bạn" value="{{old('phone', $user->phone)}}">
                                     </div>
                                     <div class="form-group">
                                         <label for="address">Địa chỉ</label>
-                                        <input type="text" id="address" class="form-control" name="address" value="{{old('address', $user->address)}}">
+                                        <input type="text" id="address" class="form-control" name="address" placeholder="Nhập địa chỉ của bạn" value="{{old('address', $user->address)}}">
                                     </div>
 
                                     <button type="submit" class="btn btn-primary">Lưu</button>

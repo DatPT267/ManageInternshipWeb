@@ -25,34 +25,30 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($schedules as $index => $schedule)
-                <tr>
-                    <td>{{$index + 1}}</td>
-                    <td>{{$schedule->user->name}}</td>
-                    <td>
-                        <a href="{{route('view-schedule', [$schedule->user_id, $month])}}" class="btn btn-info btn-circle" >
-                            <i class="fas fa-info-circle"></i>
-                          </a>
-                    </td>
-                </tr>
+            @if (count($schedules) > 0)
+                @foreach ($schedules as $index => $schedule)
+                    <tr>
+                        <td>{{$index + 1}}</td>
+                        <td>{{$schedule->user->name}}</td>
+                        <td>
+                            <a href="{{route('view-schedule', [$schedule->user_id, $month])}}" class="btn btn-info btn-circle" >
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        </td>
+                    </tr>
 
-            @endforeach
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="4" align="center"><strong>Không có dữ liệu</strong></td>
+                </tr>
+            @endif
         </tbody>
     </table>
 @endsection
 @section('script')
     <script>
         $(document).ready(function (){
-            $('#list-student').dataTable({
-                'info': false,
-                'order' : false,
-                'paging': false,
-                "bLengthChange": false,
-                "searching": false,
-                "language": {
-                    "emptyTable": "Tháng này không có ai đăng ký thực tập"
-                }
-            });
             var date = 0;
 
             //=========================AJAX=============================
@@ -76,7 +72,7 @@
                             }
 
                         }else{
-                            output = "<tr><th colspan='3' style='text-align: center'>Tháng này không có ai đăng ký thực tập</th></tr>"
+                            output = "<tr><th colspan='3' style='text-align: center'><strong>Không có dữ liệu</strong></th></tr>"
                         }
                         $('tbody').html(output);
                     }

@@ -21,17 +21,24 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($checks as $index => $check)
+            @if (count($checks) > 0)
+                @foreach ($checks as $index => $check)
+                    <tr>
+                        <td>{{++$index}}</td>
+                        <td>{{$check->user->name}}</td>
+                        <td>
+                            <a href="{{route('view-history-check', [$check->user_id, \Carbon\Carbon::now()->isoFormat('M')])}}" class="btn btn-info btn-circle">
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+
+            @else
                 <tr>
-                    <td>{{++$index}}</td>
-                    <td>{{$check->user->name}}</td>
-                    <td>
-                        <a href="{{route('view-history-check', [$check->user_id, \Carbon\Carbon::now()->isoFormat('M')])}}" class="btn btn-info btn-circle">
-                            <i class="fas fa-info-circle"></i>
-                        </a>
-                    </td>
+                    <td colspan="4" align="center"><strong>Không có dữ liệu</strong></td>
                 </tr>
-            @endforeach
+            @endif
         </tbody>
     </table>
 @endsection
@@ -60,7 +67,7 @@
                                 +"</tr>";
                             }
                         } else{
-                            output = "<tr><th colspan='3' style='text-align: center'>Không có ai thực tập</th></tr>"
+                            output = "<tr><th colspan='3' style='text-align: center'><strong>Không có dữ liệu</strong></th></tr>"
                         }
                         $('tbody').html(output);
                     }

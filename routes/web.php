@@ -16,15 +16,15 @@ use Illuminate\Support\Facades\Route;
 //ADMIN and GVHD
 // Route::get('{id}/checkEmailAreadyExist/{email}', 'Admin\StudentController@checkEmailAreadyExist')->name('checkEmailAreadyExist');
 
-Route::get('login', 'auth\AuthenticationController@getLogin')->name('login');
-Route::post('login', 'auth\AuthenticationController@postLogin')->name('login');
+Route::get('login', 'Auth\AuthenticationController@getLogin')->name('login');
+Route::post('login', 'Auth\AuthenticationController@postLogin')->name('login');
 
-Route::get('logout', 'auth\AuthenticationController@getLogout')->name('logout');
+Route::get('logout', 'Auth\AuthenticationController@getLogout')->name('logout');
 
-Route::get('losspassword', 'auth\AuthenticationController@getLosspassword')->name('losspassword');
-Route::post('losspassword', 'auth\AuthenticationController@postLosspassword')->name('post.losspassword');
+Route::get('losspassword', 'Auth\AuthenticationController@getLosspassword')->name('losspassword');
+Route::post('losspassword', 'Auth\AuthenticationController@postLosspassword')->name('post.losspassword');
 
-Route::post('sendemail/{email}', 'auth\AuthenticationController@send')->name('sendMail');
+Route::post('sendemail/{email}', 'Auth\AuthenticationController@send')->name('sendMail');
 
 
 //=======================================ADMIN==================================================================================================

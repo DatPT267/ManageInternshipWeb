@@ -46,7 +46,8 @@ class UsersExport implements
     }
 
     public function map($user): array
-    {
+    {   
+        
         return [
             ++$this->count,
             $user->name,

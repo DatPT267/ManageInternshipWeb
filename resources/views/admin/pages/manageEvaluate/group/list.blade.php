@@ -2,8 +2,8 @@
 @section('content')
     <h1>Danh sách Review của nhóm <strong>{{ $group->name }}</strong></h1>
     <!-- Large modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Thêm review</button>
     <a href="{{ route('manageGroup.index') }}" class="btn btn-secondary">Trở về</a>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Thêm review</button>
 
     <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">

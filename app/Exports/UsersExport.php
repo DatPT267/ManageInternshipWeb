@@ -45,7 +45,8 @@ class UsersExport implements
     }
 
     public function map($user): array
-    {
+    {   
+        
         return [
             $user->id,
             $user->name,

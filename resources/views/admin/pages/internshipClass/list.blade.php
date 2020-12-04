@@ -19,7 +19,7 @@
         </div>
         <div class="input-group mb-3 mr-3">
             <div class="input-group-prepend">
-                <span class="input-group-text">đến ngày</span>
+                <span class="input-group-text">Đến ngày</span>
             </div>
             <input type="text" data-date="" data-date-format="DD MM YYYY" id="end_date" class="form-control date" name="dateEndSearch" value="{{ Request::get('dateEndSearch') }}">
         </div>

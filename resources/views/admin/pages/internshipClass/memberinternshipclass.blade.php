@@ -97,12 +97,14 @@
             $('#import-data').validate({
                 rules: {
                     'file': {
-                        extension: "xlsx|xls|xlsm"
+                        extension: "xlsx|xls|xlsm",
+                        required: true,
                     }
                 },
                 messages: {
                     'file': {
-                        extension: "Vui lòng chỉ tải lên các định dạng tệp hợp lệ .xlsx, .xlsm, .xls."
+                        extension: "Vui lòng chỉ tải lên các định dạng tệp hợp lệ .xlsx, .xlsm, .xls.",
+                        required: "Bạn chưa chọn file"
                     }
                 }
             });

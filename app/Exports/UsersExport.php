@@ -29,6 +29,7 @@ class UsersExport implements
     use Exportable;
 
     private $id;
+    private $count = 0;
 
    
 
@@ -48,7 +49,7 @@ class UsersExport implements
     {   
         
         return [
-            $user->id,
+            ++$this->count,
             $user->name,
             $user->account,
             $user->email,
@@ -61,7 +62,7 @@ class UsersExport implements
     public function headings(): array
     {
         return [
-            'Id',
+            'STT',
             'Name',
             'Account',
             'Email',

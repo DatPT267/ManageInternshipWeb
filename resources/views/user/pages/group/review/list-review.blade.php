@@ -23,7 +23,7 @@
                                     <td>
                                         <button type="button"
                                                 class="btn btn-info btn-circle btn-show-review"
-                                                data-url="{{route('ajax-detail-review')}}"
+                                                data-url="{{route('ajax-detail-review-group')}}"
                                                 data-id="{{$review->id}}"
                                                 data-content-review="{{$review->content}}"
                                                 data-reviewer="{{$review->reviewer->name}}"

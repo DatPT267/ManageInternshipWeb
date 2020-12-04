@@ -35,9 +35,28 @@ class ReviewController extends Controller
         return view('user.pages.group.review.list-review', ['reviews' => $reviews, 'group' => $group]);
     }
 
-    public function getListReply(Request $request)
+    public function getListReplyGroup(Request $request)
     {
-        $replies = $this->review->where('parent_id', $request->id)->orderBy('id', 'DESC')->get();
+        $replies = $this->review->where('reviewOf',1)->where('parent_id', $request->id)->orderBy('id', 'DESC')->get();
+
+        $data = [];
+        $i = 0;
+        foreach ($replies as $index => $reply) {
+            $data[$index] = [
+                    'index' => ++$i,
+                    'id' => $reply->id,
+                    'name' => $reply->reviewer->name,
+                    'content' => $reply->content,
+                    'time' => Carbon::parse($reply->created_at)->isoFormat('hh:mm:ss DD/MM/Y'),
+                    'reviewer_id' => $reply->reviewer_id
+                ];
+        }
+        return response()->json(['data' =>  $data]);
+    }
+
+    public function getListReplyUser(Request $request)
+    {
+        $replies = $this->review->where('reviewOf',2)->where('parent_id', $request->id)->orderBy('id', 'DESC')->get();
 
         $data = [];
         $i = 0;
@@ -92,6 +111,24 @@ class ReviewController extends Controller
         return redirect()->route('list-review-of-project', $group->id);
     }
 
+    public function storeReviewOfUser(StoreReplyAndReviewRequest $request)
+    {
+        $content = $request->input('content');
+        $parent_id = $request->input('review_id');
+        $reviewer_id = Auth::id();
+        $reviewOf = 2;
+
+        $this->review->create([
+            'content' => $content,
+            'reviewer_id' => $reviewer_id,
+            'reviewOf' => $reviewOf,
+            'parent_id' => $parent_id,
+        ]);
+
+        Toastr::success('Success', 'Thêm thành công');
+        return redirect()->route('list-review-of-user', Auth::id());
+    }
+
     /**
      * Display the specified resource.
      *
@@ -135,5 +172,11 @@ class ReviewController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function getListReviewOfUser($id){
+        $this->authorize('isAuthor', $id);
+        $reviews = $this->review->where('reviewOf', 2)->where('user_id', $id)->orderByDESC('id')->get();
+        return view('user.pages.review.list-review', ['reviews' => $reviews]);
     }
 }

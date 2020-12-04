@@ -175,12 +175,14 @@ Route::group( ['prefix' => 'user', 'middleware' => ['auth', 'can:isUser'] ], fun
     Route::get('ajax/{id}/history-schedule', 'CheckController@ajaxHisSchedule')->name('ajax.His-schedule');
 
     //đánh giá
-    Route::get('{id}/list-review-user', 'ReviewController@getListReviewOfUser')->name('list-review-of-user');
-    Route::post('{id}/list-review-user/feedback/create', 'User\ReviewController@store')->name('post-create-feedback');
-    Route::get('ajax/detail-review-user', 'User\ReviewController@getListReply')->name('ajax-detail-review');
+    Route::get('{id}/list-review-user', 'User\ReviewController@getListReviewOfUser')->name('list-review-of-user');
+    Route::post('{id}/list-review-user/feedback/create', 'User\ReviewController@storeReviewOfUser')->name('post-create-feedback-user');
+    Route::get('ajax/detail-review-user', 'User\ReviewController@getListReplyUser')->name('ajax-detail-review-user');
 
     //review
     Route::get('{id}/list-review-project', 'User\ReviewController@index')->name('list-review-of-project');
+    Route::get('ajax/detail-review-group', 'User\ReviewController@getListReplyGroup')->name('ajax-detail-review-group');
+    Route::post('{id}/list-review-group/feedback/create', 'User\ReviewController@store')->name('post-create-feedback');
 });
 
 //=======================================USER==================================================================================================
